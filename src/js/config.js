@@ -109,12 +109,15 @@ export const mkadKm = [
   [108,37.841576,55.785017],
 ];
 
+export const moscowCenter = [55.755864, 37.617698];
+
 export const defaultCalculatorConfig = {
   fixedArrivalTime: [40, 60],
   nightTariff: {
     startHour: 22,
     endHour: 7,
   },
+  masterPoints: createMoscowMasterPoints(30),
   tireMultipliers: {
     crossover: 0.2,
     suv: 0.4,
@@ -243,6 +246,18 @@ const parseNumber = (value, fallback) => {
   return Number.isFinite(number) ? number : fallback;
 };
 
+const parseJsonConfig = (value, fallback = null) => {
+  if (typeof value !== 'string') {
+    return value ?? fallback;
+  }
+
+  try {
+    return JSON.parse(value);
+  } catch {
+    return fallback;
+  }
+};
+
 const parsePercent = (value, fallback) => parseNumber(value, fallback * 100) / 100;
 
 const normalizePriceMap = (source = {}, fallback = {}) => {
@@ -258,6 +273,53 @@ const normalizeFixedArrivalTime = (source, fallback) => {
   return [min, Math.max(min, max)];
 };
 
+const normalizeMasterPoint = (point, index) => {
+  if (Array.isArray(point)) {
+    const lat = parseNumber(point[0], null);
+    const lng = parseNumber(point[1], null);
+
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+      return null;
+    }
+
+    return {
+      id: `master-${index + 1}`,
+      coords: [lat, lng],
+    };
+  }
+
+  if (!isPlainObject(point)) {
+    return null;
+  }
+
+  const coords = point.coords || point.coordinates || [point.lat ?? point.latitude, point.lng ?? point.lon ?? point.longitude];
+  const lat = parseNumber(coords?.[0], null);
+  const lng = parseNumber(coords?.[1], null);
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    return null;
+  }
+
+  return {
+    id: String(point.id || point.name || `master-${index + 1}`),
+    coords: [lat, lng],
+  };
+};
+
+const normalizeMasterPoints = (source, fallback = []) => {
+  const parsedSource = parseJsonConfig(source, source);
+
+  if (!Array.isArray(parsedSource)) {
+    return fallback;
+  }
+
+  const points = parsedSource
+    .map(normalizeMasterPoint)
+    .filter(Boolean);
+
+  return points.length ? points : fallback;
+};
+
 const normalizeAcfCalculatorConfig = (sourceConfig, fallbackConfig) => {
   if (!isPlainObject(sourceConfig)) {
     return {};
@@ -269,6 +331,7 @@ const normalizeAcfCalculatorConfig = (sourceConfig, fallbackConfig) => {
   const conditioner = sourceConfig.conditioner || {};
   const storage = sourceConfig.storage || {};
   const tireMultipliers = sourceConfig.tire_multipliers || sourceConfig.tireMultipliers || {};
+  const masterPoints = sourceConfig.master_points || sourceConfig.masterPoints || sourceConfig.masters;
 
   return {
     fixedArrivalTime: normalizeFixedArrivalTime(sourceConfig.arrival_time || sourceConfig.fixedArrivalTime, fallbackConfig.fixedArrivalTime),
@@ -282,6 +345,7 @@ const normalizeAcfCalculatorConfig = (sourceConfig, fallbackConfig) => {
       lowProfile: parsePercent(tireMultipliers.low_profile_percent, fallbackConfig.tireMultipliers.lowProfile),
       reinforcedTire: parsePercent(tireMultipliers.reinforced_tire_percent, fallbackConfig.tireMultipliers.reinforcedTire),
     },
+    masterPoints: normalizeMasterPoints(masterPoints, fallbackConfig.masterPoints),
     tariffs: {
       callout: {
         insideMkad: {
@@ -346,7 +410,7 @@ export const tariffs = calculatorConfig.tariffs;
 export const tireMultipliers = calculatorConfig.tireMultipliers;
 export const fixedArrivalTime = calculatorConfig.fixedArrivalTime;
 export const nightTariff = calculatorConfig.nightTariff;
-export const moscowCenter = [55.755864, 37.617698];
+export const moscowMasterPoints = normalizeMasterPoints(calculatorConfig.masterPoints, defaultCalculatorConfig.masterPoints);
 export const serviceGeocodeBounds = [
   [54.25, 35.15],
   [56.95, 40.25],
@@ -394,5 +458,3 @@ function createMoscowMasterPoints(count) {
 
   return points;
 }
-
-export const moscowMasterPoints = createMoscowMasterPoints(37);

@@ -30,6 +30,10 @@ const serviceMapState = {
   masterCollection: null,
   customerPlacemark: null,
   ignoreNextClickAfterSheetClose: false,
+  lastBounds: null,
+  resizeFrameId: null,
+  resizeObserver: null,
+  resizeTimeoutId: null,
   route: null,
   requestId: 0,
 };
@@ -324,6 +328,9 @@ const initServiceMap = () => {
 
     serviceMapState.ignoreNextClickAfterSheetClose = true;
     collapseCalculatorSheet();
+    scheduleServiceMapRefit();
+    event.preventDefault();
+    event.stopImmediatePropagation();
 
     window.setTimeout(() => {
       serviceMapState.ignoreNextClickAfterSheetClose = false;
@@ -355,6 +362,13 @@ const initServiceMap = () => {
   });
 
   serviceMapState.instance.geoObjects.add(serviceMapState.masterCollection);
+  if ('ResizeObserver' in window && !serviceMapState.resizeObserver) {
+    serviceMapState.resizeObserver = new ResizeObserver(scheduleServiceMapRefit);
+    serviceMapState.resizeObserver.observe(container);
+  } else {
+    window.addEventListener('resize', scheduleServiceMapRefit);
+  }
+
   container.classList.add('hero__map-placeholder--ready');
   container.classList.remove('hero__map-placeholder--loading');
 
@@ -508,10 +522,11 @@ const normalizeServiceMapBounds = (bounds) => {
 
 const getServiceMapZoomMargin = (map) => {
   const [width = 0, height = 0] = map.container.getSize?.() || [];
-  const horizontalMargin = Math.min(Math.round(width * 0.12), 28);
-  const verticalMargin = Math.min(Math.round(height * 0.14), 30);
+  const horizontalMargin = Math.min(Math.round(width * 0.12), 36);
+  const verticalMargin = Math.min(Math.round(height * 0.14), 36);
+  const bottomSheetOverlap = isDesktopMapLayout() ? 0 : 42;
 
-  return [verticalMargin, horizontalMargin, verticalMargin, horizontalMargin];
+  return [verticalMargin, horizontalMargin, verticalMargin + bottomSheetOverlap, horizontalMargin];
 };
 
 const getServiceMapFitZoom = (map, bounds) => {
@@ -533,6 +548,32 @@ const getServiceMapFitZoom = (map, bounds) => {
   return clamp(Math.min(zoomByWidth, zoomByHeight), minZoom, maxZoom);
 };
 
+const getCoordsFromMercatorPoint = ({ x, y }) => {
+  const lng = x * 360 - 180;
+  const lat = (180 / Math.PI) * (2 * Math.atan(Math.exp((0.5 - y) * 2 * Math.PI)) - Math.PI / 2);
+
+  return [lat, lng];
+};
+
+const getServiceMapFitCenter = (map, bounds, zoom, zoomMargin) => {
+  const tileSize = 256;
+  const [width = 0, height = 0] = map.container.getSize?.() || [];
+  const [topMargin, rightMargin, bottomMargin, leftMargin] = zoomMargin;
+  const viewportWidth = Math.max(width - leftMargin - rightMargin, 1);
+  const viewportHeight = Math.max(height - topMargin - bottomMargin, 1);
+  const contentCenterX = leftMargin + viewportWidth / 2;
+  const contentCenterY = topMargin + viewportHeight / 2;
+  const fullCenterX = width / 2;
+  const fullCenterY = height / 2;
+  const pixelsPerWorld = tileSize * (2 ** zoom);
+  const center = getMercatorPoint(getBoundsCenter(bounds));
+
+  return getCoordsFromMercatorPoint({
+    x: center.x - (contentCenterX - fullCenterX) / pixelsPerWorld,
+    y: center.y - (contentCenterY - fullCenterY) / pixelsPerWorld,
+  });
+};
+
 const fitServiceMap = (bounds) => {
   const map = serviceMapState.instance;
   const normalizedBounds = normalizeServiceMapBounds(bounds);
@@ -541,7 +582,7 @@ const fitServiceMap = (bounds) => {
     return;
   }
 
-  const center = getBoundsCenter(normalizedBounds);
+  serviceMapState.lastBounds = normalizedBounds;
 
   window.requestAnimationFrame(() => {
     map.container.fitToViewport();
@@ -551,6 +592,7 @@ const fitServiceMap = (bounds) => {
 
       const zoom = getServiceMapFitZoom(map, normalizedBounds);
       const zoomMargin = getServiceMapZoomMargin(map);
+      const center = getServiceMapFitCenter(map, normalizedBounds, zoom, zoomMargin);
       const setRouteCamera = () => {
         map.setCenter(center, zoom, {
           checkZoomRange: true,
@@ -581,6 +623,27 @@ const fitServiceMap = (bounds) => {
       window.setTimeout(setRouteCamera, 120);
     });
   });
+};
+
+const refitServiceMap = () => {
+  if (!serviceMapState.lastBounds) {
+    serviceMapState.instance?.container?.fitToViewport();
+    return;
+  }
+
+  fitServiceMap(serviceMapState.lastBounds);
+};
+
+const scheduleServiceMapRefit = () => {
+  window.cancelAnimationFrame(serviceMapState.resizeFrameId);
+  window.clearTimeout(serviceMapState.resizeTimeoutId);
+
+  serviceMapState.resizeFrameId = window.requestAnimationFrame(() => {
+    serviceMapState.resizeFrameId = null;
+    refitServiceMap();
+  });
+
+  serviceMapState.resizeTimeoutId = window.setTimeout(refitServiceMap, 520);
 };
 
 const fitAllMasters = () => {
@@ -1198,10 +1261,15 @@ export const initYandexAddress = () => {
     });
   });
 
+  const handleServiceMapLayoutChange = () => {
+    syncServiceMapBehaviors();
+    scheduleServiceMapRefit();
+  };
+
   if (desktopLayoutMedia?.addEventListener) {
-    desktopLayoutMedia.addEventListener('change', syncServiceMapBehaviors);
+    desktopLayoutMedia.addEventListener('change', handleServiceMapLayoutChange);
   } else {
-    desktopLayoutMedia?.addListener?.(syncServiceMapBehaviors);
+    desktopLayoutMedia?.addListener?.(handleServiceMapLayoutChange);
   }
 
   if (window.__YANDEX_MAPS_DISABLED__ || !getYandexMapsUrl()) {

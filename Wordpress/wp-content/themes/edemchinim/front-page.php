@@ -208,6 +208,17 @@ if (! function_exists('edemchinim_render_faq_item')) {
 	}
 }
 
+if (! function_exists('edemchinim_phone_icon')) {
+	function edemchinim_phone_icon()
+	{
+?>
+		<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+			<path fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21"></path>
+		</svg>
+<?php
+	}
+}
+
 $reviews_query = new WP_Query(
 	array(
 		'post_type'      => 'reviews',
@@ -261,31 +272,115 @@ $faq_query = new WP_Query(
 );
 
 $order_form_shortcode = '[contact-form-7 id="db84527" title="Калькулятор"]';
-$average_rating = get_field('shina_average_rating', 'options');
-$successful_visits_count = get_field('shina_successful_visits_count', 'options');
-$work_schedule = get_field('shina_work_schedule', 'options');
-$yandex_reviews_count = get_field('shina_yandex_reviews_count', 'options');
+$average_rating = edemchinim_get_option_field('shina_average_rating', '4.9');
+$successful_visits_count = edemchinim_get_option_field('shina_successful_visits_count', '3500+');
+$work_schedule = edemchinim_get_option_field('shina_work_schedule', '24/7');
+$yandex_reviews_count = edemchinim_get_option_field('shina_yandex_reviews_count', '420+');
+$phone = edemchinim_get_option_field('shina_phone', '+7 (000) 000-00-00');
+$phone_href = function_exists('edemchinim_phone_href') ? edemchinim_phone_href($phone) : 'tel:' . preg_replace('/\D+/', '', $phone);
+$calculator_title_first_line = edemchinim_get_option_field('shina_calculator_title_first_line', 'Выездной');
+$calculator_title_second_line = edemchinim_get_option_field('shina_calculator_title_second_line', 'шиномонтаж');
+$calculator_subtitle_prefix = edemchinim_get_option_field('shina_calculator_subtitle_prefix', 'приедем за');
+$calculator_arrival_time = edemchinim_get_option_field('shina_calculator_arrival_time', '30-60');
+$calculator_subtitle_suffix = edemchinim_get_option_field('shina_calculator_subtitle_suffix', 'минут');
+$personal_data_consent_text = edemchinim_get_option_field('shina_personal_data_consent_text', 'Я принимаю согласие на обработку персональных данных');
+$cookie_consent_title = edemchinim_get_option_field('shina_cookie_consent_title', 'Мы используем cookie');
+$cookie_consent_text = edemchinim_get_option_field('shina_cookie_consent_text', 'Cookie помогают сайту работать стабильно и улучшать сервис.');
+$cookie_consent_button_text = edemchinim_get_option_field('shina_cookie_consent_button_text', 'Принять');
+$order_success_title = edemchinim_get_option_field('shina_order_success_title', 'Заявка принята');
+$order_success_text = edemchinim_get_option_field('shina_order_success_text', 'Мы получили данные и скоро свяжемся для подтверждения времени выезда.');
 ?>
 
 <main class="app" id="app" data-app>
+	<div class="app-menu-shell">
+		<button class="map-overlay__menu-button" type="button" aria-label="Открыть меню" aria-expanded="false" data-app-menu-toggle>
+			<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+				<path fill="currentColor" d="M3 8V7h17v1zm17 4v1H3v-1zM3 17h17v1H3z"></path>
+			</svg>
+		</button>
+		<a class="map-overlay__call" href="<?php echo esc_url($phone_href); ?>" aria-label="Позвонить">
+			<?php edemchinim_phone_icon(); ?>
+		</a>
+		<div class="app-menu-popover" data-app-menu hidden>
+			<nav class="app-menu-popover__nav" aria-label="Разделы">
+				<button class="app-menu-popover__item app-menu-popover__item--active" type="button" data-screen-target="order" aria-current="page">
+					<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<path fill="currentColor" d="M8.308 17.692h.884v-2h2v-.884h-2v-2h-.884v2h-2v.884h2zm5-.75h4.384v-.884h-4.384zm0-2.5h4.384v-.884h-4.384zm.792-3.953l1.4-1.4l1.4 1.4l.627-.627l-1.4-1.412l1.4-1.4l-.627-.627l-1.4 1.4l-1.4-1.4l-.627.627l1.4 1.4l-1.4 1.412zM6.558 8.892h4.384v-.884H6.558zM5.616 20q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h12.769q.69 0 1.153.463T20 5.616v12.769q0 .69-.462 1.153T18.384 20zm0-1h12.769q.23 0 .423-.192t.192-.424V5.616q0-.231-.192-.424T18.384 5H5.616q-.231 0-.424.192T5 5.616v12.769q0 .23.192.423t.423.192M5 5v14z"></path>
+					</svg>
+					<span>Заказать</span>
+				</button>
+				<button class="app-menu-popover__item" type="button" data-screen-target="reviews">
+					<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<path fill="currentColor" d="m12.34 12.192l1.93-1.163l1.928 1.163l-.523-2.196l1.712-1.475l-2.24-.186l-.878-2.066l-.877 2.066l-2.24.186l1.712 1.475zm4.514 6.27h1.485q-.002.361-.245.617t-.61.317L6.182 20.817q-.671.087-1.2-.32q-.527-.407-.608-1.078l-1.23-9.713q-.08-.672.333-1.216t1.085-.606l.977-.073v1l-.823.068q-.27.019-.424.221t-.115.471l1.196 9.713q.039.27.23.424q.193.153.463.115zm-7.7-2q-.69 0-1.153-.463t-.462-1.153V4.616q0-.691.462-1.153T9.154 3h10.23q.691 0 1.153.463T21 4.616v10.23q0 .69-.463 1.153t-1.153.463zm0-1h10.23q.27 0 .443-.173t.173-.443V4.616q0-.270-.173-.443T19.385 4H9.154q-.27 0-.442.173q-.173.173-.173.443v10.23q0 .27.173.443t.442.173M5.45 19.9"></path>
+					</svg>
+					<span>Отзывы</span>
+				</button>
+				<button class="app-menu-popover__item" type="button" data-screen-target="photo">
+					<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<path fill="currentColor" d="M4.116 18q-.667 0-1.141-.475t-.475-1.14v-8.77q0-.666.475-1.14T4.115 6h8.77q.666 0 1.14.475t.475 1.14v8.77q0 .666-.475 1.14t-1.14.475zm13.201-7q-.357 0-.587-.23t-.23-.587V6.817q0-.357.23-.587t.587-.23h3.366q.357 0 .587.23t.23.587v3.366q0 .358-.23.587t-.587.23zm.183-1h3V7h-3zM4.116 17h8.769q.269 0 .442-.173t.173-.442v-8.77q0-.269-.173-.442T12.885 7h-8.77q-.269 0-.442.173t-.173.443v8.769q0 .269.173.442t.443.173m.576-2.096h7.616l-2.433-3.25L8 14.154l-1.375-1.825zM17.317 18q-.357 0-.587-.23t-.23-.587v-3.366q0-.357.23-.587t.587-.23h3.366q.357 0 .587.23t.23.587v3.366q0 .358-.23.587t-.587.23zm.183-1h3v-3h-3zm-14 0V7zm14-7V7zm0 7v-3z"></path>
+					</svg>
+					<span>Фото</span>
+				</button>
+				<button class="app-menu-popover__item" type="button" data-screen-target="faq">
+					<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<path fill="currentColor" d="M12 20.962q-3.014-.895-5.007-3.651T5 11.1V5.692l7-2.615l7 2.615V11.1q0 3.454-1.993 6.21T12 20.963m0-1.062q2.6-.825 4.3-3.3t1.7-5.5V6.375l-6-2.23l-6 2.23V11.1q0 3.025 1.7 5.5t4.3 3.3m.43-3.559q.197-.197.197-.468t-.197-.468t-.468-.197t-.469.197t-.197.468t.197.468q.198.198.469.198t.468-.198m-.905-2.58h.885q.019-.255.057-.511t.164-.467q.169-.273.371-.501t.42-.44q.424-.444.756-.94t.332-1.16q0-.97-.738-1.607q-.737-.635-1.733-.635q-.847 0-1.538.45T9.496 9.177l.812.339q.227-.52.697-.832t1.034-.311q.627 0 1.106.383t.48.998q0 .483-.291.893q-.292.41-.636.75q-.28.255-.523.533q-.242.278-.417.614q-.137.292-.185.593t-.048.624"></path>
+					</svg>
+					<span>FAQ</span>
+				</button>
+			</nav>
+		</div>
+	</div>
 	<div class="app__screens">
-		<section class="screen screen--active" data-screen="order" aria-label="Заказ шиномонтажа">
+		<section class="screen screen--active order-screen" data-screen="order" aria-label="Заказ шиномонтажа">
 			<header class="hero">
 				<div class="hero__map-placeholder" data-service-map role="img" aria-label="Место для карты"></div>
-				<div class="hero__content">
-					<h1 class="hero__title">Выездной <br>шиномонтаж<span class="hero__accent"> <?php echo esc_html($work_schedule); ?></span></h1>
-					<p class="hero__text">Приедем за <span class="hero__accent">30-60</span> минут</p>
-				</div>
-				<div class="hero__status">
-					<span data-hero-status-text>Укажите адрес для расчёта</span>
+				<div class="map-overlay">
+					<button class="map-overlay__menu-button" type="button" aria-label="Открыть меню" aria-expanded="false" data-app-menu-toggle>
+						<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+							<path fill="currentColor" d="M3 8V7h17v1zm17 4v1H3v-1zM3 17h17v1H3z"></path>
+						</svg>
+					</button>
+					<a class="map-overlay__call" href="<?php echo esc_url($phone_href); ?>" aria-label="Позвонить">
+						<?php edemchinim_phone_icon(); ?>
+					</a>
+					<div class="map-overlay__zoom" aria-label="Масштаб карты">
+						<button class="map-overlay__control" type="button" aria-label="Приблизить карту" data-service-map-zoom="in">
+							<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+								<path fill="currentColor" d="M5 13v-1h6V6h1v6h6v1h-6v6h-1v-6z"></path>
+							</svg>
+						</button>
+						<button class="map-overlay__control" type="button" aria-label="Отдалить карту" data-service-map-zoom="out">
+							<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+								<path fill="currentColor" d="M5 13v-1h13v1z"></path>
+							</svg>
+						</button>
+					</div>
+					<button class="map-overlay__location" type="button" aria-label="Использовать текущее местоположение" data-location-button>
+						<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+							<path fill="currentColor" d="M11.5 21.45v-1.461q-3.125-.293-5.16-2.328q-2.036-2.036-2.328-5.161H2.55v-1h1.462q.292-3.125 2.328-5.16t5.16-2.328V2.55h1v1.462q3.125.292 5.16 2.328t2.329 5.16h1.461v1h-1.461q-.293 3.125-2.328 5.16q-2.036 2.036-5.161 2.329v1.461zm5.45-4.5Q19 14.9 19 12t-2.05-4.95T12 5T7.05 7.05T5 12t2.05 4.95T12 19t4.95-2.05m-7.073-2.827Q9 13.246 9 12t.877-2.123T12 9t2.123.877T15 12t-.877 2.123T12 15t-2.123-.877m3.536-.71Q14 12.825 14 12t-.587-1.412T12 10t-1.412.588T10 12t.588 1.413T12 14t1.413-.587M12 12"></path>
+						</svg>
+					</button>
+					<div class="app-menu-popover" data-app-menu hidden>
+						<nav class="app-menu-popover__nav" aria-label="Разделы">
+							<button class="app-menu-popover__item app-menu-popover__item--active" type="button" data-screen-target="order" aria-current="page"><span>Заказать</span></button>
+							<button class="app-menu-popover__item" type="button" data-screen-target="reviews"><span>Отзывы</span></button>
+							<button class="app-menu-popover__item" type="button" data-screen-target="photo"><span>Фото</span></button>
+							<button class="app-menu-popover__item" type="button" data-screen-target="faq"><span>FAQ</span></button>
+						</nav>
+					</div>
 				</div>
 			</header>
 
 			<section class="calculator" data-calculator>
-				<h2 class="visually-hidden">Калькулятор заказа</h2>
+				<button class="calculator__handle" type="button" aria-label="Развернуть калькулятор" aria-expanded="false" data-calculator-toggle>
+					<span aria-hidden="true"></span>
+				</button>
+				<header class="calculator__intro">
+					<h1 class="calculator__title"><?php echo esc_html($calculator_title_first_line); ?><br><?php echo esc_html($calculator_title_second_line); ?> <span><?php echo esc_html($work_schedule); ?></span></h1>
+					<p class="calculator__subtitle"><?php echo esc_html($calculator_subtitle_prefix); ?> <span><?php echo esc_html($calculator_arrival_time); ?></span> <?php echo esc_html($calculator_subtitle_suffix); ?></p>
+				</header>
 				<form class="calculator__form" action="#" data-calculator-form>
 					<fieldset class="calculator__section">
-						<legend class="calculator__legend">1. Адрес</legend>
 						<div class="address-row">
 							<label class="address-field" for="address-input">
 								<svg
@@ -298,29 +393,12 @@ $yandex_reviews_count = get_field('shina_yandex_reviews_count', 'options');
 								</svg>
 								<input class="address-field__input" id="address-input" type="text" name="address" placeholder="Введите адрес" autocomplete="street-address" data-address-input>
 							</label>
-							<button class="square-button" type="button" aria-label="Использовать текущее местоположение" data-location-button>
-								<svg
-									class="icon-circle icon-circle--small"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 24 24">
-									<path
-										fill="currentColor"
-										d="M11.5 21.45v-1.461q-3.125-.293-5.16-2.328q-2.036-2.036-2.328-5.161H2.55v-1h1.462q.292-3.125 2.328-5.16t5.16-2.328V2.55h1v1.462q3.125.292 5.16 2.328t2.329 5.16h1.461v1h-1.461q-.293 3.125-2.328 5.16q-2.036 2.036-5.161 2.329v1.461zm5.45-4.5Q19 14.9 19 12t-2.05-4.95T12 5T7.05 7.05T5 12t2.05 4.95T12 19t4.95-2.05m-7.073-2.827Q9 13.246 9 12t.877-2.123T12 9t2.123.877T15 12t-.877 2.123T12 15t-2.123-.877m3.536-.71Q14 12.825 14 12t-.587-1.412T12 10t-1.412.588T10 12t.588 1.413T12 14t1.413-.587M12 12"></path>
-								</svg></button>
-							<button class="square-button" type="button" aria-label="Открыть карту" data-map-button><svg
-									class="icon-circle icon-circle--small"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 24 24">
-									<path
-										fill="currentColor"
-										d="M15.5 10.23v-.038zV7.005zM5.042 19.355q-.384.142-.713-.084T4 18.634V6.404q0-.268.13-.489t.378-.307L9 4.077l6 2.1l3.958-1.53q.384-.143.713.054t.329.588v6.713q-.221-.248-.464-.463T19 11.146V5.7l-3.5 1.304v3.227q-.275.019-.516.049q-.24.03-.484.109V7.004l-5-1.746V17.64zM5 18.3l3.5-1.342v-11.7L5 6.45zm12.528-.733q.659-.644.664-1.663q.006-.985-.658-1.646q-.665-.662-1.65-.662t-1.646.662t-.661 1.646t.661 1.646t1.646.662t1.644-.645m-1.643 1.645q-1.362 0-2.335-.973t-.973-2.335t.973-2.335t2.334-.973t2.335.973t.973 2.335q0 .556-.166 1.049q-.167.493-.48.905L21 20.292l-.688.708l-2.454-2.454q-.412.333-.905.5q-.493.165-1.068.165M8.5 5.259v11.7z"></path>
-								</svg></button>
 						</div>
 						<p class="address-status" data-location-status aria-live="polite"></p>
 					</fieldset>
 
-					<fieldset class="calculator__section">
-						<legend class="calculator__legend">2. Услуга</legend>
+					<fieldset class="calculator__section calculator__section--details">
+						<legend class="calculator__legend">Услуга</legend>
 						<div class="option-grid option-grid--services" data-option-group="service">
 							<button class="option-card option-card--active" type="button" data-option-name="service" data-option-value="seasonal" aria-pressed="true"><?php edemchinim_option_icon('season.svg'); ?><span class="option-card__label">Сезонная замена</span></button>
 							<button class="option-card" type="button" data-option-name="service" data-option-value="puncture" aria-pressed="false"><?php edemchinim_option_icon('prokol.svg'); ?><span class="option-card__label">Ремонт прокола</span></button>
@@ -329,8 +407,8 @@ $yandex_reviews_count = get_field('shina_yandex_reviews_count', 'options');
 						</div>
 					</fieldset>
 
-					<fieldset class="calculator__section" data-service-section="vehicle">
-						<legend class="calculator__legend">3. Тип автомобиля</legend>
+					<fieldset class="calculator__section calculator__section--details" data-service-section="vehicle">
+						<legend class="calculator__legend">Тип автомобиля</legend>
 						<div class="option-grid option-grid--cars" data-option-group="carType">
 							<button class="option-card option-card--active" type="button" data-option-name="carType" data-option-value="passenger" aria-pressed="true"><?php edemchinim_option_icon('light.svg'); ?><span class="option-card__label">Легковой</span></button>
 							<button class="option-card" type="button" data-option-name="carType" data-option-value="crossover" aria-pressed="false"><?php edemchinim_option_icon('cross.svg'); ?><span class="option-card__label">Кроссовер</span></button>
@@ -339,8 +417,8 @@ $yandex_reviews_count = get_field('shina_yandex_reviews_count', 'options');
 						</div>
 					</fieldset>
 
-					<fieldset class="calculator__section" data-service-section="diameter">
-						<legend class="calculator__legend">4. Диаметр колес</legend>
+					<fieldset class="calculator__section calculator__section--details" data-service-section="diameter">
+						<legend class="calculator__legend">Диаметр колес</legend>
 						<div class="diameter-slider" data-diameter-slider>
 							<div class="diameter-slider__header"><output class="diameter-slider__value" id="diameter-output" for="diameter-range" data-diameter-output>R12</output></div>
 							<input type="hidden" name="diameter" value="r12" data-diameter-value>
@@ -349,7 +427,7 @@ $yandex_reviews_count = get_field('shina_yandex_reviews_count', 'options');
 						</div>
 					</fieldset>
 
-					<fieldset class="calculator__section" data-service-section="seasonal-addons">
+					<fieldset class="calculator__section calculator__section--details" data-service-section="seasonal-addons">
 						<legend class="calculator__legend">Дополнительные услуги</legend>
 						<div class="checkbox-grid">
 							<label class="checkbox-card"><input class="checkbox-card__control" type="checkbox" name="copperGrease" data-addon-name="copperGrease"><span class="checkbox-card__label">Медная смазка</span><span class="checkbox-card__price">+700 ₽</span></label>
@@ -357,7 +435,7 @@ $yandex_reviews_count = get_field('shina_yandex_reviews_count', 'options');
 						</div>
 					</fieldset>
 
-					<fieldset class="calculator__section" data-service-section="vehicle-addons">
+					<fieldset class="calculator__section calculator__section--details" data-service-section="vehicle-addons">
 						<legend class="calculator__legend">Особенности шин</legend>
 						<div class="checkbox-grid">
 							<label class="checkbox-card"><input class="checkbox-card__control" type="checkbox" name="lowProfile" data-addon-name="lowProfile"><span class="checkbox-card__label">Низкий профиль</span><span class="checkbox-card__price">+20%</span></label>
@@ -365,7 +443,7 @@ $yandex_reviews_count = get_field('shina_yandex_reviews_count', 'options');
 						</div>
 					</fieldset>
 
-					<fieldset class="calculator__section" data-service-section="conditioner-addons" hidden>
+					<fieldset class="calculator__section calculator__section--details" data-service-section="conditioner-addons" hidden>
 						<legend class="calculator__legend">Дополнительно</legend>
 						<div class="checkbox-grid">
 							<label class="checkbox-card"><input class="checkbox-card__control" type="checkbox" name="freon134" data-addon-name="freon134"><span class="checkbox-card__label">Дополнительно фреон 134А 100 г</span><span class="checkbox-card__price">+500 ₽</span></label>
@@ -374,14 +452,14 @@ $yandex_reviews_count = get_field('shina_yandex_reviews_count', 'options');
 						</div>
 					</fieldset>
 
-					<fieldset class="calculator__section" data-service-section="storage-addons" hidden>
+					<fieldset class="calculator__section calculator__section--details" data-service-section="storage-addons" hidden>
 						<legend class="calculator__legend">Дополнительно</legend>
 						<div class="checkbox-grid">
 							<label class="checkbox-card"><input class="checkbox-card__control" type="checkbox" name="storageDelivery" data-addon-name="storageDelivery"><span class="checkbox-card__label">Доставка</span><span class="checkbox-card__price">+3 500 ₽</span></label>
 						</div>
 					</fieldset>
 
-					<div class="calculator__footer">
+					<div class="calculator__footer calculator__section--details">
 						<div class="order-summary" aria-live="polite">
 							<div class="order-summary__item"><span class="order-summary__label">Стоимость</span><span class="order-summary__line"><span data-price-prefix>от</span><output class="order-summary__value" data-price-output for="diameter-range">2 700</output><span data-price-unit>₽</span></span></div>
 							<div class="order-summary__item"><span class="order-summary__label">Время прибытия</span><span class="order-summary__line"><output class="order-summary__value" data-time-output>—</output><span data-time-unit>мин</span></span></div>
@@ -394,6 +472,10 @@ $yandex_reviews_count = get_field('shina_yandex_reviews_count', 'options');
 					<div class="order-confirm" data-order-form hidden>
 						<h2 class="order-confirm__title">Подтверждение заявки</h2>
 						<dl class="order-details" data-order-details></dl>
+						<label class="personal-consent">
+							<input class="personal-consent__control" type="checkbox" name="personal_data_consent" value="yes" required data-personal-data-consent>
+							<span class="personal-consent__text"><?php echo esc_html($personal_data_consent_text); ?></span>
+						</label>
 						<?php echo do_shortcode($order_form_shortcode); ?>
 					</div>
 				<?php else : ?>
@@ -424,14 +506,18 @@ $yandex_reviews_count = get_field('shina_yandex_reviews_count', 'options');
 						<input type="hidden" name="order_details" data-order-field="details">
 						<input type="hidden" name="order_payload" data-order-field="payload">
 						<label class="phone-field" for="order-phone"><span class="phone-field__label">Телефон для связи</span><input class="phone-field__input" id="order-phone" type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"></label>
+						<label class="personal-consent">
+							<input class="personal-consent__control" type="checkbox" name="personal_data_consent" value="yes" required data-personal-data-consent>
+							<span class="personal-consent__text"><?php echo esc_html($personal_data_consent_text); ?></span>
+						</label>
 						<div class="order-confirm__footer"><button class="secondary-button" type="button" data-order-back>Назад</button><button class="primary-button" type="submit" data-order-send disabled>Отправить</button></div>
 					</form>
 				<?php endif; ?>
 
 				<div class="order-success" data-order-success hidden>
 					<span class="order-success__icon" aria-hidden="true"></span>
-					<h2 class="order-success__title">Заявка принята</h2>
-					<p class="order-success__text">Мы получили данные и скоро свяжемся для подтверждения времени выезда.</p>
+					<h2 class="order-success__title"><?php echo esc_html($order_success_title); ?></h2>
+					<p class="order-success__text"><?php echo esc_html($order_success_text); ?></p>
 					<div class="order-success__summary" data-success-summary></div>
 					<button class="primary-button" type="button" data-order-success-back>Вернуться к заказу</button>
 				</div>
@@ -477,6 +563,14 @@ $yandex_reviews_count = get_field('shina_yandex_reviews_count', 'options');
 							d="M14.935 16.223L11.5 12.789V7.923h1v4.464l3.123 3.123zM11.5 6V4h1v2zm6.5 6.5v-1h2v1zM11.5 20v-2h1v2zM4 12.5v-1h2v1zm8.003 8.5q-1.867 0-3.51-.708q-1.643-.709-2.859-1.924t-1.925-2.856T3 12.003t.709-3.51Q4.417 6.85 5.63 5.634t2.857-1.925T11.997 3t3.51.709q1.643.708 2.859 1.922t1.925 2.857t.709 3.509t-.708 3.51t-1.924 2.859t-2.856 1.925t-3.509.709M12 20q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8"></path>
 					</svg><strong><?php echo esc_html($work_schedule); ?></strong><span class="trust-panel__text">работаем круглосуточно</span></div>
 			</aside>
+
+			<div class="cookie-consent" data-cookie-consent role="dialog" aria-live="polite" aria-label="Согласие на использование cookie" hidden>
+				<div class="cookie-consent__content">
+					<h2 class="cookie-consent__title"><?php echo esc_html($cookie_consent_title); ?></h2>
+					<p class="cookie-consent__text"><?php echo esc_html($cookie_consent_text); ?></p>
+				</div>
+				<button class="primary-button cookie-consent__button" type="button" data-cookie-consent-accept><?php echo esc_html($cookie_consent_button_text); ?></button>
+			</div>
 		</section>
 
 		<section class="screen reviews-screen" data-screen="reviews" aria-label="Отзывы">

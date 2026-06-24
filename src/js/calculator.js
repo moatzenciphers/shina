@@ -91,11 +91,17 @@ const orderFieldNames = {
 
 let submittedOrderRows = null;
 let isCalculatorSheetExpanded = false;
+let isCalculatorSheetContentScrolled = false;
+let isCalculatorSheetDetailsVisible = false;
 let calculatorSheetAddress = '';
+let calculatorDetailsHideTimerId = null;
 let suppressCalculatorToggleClick = false;
 
-const calculatorSheetDragThreshold = 56;
+const calculatorSheetDragThreshold = 24;
 const calculatorSheetMoveThreshold = 6;
+const calculatorContentScrollThreshold = 12;
+const calculatorContentPullDownThreshold = 42;
+const calculatorDetailsHideDelay = 700;
 const calculatorDesktopQuery = '(min-width: 1024px)';
 
 const isDesktopCalculatorLayout = () => {
@@ -512,6 +518,36 @@ const getElementOuterHeight = (element) => {
   return element.offsetHeight + marginTop + marginBottom;
 };
 
+const syncHeroHeightWithCalculator = (calculator, height = null) => {
+  const orderScreen = document.querySelector('[data-screen="order"]');
+
+  if (!orderScreen) {
+    return;
+  }
+
+  if (isDesktopCalculatorLayout()) {
+    orderScreen.style.removeProperty('--calculator-sheet-height');
+    orderScreen.style.removeProperty('--hero-height');
+    return;
+  }
+
+  const sheetHeight = Number.isFinite(height) ? height : calculator?.getBoundingClientRect().height;
+
+  if (!Number.isFinite(sheetHeight) || sheetHeight <= 0) {
+    return;
+  }
+
+  const roundedHeight = Math.round(sheetHeight);
+
+  orderScreen.style.setProperty('--calculator-sheet-height', `${roundedHeight}px`);
+};
+
+const setHeroHeightDragState = (isDragging) => {
+  document
+    .querySelector('[data-screen="order"]')
+    ?.classList.toggle('order-screen--calculator-dragging', isDragging);
+};
+
 const getCalculatorCollapsedHeight = (calculator) => {
   const handle = calculator?.querySelector('[data-calculator-toggle]');
   const orderForm = calculator?.querySelector('[data-order-form]');
@@ -575,6 +611,48 @@ const getCalculatorCollapsedHeight = (calculator) => {
   return Math.ceil(height);
 };
 
+const getCalculatorExpandedHeight = () => {
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+
+  return Math.max(220, Math.min(viewportHeight * 0.7, viewportHeight - 24));
+};
+
+const getCalculatorContentScrolledHeight = () => {
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+
+  return Math.max(220, viewportHeight - 72);
+};
+
+const getCalculatorExpandedTargetHeight = () => {
+  return isCalculatorSheetContentScrolled ? getCalculatorContentScrolledHeight() : getCalculatorExpandedHeight();
+};
+
+const clearCalculatorDetailsHideTimer = () => {
+  window.clearTimeout(calculatorDetailsHideTimerId);
+  calculatorDetailsHideTimerId = null;
+};
+
+const completeCalculatorDetailsHide = (calculator) => {
+  clearCalculatorDetailsHideTimer();
+  isCalculatorSheetDetailsVisible = false;
+  calculator?.classList.remove('calculator--details-visible', 'calculator--closing');
+};
+
+const hideCalculatorDetailsAfterClose = (calculator) => {
+  clearCalculatorDetailsHideTimer();
+  calculator?.classList.add('calculator--closing');
+
+  calculatorDetailsHideTimerId = window.setTimeout(() => {
+    completeCalculatorDetailsHide(calculator);
+  }, calculatorDetailsHideDelay);
+};
+
+const showCalculatorDetails = (calculator) => {
+  clearCalculatorDetailsHideTimer();
+  isCalculatorSheetDetailsVisible = true;
+  calculator?.classList.remove('calculator--closing');
+};
+
 const syncCalculatorSheet = () => {
   const calculator = document.querySelector('[data-calculator]');
   const toggleButton = document.querySelector('[data-calculator-toggle]');
@@ -593,24 +671,39 @@ const syncCalculatorSheet = () => {
 
   if (isDesktopCalculatorLayout()) {
     isCalculatorSheetExpanded = true;
+    isCalculatorSheetContentScrolled = false;
   }
 
   calculatorSheetAddress = currentAddress;
 
   const isExpanded = isCalculatorSheetExpanded;
-  const hasVisibleDetails = isExpanded;
+
+  if (!isExpanded) {
+    isCalculatorSheetContentScrolled = false;
+  }
+
+  if (isExpanded) {
+    showCalculatorDetails(calculator);
+  } else if (isCalculatorSheetDetailsVisible && !calculatorDetailsHideTimerId) {
+    hideCalculatorDetailsAfterClose(calculator);
+  }
 
   calculator.classList.toggle('calculator--expanded', isExpanded);
   calculator.classList.toggle('calculator--collapsed', !isExpanded);
+  calculator.classList.toggle('calculator--content-scrolled', isExpanded && isCalculatorSheetContentScrolled);
   calculator.classList.toggle('calculator--has-address', hasAddress);
   calculator.classList.toggle('calculator--has-compact-confirm', Boolean(isConfirmStep));
-  calculator.classList.toggle('calculator--details-visible', hasVisibleDetails);
+  calculator.classList.toggle('calculator--details-visible', isCalculatorSheetDetailsVisible);
+
+  const collapsedHeight = getCalculatorCollapsedHeight(calculator);
 
   if (hasAddress || isConfirmStep) {
-    calculator.style.setProperty('--calculator-collapsed-height', `${getCalculatorCollapsedHeight(calculator)}px`);
+    calculator.style.setProperty('--calculator-collapsed-height', `${collapsedHeight}px`);
   } else {
     calculator.style.removeProperty('--calculator-collapsed-height');
   }
+
+  syncHeroHeightWithCalculator(calculator, isExpanded ? getCalculatorExpandedHeight() : collapsedHeight);
 
   if (toggleButton) {
     toggleButton.setAttribute('aria-expanded', String(isExpanded));
@@ -620,6 +713,9 @@ const syncCalculatorSheet = () => {
 
 const setCalculatorSheetExpanded = (isExpanded) => {
   isCalculatorSheetExpanded = isDesktopCalculatorLayout() || Boolean(isExpanded);
+  if (!isCalculatorSheetExpanded) {
+    isCalculatorSheetContentScrolled = false;
+  }
   calculatorSheetAddress = state.address;
   syncCalculatorSheet();
 };
@@ -633,27 +729,121 @@ export const collapseCalculatorSheet = () => {
 };
 
 const getCalculatorSheetHeights = () => {
-  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
   const calculator = document.querySelector('[data-calculator]');
   const collapsedHeight = getCalculatorCollapsedHeight(calculator);
 
   return {
     collapsed: collapsedHeight,
-    expanded: Math.max(220, Math.min(viewportHeight * 0.64, viewportHeight - 24)),
+    expanded: getCalculatorExpandedTargetHeight(),
   };
 };
 
 const setCalculatorSheetDragHeight = (calculator, height) => {
   calculator.style.setProperty('--calculator-current-height', `${Math.round(height)}px`);
+  syncHeroHeightWithCalculator(calculator, Math.min(height, getCalculatorExpandedHeight()));
 };
 
 const resetCalculatorSheetDrag = (calculator) => {
   calculator.style.removeProperty('--calculator-current-height');
   calculator.classList.remove('calculator--dragging', 'calculator--drag-preview-expanded');
+  setHeroHeightDragState(false);
 };
 
 const getCalculatorSheetDragHeight = (dragState, deltaY) => {
   return clamp(dragState.startHeight - deltaY, dragState.heights.collapsed, dragState.heights.expanded);
+};
+
+const syncCalculatorContentScrollState = (calculator) => {
+  if (!calculator || isDesktopCalculatorLayout() || !isCalculatorSheetExpanded) {
+    return;
+  }
+
+  const scrollTop = calculator.scrollTop || 0;
+  const shouldUseContentScrolledHeight = scrollTop > calculatorContentScrollThreshold;
+  const shouldUseRegularExpandedHeight = scrollTop <= 1;
+
+  if (shouldUseContentScrolledHeight === isCalculatorSheetContentScrolled) {
+    return;
+  }
+
+  if (!shouldUseContentScrolledHeight && !shouldUseRegularExpandedHeight) {
+    return;
+  }
+
+  isCalculatorSheetContentScrolled = shouldUseContentScrolledHeight;
+  syncCalculatorSheet();
+};
+
+const initCalculatorContentPullDown = (calculator) => {
+  if (!calculator) {
+    return;
+  }
+
+  let pullState = null;
+
+  calculator.addEventListener('touchstart', (event) => {
+    if (
+      isDesktopCalculatorLayout() ||
+      !isCalculatorSheetExpanded ||
+      calculator.scrollTop > 1 ||
+      event.touches.length !== 1 ||
+      event.target.closest('[data-calculator-toggle]')
+    ) {
+      pullState = null;
+      return;
+    }
+
+    pullState = {
+      startY: event.touches[0].clientY,
+      lastY: event.touches[0].clientY,
+      startHeight: getCalculatorExpandedTargetHeight(),
+      collapsedHeight: getCalculatorCollapsedHeight(calculator),
+    };
+  }, { passive: true });
+
+  calculator.addEventListener('touchmove', (event) => {
+    if (!pullState || event.touches.length !== 1) {
+      return;
+    }
+
+    pullState.lastY = event.touches[0].clientY;
+
+    const deltaY = pullState.lastY - pullState.startY;
+
+    if (deltaY > calculatorSheetMoveThreshold && calculator.scrollTop <= 1) {
+      calculator.classList.add('calculator--dragging');
+      setHeroHeightDragState(true);
+      setCalculatorSheetDragHeight(
+        calculator,
+        clamp(pullState.startHeight - deltaY, pullState.collapsedHeight, pullState.startHeight),
+      );
+      event.preventDefault();
+    }
+  }, { passive: false });
+
+  calculator.addEventListener('touchend', () => {
+    if (!pullState) {
+      return;
+    }
+
+    const deltaY = pullState.lastY - pullState.startY;
+    pullState = null;
+    resetCalculatorSheetDrag(calculator);
+
+    if (deltaY <= calculatorContentPullDownThreshold || calculator.scrollTop > 1) {
+      syncCalculatorSheet();
+      return;
+    }
+
+    calculator.scrollTop = 0;
+    setCalculatorSheetExpanded(false);
+  });
+
+  calculator.addEventListener('touchcancel', () => {
+    pullState = null;
+    resetCalculatorSheetDrag(calculator);
+    syncCalculatorSheet();
+  });
 };
 
 const initCalculatorSheetDrag = ({ calculator, toggleButton }) => {
@@ -694,21 +884,18 @@ const initCalculatorSheetDrag = ({ calculator, toggleButton }) => {
       return;
     }
 
-    if (!hasEnteredAddress()) {
+    if (dragState.startsExpanded) {
+      setCalculatorSheetExpanded(deltaY < calculatorSheetDragThreshold);
+    } else {
+      setCalculatorSheetExpanded(deltaY <= -calculatorSheetDragThreshold);
+    }
+
+    if (!hasEnteredAddress() && !dragState.startsExpanded) {
       if (nextHeight > dragState.heights.collapsed + calculatorSheetDragThreshold) {
         setCalculatorSheetExpanded(true);
       } else {
         setCalculatorSheetExpanded(false);
       }
-
-      dragState = null;
-      return;
-    }
-
-    if (dragState.startsExpanded) {
-      setCalculatorSheetExpanded(deltaY < calculatorSheetDragThreshold);
-    } else {
-      setCalculatorSheetExpanded(deltaY <= -calculatorSheetDragThreshold);
     }
 
     dragState = null;
@@ -730,6 +917,7 @@ const initCalculatorSheetDrag = ({ calculator, toggleButton }) => {
     dragState.startHeight = dragState.startsExpanded ? dragState.heights.expanded : dragState.heights.collapsed;
 
     calculator.classList.add('calculator--dragging');
+    setHeroHeightDragState(true);
 
     try {
       toggleButton.setPointerCapture?.(event.pointerId);
@@ -945,6 +1133,7 @@ export const initCalculator = () => {
   const orderForm = document.querySelector('[data-order-form]');
   const phoneInput = getPhoneInput();
   const personalDataConsentInput = getPersonalDataConsentInput();
+  const calculator = document.querySelector('[data-calculator]');
   const calculatorToggle = document.querySelector('[data-calculator-toggle]');
   const addressInput = document.querySelector('[data-address-input]');
   const orderBackButton = document.querySelector('[data-order-back]');
@@ -969,8 +1158,25 @@ export const initCalculator = () => {
   });
 
   initCalculatorSheetDrag({
-    calculator: document.querySelector('[data-calculator]'),
+    calculator,
     toggleButton: calculatorToggle,
+  });
+  initCalculatorContentPullDown(calculator);
+
+  calculator?.addEventListener('scroll', () => {
+    syncCalculatorContentScrollState(calculator);
+  }, { passive: true });
+  calculator?.addEventListener('transitionend', (event) => {
+    if (
+      event.target !== calculator ||
+      event.propertyName !== 'height' ||
+      isCalculatorSheetExpanded ||
+      !isCalculatorSheetDetailsVisible
+    ) {
+      return;
+    }
+
+    completeCalculatorDetailsHide(calculator);
   });
 
   const desktopLayoutMedia = window.matchMedia?.(calculatorDesktopQuery);
@@ -982,6 +1188,8 @@ export const initCalculator = () => {
 
     syncCalculatorSheet();
   });
+
+  window.addEventListener('resize', syncCalculatorSheet);
 
   diameterRange?.addEventListener('input', () => {
     syncDiameterSlider({

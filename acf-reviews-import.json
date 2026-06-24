@@ -1,0 +1,159 @@
+[
+  {
+    "key": "group_shina_reviews_fields",
+    "title": "Шиномонтаж: поля отзывов",
+    "fields": [
+      {
+        "key": "field_shina_review_is_active",
+        "label": "Показывать отзыв",
+        "name": "shina_review_is_active",
+        "type": "true_false",
+        "instructions": "Отключите, если отзыв пока не нужно выводить в приложении.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "message": "",
+        "default_value": 1,
+        "ui": 1,
+        "ui_on_text": "Да",
+        "ui_off_text": "Нет"
+      },
+      {
+        "key": "field_shina_review_rating",
+        "label": "Оценка",
+        "name": "shina_review_rating",
+        "type": "number",
+        "instructions": "Оценка из Яндекс Карт. На фронте звезды заполняются по этому значению.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "default_value": 5,
+        "placeholder": "",
+        "prepend": "",
+        "append": "из 5",
+        "min": 1,
+        "max": 5,
+        "step": "0.1"
+      },
+      {
+        "key": "field_shina_review_repair_type",
+        "label": "Тип работы",
+        "name": "shina_review_repair_type",
+        "type": "select",
+        "instructions": "Используется для фильтров на экране Отзывы.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "seasonal": "Сезонная замена",
+          "puncture": "Ремонт прокола",
+          "storage": "Хранение шин",
+          "conditioner": "Заправка кондиционера"
+        },
+        "default_value": "seasonal",
+        "allow_null": 0,
+        "multiple": 0,
+        "ui": 1,
+        "ajax": 0,
+        "return_format": "value",
+        "placeholder": ""
+      },
+      {
+        "key": "field_shina_review_date",
+        "label": "Дата отзыва",
+        "name": "shina_review_date",
+        "type": "date_picker",
+        "instructions": "Дата нужна для сортировки и формирования относительной даты в API.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "25",
+          "class": "",
+          "id": ""
+        },
+        "display_format": "d.m.Y",
+        "return_format": "Y-m-d",
+        "first_day": 1
+      },
+      {
+        "key": "field_shina_review_gallery",
+        "label": "Фото к отзыву",
+        "name": "shina_review_gallery",
+        "type": "gallery",
+        "instructions": "Фотографии выполненной работы. На карточке показываются первые 3 изображения.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "35",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "preview_size": "medium",
+        "insert": "append",
+        "library": "all",
+        "min": "",
+        "max": 3,
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shina_review_sort_order",
+        "label": "Порядок",
+        "name": "shina_review_sort_order",
+        "type": "number",
+        "instructions": "Меньшее число показывается выше. Если пусто, можно сортировать по дате публикации или дате отзыва.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "15",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "min": 0,
+        "max": "",
+        "step": 1
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "reviews"
+        }
+      ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Заголовок поста reviews используется как имя автора, контент поста как текст отзыва, прикреплённое изображение записи как фото автора. Остальные данные берутся из ACF.",
+    "show_in_rest": 1,
+    "modified": 1782002800
+  }
+]

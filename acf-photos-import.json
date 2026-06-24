@@ -1,0 +1,158 @@
+[
+  {
+    "key": "group_shina_photo_gallery_settings",
+    "title": "Шиномонтаж: фотогалерея",
+    "fields": [
+      {
+        "key": "field_shina_photo_gallery",
+        "label": "Фотографии работ",
+        "name": "shina_photo_gallery",
+        "type": "repeater",
+        "instructions": "Добавьте фото выполненных работ. Эти записи можно отдавать в /wp-json/shina/v1/photos с пагинацией и фильтром repair_type.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "collapsed": "field_shina_photo_label",
+        "min": 0,
+        "max": 0,
+        "layout": "block",
+        "button_label": "Добавить фото",
+        "sub_fields": [
+          {
+            "key": "field_shina_photo_image",
+            "label": "Фото",
+            "name": "image",
+            "type": "image",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "35",
+              "class": "",
+              "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp"
+          },
+          {
+            "key": "field_shina_photo_label",
+            "label": "Подпись в попапе",
+            "name": "label",
+            "type": "text",
+            "instructions": "Например: Ремонт прокола R18 на выезде. На плитке не показывается, только в GLightbox.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "35",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Описание выполненной работы",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+          },
+          {
+            "key": "field_shina_photo_repair_type",
+            "label": "Тип работы",
+            "name": "repair_type",
+            "type": "select",
+            "instructions": "Используется для фильтров на вкладке Фото.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "20",
+              "class": "",
+              "id": ""
+            },
+            "choices": {
+              "seasonal": "Сезонная замена",
+              "puncture": "Ремонт прокола",
+              "storage": "Хранение шин",
+              "conditioner": "Заправка кондиционера"
+            },
+            "default_value": "seasonal",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+          },
+          {
+            "key": "field_shina_photo_is_active",
+            "label": "Показывать",
+            "name": "is_active",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "10",
+              "class": "",
+              "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Да",
+            "ui_off_text": "Нет"
+          },
+          {
+            "key": "field_shina_photo_sort_order",
+            "label": "Порядок",
+            "name": "sort_order",
+            "type": "number",
+            "instructions": "Меньшее число показывается выше. Можно оставить пустым.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "15",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": 0,
+            "max": "",
+            "step": 1
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "shina-photo-gallery-settings"
+        }
+      ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Поля для вкладки Фото. Используйте slug страницы настроек: shina-photo-gallery-settings.",
+    "show_in_rest": 0,
+    "modified": 1782001000
+  }
+]

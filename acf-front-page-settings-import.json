@@ -1,0 +1,123 @@
+[
+  {
+    "key": "group_shina_front_page_settings",
+    "title": "Шиномонтаж: общие настройки главной",
+    "fields": [
+      {
+        "key": "shina_average_rating",
+        "label": "Средний рейтинг",
+        "name": "shina_average_rating",
+        "type": "number",
+        "instructions": "Используется в блоке показателей и на экране отзывов.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": 4.9,
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "prepend": "",
+        "append": "из 5"
+      },
+      {
+        "key": "shina_successful_visits_count",
+        "label": "Количество успешных выездов",
+        "name": "shina_successful_visits_count",
+        "type": "text",
+        "instructions": "Можно указать значение с плюсом, например 3500+.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "3500+",
+        "maxlength": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "shina_work_schedule",
+        "label": "График работы",
+        "name": "shina_work_schedule",
+        "type": "text",
+        "instructions": "Выводится в заголовке и в блоке показателей.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "24/7",
+        "maxlength": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "shina_yandex_reviews_count",
+        "label": "Количество отзывов на Яндекс Картах",
+        "name": "shina_yandex_reviews_count",
+        "type": "text",
+        "instructions": "Можно указать значение с плюсом, например 420+.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "420+",
+        "maxlength": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "shina_phone",
+        "label": "Номер телефона",
+        "name": "shina_phone",
+        "type": "text",
+        "instructions": "Используется для кнопки звонка в нижней панели. Можно вводить в формате +7 (999) 999-99-99.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "+7 (000) 000-00-00",
+        "maxlength": "",
+        "placeholder": "+7 (___) ___-__-__",
+        "prepend": "",
+        "append": ""
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "main-option"
+        }
+      ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1782086400
+  }
+]

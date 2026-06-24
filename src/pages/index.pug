@@ -1,0 +1,449 @@
+doctype html
+-
+  const authorImage = require('../img/author.jpg');
+  const reviewImage = require('../img/remont.jpg');
+  const seasonIcon = require('../img/season.svg');
+  const prokolIcon = require('../img/prokol.svg');
+  const condIcon = require('../img/cond.svg');
+  const storageIcon = require('../img/storage.svg');
+  const lightIcon = require('../img/light.svg');
+  const crossIcon = require('../img/cross.svg');
+  const offroadIcon = require('../img/offroad.svg');
+  const furaIcon = require('../img/fura.svg');
+  const photoServiceLabels = {
+    seasonal: 'Сезонная замена',
+    puncture: 'Ремонт прокола',
+    storage: 'Хранение шин',
+    conditioner: 'Заправка кондиционера'
+  };
+
+mixin reviewStars(rating)
+  -
+    const filledStars = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
+  span.review-rating__stars(aria-hidden="true")
+    each starIndex in [1, 2, 3, 4, 5]
+      if starIndex <= filledStars
+        span.review-rating__star
+      else
+        span.review-rating__star.review-rating__no-fill
+
+mixin reviewCard(id, type, author, date, rating, text)
+  article.review-card(data-review-type=type)
+    header.review-card__header
+      img.review-card__avatar(src=authorImage, alt="", loading="lazy", decoding="async")
+      div.review-card__meta
+        h3.review-card__author= author
+        div.review-rating(aria-label=`Оценка ${rating} из 5`)
+          +reviewStars(rating)
+          span.review-rating__value= rating
+      span.review-card__date= date
+    p.review-card__text= text
+    div.review-card__gallery
+      a.review-card__photo-link.glightbox(href=reviewImage, data-gallery='review-' + id, data-type="image")
+        img.review-card__photo(src=reviewImage, alt="", loading="lazy", decoding="async")
+
+mixin photoCard(id, type, label, modifier = '')
+  article.photo-card(class=modifier, data-photo-type=type)
+    a.photo-card__link.glightbox(href=reviewImage, aria-label=label, data-gallery="service-photos", data-type="image", data-description=label, data-desc-position="bottom")
+      img.photo-card__image(src=reviewImage, alt=label, loading="lazy", decoding="async")
+
+mixin faqItem(id, question, answer, isOpen = false)
+  details.faq-item(data-faq-item, open=isOpen)
+    summary.faq-item__question
+      span= question
+      span.faq-item__marker(aria-hidden="true")
+    div.faq-item__answer
+      each paragraph in answer
+        p= paragraph
+
+html(lang="ru")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="theme-color", content="#080c12")
+    title Выездной шиномонтаж 24/7
+    script.
+      window.__YANDEX_MAPS_URL__ = !{JSON.stringify(yandexMapsUrl || '')};
+      window.__YANDEX_MAPS_DISABLED__ = !{JSON.stringify(!yandexMapsUrl)};
+      window.__YANDEX_SUGGEST_DISABLED__ = !{JSON.stringify(Boolean(yandexMapsUrl && !hasYandexSuggestApiKey))};
+  body
+    div.app#app(data-app)
+      div.app-menu-shell
+        button.map-overlay__menu-button(type="button", aria-label="Открыть меню", aria-expanded="false", data-app-menu-toggle)
+          svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+              path(fill="currentColor" d="M3 8V7h17v1zm17 4v1H3v-1zM3 17h17v1H3z")
+        div.app-menu-popover(data-app-menu, hidden)
+          nav.app-menu-popover__nav(aria-label="Разделы")
+            button.app-menu-popover__item.app-menu-popover__item--active(type="button", data-screen-target="order", aria-current="page")
+              svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                path(fill="currentColor" d="M8.308 17.692h.884v-2h2v-.884h-2v-2h-.884v2h-2v.884h2zm5-.75h4.384v-.884h-4.384zm0-2.5h4.384v-.884h-4.384zm.792-3.953l1.4-1.4l1.4 1.4l.627-.627l-1.4-1.412l1.4-1.4l-.627-.627l-1.4 1.4l-1.4-1.4l-.627.627l1.4 1.4l-1.4 1.412zM6.558 8.892h4.384v-.884H6.558zM5.616 20q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h12.769q.69 0 1.153.463T20 5.616v12.769q0 .69-.462 1.153T18.384 20zm0-1h12.769q.23 0 .423-.192t.192-.424V5.616q0-.231-.192-.424T18.384 5H5.616q-.231 0-.424.192T5 5.616v12.769q0 .23.192.423t.423.192M5 5v14z")
+              span Заказать
+            button.app-menu-popover__item(type="button", data-screen-target="reviews")
+              svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                path(fill="currentColor" d="m12.34 12.192l1.93-1.163l1.928 1.163l-.523-2.196l1.712-1.475l-2.24-.186l-.878-2.066l-.877 2.066l-2.24.186l1.712 1.475zm4.514 6.27h1.485q-.002.361-.245.617t-.61.317L6.182 20.817q-.671.087-1.2-.32q-.527-.407-.608-1.078l-1.23-9.713q-.08-.672.333-1.216t1.085-.606l.977-.073v1l-.823.068q-.27.019-.424.221t-.115.471l1.196 9.713q.039.27.23.424q.193.153.463.115zm-7.7-2q-.69 0-1.153-.463t-.462-1.153V4.616q0-.691.462-1.153T9.154 3h10.23q.691 0 1.153.463T21 4.616v10.23q0 .69-.463 1.153t-1.153.463zm0-1h10.23q.27 0 .443-.173t.173-.443V4.616q0-.270-.173-.443T19.385 4H9.154q-.27 0-.442.173q-.173.173-.173.443v10.23q0 .27.173.443t.442.173M5.45 19.9")
+              span Отзывы
+            button.app-menu-popover__item(type="button", data-screen-target="photo")
+              svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                path(fill="currentColor" d="M4.116 18q-.667 0-1.141-.475t-.475-1.14v-8.77q0-.666.475-1.14T4.115 6h8.77q.666 0 1.14.475t.475 1.14v8.77q0 .666-.475 1.14t-1.14.475zm13.201-7q-.357 0-.587-.23t-.23-.587V6.817q0-.357.23-.587t.587-.23h3.366q.357 0 .587.23t.23.587v3.366q0 .358-.23.587t-.587.23zm.183-1h3V7h-3zM4.116 17h8.769q.269 0 .442-.173t.173-.442v-8.77q0-.269-.173-.442T12.885 7h-8.77q-.269 0-.442.173t-.173.443v8.769q0 .269.173.442t.443.173m.576-2.096h7.616l-2.433-3.25L8 14.154l-1.375-1.825zM17.317 18q-.357 0-.587-.23t-.23-.587v-3.366q0-.357.23-.587t.587-.23h3.366q.357 0 .587.23t.23.587v3.366q0 .358-.23.587t-.587.23zm.183-1h3v-3h-3zm-14 0V7zm14-7V7zm0 7v-3z")
+              span Фото
+            button.app-menu-popover__item(type="button", data-screen-target="faq")
+              svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                path(fill="currentColor" d="M12 20.962q-3.014-.895-5.007-3.651T5 11.1V5.692l7-2.615l7 2.615V11.1q0 3.454-1.993 6.21T12 20.963m0-1.062q2.6-.825 4.3-3.3t1.7-5.5V6.375l-6-2.23l-6 2.23V11.1q0 3.025 1.7 5.5t4.3 3.3m.43-3.559q.197-.197.197-.468t-.197-.468t-.468-.197t-.469.197t-.197.468t.197.468q.198.198.469.198t.468-.198m-.905-2.58h.885q.019-.255.057-.511t.164-.467q.169-.273.371-.501t.42-.44q.424-.444.756-.94t.332-1.16q0-.97-.738-1.607q-.737-.635-1.733-.635q-.847 0-1.538.45T9.496 9.177l.812.339q.227-.52.697-.832t1.034-.311q.627 0 1.106.383t.48.998q0 .483-.291.893q-.292.41-.636.75q-.28.255-.523.533q-.242.278-.417.614q-.137.292-.185.593t-.048.624")
+              span FAQ
+            a.app-menu-popover__call(href="tel:+70000000000", aria-label="Позвонить")
+              svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                path(fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21")
+              span Позвонить
+      main.app__screens
+        section.screen.screen--active.order-screen(data-screen="order", aria-label="Заказ шиномонтажа")
+          header.hero
+            div.hero__map-placeholder(data-service-map, role="img", aria-label="Место для карты")
+            div.map-overlay
+              button.map-overlay__menu-button(type="button", aria-label="Открыть меню", aria-expanded="false", data-app-menu-toggle)
+                svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                    path(fill="currentColor" d="M3 8V7h17v1zm17 4v1H3v-1zM3 17h17v1H3z")
+              div.map-overlay__zoom(aria-label="Масштаб карты")
+                button.map-overlay__control(type="button", aria-label="Приблизить карту", data-service-map-zoom="in")
+                  svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                      path(fill="currentColor" d="M5 13v-1h6V6h1v6h6v1h-6v6h-1v-6z")
+                button.map-overlay__control(type="button", aria-label="Отдалить карту", data-service-map-zoom="out")
+                  svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                    path(fill="currentColor" d="M5 13v-1h13v1z")
+              button.map-overlay__location(type="button", aria-label="Использовать текущее местоположение", data-location-button)
+                  svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                      path(fill="currentColor" d="M11.5 21.45v-1.461q-3.125-.293-5.16-2.328q-2.036-2.036-2.328-5.161H2.55v-1h1.462q.292-3.125 2.328-5.16t5.16-2.328V2.55h1v1.462q3.125.292 5.16 2.328t2.329 5.16h1.461v1h-1.461q-.293 3.125-2.328 5.16q-2.036 2.036-5.161 2.329v1.461zm5.45-4.5Q19 14.9 19 12t-2.05-4.95T12 5T7.05 7.05T5 12t2.05 4.95T12 19t4.95-2.05m-7.073-2.827Q9 13.246 9 12t.877-2.123T12 9t2.123.877T15 12t-.877 2.123T12 15t-2.123-.877m3.536-.71Q14 12.825 14 12t-.587-1.412T12 10t-1.412.588T10 12t.588 1.413T12 14t1.413-.587M12 12")
+              div.app-menu-popover(data-app-menu, hidden)
+                nav.app-menu-popover__nav(aria-label="Разделы")
+                  button.app-menu-popover__item.app-menu-popover__item--active(type="button", data-screen-target="order", aria-current="page")
+                    svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                      path(fill="currentColor" d="M8.308 17.692h.884v-2h2v-.884h-2v-2h-.884v2h-2v.884h2zm5-.75h4.384v-.884h-4.384zm0-2.5h4.384v-.884h-4.384zm.792-3.953l1.4-1.4l1.4 1.4l.627-.627l-1.4-1.412l1.4-1.4l-.627-.627l-1.4 1.4l-1.4-1.4l-.627.627l1.4 1.4l-1.4 1.412zM6.558 8.892h4.384v-.884H6.558zM5.616 20q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h12.769q.69 0 1.153.463T20 5.616v12.769q0 .69-.462 1.153T18.384 20zm0-1h12.769q.23 0 .423-.192t.192-.424V5.616q0-.231-.192-.424T18.384 5H5.616q-.231 0-.424.192T5 5.616v12.769q0 .23.192.423t.423.192M5 5v14z")
+                    span Заказать
+                  button.app-menu-popover__item(type="button", data-screen-target="reviews")
+                    svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                      path(fill="currentColor" d="m12.34 12.192l1.93-1.163l1.928 1.163l-.523-2.196l1.712-1.475l-2.24-.186l-.878-2.066l-.877 2.066l-2.24.186l1.712 1.475zm4.514 6.27h1.485q-.002.361-.245.617t-.61.317L6.182 20.817q-.671.087-1.2-.32q-.527-.407-.608-1.078l-1.23-9.713q-.08-.672.333-1.216t1.085-.606l.977-.073v1l-.823.068q-.27.019-.424.221t-.115.471l1.196 9.713q.039.27.23.424q.193.153.463.115zm-7.7-2q-.69 0-1.153-.463t-.462-1.153V4.616q0-.691.462-1.153T9.154 3h10.23q.691 0 1.153.463T21 4.616v10.23q0 .69-.463 1.153t-1.153.463zm0-1h10.23q.27 0 .443-.173t.173-.443V4.616q0-.27-.173-.443T19.385 4H9.154q-.27 0-.442.173q-.173.173-.173.443v10.23q0 .27.173.443t.442.173M5.45 19.9")
+                    span Отзывы
+                  button.app-menu-popover__item(type="button", data-screen-target="photo")
+                    svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                      path(fill="currentColor" d="M4.116 18q-.667 0-1.141-.475t-.475-1.14v-8.77q0-.666.475-1.14T4.115 6h8.77q.666 0 1.14.475t.475 1.14v8.77q0 .666-.475 1.14t-1.14.475zm13.201-7q-.357 0-.587-.23t-.23-.587V6.817q0-.357.23-.587t.587-.23h3.366q.357 0 .587.23t.23.587v3.366q0 .358-.23.587t-.587.23zm.183-1h3V7h-3zM4.116 17h8.769q.269 0 .442-.173t.173-.442v-8.77q0-.269-.173-.442T12.885 7h-8.77q-.269 0-.442.173t-.173.443v8.769q0 .269.173.442t.443.173m.576-2.096h7.616l-2.433-3.25L8 14.154l-1.375-1.825zM17.317 18q-.357 0-.587-.23t-.23-.587v-3.366q0-.357.23-.587t.587-.23h3.366q.357 0 .587.23t.23.587v3.366q0 .358-.23.587t-.587.23zm.183-1h3v-3h-3zm-14 0V7zm14-7V7zm0 7v-3z")
+                    span Фото
+                  button.app-menu-popover__item(type="button", data-screen-target="faq")
+                    svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                      path(fill="currentColor" d="M12 20.962q-3.014-.895-5.007-3.651T5 11.1V5.692l7-2.615l7 2.615V11.1q0 3.454-1.993 6.21T12 20.963m0-1.062q2.6-.825 4.3-3.3t1.7-5.5V6.375l-6-2.23l-6 2.23V11.1q0 3.025 1.7 5.5t4.3 3.3m.43-3.559q.197-.197.197-.468t-.197-.468t-.468-.197t-.469.197t-.197.468t.197.468q.198.198.469.198t.468-.198m-.905-2.58h.885q.019-.255.057-.511t.164-.467q.169-.273.371-.501t.42-.44q.424-.444.756-.94t.332-1.16q0-.97-.738-1.607q-.737-.635-1.733-.635q-.847 0-1.538.45T9.496 9.177l.812.339q.227-.52.697-.832t1.034-.311q.627 0 1.106.383t.48.998q0 .483-.291.893q-.292.41-.636.75q-.28.255-.523.533q-.242.278-.417.614q-.137.292-.185.593t-.048.624")
+                    span FAQ
+                  a.app-menu-popover__call(href="tel:+70000000000", aria-label="Позвонить")
+                    svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                      path(fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21")
+                    span Позвонить
+
+          section.calculator(data-calculator)
+            button.calculator__handle(type="button", aria-label="Развернуть калькулятор", aria-expanded="false", data-calculator-toggle)
+              span(aria-hidden="true")
+            h2.visually-hidden Калькулятор заказа
+            form.calculator__form(action="#", data-calculator-form, autocomplete="off")
+
+              fieldset.calculator__section
+                div.address-row
+                  label.address-field(for="address-input")
+                    svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                      path(fill="currentColor" d="M13.143 11.259q.473-.472.473-1.143q0-.672-.473-1.144Q12.671 8.5 12 8.5t-1.143.472t-.472 1.144q0 .67.472 1.143q.472.472 1.143.472t1.143-.472M12 19.677q2.82-2.454 4.458-4.991t1.638-4.39q0-2.744-1.737-4.53Q14.62 3.981 12 3.981T7.641 5.766t-1.737 4.53q0 1.852 1.638 4.39T12 19.677m0 1.342q-3.525-3.117-5.31-5.814q-1.786-2.697-1.786-4.909q0-3.173 2.066-5.234Q9.037 3 12 3t5.03 2.062q2.066 2.061 2.066 5.234q0 2.212-1.785 4.909q-1.786 2.697-5.311 5.814m0-10.903")
+                    input#address-input.address-field__input(type="text", name="address", placeholder="Введите адрес", autocomplete="street-address", data-address-input)
+                p.address-status(data-location-status, aria-live="polite")
+
+              fieldset.calculator__section.calculator__section--details
+                legend.calculator__legend Услуга
+                div.option-grid.option-grid--services(data-option-group="service")
+                  button.option-card.option-card--active(type="button", data-option-name="service", data-option-value="seasonal", aria-pressed="true")
+                    img(src=seasonIcon, alt="", loading="lazy", decoding="async")
+                    span.option-card__label Сезонная замена
+                  button.option-card(type="button", data-option-name="service", data-option-value="puncture", aria-pressed="false")
+                    img(src=prokolIcon, alt="", loading="lazy", decoding="async")
+                    span.option-card__label Ремонт прокола
+                  button.option-card(type="button", data-option-name="service", data-option-value="conditioner", aria-pressed="false")
+                    img(src=condIcon, alt="", loading="lazy", decoding="async")
+                    span.option-card__label Заправка кондиционера
+                  button.option-card(type="button", data-option-name="service", data-option-value="storage", aria-pressed="false")
+                    img(src=storageIcon, alt="", loading="lazy", decoding="async")
+                    span.option-card__label Хранение шин
+
+              fieldset.calculator__section.calculator__section--details(data-service-section="vehicle")
+                legend.calculator__legend Тип автомобиля
+                div.option-grid.option-grid--cars(data-option-group="carType")
+                  button.option-card.option-card--active(type="button", data-option-name="carType", data-option-value="passenger", aria-pressed="true")
+                    img(src=lightIcon, alt="", loading="lazy", decoding="async")
+                    span.option-card__label Легковой
+                  button.option-card(type="button", data-option-name="carType", data-option-value="crossover", aria-pressed="false")
+                    img(src=crossIcon, alt="", loading="lazy", decoding="async")
+                    span.option-card__label Кроссовер
+                  button.option-card(type="button", data-option-name="carType", data-option-value="suv", aria-pressed="false")
+                    img(src=offroadIcon, alt="", loading="lazy", decoding="async")
+                    span.option-card__label Внедорожник
+                  button.option-card(type="button", data-option-name="carType", data-option-value="commercial", data-service-only="conditioner", aria-pressed="false", hidden)
+                    img(src=furaIcon, alt="", loading="lazy", decoding="async")
+                    span.option-card__label Спецтехника, грузовое авто
+
+              fieldset.calculator__section.calculator__section--details(data-service-section="diameter")
+                legend.calculator__legend Диаметр колес
+                div.diameter-slider(data-diameter-slider)
+                  div.diameter-slider__header
+                    output#diameter-output.diameter-slider__value(for="diameter-range", data-diameter-output) R12
+                  input(type="hidden", name="diameter", value="r12", data-diameter-value)
+                  input#diameter-range.diameter-slider__control(type="range", min="0", max="12", step="1", value="0", aria-labelledby="diameter-output", data-diameter-range)
+                  div.diameter-slider__marks(aria-hidden="true")
+                    span R12
+                    span R24
+
+              fieldset.calculator__section.calculator__section--details(data-service-section="seasonal-addons")
+                legend.calculator__legend Дополнительные услуги
+                div.checkbox-grid
+                  label.checkbox-card
+                    input.checkbox-card__control(type="checkbox", name="copperGrease", data-addon-name="copperGrease")
+                    span.checkbox-card__label Медная смазка
+                    span.checkbox-card__price +700 ₽
+                  label.checkbox-card
+                    input.checkbox-card__control(type="checkbox", name="hubCleaning", data-addon-name="hubCleaning")
+                    span.checkbox-card__label Механическая чистка ступиц
+                    span.checkbox-card__price +800 ₽
+
+              fieldset.calculator__section.calculator__section--details(data-service-section="vehicle-addons")
+                legend.calculator__legend Особенности шин
+                div.checkbox-grid
+                  label.checkbox-card
+                    input.checkbox-card__control(type="checkbox", name="lowProfile", data-addon-name="lowProfile")
+                    span.checkbox-card__label Низкий профиль
+                    span.checkbox-card__price +20%
+                  label.checkbox-card
+                    input.checkbox-card__control(type="checkbox", name="reinforcedTire", data-addon-name="reinforcedTire")
+                    span.checkbox-card__label Run Flat / C / AT
+                    span.checkbox-card__price +40%
+
+              fieldset.calculator__section.calculator__section--details(data-service-section="conditioner-addons" hidden)
+                legend.calculator__legend Дополнительно
+                div.checkbox-grid
+                  label.checkbox-card
+                    input.checkbox-card__control(type="checkbox", name="freon134", data-addon-name="freon134")
+                    span.checkbox-card__label Дополнительно фреон 134А 100 г
+                    span.checkbox-card__price +500 ₽
+                  label.checkbox-card
+                    input.checkbox-card__control(type="checkbox", name="antibacterial", data-addon-name="antibacterial")
+                    span.checkbox-card__label Антибактериальная обработка системы
+                    span.checkbox-card__price +500 ₽
+                  label.checkbox-card
+                    input.checkbox-card__control(type="checkbox", name="extraCircuit", data-addon-name="extraCircuit")
+                    span.checkbox-card__label Дополнительный контур
+                    span.checkbox-card__price +70%
+
+              fieldset.calculator__section.calculator__section--details(data-service-section="storage-addons" hidden)
+                legend.calculator__legend Дополнительно
+                div.checkbox-grid
+                  label.checkbox-card
+                    input.checkbox-card__control(type="checkbox", name="storageDelivery", data-addon-name="storageDelivery")
+                    span.checkbox-card__label Доставка
+                    span.checkbox-card__price +3 500 ₽
+
+              div.calculator__footer.calculator__section--details
+                div.order-summary(aria-live="polite")
+                  div.order-summary__item
+                    span.order-summary__label Стоимость
+                    span.order-summary__line
+                      span(data-price-prefix) от
+                      output.order-summary__value(data-price-output, for="diameter-range") 2 700
+                      span(data-price-unit) ₽
+                  div.order-summary__item
+                    span.order-summary__label Время прибытия
+                    span.order-summary__line
+                      output.order-summary__value(data-time-output) —
+                      span(data-time-unit) мин
+
+                button.primary-button(type="submit", data-order-submit) Продолжить
+
+            form.order-confirm(action="#", data-order-form, hidden)
+              h2.order-confirm__title Подтверждение заявки
+              dl.order-details(data-order-details)
+              input(type="hidden", name="order_service", data-order-field="service_label")
+              input(type="hidden", name="order_service_key", data-order-field="service")
+              input(type="hidden", name="order_address", data-order-field="address")
+              input(type="hidden", name="order_car_type", data-order-field="car_type_label")
+              input(type="hidden", name="order_car_type_key", data-order-field="car_type")
+              input(type="hidden", name="order_diameter", data-order-field="diameter_label")
+              input(type="hidden", name="order_diameter_key", data-order-field="diameter")
+              input(type="hidden", name="order_addons", data-order-field="addons")
+              input(type="hidden", name="order_addon_keys", data-order-field="addon_keys")
+              input(type="hidden", name="order_price", data-order-field="price_text")
+              input(type="hidden", name="order_price_value", data-order-field="price")
+              input(type="hidden", name="order_callout_price_value", data-order-field="callout_price")
+              input(type="hidden", name="order_service_price_value", data-order-field="service_price")
+              input(type="hidden", name="order_arrival_time", data-order-field="arrival_time")
+              input(type="hidden", name="order_tariff", data-order-field="tariff")
+              input(type="hidden", name="order_is_night_tariff", data-order-field="is_night_tariff")
+              input(type="hidden", name="order_location_status", data-order-field="location_status")
+              input(type="hidden", name="order_inside_mkad", data-order-field="inside_mkad")
+              input(type="hidden", name="order_distance_outside_mkad_km", data-order-field="distance_outside_mkad_km")
+              input(type="hidden", name="order_coords", data-order-field="coords")
+              input(type="hidden", name="order_phone", data-order-field="phone")
+              input(type="hidden", name="order_details", data-order-field="details")
+              input(type="hidden", name="order_payload", data-order-field="payload")
+              label.phone-field(for="order-phone")
+                span.phone-field__label Телефон для связи
+                input#order-phone.phone-field__input(type="tel", name="phone", inputmode="tel", autocomplete="tel", placeholder="+7 (___) ___-__-__")
+              div.order-confirm__footer
+                button.secondary-button(type="button", data-order-back) Назад
+                button.primary-button(type="submit", data-order-send, disabled) Отправить
+
+            div.order-success(data-order-success, hidden)
+              span.order-success__icon(aria-hidden="true")
+              h2.order-success__title Заявка принята
+              p.order-success__text Мы получили данные и скоро свяжемся для подтверждения времени выезда.
+              div.order-success__summary(data-success-summary)
+              button.primary-button(type="button", data-order-success-back) Вернуться к заказу
+
+          div.map-picker(data-map-picker, hidden)
+            div.map-picker__panel(role="dialog", aria-modal="true", aria-labelledby="map-picker-title")
+              div.map-picker__header
+                h2#map-picker-title.map-picker__title Выберите точку на карте
+                button.map-picker__close(type="button", aria-label="Закрыть карту", data-map-picker-close)
+                  span(aria-hidden="true") ×
+              div.map-picker__map
+                div.map-picker__canvas(data-map-picker-canvas)
+                div.map-picker__zoom-controls(aria-label="Масштаб карты")
+                  button.map-picker__zoom-button(type="button", aria-label="Приблизить карту", data-map-picker-zoom="in") +
+                  button.map-picker__zoom-button(type="button", aria-label="Отдалить карту", data-map-picker-zoom="out") -
+              p.map-picker__status(data-map-picker-status, aria-live="polite") Нажмите на карту, чтобы выбрать адрес
+              div.map-picker__footer
+                button.secondary-button(type="button", data-map-picker-cancel) Отмена
+                button.primary-button(type="button", data-map-picker-apply, disabled) Выбрать адрес
+
+          aside.trust-panel(aria-label="Показатели сервиса")
+            div.trust-panel__item
+              svg.icon-circle.icon-circle--medium(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                path(fill="currentColor" d="m8.125 7.092l2.608-3.47q.242-.324.568-.473T12 3t.699.149t.568.472l2.608 3.471l4.02 1.368q.534.18.822.602t.289.938q0 .242-.069.475t-.23.45l-2.634 3.573l.1 3.83q.025.703-.47 1.188q-.493.484-1.14.484l-.453-.056L12 18.733l-4.11 1.211q-.124.05-.236.053T7.437 20q-.666 0-1.15-.484q-.485-.485-.46-1.187l.1-3.856l-2.629-3.548q-.161-.217-.23-.45T3 10q0-.51.295-.941t.83-.618zm.629.86L4.462 9.398q-.289.096-.395.394t.087.548l2.792 3.84l-.119 4.16q-.02.327.23.52q.25.192.559.096L12 17.696l4.385 1.285q.307.096.557-.096q.25-.193.231-.52l-.12-4.184l2.793-3.79q.192-.25.087-.549q-.106-.298-.395-.394l-4.292-1.496l-2.765-3.683q-.173-.25-.481-.25t-.48.25zM12 11.519")
+              strong 4.9
+              span.trust-panel__text рейтинг
+            div.trust-panel__item
+              svg.icon-circle.icon-circle--medium(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                path(fill="currentColor" d="M12 20.962q-3.014-.895-5.007-3.651T5 11.1V5.692l7-2.615l7 2.615V11.1q0 3.454-1.993 6.21T12 20.963m0-1.062q2.6-.825 4.3-3.3t1.7-5.5V6.375l-6-2.23l-6 2.23V11.1q0 3.025 1.7 5.5t4.3 3.3m0-7.88")
+              strong 3500+
+              span.trust-panel__text успешных выездов
+            div.trust-panel__item
+              svg.icon-circle.icon-circle--medium(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                path(fill="currentColor" d="M14.935 16.223L11.5 12.789V7.923h1v4.464l3.123 3.123zM11.5 6V4h1v2zm6.5 6.5v-1h2v1zM11.5 20v-2h1v2zM4 12.5v-1h2v1zm8.003 8.5q-1.867 0-3.51-.708q-1.643-.709-2.859-1.924t-1.925-2.856T3 12.003t.709-3.51Q4.417 6.85 5.63 5.634t2.857-1.925T11.997 3t3.51.709q1.643.708 2.859 1.922t1.925 2.857t.709 3.509t-.708 3.51t-1.924 2.859t-2.856 1.925t-3.509.709M12 20q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8")
+              strong 24/7
+              span.trust-panel__text работаем круглосуточно
+
+        section.screen.reviews-screen(data-screen="reviews", aria-label="Отзывы")
+          header.reviews-hero
+            h2.reviews-title Отзывы
+            div.reviews-overview
+              div.reviews-overview__rating(aria-label="Рейтинг 4.9 из 5")
+                svg.icon-circle.icon-circle--medium(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8")
+                  path(fill="currentColor" d="M1.6622 7.46132L2.2822 4.80482L0.220703 3.01882L2.9362 2.78382L3.9997 0.27832L5.0632 2.78332L7.7782 3.01832L5.7167 4.80432L6.3372 7.46082L3.9997 6.05082L1.6622 7.46132Z"  )
+                span.reviews-overview__score 4.9
+                span.reviews-overview__caption из 5
+              div.reviews-overview__count
+                strong 420+
+                span отзывов
+                small на Яндекс Картах
+
+          div.review-filters(data-review-filters, aria-label="Фильтр отзывов по типу ремонта")
+            button.review-filter-card.review-filter-card--active(type="button", data-review-filter="all", aria-pressed="true") Все отзывы
+            button.review-filter-card(type="button", data-review-filter="seasonal", aria-pressed="false") Сезонная замена
+            button.review-filter-card(type="button", data-review-filter="puncture", aria-pressed="false") Ремонт прокола
+            button.review-filter-card(type="button", data-review-filter="storage", aria-pressed="false") Хранение шин
+            button.review-filter-card(type="button", data-review-filter="conditioner", aria-pressed="false") Заправка кондиционера
+
+          section.reviews-feed(aria-label="Отзывы клиентов")
+            div.reviews-list(data-reviews-list)
+              +reviewCard('initial-1', 'puncture', 'Алексей С.', 'Сегодня', '5.0', 'Прокол колеса на МКАДе, мастер приехал за 35 минут. Быстро нашел проблему и устранил. Спасибо!')
+              +reviewCard('initial-2', 'conditioner', 'Мария П.', 'Вчера', '5.0', 'Заправили кондиционер утром у дома. Приехал вежливый мастер, все сделал быстро. Отличный сервис!')
+              +reviewCard('initial-3', 'seasonal', 'Дмитрий К.', '2 дня назад', '5.0', 'Сезонная замена колес. Приехали вовремя, все профессионально и аккуратно. Рекомендую.')
+              +reviewCard('initial-4', 'puncture', 'Екатерина М.', '3 дня назад', '5.0', 'Очень выручили ночью после прокола. Мастер приехал без лишних вопросов и быстро поставил колесо.')
+              +reviewCard('initial-5', 'seasonal', 'Игорь Н.', '5 дней назад', '5.0', 'Удобно, что не пришлось ехать в сервис. Поменяли резину прямо у офиса, по времени уложились.')
+              +reviewCard('initial-6', 'puncture', 'Анна В.', 'Неделю назад', '5.0', 'Поймала саморез по дороге домой. Оператор быстро уточнил адрес, мастер приехал и все заклеил на месте.')
+              +reviewCard('initial-7', 'conditioner', 'Сергей Л.', 'Неделю назад', '4.9', 'Заправлял кондиционер перед поездкой. Был небольшой перенос по времени, но предупредили заранее и сделали качественно.')
+              +reviewCard('initial-8', 'storage', 'Ольга Р.', '10 дней назад', '5.0', 'Заказывала хранение шин и замену. Все забрали, подписали комплект, объяснили условия. Очень удобно.')
+              +reviewCard('initial-9', 'seasonal', 'Павел А.', '12 дней назад', '5.0', 'Аккуратно сняли колеса, проверили давление и подсказали по износу. Видно, что мастера знают свое дело.')
+              +reviewCard('initial-10', 'storage', 'Наталья Б.', '2 недели назад', '5.0', 'Быстро оформили хранение шин. Приехали в подземный паркинг, забрали комплект и выдали все документы.')
+            div.reviews-loader(data-reviews-status, role="status", aria-live="polite")
+            div.reviews-sentinel(data-reviews-sentinel, aria-hidden="true")
+
+        section.screen.photo-screen(data-screen="photo", aria-label="Фото работ")
+          header.photo-hero
+            h2.photo-title Фото
+            p.photo-subtitle Реальные выезды и выполненные работы
+
+          div.review-filters(data-photo-filters, aria-label="Фильтр фото по типу ремонта")
+            button.review-filter-card.review-filter-card--active(type="button", data-photo-filter="all", aria-pressed="true") Все фото
+            button.review-filter-card(type="button", data-photo-filter="seasonal", aria-pressed="false") Сезонная замена
+            button.review-filter-card(type="button", data-photo-filter="puncture", aria-pressed="false") Ремонт прокола
+            button.review-filter-card(type="button", data-photo-filter="storage", aria-pressed="false") Хранение шин
+            button.review-filter-card(type="button", data-photo-filter="conditioner", aria-pressed="false") Заправка кондиционера
+
+          section.photo-feed(aria-label="Фото выполненных работ")
+            div.photo-grid(data-photo-list)
+              +photoCard('initial-1', 'puncture', 'Ремонт прокола на выезде', 'photo-card--tall')
+              +photoCard('initial-2', 'seasonal', 'Сезонная замена R18')
+              +photoCard('initial-3', 'conditioner', 'Заправка кондиционера у дома', 'photo-card--short')
+              +photoCard('initial-4', 'storage', 'Забор колес на хранение')
+              +photoCard('initial-5', 'seasonal', 'Замена комплекта во дворе', 'photo-card--tall')
+              +photoCard('initial-6', 'puncture', 'Устранение прокола после самореза')
+              +photoCard('initial-7', 'conditioner', 'Обслуживание системы кондиционера')
+              +photoCard('initial-8', 'storage', 'Доставка комплекта колес', 'photo-card--short')
+              +photoCard('initial-9', 'seasonal', 'Проверка давления после замены')
+              +photoCard('initial-10', 'puncture', 'Быстрый ремонт колеса', 'photo-card--tall')
+            div.photo-loader(data-photo-status, role="status", aria-live="polite")
+            div.photo-sentinel(data-photo-sentinel, aria-hidden="true")
+
+        section.screen.faq-screen(data-screen="faq", aria-label="FAQ")
+          header.faq-hero
+            h2.faq-title FAQ
+            p.faq-subtitle Ответы на популярные вопросы
+            label.faq-search(for="faq-search")
+              svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                path(fill="currentColor" d="m19.485 20.154l-6.262-6.262q-.75.639-1.725.989t-1.96.35q-2.398 0-4.064-1.666Q3.808 11.898 3.808 9.5t1.666-4.064t4.064-1.667t4.065 1.667T15.269 9.5q0 1.042-.369 2.017t-.97 1.668l6.262 6.261zM9.539 14.23q1.99 0 3.36-1.37t1.37-3.361t-1.37-3.36t-3.36-1.37t-3.361 1.37t-1.37 3.36t1.37 3.36t3.36 1.37")
+              input#faq-search.faq-search__input(type="search", name="faq-search", placeholder="Поиск по вопросам и ответам", autocomplete="off", data-faq-search)
+
+          section.faq-feed(aria-label="Вопросы и ответы")
+            div.faq-list(data-faq-list)
+              +faqItem('initial-1', 'Сколько стоит выезд?', ['Выезд рассчитывается по адресу: внутри МКАД действует базовый тариф, за МКАД добавляется километраж.', 'Итоговая стоимость обновляется в калькуляторе после ввода адреса.'], true)
+              +faqItem('initial-2', 'Как быстро приедет мастер?', ['Обычно мастер приезжает в течение 40-60 минут после подтверждения заявки.', 'Точное время зависит от адреса, дорожной ситуации и ближайшего свободного мастера.'])
+              +faqItem('initial-3', 'Какие способы оплаты доступны?', ['Можно оплатить наличными или переводом после выполнения работ.', 'Для юридических лиц доступна оплата по счету по предварительной договоренности.'])
+              +faqItem('initial-4', 'Какие районы вы обслуживаете?', ['Мы работаем по Москве и Московской области.', 'Если адрес вне зоны обслуживания, калькулятор покажет, что вызов невозможен.'])
+              +faqItem('initial-5', 'Даете ли вы гарантию на работы?', ['Да, гарантия распространяется на выполненные работы и использованные материалы.', 'Срок и условия зависят от типа услуги.'])
+              +faqItem('initial-6', 'Что делать, если у меня нет запчасти?', ['Сообщите оператору, какая деталь нужна.', 'Мы подскажем, можно ли выполнить работу на месте или потребуется предварительно подготовить материал.'])
+              +faqItem('initial-7', 'Работаете ли вы с юридическими лицами?', ['Да, принимаем заявки от компаний, парков и сервисных служб.', 'Можно согласовать регулярное обслуживание и закрывающие документы.'])
+              +faqItem('initial-8', 'Можно ли вызвать мастера на другое время?', ['Да, можно выбрать удобное время визита.', 'Оператор подтвердит доступный интервал после оформления заявки.'])
+              +faqItem('initial-9', 'Что входит в услугу сезонной замены?', ['Мастер снимет комплект колес, установит другой комплект, проверит давление и затяжку крепежа.', 'Дополнительные услуги можно выбрать в калькуляторе.'])
+              +faqItem('initial-10', 'Выезжаете ли за МКАД?', ['Да, выезд за МКАД доступен по Московской области.', 'Стоимость зависит от расстояния от МКАД и текущего дневного или ночного тарифа.'])
+              +faqItem('initial-11', 'Что делать, если проблема повторится?', ['Свяжитесь с нами и опишите ситуацию.', 'Если случай гарантийный, мастер повторно проверит работу.'])
+              +faqItem('initial-12', 'Можно ли оформить заявку ночью?', ['Да, сервис работает круглосуточно.', 'С 22:00 до 07:00 применяется ночной тариф на выезд.'])
+              +faqItem('initial-13', 'Нужно ли заранее готовить место для работы?', ['Желательно оставить доступ к автомобилю и свободное место рядом с ним.', 'Если машина находится в паркинге, заранее уточните высоту въезда и правила доступа.'])
+              +faqItem('initial-14', 'Работаете ли вы в подземных паркингах?', ['Да, если есть безопасный доступ к автомобилю и достаточно места для оборудования.', 'При оформлении заявки укажите этаж, сектор и особенности проезда.'])
+              +faqItem('initial-15', 'Можно ли отремонтировать боковой порез?', ['Это зависит от размера и расположения повреждения.', 'Мастер осмотрит шину на месте и скажет, возможен ли безопасный ремонт.'])
+              +faqItem('initial-16', 'Что такое Run Flat?', ['Run Flat - усиленная шина, на которой можно некоторое время ехать после потери давления.', 'Работа с такими шинами сложнее, поэтому в калькуляторе применяется отдельный коэффициент.'])
+              +faqItem('initial-17', 'Можно ли заказать хранение шин?', ['Да, услуга хранения доступна для комплектов разных диаметров.', 'При необходимости можно добавить доставку комплекта.'])
+              +faqItem('initial-18', 'Заправляете ли кондиционер на месте?', ['Да, мастер может выполнить заправку кондиционера у дома, офиса или на парковке.', 'Дополнительные опции выбираются в калькуляторе.'])
+              +faqItem('initial-19', 'Что входит в ремонт прокола?', ['Мастер найдет повреждение, оценит состояние шины и выполнит ремонт подходящим способом.', 'Если ремонт невозможен, он объяснит причину и предложит безопасное решение.'])
+              +faqItem('initial-20', 'Как отменить заявку?', ['Позвоните оператору как можно раньше и назовите адрес или номер заявки.', 'Если мастер уже выехал, условия отмены уточняются отдельно.'])
+            div.faq-loader(data-faq-status, role="status", aria-live="polite")
+            div.faq-sentinel(data-faq-sentinel, aria-hidden="true")
+
+      //- Bottom navigation is disabled; navigation lives in the burger menu.
+        button.bottom-nav__item.bottom-nav__item--active(type="button", data-screen-target="order", aria-current="page")
+          svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+            path(fill="currentColor" d="M8.308 17.692h.884v-2h2v-.884h-2v-2h-.884v2h-2v.884h2zm5-.75h4.384v-.884h-4.384zm0-2.5h4.384v-.884h-4.384zm.792-3.953l1.4-1.4l1.4 1.4l.627-.627l-1.4-1.412l1.4-1.4l-.627-.627l-1.4 1.4l-1.4-1.4l-.627.627l1.4 1.4l-1.4 1.412zM6.558 8.892h4.384v-.884H6.558zM5.616 20q-.691 0-1.153-.462T4 18.384V5.616q0-.691.463-1.153T5.616 4h12.769q.69 0 1.153.463T20 5.616v12.769q0 .69-.462 1.153T18.384 20zm0-1h12.769q.23 0 .423-.192t.192-.424V5.616q0-.231-.192-.424T18.384 5H5.616q-.231 0-.424.192T5 5.616v12.769q0 .23.192.423t.423.192M5 5v14z")
+          span Заказать
+        button.bottom-nav__item(type="button", data-screen-target="reviews")
+          svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+             path(fill="currentColor" d="m12.34 12.192l1.93-1.163l1.928 1.163l-.523-2.196l1.712-1.475l-2.24-.186l-.878-2.066l-.877 2.066l-2.24.186l1.712 1.475zm4.514 6.27h1.485q-.002.361-.245.617t-.61.317L6.182 20.817q-.671.087-1.2-.32q-.527-.407-.608-1.078l-1.23-9.713q-.08-.672.333-1.216t1.085-.606l.977-.073v1l-.823.068q-.27.019-.424.221t-.115.471l1.196 9.713q.039.27.23.424q.193.153.463.115zm-7.7-2q-.69 0-1.153-.463t-.462-1.153V4.616q0-.691.462-1.153T9.154 3h10.23q.691 0 1.153.463T21 4.616v10.23q0 .69-.463 1.153t-1.153.463zm0-1h10.23q.27 0 .443-.173t.173-.443V4.616q0-.27-.173-.443T19.385 4H9.154q-.27 0-.442.173q-.173.173-.173.443v10.23q0 .27.173.443t.442.173M5.45 19.9")
+          span Отзывы
+        a.bottom-nav__call(href="tel:+70000000000", aria-label="Позвонить")
+          svg.icon-circle(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+             path(fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21")
+
+        button.bottom-nav__item(type="button", data-screen-target="photo")
+          svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+             path(fill="currentColor" d="M4.116 18q-.667 0-1.141-.475t-.475-1.14v-8.77q0-.666.475-1.14T4.115 6h8.77q.666 0 1.14.475t.475 1.14v8.77q0 .666-.475 1.14t-1.14.475zm13.201-7q-.357 0-.587-.23t-.23-.587V6.817q0-.357.23-.587t.587-.23h3.366q.357 0 .587.23t.23.587v3.366q0 .358-.23.587t-.587.23zm.183-1h3V7h-3zM4.116 17h8.769q.269 0 .442-.173t.173-.442v-8.77q0-.269-.173-.442T12.885 7h-8.77q-.269 0-.442.173t-.173.443v8.769q0 .269.173.442t.443.173m.576-2.096h7.616l-2.433-3.25L8 14.154l-1.375-1.825zM17.317 18q-.357 0-.587-.23t-.23-.587v-3.366q0-.357.23-.587t.587-.23h3.366q.357 0 .587.23t.23.587v3.366q0 .358-.23.587t-.587.23zm.183-1h3v-3h-3zm-14 0V7zm14-7V7zm0 7v-3z")
+          span Фото
+        button.bottom-nav__item(type="button", data-screen-target="faq")
+          svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+             path(fill="currentColor" d="M12 20.962q-3.014-.895-5.007-3.651T5 11.1V5.692l7-2.615l7 2.615V11.1q0 3.454-1.993 6.21T12 20.963m0-1.062q2.6-.825 4.3-3.3t1.7-5.5V6.375l-6-2.23l-6 2.23V11.1q0 3.025 1.7 5.5t4.3 3.3m.43-3.559q.197-.197.197-.468t-.197-.468t-.468-.197t-.469.197t-.197.468t.197.468q.198.198.469.198t.468-.198m-.905-2.58h.885q.019-.255.057-.511t.164-.467q.169-.273.371-.501t.42-.44q.424-.444.756-.94t.332-1.16q0-.97-.738-1.607q-.737-.635-1.733-.635q-.847 0-1.538.45T9.496 9.177l.812.339q.227-.52.697-.832t1.034-.311q.627 0 1.106.383t.48.998q0 .483-.291.893q-.292.41-.636.75q-.28.255-.523.533q-.242.278-.417.614q-.137.292-.185.593t-.048.624")
+          span FAQ

@@ -1,0 +1,1196 @@
+import { fixedArrivalTime, moscowCenter, moscowMasterPoints, serviceGeocodeBounds } from './config';
+import {
+  collapseCalculatorSheet,
+  resetArrivalTime,
+  setAddress,
+  setArrivalTimeByRoute,
+  updateSummary,
+} from './calculator';
+import {
+  getServiceLocationByCoords,
+  resetServiceLocation,
+  setLocationStatus,
+  setServiceLocationByCoords,
+  showServiceLocationStatus,
+} from './service-location';
+import { state } from './state';
+import {
+  clamp,
+  getBoundsCenter,
+  getBoundsFromPoints,
+  getDistanceBetweenCoords,
+  getMercatorPoint,
+} from './utils';
+
+const serviceMapState = {
+  debounceId: null,
+  instance: null,
+  lastRenderedAddress: '',
+  markerLayouts: {},
+  masterCollection: null,
+  customerPlacemark: null,
+  ignoreNextClickAfterSheetClose: false,
+  route: null,
+  requestId: 0,
+};
+
+const mapPickerState = {
+  instance: null,
+  placemark: null,
+  coords: null,
+  address: '',
+  geoObject: null,
+};
+
+const yandexMapsState = {
+  promise: null,
+  suggestView: null,
+};
+
+const desktopMapQuery = '(min-width: 1024px)';
+
+const getYandexMapsUrl = () => String(window.__YANDEX_MAPS_URL__ || '');
+
+const setYandexMapsMissingStatus = () => {
+  setLocationStatus('Укажите YANDEX_MAPS_API_KEY и YANDEX_SUGGEST_API_KEY в .env для карт и подсказок.');
+};
+
+const isDesktopMapLayout = () => {
+  return window.matchMedia?.(desktopMapQuery).matches || false;
+};
+
+const isCalculatorSheetOpen = () => {
+  return document.querySelector('[data-calculator]')?.classList.contains('calculator--expanded') || false;
+};
+
+const canUseServiceMapAsAddressPicker = () => {
+  const calculator = document.querySelector('[data-calculator]');
+
+  return !calculator?.classList.contains('calculator--step-confirm') &&
+    !calculator?.classList.contains('calculator--step-success');
+};
+
+const closeYandexSuggest = (input = document.querySelector('[data-address-input]')) => {
+  if (input && document.activeElement === input) {
+    input.blur();
+  }
+
+  try {
+    yandexMapsState.suggestView?.state?.set?.('open', false);
+    yandexMapsState.suggestView?.state?.set?.('items', []);
+  } catch {
+    // SuggestView versions expose state slightly differently.
+  }
+};
+
+const loadYandexMaps = () => {
+  if (window.ymaps) {
+    return new Promise((resolve) => {
+      window.ymaps.ready(() => resolve(window.ymaps));
+    });
+  }
+
+  if (yandexMapsState.promise) {
+    return yandexMapsState.promise;
+  }
+
+  const scriptUrl = getYandexMapsUrl();
+
+  if (window.__YANDEX_MAPS_DISABLED__ || !scriptUrl) {
+    yandexMapsState.promise = Promise.reject(new Error('Yandex Maps API URL is not configured'));
+    return yandexMapsState.promise;
+  }
+
+  yandexMapsState.promise = new Promise((resolve, reject) => {
+    const existingScript = document.querySelector('script[data-yandex-maps-loader]');
+    const script = existingScript || document.createElement('script');
+
+    const handleLoad = () => {
+      if (!window.ymaps) {
+        reject(new Error('Yandex Maps API did not expose window.ymaps'));
+        return;
+      }
+
+      window.ymaps.ready(() => resolve(window.ymaps));
+    };
+
+    script.addEventListener('load', handleLoad, { once: true });
+    script.addEventListener('error', () => {
+      yandexMapsState.promise = null;
+      reject(new Error('Yandex Maps API failed to load'));
+    }, { once: true });
+
+    if (!existingScript) {
+      script.src = scriptUrl;
+      script.async = true;
+      script.defer = true;
+      script.dataset.yandexMapsLoader = '';
+      document.head.append(script);
+    }
+  });
+
+  return yandexMapsState.promise;
+};
+
+const scheduleAfterFirstPaint = (callback) => {
+  const run = () => {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(callback, { timeout: 1800 });
+      return;
+    }
+
+    window.setTimeout(callback, 900);
+  };
+
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(run);
+  });
+};
+
+const getNearestMaster = (coords) => {
+  return moscowMasterPoints.reduce((nearest, master) => {
+    const distance = getDistanceBetweenCoords(master.coords, coords);
+
+    if (!nearest || distance < nearest.distance) {
+      return {
+        ...master,
+        distance,
+      };
+    }
+
+    return nearest;
+  }, null);
+};
+
+const normalizeMoscowAddress = (address) => address.trim();
+
+const getServiceMarkerLayout = (type) => {
+  if (!window.ymaps?.templateLayoutFactory) {
+    return null;
+  }
+
+  if (!serviceMapState.markerLayouts[type]) {
+    serviceMapState.markerLayouts[type] = window.ymaps.templateLayoutFactory.createClass(
+      `<div class="service-map-marker service-map-marker--${type}"><span></span></div>`,
+    );
+  }
+
+  return serviceMapState.markerLayouts[type];
+};
+
+const getServiceMarkerOptions = (type, radius) => {
+  const layout = getServiceMarkerLayout(type);
+
+  if (!layout) {
+    return {
+      iconColor: type === 'customer' ? '#4ea1ff' : '#ff9f1a',
+      preset: 'islands#circleDotIcon',
+    };
+  }
+
+  return {
+    iconLayout: layout,
+    iconShape: {
+      type: 'Circle',
+      coordinates: [0, 0],
+      radius,
+    },
+  };
+};
+
+const createMasterPlacemark = (master) => {
+  return new window.ymaps.Placemark(
+    master.coords,
+    {
+      masterId: master.id,
+      markerType: 'master',
+    },
+    {
+      cursor: 'default',
+      hasBalloon: false,
+      hasHint: false,
+      interactiveZIndex: false,
+      openBalloonOnClick: false,
+      openHintOnHover: false,
+      opacity: 0,
+      visible: false,
+      zIndex: 1000,
+      zIndexActive: 1000,
+      ...getServiceMarkerOptions('master', 16),
+    },
+  );
+};
+
+const createCustomerPlacemark = (coords) => {
+  return new window.ymaps.Placemark(
+    coords,
+    {
+      markerType: 'customer',
+    },
+    {
+      cursor: 'default',
+      hasBalloon: false,
+      hasHint: false,
+      interactiveZIndex: false,
+      openBalloonOnClick: false,
+      openHintOnHover: false,
+      zIndex: 1001,
+      zIndexActive: 1001,
+      ...getServiceMarkerOptions('customer', 18),
+    },
+  );
+};
+
+const createMapPickerPlacemark = (coords) => {
+  return new window.ymaps.Placemark(
+    coords,
+    {
+      markerType: 'customer',
+    },
+    {
+      cursor: 'grab',
+      draggable: true,
+      hasBalloon: false,
+      hasHint: false,
+      openBalloonOnClick: false,
+      openHintOnHover: false,
+      ...getServiceMarkerOptions('customer', 18),
+    },
+  );
+};
+
+const initServiceMap = () => {
+  const container = document.querySelector('[data-service-map]');
+
+  if (!container || !window.ymaps?.Map) {
+    return null;
+  }
+
+  if (serviceMapState.instance) {
+    return serviceMapState.instance;
+  }
+
+  container.classList.add('hero__map-placeholder--loading');
+
+  serviceMapState.instance = new window.ymaps.Map(
+    container,
+    {
+      center: moscowCenter,
+      controls: [],
+      zoom: 10,
+    },
+    {
+      suppressMapOpenBlock: true,
+      yandexMapDisablePoiInteractivity: true,
+    },
+  );
+
+  serviceMapState.instance.behaviors.disable([
+    'scrollZoom',
+    'dblClickZoom',
+    'rightMouseButtonMagnifier',
+  ]);
+
+  container.addEventListener('pointerdown', (event) => {
+    if (!canUseServiceMapAsAddressPicker()) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return;
+    }
+
+    closeYandexSuggest();
+
+    if (isDesktopMapLayout()) {
+      return;
+    }
+
+    if (!isCalculatorSheetOpen()) {
+      return;
+    }
+
+    serviceMapState.ignoreNextClickAfterSheetClose = true;
+    collapseCalculatorSheet();
+
+    window.setTimeout(() => {
+      serviceMapState.ignoreNextClickAfterSheetClose = false;
+    }, 350);
+  }, {
+    capture: true,
+  });
+
+  serviceMapState.instance.events.add('click', (event) => {
+    if (!canUseServiceMapAsAddressPicker()) {
+      return;
+    }
+
+    if (serviceMapState.ignoreNextClickAfterSheetClose) {
+      serviceMapState.ignoreNextClickAfterSheetClose = false;
+      return;
+    }
+
+    const coords = event.get('coords');
+
+    if (Array.isArray(coords)) {
+      applyAddressFromCoords(coords);
+    }
+  });
+
+  serviceMapState.masterCollection = new window.ymaps.GeoObjectCollection();
+  moscowMasterPoints.forEach((master) => {
+    serviceMapState.masterCollection.add(createMasterPlacemark(master));
+  });
+
+  serviceMapState.instance.geoObjects.add(serviceMapState.masterCollection);
+  container.classList.add('hero__map-placeholder--ready');
+  container.classList.remove('hero__map-placeholder--loading');
+
+  return serviceMapState.instance;
+};
+
+const clearServiceMapRoute = () => {
+  const map = serviceMapState.instance;
+
+  if (!map) {
+    return;
+  }
+
+  if (serviceMapState.route) {
+    map.geoObjects.remove(serviceMapState.route);
+    serviceMapState.route = null;
+  }
+
+  if (serviceMapState.customerPlacemark) {
+    map.geoObjects.remove(serviceMapState.customerPlacemark);
+    serviceMapState.customerPlacemark = null;
+  }
+};
+
+const showOnlyNearestMaster = (masterId) => {
+  serviceMapState.masterCollection?.each((placemark) => {
+    const isNearest = placemark.properties.get('masterId') === masterId;
+
+    placemark.options.set({
+      opacity: isNearest ? 1 : 0,
+      visible: isNearest,
+    });
+  });
+};
+
+const showAllMasters = () => {
+  serviceMapState.masterCollection?.each((placemark) => {
+    placemark.options.set({
+      opacity: 1,
+      visible: true,
+    });
+  });
+};
+
+const resetServiceMapToMasters = () => {
+  serviceMapState.requestId += 1;
+  clearServiceMapRoute();
+  showAllMasters();
+  fitAllMasters();
+};
+
+const hideRouteWaypoints = (route) => {
+  try {
+    route.getWayPoints().options.set({
+      visible: false,
+    });
+  } catch {
+    // Some Yandex route implementations expose waypoints differently.
+  }
+};
+
+const mergeBounds = (...boundsList) => {
+  const points = boundsList
+    .filter(Boolean)
+    .flat()
+    .filter(Boolean);
+
+  if (!points.length) {
+    return null;
+  }
+
+  return getBoundsFromPoints(points);
+};
+
+const isServiceMapPoint = (value) => {
+  return (
+    Array.isArray(value) &&
+    value.length >= 2 &&
+    Number.isFinite(Number(value[0])) &&
+    Number.isFinite(Number(value[1]))
+  );
+};
+
+const collectServiceMapPoints = (value, points = []) => {
+  if (isServiceMapPoint(value)) {
+    points.push([Number(value[0]), Number(value[1])]);
+    return points;
+  }
+
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectServiceMapPoints(item, points));
+  }
+
+  return points;
+};
+
+const getRoutePathPoints = (route) => {
+  const points = [];
+  const paths = route.getPaths?.();
+
+  if (!paths) {
+    return points;
+  }
+
+  const collectPath = (path) => {
+    const coordinates = path.geometry?.getCoordinates?.();
+
+    collectServiceMapPoints(coordinates, points);
+  };
+
+  if (typeof paths.each === 'function') {
+    paths.each(collectPath);
+    return points;
+  }
+
+  const pathsCount = paths.getLength?.() || 0;
+
+  for (let index = 0; index < pathsCount; index += 1) {
+    collectPath(paths.get(index));
+  }
+
+  return points;
+};
+
+const getRouteBounds = (route, fallbackPoints = []) => {
+  const routePoints = getRoutePathPoints(route);
+  const points = routePoints.length ? routePoints : fallbackPoints;
+
+  return points.length ? getBoundsFromPoints(points) : null;
+};
+
+const normalizeServiceMapBounds = (bounds) => {
+  if (!bounds) {
+    return null;
+  }
+
+  const normalizedBounds = getBoundsFromPoints(bounds);
+  const [[minLat, minLng], [maxLat, maxLng]] = normalizedBounds;
+
+  if (minLat !== maxLat || minLng !== maxLng) {
+    return normalizedBounds;
+  }
+
+  const offset = 0.004;
+
+  return [
+    [minLat - offset, minLng - offset],
+    [maxLat + offset, maxLng + offset],
+  ];
+};
+
+const getServiceMapZoomMargin = (map) => {
+  const [width = 0, height = 0] = map.container.getSize?.() || [];
+  const horizontalMargin = Math.min(Math.round(width * 0.12), 28);
+  const verticalMargin = Math.min(Math.round(height * 0.14), 30);
+
+  return [verticalMargin, horizontalMargin, verticalMargin, horizontalMargin];
+};
+
+const getServiceMapFitZoom = (map, bounds) => {
+  const tileSize = 256;
+  const maxZoom = 17;
+  const minZoom = 1;
+  const [[minLat, minLng], [maxLat, maxLng]] = bounds;
+  const [width = 0, height = 0] = map.container.getSize?.() || [];
+  const [topMargin, rightMargin, bottomMargin, leftMargin] = getServiceMapZoomMargin(map);
+  const viewportWidth = Math.max(width - leftMargin - rightMargin, 1);
+  const viewportHeight = Math.max(height - topMargin - bottomMargin, 1);
+  const topLeft = getMercatorPoint([maxLat, minLng]);
+  const bottomRight = getMercatorPoint([minLat, maxLng]);
+  const lngDelta = Math.abs(bottomRight.x - topLeft.x);
+  const latDelta = Math.abs(bottomRight.y - topLeft.y);
+  const zoomByWidth = lngDelta > 0 ? Math.floor(Math.log2(viewportWidth / (tileSize * lngDelta))) : maxZoom;
+  const zoomByHeight = latDelta > 0 ? Math.floor(Math.log2(viewportHeight / (tileSize * latDelta))) : maxZoom;
+
+  return clamp(Math.min(zoomByWidth, zoomByHeight), minZoom, maxZoom);
+};
+
+const fitServiceMap = (bounds) => {
+  const map = serviceMapState.instance;
+  const normalizedBounds = normalizeServiceMapBounds(bounds);
+
+  if (!map || !normalizedBounds) {
+    return;
+  }
+
+  const center = getBoundsCenter(normalizedBounds);
+
+  window.requestAnimationFrame(() => {
+    map.container.fitToViewport();
+
+    window.requestAnimationFrame(() => {
+      map.container.fitToViewport();
+
+      const zoom = getServiceMapFitZoom(map, normalizedBounds);
+      const zoomMargin = getServiceMapZoomMargin(map);
+      const setRouteCamera = () => {
+        map.setCenter(center, zoom, {
+          checkZoomRange: true,
+          duration: 200,
+        });
+        map.setZoom(zoom, {
+          duration: 200,
+        });
+      };
+
+      if (typeof map.setBounds === 'function') {
+        const boundsResult = map.setBounds(normalizedBounds, {
+          checkZoomRange: true,
+          duration: 200,
+          zoomMargin,
+        });
+
+        if (boundsResult?.then) {
+          boundsResult.then(() => {
+            setRouteCamera();
+            window.setTimeout(setRouteCamera, 120);
+          });
+          return;
+        }
+      }
+
+      setRouteCamera();
+      window.setTimeout(setRouteCamera, 120);
+    });
+  });
+};
+
+const fitAllMasters = () => {
+  fitServiceMap(getBoundsFromPoints(moscowMasterPoints.map((master) => master.coords)));
+};
+
+const renderInitialServiceMap = () => {
+  loadYandexMaps().then(() => {
+    const map = initServiceMap();
+
+    if (!map) {
+      return;
+    }
+
+    clearServiceMapRoute();
+    showAllMasters();
+    fitAllMasters();
+  }).catch(() => {});
+};
+
+const renderServiceMapForCoords = (customerCoords) => {
+  loadYandexMaps().then(() => {
+    const requestId = serviceMapState.requestId + 1;
+    serviceMapState.requestId = requestId;
+
+    const map = initServiceMap();
+    const nearestMaster = getNearestMaster(customerCoords);
+
+    if (!map || !nearestMaster) {
+      return;
+    }
+
+    clearServiceMapRoute();
+    showOnlyNearestMaster(nearestMaster.id);
+
+    serviceMapState.customerPlacemark = createCustomerPlacemark(customerCoords);
+    map.geoObjects.add(serviceMapState.customerPlacemark);
+
+    window.ymaps.route([nearestMaster.coords, customerCoords], {
+      mapStateAutoApply: false,
+      routingMode: 'auto',
+    }).then(
+      (route) => {
+        if (requestId !== serviceMapState.requestId) {
+          return;
+        }
+
+        serviceMapState.route = route;
+        hideRouteWaypoints(route);
+
+        route.getPaths().options.set({
+          opacity: 1,
+          strokeColor: '#ff9f1a',
+          strokeOpacity: 0.96,
+          strokeStyle: 'solid',
+          strokeWidth: 6,
+          zIndex: 10,
+        });
+
+        map.geoObjects.add(route);
+        setArrivalTimeByRoute(route);
+        fitServiceMap(mergeBounds(getRouteBounds(route), getBoundsFromPoints([nearestMaster.coords, customerCoords])));
+      },
+      () => {
+        state.arrivalTime = fixedArrivalTime;
+        updateSummary();
+        fitServiceMap(getBoundsFromPoints([nearestMaster.coords, customerCoords]));
+      },
+    );
+  }).catch(() => {
+    setYandexMapsMissingStatus();
+  });
+};
+
+const applyAddressFromCoords = (coords, { fallbackAddress = `${coords[0].toFixed(6)}, ${coords[1].toFixed(6)}` } = {}) => {
+  const input = document.querySelector('[data-address-input]');
+
+  closeYandexSuggest(input);
+  resetArrivalTime();
+
+  if (input) {
+    input.value = fallbackAddress;
+  }
+
+  setAddress(fallbackAddress);
+  updateSummary();
+
+  if (!window.ymaps?.geocode) {
+    serviceMapState.lastRenderedAddress = fallbackAddress;
+    setServiceLocationByCoords(coords);
+    showServiceLocationStatus();
+    updateSummary();
+    renderServiceMapForCoords(coords);
+    return;
+  }
+
+  window.ymaps.geocode(coords, { results: 1 }).then(
+    (result) => {
+      const firstGeoObject = result.geoObjects.get(0);
+      const address = firstGeoObject?.getAddressLine?.() || firstGeoObject?.properties.get('text') || fallbackAddress;
+
+      if (input) {
+        input.value = address;
+      }
+
+      setAddress(address);
+      serviceMapState.lastRenderedAddress = address;
+
+      if (!setServiceLocationByCoords(coords, firstGeoObject)) {
+        resetServiceMapToMasters();
+        updateSummary();
+        showServiceLocationStatus();
+        return;
+      }
+
+      showServiceLocationStatus();
+      updateSummary();
+      renderServiceMapForCoords(coords);
+    },
+    () => {
+      if (input) {
+        input.value = fallbackAddress;
+      }
+
+      setAddress(fallbackAddress);
+      serviceMapState.lastRenderedAddress = fallbackAddress;
+      setServiceLocationByCoords(coords);
+      showServiceLocationStatus();
+      updateSummary();
+      renderServiceMapForCoords(coords);
+    },
+  );
+};
+
+const renderServiceMapByAddress = (address) => {
+  const normalizedAddress = normalizeMoscowAddress(address.trim());
+
+  if (!normalizedAddress) {
+    return;
+  }
+
+  loadYandexMaps().then(() => {
+    if (!window.ymaps?.geocode) {
+      setLocationStatus('Модуль геокодера Яндекс Карт не загрузился.', 'error');
+      return;
+    }
+
+    const requestId = serviceMapState.requestId + 1;
+    serviceMapState.requestId = requestId;
+
+    window.ymaps.geocode(normalizedAddress, {
+      boundedBy: serviceGeocodeBounds,
+      results: 1,
+    }).then(
+      (result) => {
+        if (requestId !== serviceMapState.requestId) {
+          return;
+        }
+
+        const firstGeoObject = result.geoObjects.get(0);
+        const coords = firstGeoObject?.geometry?.getCoordinates?.();
+
+        if (!coords) {
+          resetServiceLocation();
+          updateSummary();
+          setLocationStatus('Не удалось определить адрес. Уточните улицу и дом.', 'error');
+          return;
+        }
+
+        if (!setServiceLocationByCoords(coords, firstGeoObject)) {
+          resetServiceMapToMasters();
+          resetArrivalTime();
+          updateSummary();
+          showServiceLocationStatus();
+          return;
+        }
+
+        showServiceLocationStatus();
+        updateSummary();
+        renderServiceMapForCoords(coords);
+      },
+      () => {
+        if (requestId !== serviceMapState.requestId) {
+          return;
+        }
+
+        resetServiceLocation();
+        resetArrivalTime();
+        updateSummary();
+        setLocationStatus('Не удалось проверить адрес. Попробуйте еще раз.', 'error');
+      },
+    );
+  }).catch(() => {
+    setYandexMapsMissingStatus();
+  });
+};
+
+const renderServiceMapByCommittedAddress = (address) => {
+  window.clearTimeout(serviceMapState.debounceId);
+
+  const trimmedAddress = address.trim();
+
+  if (trimmedAddress.length < 6 || trimmedAddress === serviceMapState.lastRenderedAddress) {
+    return;
+  }
+
+  serviceMapState.lastRenderedAddress = trimmedAddress;
+  renderServiceMapByAddress(trimmedAddress);
+};
+
+const scheduleServiceMapRenderByAddress = (address) => {
+  window.clearTimeout(serviceMapState.debounceId);
+
+  serviceMapState.debounceId = window.setTimeout(() => {
+    renderServiceMapByCommittedAddress(address);
+  }, 120);
+};
+
+const fillAddressByCoordinates = (coords) => {
+  const position = [coords.latitude, coords.longitude];
+  const fallbackAddress = `${coords.latitude.toFixed(6)}, ${coords.longitude.toFixed(6)}`;
+
+  applyAddressFromCoords(position, { fallbackAddress });
+};
+
+const requestBrowserLocation = () => {
+  if (!navigator.geolocation) {
+    setLocationStatus('Браузер не поддерживает геолокацию.');
+    return;
+  }
+
+  setLocationStatus('Определяем местоположение...');
+  resetArrivalTime();
+  resetServiceLocation();
+  updateSummary();
+
+  navigator.geolocation.getCurrentPosition(
+    ({ coords }) => fillAddressByCoordinates(coords),
+    () => setLocationStatus('Не удалось получить текущее местоположение. Введите адрес вручную.'),
+    {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 60000,
+    },
+  );
+};
+
+const requestYandexLocation = () => {
+  if (!window.ymaps?.geolocation) {
+    requestBrowserLocation();
+    return;
+  }
+
+  setLocationStatus('Определяем местоположение...');
+  resetArrivalTime();
+  resetServiceLocation();
+  updateSummary();
+
+  window.ymaps.geolocation.get({
+    provider: 'browser',
+    autoReverseGeocode: true,
+    timeout: 15000,
+  }).then(
+    (result) => {
+      const input = document.querySelector('[data-address-input]');
+      const geoObject = result.geoObjects.get(0);
+      const address = geoObject?.getAddressLine?.() || geoObject?.properties.get('text');
+      const coords = geoObject?.geometry?.getCoordinates?.();
+
+      if (input) {
+        input.value = address || input.value;
+      }
+
+      serviceMapState.lastRenderedAddress = (address || input?.value || '').trim();
+      setAddress(address || input?.value || '');
+
+      if (!coords) {
+        updateSummary();
+        setLocationStatus('Не удалось определить координаты. Введите адрес вручную.', 'error');
+        return;
+      }
+
+      if (!setServiceLocationByCoords(coords, geoObject)) {
+        resetServiceMapToMasters();
+        updateSummary();
+        showServiceLocationStatus();
+        return;
+      }
+
+      showServiceLocationStatus();
+      updateSummary();
+      renderServiceMapForCoords(coords);
+    },
+    requestBrowserLocation,
+  );
+};
+
+const setMapPickerStatus = (message, statusType = '') => {
+  const status = document.querySelector('[data-map-picker-status]');
+
+  if (status) {
+    status.textContent = message;
+    status.dataset.status = statusType;
+  }
+};
+
+const setMapPickerApplyEnabled = (isEnabled) => {
+  const applyButton = document.querySelector('[data-map-picker-apply]');
+
+  if (applyButton) {
+    applyButton.disabled = !isEnabled;
+  }
+};
+
+const resetMapPickerSelection = () => {
+  mapPickerState.coords = null;
+  mapPickerState.address = '';
+  mapPickerState.geoObject = null;
+  setMapPickerApplyEnabled(false);
+};
+
+const updateMapPickerPlacemark = (coords) => {
+  const map = mapPickerState.instance;
+
+  if (!map) {
+    return;
+  }
+
+  if (!mapPickerState.placemark) {
+    mapPickerState.placemark = createMapPickerPlacemark(coords);
+    mapPickerState.placemark.events.add('dragend', () => {
+      selectMapPickerPoint(mapPickerState.placemark.geometry.getCoordinates());
+    });
+    map.geoObjects.add(mapPickerState.placemark);
+    return;
+  }
+
+  mapPickerState.placemark.geometry.setCoordinates(coords);
+};
+
+const selectMapPickerPoint = (coords) => {
+  mapPickerState.coords = coords;
+  mapPickerState.address = `${coords[0].toFixed(6)}, ${coords[1].toFixed(6)}`;
+  mapPickerState.geoObject = null;
+  updateMapPickerPlacemark(coords);
+  setMapPickerStatus('Определяем адрес...');
+  setMapPickerApplyEnabled(false);
+
+  if (!window.ymaps?.geocode) {
+    setMapPickerStatus('Адрес будет выбран по координатам.', 'success');
+    setMapPickerApplyEnabled(true);
+    return;
+  }
+
+  window.ymaps.geocode(coords, { results: 1 }).then(
+    (result) => {
+      const firstGeoObject = result.geoObjects.get(0);
+      const address = firstGeoObject?.getAddressLine?.() || firstGeoObject?.properties.get('text');
+      const serviceLocation = getServiceLocationByCoords(coords, firstGeoObject);
+
+      mapPickerState.geoObject = firstGeoObject;
+      mapPickerState.address = address || mapPickerState.address;
+
+      if (serviceLocation.status === 'denied') {
+        setMapPickerStatus('Вызов невозможен по этому адресу. Выберите точку в Москве или Московской области.', 'error');
+        setMapPickerApplyEnabled(false);
+        return;
+      }
+
+      setMapPickerStatus(mapPickerState.address, 'success');
+      setMapPickerApplyEnabled(true);
+    },
+    () => {
+      setMapPickerStatus('Не удалось определить адрес. Можно выбрать точку по координатам.', 'success');
+      setMapPickerApplyEnabled(true);
+    },
+  );
+};
+
+const initMapPicker = () => {
+  const container = document.querySelector('[data-map-picker-canvas]');
+
+  if (!container || !window.ymaps?.Map) {
+    return null;
+  }
+
+  if (mapPickerState.instance) {
+    return mapPickerState.instance;
+  }
+
+  mapPickerState.instance = new window.ymaps.Map(
+    container,
+    {
+      center: state.serviceLocation.coords || moscowCenter,
+      controls: [],
+      zoom: state.serviceLocation.coords ? 14 : 10,
+    },
+    {
+      suppressMapOpenBlock: true,
+      yandexMapDisablePoiInteractivity: true,
+    },
+  );
+
+  mapPickerState.instance.events.add('click', (event) => {
+    selectMapPickerPoint(event.get('coords'));
+  });
+
+  return mapPickerState.instance;
+};
+
+const changeMapPickerZoom = (step) => {
+  const map = mapPickerState.instance;
+
+  if (!map) {
+    return;
+  }
+
+  const currentZoom = Number(map.getZoom?.()) || 10;
+  const nextZoom = clamp(currentZoom + step, 3, 19);
+
+  map.setZoom(nextZoom, {
+    checkZoomRange: true,
+    duration: 180,
+  });
+};
+
+const changeServiceMapZoom = (step) => {
+  loadYandexMaps().then(() => {
+    const map = initServiceMap();
+
+    if (!map) {
+      return;
+    }
+
+    map.container.fitToViewport();
+
+    const currentZoom = Number(map.getZoom?.()) || 10;
+    const nextZoom = clamp(currentZoom + step, 3, 19);
+
+    map.setZoom(nextZoom, {
+      checkZoomRange: true,
+      duration: 180,
+    });
+  }).catch(() => {
+    setYandexMapsMissingStatus();
+  });
+};
+
+const openMapPicker = () => {
+  const picker = document.querySelector('[data-map-picker]');
+
+  if (!picker) {
+    return;
+  }
+
+  picker.hidden = false;
+  resetMapPickerSelection();
+  setMapPickerStatus('Загружаем карту...');
+
+  loadYandexMaps().then(() => {
+    const map = initMapPicker();
+
+    if (!map) {
+      setMapPickerStatus('Карта не загрузилась. Введите адрес вручную.', 'error');
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      map.container.fitToViewport();
+      map.setCenter(state.serviceLocation.coords || moscowCenter, state.serviceLocation.coords ? 14 : 10);
+
+      if (state.serviceLocation.coords) {
+        selectMapPickerPoint(state.serviceLocation.coords);
+      }
+    });
+  }).catch(() => {
+    setMapPickerStatus('Карта не загрузилась. Проверьте ключ Яндекс Карт.', 'error');
+  });
+};
+
+const closeMapPicker = () => {
+  const picker = document.querySelector('[data-map-picker]');
+
+  if (picker) {
+    picker.hidden = true;
+  }
+};
+
+const applyMapPickerSelection = () => {
+  if (!mapPickerState.coords) {
+    return;
+  }
+
+  const input = document.querySelector('[data-address-input]');
+
+  if (input) {
+    input.value = mapPickerState.address;
+  }
+
+  resetArrivalTime();
+  setAddress(mapPickerState.address);
+
+  if (!setServiceLocationByCoords(mapPickerState.coords, mapPickerState.geoObject)) {
+    resetServiceMapToMasters();
+    updateSummary();
+    showServiceLocationStatus();
+    closeMapPicker();
+    return;
+  }
+
+  serviceMapState.lastRenderedAddress = mapPickerState.address;
+  showServiceLocationStatus();
+  updateSummary();
+  renderServiceMapForCoords(mapPickerState.coords);
+  closeMapPicker();
+};
+
+const initYandexSuggest = (input) => {
+  if (!input || yandexMapsState.suggestView) {
+    return Promise.resolve();
+  }
+
+  if (window.__YANDEX_SUGGEST_DISABLED__) {
+    return Promise.resolve();
+  }
+
+  return loadYandexMaps().then(() => {
+    if (yandexMapsState.suggestView) {
+      return;
+    }
+
+    if (!window.ymaps?.SuggestView) {
+      setLocationStatus('Модуль подсказок Яндекс Карт не загрузился.');
+      return;
+    }
+
+    yandexMapsState.suggestView = new window.ymaps.SuggestView(input, {
+      results: 5,
+    });
+
+    yandexMapsState.suggestView.events.add('select', (event) => {
+      input.value = event.get('item').value;
+      setAddress(input.value);
+      resetArrivalTime();
+      resetServiceLocation();
+      updateSummary();
+      renderServiceMapByCommittedAddress(input.value);
+    });
+
+    setLocationStatus('');
+  }).catch(() => {});
+};
+
+const warmUpYandexMaps = (input) => {
+  scheduleAfterFirstPaint(() => {
+    renderInitialServiceMap();
+    initYandexSuggest(input);
+  });
+};
+
+export const initYandexAddress = () => {
+  const input = document.querySelector('[data-address-input]');
+  const locationButton = document.querySelector('[data-location-button]');
+  const mapPickerClose = document.querySelector('[data-map-picker-close]');
+  const mapPickerCancel = document.querySelector('[data-map-picker-cancel]');
+  const mapPickerApply = document.querySelector('[data-map-picker-apply]');
+  const serviceMapZoomButtons = document.querySelectorAll('[data-service-map-zoom]');
+  const mapPickerZoomButtons = document.querySelectorAll('[data-map-picker-zoom]');
+
+  if (!input) {
+    return;
+  }
+
+  input.addEventListener('input', () => {
+    setAddress(input.value);
+    resetArrivalTime();
+    resetServiceLocation();
+    updateSummary();
+    setLocationStatus('');
+    window.clearTimeout(serviceMapState.debounceId);
+    serviceMapState.lastRenderedAddress = '';
+    resetServiceMapToMasters();
+  });
+
+  input.addEventListener('blur', () => {
+    scheduleServiceMapRenderByAddress(input.value);
+  });
+
+  input.addEventListener('focus', () => {
+    initYandexSuggest(input);
+  }, { once: true });
+
+  locationButton?.addEventListener('click', () => {
+    loadYandexMaps()
+      .then(requestYandexLocation)
+      .catch(requestBrowserLocation);
+  });
+
+  mapPickerClose?.addEventListener('click', closeMapPicker);
+  mapPickerCancel?.addEventListener('click', closeMapPicker);
+  mapPickerApply?.addEventListener('click', applyMapPickerSelection);
+  serviceMapZoomButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      changeServiceMapZoom(button.dataset.serviceMapZoom === 'in' ? 1 : -1);
+    });
+  });
+  mapPickerZoomButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      changeMapPickerZoom(button.dataset.mapPickerZoom === 'in' ? 1 : -1);
+    });
+  });
+
+  if (window.__YANDEX_MAPS_DISABLED__ || !getYandexMapsUrl()) {
+    setYandexMapsMissingStatus();
+    return;
+  }
+
+  if (window.__YANDEX_SUGGEST_DISABLED__) {
+    setLocationStatus('Укажите YANDEX_SUGGEST_API_KEY в .env для подсказок.');
+  }
+
+  warmUpYandexMaps(input);
+};

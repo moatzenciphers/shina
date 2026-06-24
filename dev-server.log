@@ -1,0 +1,21 @@
+
+> mobile-tyre-service-app@1.0.0 dev
+> webpack serve --mode development --host 0.0.0.0
+
+asset [1m[32mjs/main.30c3fa22.js[39m[22m 218 KiB [1m[32m[emitted][39m[22m [1m[32m[immutable][39m[22m (name: main) 1 related asset
+asset [1m[32mindex.html[39m[22m 8.58 KiB [1m[32m[emitted][39m[22m
+runtime modules 31.2 KiB 15 modules
+modules by path [1m./node_modules/[39m[22m 124 KiB
+  modules by path [1m./node_modules/webpack-dev-server/client/[39m[22m 91.6 KiB 8 modules
+  modules by path [1m./node_modules/style-loader/dist/runtime/*.js[39m[22m 5.84 KiB 6 modules
+  modules by path [1m./node_modules/webpack/hot/*.js[39m[22m 5.56 KiB 4 modules
+  modules by path [1m./node_modules/css-loader/dist/runtime/*.js[39m[22m 2.74 KiB
+    [1m./node_modules/css-loader/dist/runtime/sourceMaps.js[39m[22m 505 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+    [1m./node_modules/css-loader/dist/runtime/api.js[39m[22m 2.25 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m./node_modules/events/events.js[39m[22m 14.5 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m./node_modules/ansi-html-community/index.js[39m[22m 4.16 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+modules by path [1m./src/[39m[22m 24.6 KiB
+  [1m./src/js/index.js[39m[22m 7.69 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  [1m./src/scss/main.scss[39m[22m 2.38 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js![1m./src/scss/main.scss[39m[22m 14.6 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+webpack 5.107.2 compiled [1m[32msuccessfully[39m[22m in 2680 ms

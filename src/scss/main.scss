@@ -1091,6 +1091,7 @@ button {
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(16px);
   transform: translateX(-50%);
+  max-width: 360px;
 }
 
 .cookie-consent__content {
@@ -1772,6 +1773,10 @@ button {
 }
 
 @media (min-width: 1024px) {
+
+  .cookie-consent {
+    bottom: 24px;
+  }
   .app {
     width: 100%;
     max-width: none;

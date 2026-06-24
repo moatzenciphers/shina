@@ -41,7 +41,7 @@ const carTypeLabels = {
   passenger: 'Легковой',
   crossover: 'Кроссовер',
   suv: 'Внедорожник',
-  commercial: 'Спецтехника, грузовое авто',
+  commercial: 'Спецтехника, грузовое',
 };
 
 const addonLabels = {
@@ -590,7 +590,7 @@ const getCalculatorCollapsedHeight = (calculator) => {
 
   const form = calculator.querySelector('[data-calculator-form]');
   const addressField = calculator.querySelector('.address-field');
-  const footer = calculator.querySelector('.calculator__footer');
+  const footer = calculator.querySelector('.calculator__footer-row');
 
   if (!hasEnteredAddress()) {
     if (!addressField) {
@@ -794,10 +794,13 @@ const initCalculatorContentPullDown = (calculator) => {
     }
 
     pullState = {
+      startX: event.touches[0].clientX,
       startY: event.touches[0].clientY,
+      lastX: event.touches[0].clientX,
       lastY: event.touches[0].clientY,
       startHeight: getCalculatorExpandedTargetHeight(),
       collapsedHeight: getCalculatorCollapsedHeight(calculator),
+      isOptionGridGesture: Boolean(event.target.closest('.option-grid')),
     };
   }, { passive: true });
 
@@ -806,9 +809,22 @@ const initCalculatorContentPullDown = (calculator) => {
       return;
     }
 
+    pullState.lastX = event.touches[0].clientX;
     pullState.lastY = event.touches[0].clientY;
 
+    const deltaX = pullState.lastX - pullState.startX;
     const deltaY = pullState.lastY - pullState.startY;
+    const absDeltaX = Math.abs(deltaX);
+    const absDeltaY = Math.abs(deltaY);
+
+    if (
+      pullState.isOptionGridGesture &&
+      absDeltaX > calculatorSheetMoveThreshold &&
+      absDeltaX > absDeltaY
+    ) {
+      pullState = null;
+      return;
+    }
 
     if (deltaY > calculatorSheetMoveThreshold && calculator.scrollTop <= 1) {
       calculator.classList.add('calculator--dragging');

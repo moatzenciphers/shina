@@ -340,9 +340,6 @@ $order_success_text = edemchinim_get_option_field('shina_order_success_text', '�
 							<path fill="currentColor" d="M3 8V7h17v1zm17 4v1H3v-1zM3 17h17v1H3z"></path>
 						</svg>
 					</button>
-					<a class="map-overlay__call" href="<?php echo esc_url($phone_href); ?>" aria-label="Позвонить">
-						<?php edemchinim_phone_icon(); ?>
-					</a>
 					<div class="map-overlay__zoom" aria-label="Масштаб карты">
 						<button class="map-overlay__control" type="button" aria-label="Приблизить карту" data-service-map-zoom="in">
 							<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -376,8 +373,13 @@ $order_success_text = edemchinim_get_option_field('shina_order_success_text', '�
 					<span aria-hidden="true"></span>
 				</button>
 				<header class="calculator__intro">
-					<h1 class="calculator__title"><?php echo esc_html($calculator_title_first_line); ?><br><?php echo esc_html($calculator_title_second_line); ?> <span><?php echo esc_html($work_schedule); ?></span></h1>
-					<p class="calculator__subtitle"><?php echo esc_html($calculator_subtitle_prefix); ?> <span><?php echo esc_html($calculator_arrival_time); ?></span> <?php echo esc_html($calculator_subtitle_suffix); ?></p>
+					<div class="calculator__intro-copy">
+						<h1 class="calculator__title"><?php echo esc_html($calculator_title_first_line); ?><br><?php echo esc_html($calculator_title_second_line); ?> <span><?php echo esc_html($work_schedule); ?></span></h1>
+						<p class="calculator__subtitle"><?php echo esc_html($calculator_subtitle_prefix); ?> <span><?php echo esc_html($calculator_arrival_time); ?></span> <?php echo esc_html($calculator_subtitle_suffix); ?></p>
+					</div>
+					<a class="calculator__call" href="<?php echo esc_url($phone_href); ?>" aria-label="Позвонить">
+						<?php edemchinim_phone_icon(); ?>
+					</a>
 				</header>
 				<form class="calculator__form" action="#" data-calculator-form>
 					<fieldset class="calculator__section">
@@ -413,7 +415,7 @@ $order_success_text = edemchinim_get_option_field('shina_order_success_text', '�
 							<button class="option-card option-card--active" type="button" data-option-name="carType" data-option-value="passenger" aria-pressed="true"><?php edemchinim_option_icon('light.svg'); ?><span class="option-card__label">Легковой</span></button>
 							<button class="option-card" type="button" data-option-name="carType" data-option-value="crossover" aria-pressed="false"><?php edemchinim_option_icon('cross.svg'); ?><span class="option-card__label">Кроссовер</span></button>
 							<button class="option-card" type="button" data-option-name="carType" data-option-value="suv" aria-pressed="false"><?php edemchinim_option_icon('offroad.svg'); ?><span class="option-card__label">Внедорожник</span></button>
-							<button class="option-card" type="button" data-option-name="carType" data-option-value="commercial" data-service-only="conditioner" aria-pressed="false" hidden><?php edemchinim_option_icon('fura.svg'); ?><span class="option-card__label">Спецтехника, грузовое авто</span></button>
+							<button class="option-card" type="button" data-option-name="carType" data-option-value="commercial" data-service-only="conditioner" aria-pressed="false" hidden><?php edemchinim_option_icon('fura.svg'); ?><span class="option-card__label">Спецтехника, грузовое</span></button>
 						</div>
 					</fieldset>
 
@@ -459,13 +461,15 @@ $order_success_text = edemchinim_get_option_field('shina_order_success_text', '�
 						</div>
 					</fieldset>
 
-					<div class="calculator__footer calculator__section--details">
-						<div class="order-summary" aria-live="polite">
-							<div class="order-summary__item"><span class="order-summary__label">Стоимость</span><span class="order-summary__line"><span data-price-prefix>от</span><output class="order-summary__value" data-price-output for="diameter-range">2 700</output><span data-price-unit>₽</span></span></div>
-							<div class="order-summary__item"><span class="order-summary__label">Время прибытия</span><span class="order-summary__line"><output class="order-summary__value" data-time-output>—</output><span data-time-unit>мин</span></span></div>
-						</div>
-						<button class="primary-button" type="submit" data-order-submit>Продолжить</button>
-					</div>
+					<button class="calculator__footer calculator__section--details" type="submit" data-order-submit>
+						<span class="order-summary" aria-live="polite">
+							<span class="order-summary__item"><span class="order-summary__label">Стоимость</span><span class="order-summary__line"><span data-price-prefix>от</span><output class="order-summary__value" data-price-output for="diameter-range">2 700</output><span data-price-unit>₽</span></span></span>
+							<span class="order-summary__item"><span class="order-summary__label">Время прибытия</span><span class="order-summary__line"><output class="order-summary__value" data-time-output>—</output><span data-time-unit>мин</span></span></span>
+						</span>
+						<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+							<path fill="currentColor" d="M4 12h12.25L11 6.75l.66-.75l6.5 6.5l-6.5 6.5l-.66-.75L16.25 13H4z"></path>
+						</svg>
+					</button>
 				</form>
 
 				<?php if ($order_form_shortcode) : ?>

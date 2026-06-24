@@ -72,9 +72,6 @@ html(lang="ru")
         button.map-overlay__menu-button(type="button", aria-label="Открыть меню", aria-expanded="false", data-app-menu-toggle)
           svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
               path(fill="currentColor" d="M3 8V7h17v1zm17 4v1H3v-1zM3 17h17v1H3z")
-        a.map-overlay__call(href="tel:+70000000000", aria-label="Позвонить")
-          svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
-            path(fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21")
         div.app-menu-popover(data-app-menu, hidden)
           nav.app-menu-popover__nav(aria-label="Разделы")
             button.app-menu-popover__item.app-menu-popover__item--active(type="button", data-screen-target="order", aria-current="page")
@@ -100,17 +97,17 @@ html(lang="ru")
             div.map-overlay
               button.map-overlay__menu-button(type="button", aria-label="Открыть меню", aria-expanded="false", data-app-menu-toggle)
                 svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
-                    path(fill="currentColor" d="M3 8V7h17v1zm17 4v1H3v-1zM3 17h17v1H3z")
+                    path(fill="currentColor" fill-rule="evenodd" d="M10.5 5A1.5 1.5 0 0 1 12 3.5h.01a1.5 1.5 0 0 1 1.5 1.5v.01a1.5 1.5 0 0 1-1.5 1.5H12a1.5 1.5 0 0 1-1.5-1.5zm0 7a1.5 1.5 0 0 1 1.5-1.5h.01a1.5 1.5 0 0 1 1.5 1.5v.01a1.5 1.5 0 0 1-1.5 1.5H12a1.5 1.5 0 0 1-1.5-1.5zm1.5 5.5a1.5 1.5 0 0 0-1.5 1.5v.01a1.5 1.5 0 0 0 1.5 1.5h.01a1.5 1.5 0 0 0 1.5-1.5V19a1.5 1.5 0 0 0-1.5-1.5z" clip-rule="evenodd")
               div.map-overlay__zoom(aria-label="Масштаб карты")
                 button.map-overlay__control(type="button", aria-label="Приблизить карту", data-service-map-zoom="in")
                   svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
-                      path(fill="currentColor" d="M5 13v-1h6V6h1v6h6v1h-6v6h-1v-6z")
+                      path(fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z")
                 button.map-overlay__control(type="button", aria-label="Отдалить карту", data-service-map-zoom="out")
                   svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
-                    path(fill="currentColor" d="M5 13v-1h13v1z")
+                    path(fill="currentColor" d="M19 12.998H5v-2h14z")
               button.map-overlay__location(type="button", aria-label="Использовать текущее местоположение", data-location-button)
                   svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
-                      path(fill="currentColor" d="M11.5 21.45v-1.461q-3.125-.293-5.16-2.328q-2.036-2.036-2.328-5.161H2.55v-1h1.462q.292-3.125 2.328-5.16t5.16-2.328V2.55h1v1.462q3.125.292 5.16 2.328t2.329 5.16h1.461v1h-1.461q-.293 3.125-2.328 5.16q-2.036 2.036-5.161 2.329v1.461zm5.45-4.5Q19 14.9 19 12t-2.05-4.95T12 5T7.05 7.05T5 12t2.05 4.95T12 19t4.95-2.05m-7.073-2.827Q9 13.246 9 12t.877-2.123T12 9t2.123.877T15 12t-.877 2.123T12 15t-2.123-.877m3.536-.71Q14 12.825 14 12t-.587-1.412T12 10t-1.412.588T10 12t.588 1.413T12 14t1.413-.587M12 12")
+                      path(fill="currentColor" d="m17.27 6.73l-4.24 10.13l-1.32-3.42l-.32-.83l-.82-.32l-3.43-1.33zM21 3L3 10.53v.97l6.84 2.66L12.5 21h.96z")
               div.app-menu-popover(data-app-menu, hidden)
                 nav.app-menu-popover__nav(aria-label="Разделы")
                   button.app-menu-popover__item.app-menu-popover__item--active(type="button", data-screen-target="order", aria-current="page")
@@ -182,7 +179,7 @@ html(lang="ru")
                     span.option-card__label Внедорожник
                   button.option-card(type="button", data-option-name="carType", data-option-value="commercial", data-service-only="conditioner", aria-pressed="false", hidden)
                     img(src=furaIcon, alt="", loading="lazy", decoding="async")
-                    span.option-card__label Спецтехника, грузовое авто
+                    span.option-card__label Спецтехника, грузовое
 
               fieldset.calculator__section.calculator__section--details(data-service-section="diameter")
                 legend.calculator__legend Диаметр колес
@@ -243,22 +240,26 @@ html(lang="ru")
                     span.checkbox-card__label Доставка
                     span.checkbox-card__price +3 500 ₽
 
-              button.calculator__footer.calculator__section--details(type="submit", data-order-submit)
-                span.order-summary(aria-live="polite")
-                  span.order-summary__item
-                    span.order-summary__label Стоимость
-                    span.order-summary__line
-                      span(data-price-prefix) от
-                      output.order-summary__value(data-price-output, for="diameter-range") 2 700
-                      span(data-price-unit) ₽
-                  | |
-                  span.order-summary__item
-                    span.order-summary__label Время прибытия
-                    span.order-summary__line
-                      output.order-summary__value(data-time-output) —
-                      span(data-time-unit) мин
-                svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
-                  path(fill="currentColor" d="M4 12h12.25L11 6.75l.66-.75l6.5 6.5l-6.5 6.5l-.66-.75L16.25 13H4z")
+              div.calculator__footer-row
+                button.calculator__footer.calculator__section--details(type="submit", data-order-submit)
+                  span.order-summary(aria-live="polite")
+                    span.order-summary__item
+                      span.order-summary__label Стоимость
+                      span.order-summary__line
+                        span(data-price-prefix) от
+                        output.order-summary__value(data-price-output, for="diameter-range") 2 700
+                        span(data-price-unit) ₽
+                    | |
+                    span.order-summary__item
+                      span.order-summary__label Время прибытия
+                      span.order-summary__line
+                        output.order-summary__value(data-time-output) —
+                        span(data-time-unit) мин
+                  svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                    path(fill="currentColor" d="M4 12h12.25L11 6.75l.66-.75l6.5 6.5l-6.5 6.5l-.66-.75L16.25 13H4z")
+                a.calculator__footer-call.calculator__section--details(href="tel:+70000000000", aria-label="Позвонить")
+                  svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                    path(fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21")
 
             form.order-confirm(action="#", data-order-form, hidden)
               h2.order-confirm__title Подтверждение заявки

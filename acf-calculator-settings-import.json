@@ -357,7 +357,7 @@
                 "layout": "table",
                 "sub_fields": [
                   { "key": "field_shina_calc_extra_circuit_percent", "label": "Дополнительный контур", "name": "extra_circuit_percent", "type": "number", "default_value": 70, "min": 0, "step": 1, "append": "%" },
-                  { "key": "field_shina_calc_commercial_percent", "label": "Спецтехника, грузовое авто", "name": "commercial_percent", "type": "number", "default_value": 100, "min": 0, "step": 1, "append": "%" }
+                  { "key": "field_shina_calc_commercial_percent", "label": "Спецтехника, грузовое", "name": "commercial_percent", "type": "number", "default_value": 100, "min": 0, "step": 1, "append": "%" }
                 ]
               }
             ]

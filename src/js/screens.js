@@ -19,6 +19,19 @@ export const initScreens = () => {
     return Array.from(menus).some((menu) => menu.hidden === false);
   };
 
+  const isMenuElement = (target) => {
+    return target instanceof Element &&
+      (target.closest('[data-app-menu]') || target.closest('[data-app-menu-toggle]'));
+  };
+
+  const closeMenuOnOutsideAction = (event) => {
+    if (!isMenuOpen() || isMenuElement(event.target)) {
+      return;
+    }
+
+    setMenuOpen(false);
+  };
+
   const syncAppState = (target) => {
     app?.classList.toggle('app--order-active', target === 'order');
 
@@ -44,17 +57,9 @@ export const initScreens = () => {
     });
   });
 
-  document.addEventListener('click', (event) => {
-    if (!isMenuOpen()) {
-      return;
-    }
-
-    if (event.target.closest('[data-app-menu]') || event.target.closest('[data-app-menu-toggle]')) {
-      return;
-    }
-
-    setMenuOpen(false);
-  });
+  document.addEventListener('pointerdown', closeMenuOnOutsideAction, true);
+  document.addEventListener('focusin', closeMenuOnOutsideAction);
+  document.addEventListener('wheel', closeMenuOnOutsideAction, { passive: true });
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {

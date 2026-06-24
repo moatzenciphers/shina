@@ -72,6 +72,9 @@ html(lang="ru")
         button.map-overlay__menu-button(type="button", aria-label="Открыть меню", aria-expanded="false", data-app-menu-toggle)
           svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
               path(fill="currentColor" d="M3 8V7h17v1zm17 4v1H3v-1zM3 17h17v1H3z")
+        a.map-overlay__call(href="tel:+70000000000", aria-label="Позвонить")
+          svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+            path(fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21")
         div.app-menu-popover(data-app-menu, hidden)
           nav.app-menu-popover__nav(aria-label="Разделы")
             button.app-menu-popover__item.app-menu-popover__item--active(type="button", data-screen-target="order", aria-current="page")
@@ -90,10 +93,6 @@ html(lang="ru")
               svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
                 path(fill="currentColor" d="M12 20.962q-3.014-.895-5.007-3.651T5 11.1V5.692l7-2.615l7 2.615V11.1q0 3.454-1.993 6.21T12 20.963m0-1.062q2.6-.825 4.3-3.3t1.7-5.5V6.375l-6-2.23l-6 2.23V11.1q0 3.025 1.7 5.5t4.3 3.3m.43-3.559q.197-.197.197-.468t-.197-.468t-.468-.197t-.469.197t-.197.468t.197.468q.198.198.469.198t.468-.198m-.905-2.58h.885q.019-.255.057-.511t.164-.467q.169-.273.371-.501t.42-.44q.424-.444.756-.94t.332-1.16q0-.97-.738-1.607q-.737-.635-1.733-.635q-.847 0-1.538.45T9.496 9.177l.812.339q.227-.52.697-.832t1.034-.311q.627 0 1.106.383t.48.998q0 .483-.291.893q-.292.41-.636.75q-.28.255-.523.533q-.242.278-.417.614q-.137.292-.185.593t-.048.624")
               span FAQ
-            a.app-menu-popover__call(href="tel:+70000000000", aria-label="Позвонить")
-              svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
-                path(fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21")
-              span Позвонить
       main.app__screens
         section.screen.screen--active.order-screen(data-screen="order", aria-label="Заказ шиномонтажа")
           header.hero
@@ -102,6 +101,9 @@ html(lang="ru")
               button.map-overlay__menu-button(type="button", aria-label="Открыть меню", aria-expanded="false", data-app-menu-toggle)
                 svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
                     path(fill="currentColor" d="M3 8V7h17v1zm17 4v1H3v-1zM3 17h17v1H3z")
+              a.map-overlay__call(href="tel:+70000000000", aria-label="Позвонить")
+                svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                  path(fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21")
               div.map-overlay__zoom(aria-label="Масштаб карты")
                 button.map-overlay__control(type="button", aria-label="Приблизить карту", data-service-map-zoom="in")
                   svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
@@ -130,15 +132,15 @@ html(lang="ru")
                     svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
                       path(fill="currentColor" d="M12 20.962q-3.014-.895-5.007-3.651T5 11.1V5.692l7-2.615l7 2.615V11.1q0 3.454-1.993 6.21T12 20.963m0-1.062q2.6-.825 4.3-3.3t1.7-5.5V6.375l-6-2.23l-6 2.23V11.1q0 3.025 1.7 5.5t4.3 3.3m.43-3.559q.197-.197.197-.468t-.197-.468t-.468-.197t-.469.197t-.197.468t.197.468q.198.198.469.198t.468-.198m-.905-2.58h.885q.019-.255.057-.511t.164-.467q.169-.273.371-.501t.42-.44q.424-.444.756-.94t.332-1.16q0-.97-.738-1.607q-.737-.635-1.733-.635q-.847 0-1.538.45T9.496 9.177l.812.339q.227-.52.697-.832t1.034-.311q.627 0 1.106.383t.48.998q0 .483-.291.893q-.292.41-.636.75q-.28.255-.523.533q-.242.278-.417.614q-.137.292-.185.593t-.048.624")
                     span FAQ
-                  a.app-menu-popover__call(href="tel:+70000000000", aria-label="Позвонить")
-                    svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
-                      path(fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21")
-                    span Позвонить
 
           section.calculator(data-calculator)
             button.calculator__handle(type="button", aria-label="Развернуть калькулятор", aria-expanded="false", data-calculator-toggle)
               span(aria-hidden="true")
-            h2.visually-hidden Калькулятор заказа
+            header.calculator__intro
+              h1.calculator__title Выездной 
+                br 
+                | шиномонтаж #[span 24/7]
+              p.calculator__subtitle приедем за #[span 30-60] минут
             form.calculator__form(action="#", data-calculator-form, autocomplete="off")
 
               fieldset.calculator__section
@@ -285,6 +287,9 @@ html(lang="ru")
               label.phone-field(for="order-phone")
                 span.phone-field__label Телефон для связи
                 input#order-phone.phone-field__input(type="tel", name="phone", inputmode="tel", autocomplete="tel", placeholder="+7 (___) ___-__-__")
+              label.personal-consent
+                input.personal-consent__control(type="checkbox", name="personal_data_consent", value="yes", required, data-personal-data-consent)
+                span.personal-consent__text Я принимаю согласие на обработку персональных данных
               div.order-confirm__footer
                 button.secondary-button(type="button", data-order-back) Назад
                 button.primary-button(type="submit", data-order-send, disabled) Отправить
@@ -328,6 +333,12 @@ html(lang="ru")
                 path(fill="currentColor" d="M14.935 16.223L11.5 12.789V7.923h1v4.464l3.123 3.123zM11.5 6V4h1v2zm6.5 6.5v-1h2v1zM11.5 20v-2h1v2zM4 12.5v-1h2v1zm8.003 8.5q-1.867 0-3.51-.708q-1.643-.709-2.859-1.924t-1.925-2.856T3 12.003t.709-3.51Q4.417 6.85 5.63 5.634t2.857-1.925T11.997 3t3.51.709q1.643.708 2.859 1.922t1.925 2.857t.709 3.509t-.708 3.51t-1.924 2.859t-2.856 1.925t-3.509.709M12 20q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8")
               strong 24/7
               span.trust-panel__text работаем круглосуточно
+
+          div.cookie-consent(data-cookie-consent, role="dialog", aria-live="polite", aria-label="Согласие на использование cookie", hidden)
+            div.cookie-consent__content
+              h2.cookie-consent__title Мы используем cookie
+              p.cookie-consent__text Cookie помогают сайту работать стабильно и улучшать сервис.
+            button.primary-button.cookie-consent__button(type="button", data-cookie-consent-accept) Принять
 
         section.screen.reviews-screen(data-screen="reviews", aria-label="Отзывы")
           header.reviews-hero

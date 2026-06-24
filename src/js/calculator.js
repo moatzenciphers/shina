@@ -265,6 +265,10 @@ const getPhoneInput = () => {
   return orderForm?.querySelector('input[type="tel"]') || document.querySelector('input[type="tel"]');
 };
 
+const getPersonalDataConsentInput = () => {
+  return document.querySelector('[data-personal-data-consent]');
+};
+
 const formatTimeRange = (time) => {
   return Array.isArray(time) ? `${time[0]}-${time[1]} мин` : '—';
 };
@@ -482,10 +486,11 @@ const isPhoneComplete = (value) => {
 
 const syncOrderSendButton = () => {
   const phoneInput = getPhoneInput();
+  const consentInput = getPersonalDataConsentInput();
   const sendButton = document.querySelector('[data-order-send]');
 
   if (sendButton) {
-    sendButton.disabled = !isPhoneComplete(phoneInput?.value);
+    sendButton.disabled = !isPhoneComplete(phoneInput?.value) || !consentInput?.checked;
   }
 };
 
@@ -493,6 +498,18 @@ const getCssNumber = (value, fallback = 0) => {
   const number = Number.parseFloat(value);
 
   return Number.isFinite(number) ? number : fallback;
+};
+
+const getElementOuterHeight = (element) => {
+  if (!element) {
+    return 0;
+  }
+
+  const styles = window.getComputedStyle(element);
+  const marginTop = getCssNumber(styles.marginTop);
+  const marginBottom = getCssNumber(styles.marginBottom);
+
+  return element.offsetHeight + marginTop + marginBottom;
 };
 
 const getCalculatorCollapsedHeight = (calculator) => {
@@ -507,9 +524,11 @@ const getCalculatorCollapsedHeight = (calculator) => {
   const calculatorStyles = window.getComputedStyle(calculator);
   const paddingTop = getCssNumber(calculatorStyles.paddingTop);
   const paddingBottom = getCssNumber(calculatorStyles.paddingBottom);
+  const introHeight = getElementOuterHeight(calculator.querySelector('.calculator__intro'));
 
   if (isConfirmStep) {
     const phoneField = orderForm.querySelector('.phone-field');
+    const consentField = orderForm.querySelector('.personal-consent');
     const footer = orderForm.querySelector('.order-confirm__footer');
 
     if (!phoneField || !footer) {
@@ -518,18 +537,32 @@ const getCalculatorCollapsedHeight = (calculator) => {
 
     const formStyles = window.getComputedStyle(orderForm);
     const formGap = getCssNumber(formStyles.rowGap || formStyles.gap, 0);
-    const height = paddingTop + handle.offsetHeight + phoneField.offsetHeight + formGap + footer.offsetHeight + paddingBottom;
+    const consentHeight = getElementOuterHeight(consentField);
+    const consentGap = consentHeight ? formGap : 0;
+    const height = paddingTop +
+      handle.offsetHeight +
+      introHeight +
+      phoneField.offsetHeight +
+      formGap +
+      consentHeight +
+      consentGap +
+      footer.offsetHeight +
+      paddingBottom;
 
     return Math.ceil(height);
-  }
-
-  if (!hasEnteredAddress()) {
-    return 128;
   }
 
   const form = calculator.querySelector('[data-calculator-form]');
   const addressField = calculator.querySelector('.address-field');
   const footer = calculator.querySelector('.calculator__footer');
+
+  if (!hasEnteredAddress()) {
+    if (!addressField) {
+      return 178;
+    }
+
+    return Math.ceil(paddingTop + handle.offsetHeight + introHeight + addressField.offsetHeight + paddingBottom);
+  }
 
   if (!form || !addressField || !footer) {
     return 292;
@@ -537,7 +570,7 @@ const getCalculatorCollapsedHeight = (calculator) => {
 
   const formStyles = window.getComputedStyle(form);
   const formGap = getCssNumber(formStyles.rowGap || formStyles.gap, 0);
-  const height = paddingTop + handle.offsetHeight + addressField.offsetHeight + formGap + footer.offsetHeight + paddingBottom;
+  const height = paddingTop + handle.offsetHeight + introHeight + addressField.offsetHeight + formGap + footer.offsetHeight + paddingBottom;
 
   return Math.ceil(height);
 };
@@ -911,6 +944,7 @@ export const initCalculator = () => {
   const form = document.querySelector('[data-calculator-form]');
   const orderForm = document.querySelector('[data-order-form]');
   const phoneInput = getPhoneInput();
+  const personalDataConsentInput = getPersonalDataConsentInput();
   const calculatorToggle = document.querySelector('[data-calculator-toggle]');
   const addressInput = document.querySelector('[data-address-input]');
   const orderBackButton = document.querySelector('[data-order-back]');
@@ -988,10 +1022,14 @@ export const initCalculator = () => {
   });
 
   orderForm?.addEventListener('submit', (event) => {
-    if (!isPhoneComplete(phoneInput?.value)) {
+    if (!isPhoneComplete(phoneInput?.value) || !personalDataConsentInput?.checked) {
       event.preventDefault();
       event.stopPropagation();
-      phoneInput?.focus();
+      if (!isPhoneComplete(phoneInput?.value)) {
+        phoneInput?.focus();
+      } else {
+        personalDataConsentInput?.focus();
+      }
       return;
     }
 
@@ -1020,6 +1058,10 @@ export const initCalculator = () => {
   phoneInput?.addEventListener('blur', () => {
     syncOrderSendButton();
     syncOrderHiddenFields();
+  });
+
+  personalDataConsentInput?.addEventListener('change', () => {
+    syncOrderSendButton();
   });
 
   orderBackButton?.addEventListener('click', () => {

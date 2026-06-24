@@ -189,15 +189,16 @@ button {
 }
 
 .app-menu-shell .map-overlay__menu-button,
+.app-menu-shell .map-overlay__call,
 .app-menu-shell .app-menu-popover {
   pointer-events: auto;
 }
 
 .map-overlay__menu-button,
+.map-overlay__call,
 .map-overlay__control,
 .map-overlay__location,
-.app-menu-popover__item,
-.app-menu-popover__call {
+.app-menu-popover__item {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
   background: rgba(16, 21, 27, 0.88);
@@ -207,6 +208,7 @@ button {
 }
 
 .map-overlay__menu-button,
+.map-overlay__call,
 .map-overlay__control,
 .map-overlay__location {
   pointer-events: auto;
@@ -230,6 +232,18 @@ button {
   height: 2px;
   border-radius: 999px;
   background: currentColor;
+}
+
+.map-overlay__call {
+  position: absolute;
+  top: 68px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  text-decoration: none;
 }
 
 .map-overlay__zoom {
@@ -263,6 +277,7 @@ button {
 }
 
 .map-overlay__menu-button:active,
+.map-overlay__call:active,
 .map-overlay__control:active,
 .map-overlay__location:active {
   border-color: var(--color-accent);
@@ -271,8 +286,8 @@ button {
 
 .app-menu-popover {
   position: absolute;
-  top: 66px;
-  right: 14px;
+  top: 14px;
+  right: 66px;
   width: min(280px, calc(100% - 28px));
   padding: 10px;
   border: 1px solid var(--color-border);
@@ -288,8 +303,7 @@ button {
   gap: 8px;
 }
 
-.app-menu-popover__item,
-.app-menu-popover__call {
+.app-menu-popover__item {
   width: 100%;
   min-height: 48px;
   display: grid;
@@ -304,12 +318,6 @@ button {
 .app-menu-popover__item--active {
   border-color: var(--color-accent);
   color: var(--color-accent);
-}
-
-.app-menu-popover__call {
-  background: var(--color-accent);
-  color: #111111;
-  font-weight: 700;
 }
 
 .service-map-marker {
@@ -368,7 +376,7 @@ button {
 }
 
 .calculator {
-  --calculator-collapsed-height: 128px;
+  --calculator-collapsed-height: 220px;
   --calculator-expanded-height: min(70dvh, calc(100dvh - 24px));
   --calculator-current-height: var(--calculator-collapsed-height);
 
@@ -439,6 +447,39 @@ button {
   --calculator-collapsed-height: 292px;
 }
 
+.calculator__intro {
+  display: grid;
+  gap: 2px;
+  margin: 0 0 18px;
+}
+
+.calculator__title,
+.calculator__subtitle {
+  margin: 0;
+}
+
+.calculator__title {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.08;
+}
+
+.calculator__subtitle {
+  font-size: 16px;
+  line-height: 1.2;
+  margin-top: 12px;
+}
+
+.calculator__subtitle span {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.calculator--expanded .calculator__intro,
+.calculator--drag-preview-expanded .calculator__intro {
+  display: none;
+}
+
 .calculator:not(.calculator--details-visible) .calculator__section--details {
   display: none !important;
 }
@@ -470,7 +511,7 @@ button {
   overflow-y: hidden;
 }
 
-.calculator.calculator--drag-preview-expanded .calculator__section--details {
+.calculator.calculator--drag-preview-expanded .calculator__section--details:not([hidden]) {
   display: grid !important;
 }
 
@@ -947,6 +988,36 @@ button {
   color: var(--color-muted);
 }
 
+.personal-consent {
+  min-height: 54px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface-muted);
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.personal-consent:focus-within {
+  border-color: var(--color-accent);
+}
+
+.personal-consent__control {
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: var(--color-accent);
+}
+
+.personal-consent__text {
+  min-width: 0;
+}
+
 .order-confirm__footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1002,6 +1073,48 @@ button {
 
 .order-success__summary {
   text-align: left;
+}
+
+.cookie-consent {
+  position: fixed;
+  left: 50%;
+  right: auto;
+  bottom: 232px;
+  z-index: 40;
+  width: 100%;
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: rgba(16, 21, 27, 0.96);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(16px);
+  transform: translateX(-50%);
+}
+
+.cookie-consent__content {
+  display: grid;
+  gap: 4px;
+}
+
+.cookie-consent__title,
+.cookie-consent__text {
+  margin: 0;
+}
+
+.cookie-consent__title {
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.cookie-consent__text {
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.cookie-consent__button {
+  min-height: 46px;
 }
 
 .map-picker {
@@ -1719,13 +1832,19 @@ button {
     display: none;
   }
 
+  .calculator--expanded .calculator__intro,
+  .calculator--drag-preview-expanded .calculator__intro,
+  .calculator__intro {
+    display: grid;
+  }
+
   .calculator,
   .calculator--collapsed,
   .calculator--expanded {
     overflow-y: auto;
   }
 
-  .calculator .calculator__section--details {
+  .calculator .calculator__section--details:not([hidden]) {
     display: grid !important;
   }
 

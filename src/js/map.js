@@ -59,6 +59,20 @@ const isDesktopMapLayout = () => {
   return window.matchMedia?.(desktopMapQuery).matches || false;
 };
 
+const syncServiceMapBehaviors = () => {
+  const map = serviceMapState.instance;
+
+  if (!map?.behaviors) {
+    return;
+  }
+
+  if (isDesktopMapLayout()) {
+    map.behaviors.enable('scrollZoom');
+  } else {
+    map.behaviors.disable('scrollZoom');
+  }
+};
+
 const isCalculatorSheetOpen = () => {
   return document.querySelector('[data-calculator]')?.classList.contains('calculator--expanded') || false;
 };
@@ -286,10 +300,10 @@ const initServiceMap = () => {
   );
 
   serviceMapState.instance.behaviors.disable([
-    'scrollZoom',
     'dblClickZoom',
     'rightMouseButtonMagnifier',
   ]);
+  syncServiceMapBehaviors();
 
   container.addEventListener('pointerdown', (event) => {
     if (!canUseServiceMapAsAddressPicker()) {
@@ -1135,6 +1149,7 @@ export const initYandexAddress = () => {
   const mapPickerApply = document.querySelector('[data-map-picker-apply]');
   const serviceMapZoomButtons = document.querySelectorAll('[data-service-map-zoom]');
   const mapPickerZoomButtons = document.querySelectorAll('[data-map-picker-zoom]');
+  const desktopLayoutMedia = window.matchMedia?.(desktopMapQuery);
 
   if (!input) {
     return;
@@ -1182,6 +1197,12 @@ export const initYandexAddress = () => {
       changeMapPickerZoom(button.dataset.mapPickerZoom === 'in' ? 1 : -1);
     });
   });
+
+  if (desktopLayoutMedia?.addEventListener) {
+    desktopLayoutMedia.addEventListener('change', syncServiceMapBehaviors);
+  } else {
+    desktopLayoutMedia?.addListener?.(syncServiceMapBehaviors);
+  }
 
   if (window.__YANDEX_MAPS_DISABLED__ || !getYandexMapsUrl()) {
     setYandexMapsMissingStatus();

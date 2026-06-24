@@ -52,8 +52,52 @@ const yandexMapsState = {
 };
 
 const desktopMapQuery = '(min-width: 1024px)';
+const addressLocationResolvingText = 'Определяем местоположение';
 
 const getYandexMapsUrl = () => String(window.__YANDEX_MAPS_URL__ || '');
+
+const getAddressInputValue = (input) => {
+  if (!input) {
+    return '';
+  }
+
+  if (input.value === addressLocationResolvingText) {
+    return input.dataset.locationPreviousValue || '';
+  }
+
+  return input.value;
+};
+
+const setAddressInputResolving = (isResolving) => {
+  const input = document.querySelector('[data-address-input]');
+
+  if (!input) {
+    return;
+  }
+
+  if (isResolving) {
+    if (!('locationPreviousValue' in input.dataset)) {
+      input.dataset.locationPreviousValue = input.value;
+      input.dataset.locationPreviousPlaceholder = input.getAttribute('placeholder') || '';
+    }
+
+    input.value = addressLocationResolvingText;
+    input.placeholder = addressLocationResolvingText;
+    input.disabled = true;
+    input.setAttribute('aria-busy', 'true');
+    return;
+  }
+
+  if (input.value === addressLocationResolvingText) {
+    input.value = input.dataset.locationPreviousValue || '';
+  }
+
+  input.placeholder = input.dataset.locationPreviousPlaceholder || 'Введите адрес';
+  input.disabled = false;
+  input.removeAttribute('aria-busy');
+  delete input.dataset.locationPreviousValue;
+  delete input.dataset.locationPreviousPlaceholder;
+};
 
 const setYandexMapsMissingStatus = () => {
   setLocationStatus('Укажите YANDEX_MAPS_API_KEY и YANDEX_SUGGEST_API_KEY в .env для карт и подсказок.');
@@ -871,18 +915,26 @@ const fillAddressByCoordinates = (coords) => {
 
 const requestBrowserLocation = () => {
   if (!navigator.geolocation) {
+    setAddressInputResolving(false);
     setLocationStatus('Браузер не поддерживает геолокацию.');
     return;
   }
 
+  setAddressInputResolving(true);
   setLocationStatus('Определяем местоположение...');
   resetArrivalTime();
   resetServiceLocation();
   updateSummary();
 
   navigator.geolocation.getCurrentPosition(
-    ({ coords }) => fillAddressByCoordinates(coords),
-    () => setLocationStatus('Не удалось получить текущее местоположение. Введите адрес вручную.'),
+    ({ coords }) => {
+      fillAddressByCoordinates(coords);
+      setAddressInputResolving(false);
+    },
+    () => {
+      setAddressInputResolving(false);
+      setLocationStatus('Не удалось получить текущее местоположение. Введите адрес вручную.');
+    },
     {
       enableHighAccuracy: true,
       timeout: 15000,
@@ -897,6 +949,7 @@ const requestYandexLocation = () => {
     return;
   }
 
+  setAddressInputResolving(true);
   setLocationStatus('Определяем местоположение...');
   resetArrivalTime();
   resetServiceLocation();
@@ -912,21 +965,25 @@ const requestYandexLocation = () => {
       const geoObject = result.geoObjects.get(0);
       const address = geoObject?.getAddressLine?.() || geoObject?.properties.get('text');
       const coords = geoObject?.geometry?.getCoordinates?.();
+      const fallbackAddress = Array.isArray(coords) ? coords.join(', ') : getAddressInputValue(input);
+      const resolvedAddress = address || fallbackAddress;
 
       if (input) {
-        input.value = address || input.value;
+        input.value = resolvedAddress || input.value;
       }
 
-      serviceMapState.lastRenderedAddress = (address || input?.value || '').trim();
-      setAddress(address || input?.value || '');
+      serviceMapState.lastRenderedAddress = resolvedAddress.trim();
+      setAddress(resolvedAddress);
 
       if (!coords) {
+        setAddressInputResolving(false);
         updateSummary();
         setLocationStatus('Не удалось определить координаты. Введите адрес вручную.', 'error');
         return;
       }
 
       if (!setServiceLocationByCoords(coords, geoObject)) {
+        setAddressInputResolving(false);
         resetServiceMapToMasters();
         updateSummary();
         showServiceLocationStatus();
@@ -936,6 +993,7 @@ const requestYandexLocation = () => {
       showServiceLocationStatus();
       updateSummary();
       renderServiceMapForCoords(coords);
+      setAddressInputResolving(false);
     },
     requestBrowserLocation,
   );

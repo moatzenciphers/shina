@@ -100,7 +100,6 @@ let suppressCalculatorToggleClick = false;
 const calculatorSheetDragThreshold = 24;
 const calculatorSheetMoveThreshold = 6;
 const calculatorContentScrollThreshold = 12;
-const calculatorContentPullDownThreshold = 42;
 const calculatorDetailsHideDelay = 700;
 const calculatorDesktopQuery = '(min-width: 1024px)';
 
@@ -724,6 +723,11 @@ export const expandCalculatorSheet = () => {
   setCalculatorSheetExpanded(true);
 };
 
+const expandCalculatorSheetFully = () => {
+  isCalculatorSheetContentScrolled = !isDesktopCalculatorLayout();
+  setCalculatorSheetExpanded(true);
+};
+
 export const collapseCalculatorSheet = () => {
   setCalculatorSheetExpanded(false);
 };
@@ -760,106 +764,13 @@ const syncCalculatorContentScrollState = (calculator) => {
 
   const scrollTop = calculator.scrollTop || 0;
   const shouldUseContentScrolledHeight = scrollTop > calculatorContentScrollThreshold;
-  const shouldUseRegularExpandedHeight = scrollTop <= 1;
 
-  if (shouldUseContentScrolledHeight === isCalculatorSheetContentScrolled) {
+  if (!shouldUseContentScrolledHeight || isCalculatorSheetContentScrolled) {
     return;
   }
 
-  if (!shouldUseContentScrolledHeight && !shouldUseRegularExpandedHeight) {
-    return;
-  }
-
-  isCalculatorSheetContentScrolled = shouldUseContentScrolledHeight;
+  isCalculatorSheetContentScrolled = true;
   syncCalculatorSheet();
-};
-
-const initCalculatorContentPullDown = (calculator) => {
-  if (!calculator) {
-    return;
-  }
-
-  let pullState = null;
-
-  calculator.addEventListener('touchstart', (event) => {
-    if (
-      isDesktopCalculatorLayout() ||
-      !isCalculatorSheetExpanded ||
-      calculator.scrollTop > 1 ||
-      event.touches.length !== 1 ||
-      event.target.closest('[data-calculator-toggle]')
-    ) {
-      pullState = null;
-      return;
-    }
-
-    pullState = {
-      startX: event.touches[0].clientX,
-      startY: event.touches[0].clientY,
-      lastX: event.touches[0].clientX,
-      lastY: event.touches[0].clientY,
-      startHeight: getCalculatorExpandedTargetHeight(),
-      collapsedHeight: getCalculatorCollapsedHeight(calculator),
-      isOptionGridGesture: Boolean(event.target.closest('.option-grid')),
-    };
-  }, { passive: true });
-
-  calculator.addEventListener('touchmove', (event) => {
-    if (!pullState || event.touches.length !== 1) {
-      return;
-    }
-
-    pullState.lastX = event.touches[0].clientX;
-    pullState.lastY = event.touches[0].clientY;
-
-    const deltaX = pullState.lastX - pullState.startX;
-    const deltaY = pullState.lastY - pullState.startY;
-    const absDeltaX = Math.abs(deltaX);
-    const absDeltaY = Math.abs(deltaY);
-
-    if (
-      pullState.isOptionGridGesture &&
-      absDeltaX > calculatorSheetMoveThreshold &&
-      absDeltaX > absDeltaY
-    ) {
-      pullState = null;
-      return;
-    }
-
-    if (deltaY > calculatorSheetMoveThreshold && calculator.scrollTop <= 1) {
-      calculator.classList.add('calculator--dragging');
-      setHeroHeightDragState(true);
-      setCalculatorSheetDragHeight(
-        calculator,
-        clamp(pullState.startHeight - deltaY, pullState.collapsedHeight, pullState.startHeight),
-      );
-      event.preventDefault();
-    }
-  }, { passive: false });
-
-  calculator.addEventListener('touchend', () => {
-    if (!pullState) {
-      return;
-    }
-
-    const deltaY = pullState.lastY - pullState.startY;
-    pullState = null;
-    resetCalculatorSheetDrag(calculator);
-
-    if (deltaY <= calculatorContentPullDownThreshold || calculator.scrollTop > 1) {
-      syncCalculatorSheet();
-      return;
-    }
-
-    calculator.scrollTop = 0;
-    setCalculatorSheetExpanded(false);
-  });
-
-  calculator.addEventListener('touchcancel', () => {
-    pullState = null;
-    resetCalculatorSheetDrag(calculator);
-    syncCalculatorSheet();
-  });
 };
 
 const initCalculatorSheetDrag = ({ calculator, toggleButton }) => {
@@ -1157,9 +1068,8 @@ export const initCalculator = () => {
 
   initPhoneMask(phoneInput);
 
-  addressInput?.addEventListener('focus', () => {
-    setCalculatorSheetExpanded(true);
-  });
+  addressInput?.addEventListener('focus', expandCalculatorSheetFully);
+  addressInput?.addEventListener('click', expandCalculatorSheetFully);
 
   calculatorToggle?.addEventListener('click', (event) => {
     if (suppressCalculatorToggleClick) {
@@ -1177,7 +1087,6 @@ export const initCalculator = () => {
     calculator,
     toggleButton: calculatorToggle,
   });
-  initCalculatorContentPullDown(calculator);
 
   calculator?.addEventListener('scroll', () => {
     syncCalculatorContentScrollState(calculator);
@@ -1242,7 +1151,6 @@ export const initCalculator = () => {
     setCalculatorSheetExpanded(true);
     syncOrderSendButton();
     syncOrderHiddenFields();
-    phoneInput?.focus();
   });
 
   orderForm?.addEventListener('submit', (event) => {

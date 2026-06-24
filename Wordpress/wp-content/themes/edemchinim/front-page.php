@@ -271,7 +271,9 @@ $faq_query = new WP_Query(
 	)
 );
 
-$order_form_shortcode = '[contact-form-7 id="db84527" title="Калькулятор"]';
+$default_order_form_shortcode = '[contact-form-7 id="db84527" title="Калькулятор"]';
+$order_form_shortcode_value = function_exists('get_field') ? get_field('shina_order_form_shortcode', 'options') : get_option('options_shina_order_form_shortcode', $default_order_form_shortcode);
+$order_form_shortcode = trim((string) ($order_form_shortcode_value === null || $order_form_shortcode_value === false ? $default_order_form_shortcode : $order_form_shortcode_value));
 $average_rating = edemchinim_get_option_field('shina_average_rating', '4.9');
 $successful_visits_count = edemchinim_get_option_field('shina_successful_visits_count', '3500+');
 $work_schedule = edemchinim_get_option_field('shina_work_schedule', '24/7');
@@ -461,15 +463,20 @@ $order_success_text = edemchinim_get_option_field('shina_order_success_text', '�
 						</div>
 					</fieldset>
 
-					<button class="calculator__footer calculator__section--details" type="submit" data-order-submit>
-						<span class="order-summary" aria-live="polite">
-							<span class="order-summary__item"><span class="order-summary__label">Стоимость</span><span class="order-summary__line"><span data-price-prefix>от</span><output class="order-summary__value" data-price-output for="diameter-range">2 700</output><span data-price-unit>₽</span></span></span>
-							<span class="order-summary__item"><span class="order-summary__label">Время прибытия</span><span class="order-summary__line"><output class="order-summary__value" data-time-output>—</output><span data-time-unit>мин</span></span></span>
-						</span>
-						<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-							<path fill="currentColor" d="M4 12h12.25L11 6.75l.66-.75l6.5 6.5l-6.5 6.5l-.66-.75L16.25 13H4z"></path>
-						</svg>
-					</button>
+					<div class="calculator__footer-row">
+						<button class="calculator__footer calculator__section--details" type="submit" data-order-submit>
+							<span class="order-summary" aria-live="polite">
+								<span class="order-summary__item"><span class="order-summary__label">Стоимость</span><span class="order-summary__line"><span data-price-prefix>от</span><output class="order-summary__value" data-price-output for="diameter-range">2 700</output><span data-price-unit>₽</span></span></span>
+								<span class="order-summary__item"><span class="order-summary__label">Время прибытия</span><span class="order-summary__line"><output class="order-summary__value" data-time-output>—</output><span data-time-unit>мин</span></span></span>
+							</span>
+							<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+								<path fill="currentColor" d="M4 12h12.25L11 6.75l.66-.75l6.5 6.5l-6.5 6.5l-.66-.75L16.25 13H4z"></path>
+							</svg>
+						</button>
+						<a class="calculator__footer-call calculator__section--details" href="<?php echo esc_url($phone_href); ?>" aria-label="Позвонить">
+							<?php edemchinim_phone_icon(); ?>
+						</a>
+					</div>
 				</form>
 
 				<?php if ($order_form_shortcode) : ?>

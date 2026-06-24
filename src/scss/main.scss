@@ -565,7 +565,7 @@ button {
   display: none !important;
 }
 
-.calculator--collapsed:not(.calculator--has-address) .calculator__footer-row {
+.calculator:not(.calculator--has-address) .calculator__footer-row {
   display: none;
 }
 
@@ -1213,6 +1213,10 @@ button {
 }
 
 .calculator--step-confirm.calculator--collapsed .order-confirm__footer {
+  margin-top: 0;
+}
+
+.calculator--collapsed .calculator__footer-row {
   margin-top: 0;
 }
 

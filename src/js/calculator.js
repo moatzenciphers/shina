@@ -96,11 +96,13 @@ let isCalculatorSheetDetailsVisible = false;
 let calculatorSheetAddress = '';
 let calculatorDetailsHideTimerId = null;
 let suppressCalculatorToggleClick = false;
+let addressFocusViewportTimerId = null;
 
 const calculatorSheetDragThreshold = 24;
 const calculatorSheetMoveThreshold = 6;
 const calculatorContentScrollThreshold = 12;
 const calculatorDetailsHideDelay = 700;
+const addressFocusViewportReleaseDelay = 260;
 const calculatorDesktopQuery = '(min-width: 1024px)';
 
 const isDesktopCalculatorLayout = () => {
@@ -129,15 +131,7 @@ export const resetArrivalTime = () => {
   state.arrivalTime = null;
 };
 
-const getRouteDurationMinutes = (route) => {
-  const durationSeconds = [route.getJamsTime?.(), route.getTime?.()].find(
-    (value) => Number.isFinite(value) && value > 0,
-  );
-
-  return durationSeconds ? Math.ceil(durationSeconds / 60) : null;
-};
-
-const setArrivalTimeByMinutes = (minutes) => {
+export const setArrivalTimeByMinutes = (minutes) => {
   if (!Number.isFinite(minutes) || minutes <= 0) {
     state.arrivalTime = fixedArrivalTime;
     updateSummary();
@@ -148,10 +142,6 @@ const setArrivalTimeByMinutes = (minutes) => {
 
   state.arrivalTime = [minArrivalTime, minArrivalTime + 20];
   updateSummary();
-};
-
-export const setArrivalTimeByRoute = (route) => {
-  setArrivalTimeByMinutes(getRouteDurationMinutes(route));
 };
 
 const getActiveCalloutTariff = () => {
@@ -610,14 +600,22 @@ const getCalculatorCollapsedHeight = (calculator) => {
   return Math.ceil(height);
 };
 
+const getStableViewportHeight = () => {
+  return Math.max(
+    window.innerHeight || 0,
+    window.visualViewport?.height || 0,
+    document.documentElement.clientHeight || 0,
+  );
+};
+
 const getCalculatorExpandedHeight = () => {
-  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+  const viewportHeight = getStableViewportHeight();
 
   return Math.max(220, Math.min(viewportHeight * 0.7, viewportHeight - 24));
 };
 
 const getCalculatorContentScrolledHeight = () => {
-  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+  const viewportHeight = getStableViewportHeight();
 
   return Math.max(220, viewportHeight - 72);
 };
@@ -723,9 +721,43 @@ export const expandCalculatorSheet = () => {
   setCalculatorSheetExpanded(true);
 };
 
-const expandCalculatorSheetFully = () => {
+const lockAddressFocusViewport = () => {
+  if (isDesktopCalculatorLayout()) {
+    return;
+  }
+
+  window.clearTimeout(addressFocusViewportTimerId);
+
+  const viewportHeight = getStableViewportHeight();
+  const calculator = document.querySelector('[data-calculator]');
+
+  if (!viewportHeight) {
+    return;
+  }
+
+  document.documentElement.style.setProperty('--app-viewport-height', `${Math.round(viewportHeight)}px`);
+  calculator?.style.setProperty('--calculator-address-expanded-height', `${Math.round(viewportHeight * 0.7)}px`);
+};
+
+const releaseAddressFocusViewport = () => {
+  window.clearTimeout(addressFocusViewportTimerId);
+
+  addressFocusViewportTimerId = window.setTimeout(() => {
+    document.documentElement.style.removeProperty('--app-viewport-height');
+    document.querySelector('[data-calculator]')?.style.removeProperty('--calculator-address-expanded-height');
+  }, addressFocusViewportReleaseDelay);
+};
+
+const expandCalculatorSheetForAddressInput = () => {
+  lockAddressFocusViewport();
   isCalculatorSheetContentScrolled = !isDesktopCalculatorLayout();
   setCalculatorSheetExpanded(true);
+
+  window.requestAnimationFrame(() => {
+    document.querySelector('[data-calculator]')?.scrollTo({
+      top: 0,
+    });
+  });
 };
 
 export const collapseCalculatorSheet = () => {
@@ -1068,8 +1100,9 @@ export const initCalculator = () => {
 
   initPhoneMask(phoneInput);
 
-  addressInput?.addEventListener('focus', expandCalculatorSheetFully);
-  addressInput?.addEventListener('click', expandCalculatorSheetFully);
+  addressInput?.addEventListener('focus', expandCalculatorSheetForAddressInput);
+  addressInput?.addEventListener('click', expandCalculatorSheetForAddressInput);
+  addressInput?.addEventListener('blur', releaseAddressFocusViewport);
 
   calculatorToggle?.addEventListener('click', (event) => {
     if (suppressCalculatorToggleClick) {

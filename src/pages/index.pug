@@ -66,6 +66,7 @@ html(lang="ru")
       window.__YANDEX_MAPS_URL__ = !{JSON.stringify(yandexMapsUrl || '')};
       window.__YANDEX_MAPS_DISABLED__ = !{JSON.stringify(!yandexMapsUrl)};
       window.__YANDEX_SUGGEST_DISABLED__ = !{JSON.stringify(Boolean(yandexMapsUrl && !hasYandexSuggestApiKey))};
+      window.__OPENROUTESERVICE_API_KEY__ = !{JSON.stringify(openRouteServiceApiKey || '')};
   body
     div.app#app(data-app)
       div.app-menu-shell
@@ -94,6 +95,11 @@ html(lang="ru")
         section.screen.screen--active.order-screen(data-screen="order", aria-label="Заказ шиномонтажа")
           header.hero
             div.hero__map-placeholder(data-service-map, role="img", aria-label="Место для карты")
+            div.map-attribution
+              | ©&nbsp;
+              a(href="https://openrouteservice.org/", target="_blank", rel="noopener noreferrer") openrouteservice.org
+              | &nbsp;by HeiGIT | Map data ©&nbsp;
+              a(href="https://www.openstreetmap.org/copyright", target="_blank", rel="noopener noreferrer") OpenStreetMap contributors
             div.map-overlay
               button.map-overlay__menu-button(type="button", aria-label="Открыть меню", aria-expanded="false", data-app-menu-toggle)
                 svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
@@ -241,25 +247,28 @@ html(lang="ru")
                     span.checkbox-card__price +3 500 ₽
 
               div.calculator__footer-row
-                button.calculator__footer.calculator__section--details(type="submit", data-order-submit)
-                  span.order-summary(aria-live="polite")
-                    span.order-summary__item
-                      span.order-summary__label Стоимость
-                      span.order-summary__line
-                        span(data-price-prefix) от
-                        output.order-summary__value(data-price-output, for="diameter-range") 2 700
-                        span(data-price-unit) ₽
-                    | |
-                    span.order-summary__item
-                      span.order-summary__label Время прибытия
-                      span.order-summary__line
-                        output.order-summary__value(data-time-output) —
-                        span(data-time-unit) мин
-                  svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
-                    path(fill="currentColor" d="M4 12h12.25L11 6.75l.66-.75l6.5 6.5l-6.5 6.5l-.66-.75L16.25 13H4z")
+                div.calculator__footer-main
+                  button.calculator__footer.calculator__section--details(type="submit", data-order-submit)
+                    span.order-summary(aria-live="polite")
+                      span.order-summary__item
+                        span.order-summary__label Стоимость
+                        span.order-summary__line
+                          span(data-price-prefix) от
+                          output.order-summary__value(data-price-output, for="diameter-range") 2 700
+                          span(data-price-unit) ₽
+                      | |
+                      span.order-summary__item
+                        span.order-summary__label Время прибытия
+                        span.order-summary__line
+                          output.order-summary__value(data-time-output) —
+                          span(data-time-unit) мин
+                    svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                      path(fill="currentColor" d="M4 12h12.25L11 6.75l.66-.75l6.5 6.5l-6.5 6.5l-.66-.75L16.25 13H4z")
                 a.calculator__footer-call.calculator__section--details(href="tel:+70000000000", aria-label="Позвонить")
                   svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
                     path(fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21")
+
+                p.calculator__footer-disclaimer Цены указаны за неполный комплекс. Для уточнения деталей вам позвонит оператор.
 
             form.order-confirm(action="#", data-order-form, hidden)
               h2.order-confirm__title Подтверждение заявки

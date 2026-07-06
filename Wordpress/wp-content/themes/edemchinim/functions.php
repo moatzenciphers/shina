@@ -620,16 +620,310 @@ if (! function_exists('edemchinim_register_rest_routes')) {
 }
 add_action('rest_api_init', 'edemchinim_register_rest_routes');
 
+if (! function_exists('edemchinim_normalize_master_points')) {
+	function edemchinim_normalize_master_points($value)
+	{
+		if (is_string($value)) {
+			$decoded = json_decode($value, true);
+
+			if (json_last_error() === JSON_ERROR_NONE) {
+				$value = $decoded;
+			}
+		}
+
+		if (! is_array($value)) {
+			return array();
+		}
+
+		$points = isset($value['marks']) && is_array($value['marks']) ? $value['marks'] : $value;
+		$normalized = array();
+
+		foreach ($points as $index => $point) {
+			if (! is_array($point)) {
+				continue;
+			}
+
+			$coords = $point['coords'] ?? $point['coordinates'] ?? array(
+				$point['latitude'] ?? $point['lat'] ?? null,
+				$point['longitude'] ?? $point['lng'] ?? $point['lon'] ?? null,
+			);
+
+			if (! is_array($coords) || count($coords) < 2 || ! is_numeric($coords[0]) || ! is_numeric($coords[1])) {
+				continue;
+			}
+
+			$point_number = is_numeric($point['id'] ?? null) ? absint($point['id']) : $index + 1;
+			$point_id = sanitize_key((string) ($point['id'] ?? ''));
+
+			if (! $point_id || strpos($point_id, 'master-') !== 0) {
+				$point_id = 'master-' . max(1, $point_number);
+			}
+
+			$normalized[] = array(
+				'id'        => $point_id,
+				'name'      => sanitize_text_field(wp_strip_all_tags((string) ($point['content'] ?? $point['name'] ?? 'Мастер ' . ($index + 1)))),
+				'latitude'  => (float) $coords[0],
+				'longitude' => (float) $coords[1],
+			);
+		}
+
+		return $normalized;
+	}
+}
+
+if (! function_exists('edemchinim_prepare_calculator_config')) {
+	function edemchinim_prepare_calculator_config($config)
+	{
+		if (! is_array($config)) {
+			return array();
+		}
+
+		$config['master_points'] = edemchinim_normalize_master_points($config['master_points'] ?? array());
+
+		return $config;
+	}
+}
+
+if (! function_exists('edemchinim_sanitize_yandex_map_value')) {
+	function edemchinim_sanitize_yandex_map_value($value, $post_id = 0, $field = array())
+	{
+		$raw_value = is_string($value) ? wp_unslash($value) : $value;
+		$map = is_string($raw_value) ? json_decode($raw_value, true) : $raw_value;
+
+		if (! is_array($map)) {
+			$stored_value = get_option('options_shina_calculator_config_master_points', '');
+			$map = is_string($stored_value) ? json_decode($stored_value, true) : $stored_value;
+		}
+
+		if (! is_array($map)) {
+			$default_map = ! empty($field['default_value']) ? json_decode((string) $field['default_value'], true) : null;
+			$map = is_array($default_map) ? $default_map : edemchinim_build_legacy_master_points_map(100);
+		}
+
+		if (! is_array($map)) {
+			$map = array(
+				'center_lat' => 55.755864,
+				'center_lng' => 37.617698,
+				'zoom'       => 9,
+				'type'       => 'map',
+				'marks'      => array(),
+			);
+		}
+
+		$marks = array();
+
+		foreach (($map['marks'] ?? array()) as $index => $mark) {
+			if (! is_array($mark) || ! isset($mark['coords'][0], $mark['coords'][1])) {
+				continue;
+			}
+
+			if (! is_numeric($mark['coords'][0]) || ! is_numeric($mark['coords'][1])) {
+				continue;
+			}
+
+			$marks[] = array(
+				'id'          => absint($mark['id'] ?? $index + 1),
+				'content'     => sanitize_text_field(wp_strip_all_tags((string) ($mark['content'] ?? ''))),
+				'type'        => 'Point',
+				'coords'      => array((float) $mark['coords'][0], (float) $mark['coords'][1]),
+				'circle_size' => 0,
+			);
+		}
+
+		$sanitized_map = array(
+			'center_lat' => is_numeric($map['center_lat'] ?? null) ? (float) $map['center_lat'] : 55.755864,
+			'center_lng' => is_numeric($map['center_lng'] ?? null) ? (float) $map['center_lng'] : 37.617698,
+			'zoom'       => max(0, min(18, absint($map['zoom'] ?? 9))),
+			'type'       => in_array(($map['type'] ?? ''), array('map', 'satellite', 'hybrid'), true) ? $map['type'] : 'map',
+			'marks'      => $marks,
+		);
+
+		return wp_json_encode($sanitized_map);
+	}
+}
+add_filter('acf/update_value/key=field_shina_calc_master_points', 'edemchinim_sanitize_yandex_map_value', 10, 3);
+
+if (! function_exists('edemchinim_build_legacy_master_points_map')) {
+	function edemchinim_build_legacy_master_points_map($rows_count)
+	{
+		$option_name = 'options_shina_calculator_config_master_points';
+		$marks = array();
+
+		for ($index = 0; $index < absint($rows_count); $index += 1) {
+			$prefix = $option_name . '_' . $index . '_';
+			$latitude = get_option($prefix . 'latitude', '');
+			$longitude = get_option($prefix . 'longitude', '');
+
+			if (! is_numeric($latitude) || ! is_numeric($longitude)) {
+				continue;
+			}
+
+			$marks[] = array(
+				'id'          => $index + 1,
+				'content'     => sanitize_text_field((string) get_option($prefix . 'name', 'Мастер ' . ($index + 1))),
+				'type'        => 'Point',
+				'coords'      => array((float) $latitude, (float) $longitude),
+				'circle_size' => 0,
+			);
+		}
+
+		return array(
+			'center_lat' => 55.755864,
+			'center_lng' => 37.617698,
+			'zoom'       => 9,
+			'type'       => 'map',
+			'marks'      => $marks,
+		);
+	}
+}
+
+if (! function_exists('edemchinim_load_master_points_yandex_map')) {
+	function edemchinim_load_master_points_yandex_map($value, $post_id, $field)
+	{
+		$raw_value = is_string($value) ? wp_unslash($value) : $value;
+		$decoded = is_string($raw_value) ? json_decode($raw_value, true) : $raw_value;
+
+		if (is_array($decoded) && isset($decoded['marks'])) {
+			return wp_json_encode($decoded);
+		}
+
+		$map = is_numeric($value) ? edemchinim_build_legacy_master_points_map($value) : array();
+
+		if (empty($map['marks']) && ! empty($field['default_value'])) {
+			$default_map = json_decode((string) $field['default_value'], true);
+
+			if (is_array($default_map) && isset($default_map['marks'])) {
+				$map = $default_map;
+			}
+		}
+
+		if (empty($map['marks'])) {
+			$legacy_map = edemchinim_build_legacy_master_points_map(100);
+
+			if (! empty($legacy_map['marks'])) {
+				$map = $legacy_map;
+			}
+		}
+
+		$map_json = edemchinim_sanitize_yandex_map_value($map, $post_id, $field);
+		update_option('options_shina_calculator_config_master_points', $map_json, false);
+		update_option('edemchinim_master_points_map_migration', '1', false);
+
+		return $map_json;
+	}
+}
+add_filter('acf/load_value/key=field_shina_calc_master_points', 'edemchinim_load_master_points_yandex_map', 5, 3);
+
+if (! function_exists('edemchinim_prepare_master_points_yandex_map_field')) {
+	function edemchinim_prepare_master_points_yandex_map_field($field)
+	{
+		$value = $field['value'] ?? '';
+		$raw_value = is_string($value) ? wp_unslash($value) : $value;
+		$map = is_string($raw_value) ? json_decode($raw_value, true) : $raw_value;
+
+		if (! is_array($map) || ! isset($map['marks'])) {
+			$default_map = ! empty($field['default_value']) ? json_decode((string) $field['default_value'], true) : null;
+			$map = is_array($default_map) && isset($default_map['marks'])
+				? $default_map
+				: edemchinim_build_legacy_master_points_map(100);
+		}
+
+		$field['value'] = edemchinim_sanitize_yandex_map_value($map, 'options', $field);
+
+		return $field;
+	}
+}
+add_filter('acf/prepare_field/key=field_shina_calc_master_points', 'edemchinim_prepare_master_points_yandex_map_field', 5);
+
+if (! function_exists('edemchinim_patch_acf_yandex_map_admin_script')) {
+	function edemchinim_patch_acf_yandex_map_admin_script()
+	{
+		if (! wp_script_is('acf-yandex', 'registered')) {
+			return;
+		}
+
+		$relative_path = '/js/acf-yandex-map-admin.js';
+		$script_path = get_template_directory() . $relative_path;
+
+		wp_dequeue_script('acf-yandex');
+		wp_deregister_script('acf-yandex');
+		wp_register_script(
+			'acf-yandex',
+			get_template_directory_uri() . $relative_path,
+			array('jquery', 'yandex-map-api'),
+			file_exists($script_path) ? (string) filemtime($script_path) : _S_VERSION,
+			true
+		);
+		wp_localize_script(
+			'acf-yandex',
+			'acf_yandex_locale',
+			array(
+				'map_init_fail'      => __('Не удалось инициализировать поле Яндекс Карты.', 'edemchinim'),
+				'mark_hint'          => __('Перетащите точку. Нажмите правой кнопкой, чтобы удалить.', 'edemchinim'),
+				'btn_clear_all'      => __('Очистить', 'edemchinim'),
+				'btn_clear_all_hint' => __('Удалить все точки', 'edemchinim'),
+				'mark_save'          => __('Сохранить', 'edemchinim'),
+				'mark_remove'        => __('Удалить', 'edemchinim'),
+			)
+		);
+		wp_enqueue_script('acf-yandex');
+	}
+}
+add_action('acf/input/admin_enqueue_scripts', 'edemchinim_patch_acf_yandex_map_admin_script', 100);
+
+if (! function_exists('edemchinim_migrate_master_points_to_yandex_map')) {
+	function edemchinim_migrate_master_points_to_yandex_map()
+	{
+		if (get_option('edemchinim_master_points_map_migration') === '1' || ! function_exists('get_field_object')) {
+			return;
+		}
+
+		$field = get_field_object('field_shina_calc_master_points', 'options', false, false);
+
+		if (($field['type'] ?? '') !== 'yandex-map') {
+			return;
+		}
+
+		$option_name = 'options_shina_calculator_config_master_points';
+		$stored_value = get_option($option_name, '');
+		$stored_map = is_string($stored_value) ? json_decode($stored_value, true) : $stored_value;
+
+		if (is_array($stored_map) && isset($stored_map['marks'])) {
+			update_option('edemchinim_master_points_map_migration', '1', false);
+			return;
+		}
+
+		$rows_count = absint($stored_value);
+
+		if (! $rows_count) {
+			return;
+		}
+
+		$map = edemchinim_build_legacy_master_points_map($rows_count);
+
+		if (empty($map['marks'])) {
+			return;
+		}
+
+		update_option($option_name, edemchinim_sanitize_yandex_map_value($map), false);
+		update_option('edemchinim_master_points_map_migration', '1', false);
+	}
+}
+add_action('acf/init', 'edemchinim_migrate_master_points_to_yandex_map', 30);
+
 /**
  * Enqueue scripts and styles.
  */
 function edemchinim_scripts()
 {
+	$calculator_config = function_exists('get_field') ? get_field('shina_calculator_config', 'options') : array();
+	$calculator_config = edemchinim_prepare_calculator_config($calculator_config);
+
 	wp_enqueue_style('edemchinim-style', get_stylesheet_uri(), array(), _S_VERSION);
 	wp_enqueue_script('edemchinim-main', get_template_directory_uri() . '/js/main.min.js', array(), _S_VERSION, true);
 	wp_add_inline_script(
 		'edemchinim-main',
-		'window.shinaCalculatorConfig = ' . wp_json_encode(get_field('shina_calculator_config', 'options') ?: []) . ';',
+		'window.shinaCalculatorConfig = ' . wp_json_encode($calculator_config) . ';',
 		'before'
 	);
 }

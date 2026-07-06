@@ -3,7 +3,7 @@ import {
   collapseCalculatorSheet,
   resetArrivalTime,
   setAddress,
-  setArrivalTimeByRoute,
+  setArrivalTimeByMinutes,
   updateSummary,
 } from './calculator';
 import {
@@ -29,12 +29,12 @@ const serviceMapState = {
   markerLayouts: {},
   masterCollection: null,
   customerPlacemark: null,
-  ignoreNextClickAfterSheetClose: false,
   lastBounds: null,
   resizeFrameId: null,
   resizeObserver: null,
   resizeTimeoutId: null,
   route: null,
+  routeAbortController: null,
   requestId: 0,
 };
 
@@ -53,8 +53,10 @@ const yandexMapsState = {
 
 const desktopMapQuery = '(min-width: 1024px)';
 const addressLocationResolvingText = 'Определяем местоположение';
+const openRouteServiceDirectionsUrl = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
 
 const getYandexMapsUrl = () => String(window.__YANDEX_MAPS_URL__ || '');
+const getOpenRouteServiceApiKey = () => String(window.__OPENROUTESERVICE_API_KEY__ || '');
 
 const getAddressInputValue = (input) => {
   if (!input) {
@@ -169,11 +171,18 @@ const loadYandexMaps = () => {
 
     const handleLoad = () => {
       if (!window.ymaps) {
+        yandexMapsState.promise = null;
         reject(new Error('Yandex Maps API did not expose window.ymaps'));
         return;
       }
 
-      window.ymaps.ready(() => resolve(window.ymaps));
+      window.ymaps.ready(
+        () => resolve(window.ymaps),
+        () => {
+          yandexMapsState.promise = null;
+          reject(new Error('Yandex Maps API failed to initialize'));
+        },
+      );
     };
 
     script.addEventListener('load', handleLoad, { once: true });
@@ -348,7 +357,6 @@ const initServiceMap = () => {
   );
 
   serviceMapState.instance.behaviors.disable([
-    'dblClickZoom',
     'rightMouseButtonMagnifier',
   ]);
   syncServiceMapBehaviors();
@@ -370,26 +378,14 @@ const initServiceMap = () => {
       return;
     }
 
-    serviceMapState.ignoreNextClickAfterSheetClose = true;
     collapseCalculatorSheet();
     scheduleServiceMapRefit();
-    event.preventDefault();
-    event.stopImmediatePropagation();
-
-    window.setTimeout(() => {
-      serviceMapState.ignoreNextClickAfterSheetClose = false;
-    }, 350);
   }, {
     capture: true,
   });
 
   serviceMapState.instance.events.add('click', (event) => {
     if (!canUseServiceMapAsAddressPicker()) {
-      return;
-    }
-
-    if (serviceMapState.ignoreNextClickAfterSheetClose) {
-      serviceMapState.ignoreNextClickAfterSheetClose = false;
       return;
     }
 
@@ -422,18 +418,21 @@ const initServiceMap = () => {
 const clearServiceMapRoute = () => {
   const map = serviceMapState.instance;
 
+  serviceMapState.routeAbortController?.abort();
+  serviceMapState.routeAbortController = null;
+
   if (!map) {
     return;
-  }
-
-  if (serviceMapState.route) {
-    map.geoObjects.remove(serviceMapState.route);
-    serviceMapState.route = null;
   }
 
   if (serviceMapState.customerPlacemark) {
     map.geoObjects.remove(serviceMapState.customerPlacemark);
     serviceMapState.customerPlacemark = null;
+  }
+
+  if (serviceMapState.route) {
+    map.geoObjects.remove(serviceMapState.route);
+    serviceMapState.route = null;
   }
 };
 
@@ -462,86 +461,6 @@ const resetServiceMapToMasters = () => {
   clearServiceMapRoute();
   showAllMasters();
   fitAllMasters();
-};
-
-const hideRouteWaypoints = (route) => {
-  try {
-    route.getWayPoints().options.set({
-      visible: false,
-    });
-  } catch {
-    // Some Yandex route implementations expose waypoints differently.
-  }
-};
-
-const mergeBounds = (...boundsList) => {
-  const points = boundsList
-    .filter(Boolean)
-    .flat()
-    .filter(Boolean);
-
-  if (!points.length) {
-    return null;
-  }
-
-  return getBoundsFromPoints(points);
-};
-
-const isServiceMapPoint = (value) => {
-  return (
-    Array.isArray(value) &&
-    value.length >= 2 &&
-    Number.isFinite(Number(value[0])) &&
-    Number.isFinite(Number(value[1]))
-  );
-};
-
-const collectServiceMapPoints = (value, points = []) => {
-  if (isServiceMapPoint(value)) {
-    points.push([Number(value[0]), Number(value[1])]);
-    return points;
-  }
-
-  if (Array.isArray(value)) {
-    value.forEach((item) => collectServiceMapPoints(item, points));
-  }
-
-  return points;
-};
-
-const getRoutePathPoints = (route) => {
-  const points = [];
-  const paths = route.getPaths?.();
-
-  if (!paths) {
-    return points;
-  }
-
-  const collectPath = (path) => {
-    const coordinates = path.geometry?.getCoordinates?.();
-
-    collectServiceMapPoints(coordinates, points);
-  };
-
-  if (typeof paths.each === 'function') {
-    paths.each(collectPath);
-    return points;
-  }
-
-  const pathsCount = paths.getLength?.() || 0;
-
-  for (let index = 0; index < pathsCount; index += 1) {
-    collectPath(paths.get(index));
-  }
-
-  return points;
-};
-
-const getRouteBounds = (route, fallbackPoints = []) => {
-  const routePoints = getRoutePathPoints(route);
-  const points = routePoints.length ? routePoints : fallbackPoints;
-
-  return points.length ? getBoundsFromPoints(points) : null;
 };
 
 const normalizeServiceMapBounds = (bounds) => {
@@ -708,6 +627,45 @@ const renderInitialServiceMap = () => {
   }).catch(() => {});
 };
 
+const requestOpenRouteServiceRoute = async (startCoords, endCoords, signal) => {
+  const apiKey = getOpenRouteServiceApiKey();
+
+  if (!apiKey) {
+    throw new Error('OPENROUTESERVICE_API_KEY is not configured');
+  }
+
+  const response = await fetch(openRouteServiceDirectionsUrl, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/geo+json',
+      Authorization: apiKey,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      coordinates: [startCoords, endCoords].map(([lat, lng]) => [lng, lat]),
+    }),
+    signal,
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenRouteService request failed with status ${response.status}`);
+  }
+
+  const data = await response.json();
+  const feature = data.features?.[0];
+  const durationSeconds = Number(feature?.properties?.summary?.duration);
+  const routeCoords = feature?.geometry?.coordinates?.map(([lng, lat]) => [Number(lat), Number(lng)]);
+  const hasValidRoute = Array.isArray(routeCoords) && routeCoords.length >= 2 && routeCoords.every(
+    ([lat, lng]) => Number.isFinite(lat) && Number.isFinite(lng),
+  );
+
+  if (!hasValidRoute || !Number.isFinite(durationSeconds) || durationSeconds <= 0) {
+    throw new Error('OpenRouteService returned an invalid route');
+  }
+
+  return { durationSeconds, routeCoords };
+};
+
 const renderServiceMapForCoords = (customerCoords) => {
   loadYandexMaps().then(() => {
     const requestId = serviceMapState.requestId + 1;
@@ -726,19 +684,29 @@ const renderServiceMapForCoords = (customerCoords) => {
     serviceMapState.customerPlacemark = createCustomerPlacemark(customerCoords);
     map.geoObjects.add(serviceMapState.customerPlacemark);
 
-    window.ymaps.route([nearestMaster.coords, customerCoords], {
-      mapStateAutoApply: false,
-      routingMode: 'auto',
-    }).then(
-      (route) => {
+    const applyRouteFallback = () => {
+      if (requestId !== serviceMapState.requestId) {
+        return;
+      }
+
+      serviceMapState.routeAbortController = null;
+      state.arrivalTime = fixedArrivalTime;
+      updateSummary();
+      fitServiceMap(getBoundsFromPoints([nearestMaster.coords, customerCoords]));
+    };
+
+    const routeAbortController = new AbortController();
+    serviceMapState.routeAbortController = routeAbortController;
+
+    requestOpenRouteServiceRoute(nearestMaster.coords, customerCoords, routeAbortController.signal).then(
+      ({ durationSeconds, routeCoords }) => {
         if (requestId !== serviceMapState.requestId) {
           return;
         }
 
-        serviceMapState.route = route;
-        hideRouteWaypoints(route);
-
-        route.getPaths().options.set({
+        serviceMapState.routeAbortController = null;
+        setArrivalTimeByMinutes(durationSeconds / 60);
+        serviceMapState.route = new window.ymaps.Polyline(routeCoords, {}, {
           opacity: 1,
           strokeColor: '#ff9f1a',
           strokeOpacity: 0.96,
@@ -746,15 +714,13 @@ const renderServiceMapForCoords = (customerCoords) => {
           strokeWidth: 6,
           zIndex: 10,
         });
-
-        map.geoObjects.add(route);
-        setArrivalTimeByRoute(route);
-        fitServiceMap(mergeBounds(getRouteBounds(route), getBoundsFromPoints([nearestMaster.coords, customerCoords])));
+        map.geoObjects.add(serviceMapState.route);
+        fitServiceMap(getBoundsFromPoints(routeCoords));
       },
-      () => {
-        state.arrivalTime = fixedArrivalTime;
-        updateSummary();
-        fitServiceMap(getBoundsFromPoints([nearestMaster.coords, customerCoords]));
+      (error) => {
+        if (error?.name !== 'AbortError') {
+          applyRouteFallback();
+        }
       },
     );
   }).catch(() => {
@@ -767,16 +733,15 @@ const applyAddressFromCoords = (coords, { fallbackAddress = `${coords[0].toFixed
 
   closeYandexSuggest(input);
   resetArrivalTime();
-
-  if (input) {
-    input.value = fallbackAddress;
-  }
-
-  setAddress(fallbackAddress);
-  updateSummary();
+  setLocationStatus('Определяем адрес...');
 
   if (!window.ymaps?.geocode) {
+    if (input) {
+      input.value = fallbackAddress;
+    }
+
     serviceMapState.lastRenderedAddress = fallbackAddress;
+    setAddress(fallbackAddress);
     setServiceLocationByCoords(coords);
     showServiceLocationStatus();
     updateSummary();

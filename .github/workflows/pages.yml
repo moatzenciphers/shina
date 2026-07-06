@@ -39,6 +39,7 @@ jobs:
         env:
           YANDEX_MAPS_API_KEY: ${{ secrets.YANDEX_MAPS_API_KEY }}
           YANDEX_SUGGEST_API_KEY: ${{ secrets.YANDEX_SUGGEST_API_KEY }}
+          OPENROUTESERVICE_API_KEY: ${{ secrets.OPENROUTESERVICE_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

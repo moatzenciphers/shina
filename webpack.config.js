@@ -21,7 +21,7 @@ const getYandexMapsUrl = () => {
       'SuggestView',
       'geocode',
       'geolocation',
-      'route',
+      'Polyline',
       'templateLayoutFactory',
     ].join(','),
     apikey: apiKey,
@@ -35,6 +35,7 @@ const getYandexMapsUrl = () => {
 };
 
 const hasYandexSuggestApiKey = () => Boolean(process.env.YANDEX_SUGGEST_API_KEY);
+const getOpenRouteServiceApiKey = () => String(process.env.OPENROUTESERVICE_API_KEY || '');
 
 module.exports = (_, argv) => {
   const isProduction = argv.mode === 'production';
@@ -111,6 +112,7 @@ module.exports = (_, argv) => {
         templateParameters: {
           yandexMapsUrl: getYandexMapsUrl(),
           hasYandexSuggestApiKey: hasYandexSuggestApiKey(),
+          openRouteServiceApiKey: getOpenRouteServiceApiKey(),
         },
       }),
       new MiniCssExtractPlugin({

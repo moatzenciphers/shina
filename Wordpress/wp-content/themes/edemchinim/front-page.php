@@ -464,15 +464,18 @@ $order_success_text = edemchinim_get_option_field('shina_order_success_text', '�
 					</fieldset>
 
 					<div class="calculator__footer-row">
-						<button class="calculator__footer calculator__section--details" type="submit" data-order-submit>
-							<span class="order-summary" aria-live="polite">
-								<span class="order-summary__item"><span class="order-summary__label">Стоимость</span><span class="order-summary__line"><span data-price-prefix>от</span><output class="order-summary__value" data-price-output for="diameter-range">2 700</output><span data-price-unit>₽</span></span></span>
-								<span class="order-summary__item"><span class="order-summary__label">Время прибытия</span><span class="order-summary__line"><output class="order-summary__value" data-time-output>—</output><span data-time-unit>мин</span></span></span>
-							</span>
-							<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-								<path fill="currentColor" d="M4 12h12.25L11 6.75l.66-.75l6.5 6.5l-6.5 6.5l-.66-.75L16.25 13H4z"></path>
-							</svg>
-						</button>
+						<div class="calculator__footer-main">
+							<button class="calculator__footer calculator__section--details" type="submit" data-order-submit>
+								<span class="order-summary" aria-live="polite">
+									<span class="order-summary__item"><span class="order-summary__label">Стоимость</span><span class="order-summary__line"><span data-price-prefix>от</span><output class="order-summary__value" data-price-output for="diameter-range">2 700</output><span data-price-unit>₽</span></span></span>
+									<span class="order-summary__item"><span class="order-summary__label">Время прибытия</span><span class="order-summary__line"><output class="order-summary__value" data-time-output>—</output><span data-time-unit>мин</span></span></span>
+								</span>
+								<svg class="icon-circle icon-circle--small" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+									<path fill="currentColor" d="M4 12h12.25L11 6.75l.66-.75l6.5 6.5l-6.5 6.5l-.66-.75L16.25 13H4z"></path>
+								</svg>
+							</button>
+							<p class="calculator__footer-disclaimer">Цены указаны за неполный комплекс. Для уточнения деталей вам позвонит оператор.</p>
+						</div>
 						<a class="calculator__footer-call calculator__section--details" href="<?php echo esc_url($phone_href); ?>" aria-label="Позвонить">
 							<?php edemchinim_phone_icon(); ?>
 						</a>

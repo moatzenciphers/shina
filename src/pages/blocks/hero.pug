@@ -28,7 +28,7 @@ section.landing-hero(aria-labelledby="landing-hero-title")
           ul.landing-hero__submenu#landing-services
             if landingServicesHref
               li.landing-hero__all-link
-                a(href=landingServicesHref) Все услуги
+                a(href=landingServicesHref) Рассчитать стоимость
             each service, index in landingServices
               li.landing-hero__submenu-item(data-menu-item)
                 a.landing-hero__submenu-button(href=service.href, aria-expanded="false", aria-controls=`landing-service-${index}`, data-menu-expand)

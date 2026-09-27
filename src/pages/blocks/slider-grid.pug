@@ -29,10 +29,16 @@ section.slider-grid.landing-section#reviews(aria-labelledby="slider-grid-title")
             cite.slider-grid__author-name= review.author
             time.slider-grid__date(datetime=review.dateTime)= review.date
   div.slider-grid__controls(role="group", aria-label="Управление отзывами")
-    button.slider-grid__arrow(type="button", data-review-prev, aria-label="Предыдущий отзыв") ←
+    button.landing-slider-arrow.slider-grid__arrow(type="button", data-review-prev, aria-label="Предыдущий отзыв")
+      svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+        path(d="M26 16H6m8-8-8 8 8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
     span.slider-grid__counter(aria-live="polite")
       span(data-review-current) 01
       span.slider-grid__counter-total  / 06
-    button.slider-grid__arrow.slider-grid__arrow--next(type="button", data-review-next, aria-label="Следующий отзыв") →
+    button.landing-slider-arrow.landing-slider-arrow--next.slider-grid__arrow(type="button", data-review-next, aria-label="Следующий отзыв")
+      svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+        path(d="M6 16h20m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
   footer.slider-grid__footer
-    a.slider-grid__all(href="/otzyvy/") Смотреть все отзывы
+    a.slider-grid__all.landing-more-link(href="/otzyvy/") Смотреть все отзывы
+      svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+        path(d="M5 16h22m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")

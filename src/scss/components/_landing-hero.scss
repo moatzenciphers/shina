@@ -324,6 +324,9 @@
 
 .app__back {
   position: fixed;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   top: 16px;
   left: 80px;
   z-index: 30;
@@ -333,6 +336,8 @@
   background: var(--color-surface);
   color: var(--color-text);
 }
+
+.app__back svg { width: 20px; height: 20px; }
 
 .landing-hero button:focus-visible,
 .landing-hero a:focus-visible,

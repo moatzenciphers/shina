@@ -1,0 +1,61 @@
+-
+  const serviceColumns = [
+    ['Сезонная замена шин', 'Ремонт проколов', 'Ремонт порезов и грыж', 'Снятие секреток', 'Правка дисков', 'Замена аккумулятора'],
+    ['Прикурка автомобиля', 'Отогрев автомобиля', 'Доставка топлива', 'Заправка кондиционера', 'Подбор шин и дисков', 'Хранение шин']
+  ];
+  const clientLinks = [
+    { label: 'Главная', current: true },
+    { label: 'Цены' }, { label: 'Зона выезда' }, { label: 'Отзывы' },
+    { label: 'Фото работ' }, { label: 'Частые вопросы' },
+    { label: 'Контакты' }, { label: 'О компании' }
+  ];
+  const documentLinks = [
+    'Политика конфиденциальности', 'Согласие на обработку персональных данных',
+    'Публичная оферта', 'Реквизиты'
+  ];
+
+footer.site-footer.landing-section#contacts
+  div.site-footer__panel
+    div.site-footer__top
+      div.site-footer__about
+        a.site-footer__brand(href="#", aria-label="Едем–чиним — на главную")
+          svg.site-footer__brand-car(viewBox="0 0 132 31", fill="none", aria-hidden="true")
+            path(d="M5 23c6-5 16-6 28-6 9-8 18-12 35-12 15 0 27 4 39 12 10 0 16 2 20 6M15 23h20m62 0h23M46 13c18-5 33-5 48 2", stroke="currentColor", stroke-width="3", stroke-linecap="round", stroke-linejoin="round")
+          span.site-footer__brand-name ЕДЕМ–ЧИНИМ
+        p.site-footer__description.landing-text Выездной шиномонтаж и помощь на дороге в Москве и МО 24/7.
+        p.site-footer__contacts Телефон: уточняется<br>Круглосуточно<br>E-mail: уточняется
+      nav.site-footer__nav(aria-label="Навигация в футере")
+        div.site-footer__group.site-footer__group--services
+          button.site-footer__toggle(type="button", aria-expanded="false", aria-controls="footer-services", data-footer-toggle)
+            span УСЛУГИ
+            span.site-footer__chevron(aria-hidden="true")
+          div.site-footer__links.site-footer__service-columns#footer-services
+            each column in serviceColumns
+              ul.site-footer__link-list
+                each service in column
+                  li
+                    a(href="#")= service
+        div.site-footer__group
+          button.site-footer__toggle(type="button", aria-expanded="false", aria-controls="footer-clients", data-footer-toggle)
+            span КЛИЕНТАМ
+            span.site-footer__chevron(aria-hidden="true")
+          div.site-footer__links#footer-clients
+            ul.site-footer__link-list
+              each item in clientLinks
+                li
+                  if item.current
+                    span.site-footer__active(aria-current="page")= item.label
+                  else
+                    a(href="#")= item.label
+        div.site-footer__group
+          button.site-footer__toggle(type="button", aria-expanded="false", aria-controls="footer-documents", data-footer-toggle)
+            span ДОКУМЕНТЫ
+            span.site-footer__chevron(aria-hidden="true")
+          div.site-footer__links#footer-documents
+            ul.site-footer__link-list
+              each document in documentLinks
+                li
+                  a(href="#")= document
+    div.site-footer__bottom
+      span © 2026 ЕДЕМ–ЧИНИМ
+      p Информация на сайте не является публичной офертой. Окончательная стоимость согласовывается до начала работ.

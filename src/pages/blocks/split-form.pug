@@ -1,0 +1,30 @@
+section.split-form.landing-section#help(aria-labelledby="split-form-title")
+  div.split-form__inner
+    header.split-form__intro
+      p.split-form__eyebrow.landing-eyebrow НУЖНА ПОМОЩЬ?
+      h2.split-form__title.landing-title.landing-title--section#split-form-title Не знаете, какая услуга нужна?
+      p.split-form__lead.landing-text Опишите, что произошло. Оператор разберётся в ситуации, уточнит детали и перезвонит в течение 2 минут.
+    form.split-form__form(data-split-form)
+      div.split-form__fields
+        label.split-form__field(for="help-phone")
+          span.split-form__label Телефон
+          input.split-form__input#help-phone(type="tel", name="phone", inputmode="tel", autocomplete="tel", placeholder="+7 (___) ___-__-__", required, data-split-form-phone)
+        label.split-form__field(for="help-address")
+          span.split-form__label Адрес
+          input.split-form__input#help-address(type="text", name="address", autocomplete="street-address", placeholder="Город, улица, дом", required)
+        label.split-form__field.split-form__field--wide(for="help-details")
+          span.split-form__label Что случилось?
+          textarea.split-form__input.split-form__message#help-details(name="details", rows="4", placeholder="Например: спустило переднее колесо, автомобиль стоит на парковке и не может ехать", required)
+      div.split-form__actions
+        button.split-form__submit.landing-cta(type="submit")
+          span Получить помощь
+          svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+            path(d="M5 16h21m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
+        span.split-form__or или
+        button.split-form__calculator(type="button", data-open-calculator)
+          span Рассчитать стоимость
+      label.split-form__consent.landing-consent
+        input(type="checkbox", name="privacy_consent", required)
+        span Согласен(на) с политикой конфиденциальности
+      p.split-form__note.landing-text Калькулятор покажет предварительную стоимость и время приезда.
+      p.split-form__status(role="status", aria-live="polite", data-split-form-status, hidden)

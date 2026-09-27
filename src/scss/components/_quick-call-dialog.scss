@@ -69,21 +69,7 @@
 }
 
 .quick-call-dialog__consent {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
   margin-block: 8px;
-  color: var(--color-muted);
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.quick-call-dialog__consent input {
-  width: 18px;
-  height: 18px;
-  flex: 0 0 auto;
-  margin: 2px 0 0;
-  accent-color: var(--color-accent);
 }
 
 .quick-call-dialog__submit {

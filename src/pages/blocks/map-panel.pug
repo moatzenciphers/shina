@@ -13,7 +13,7 @@ section.map-panel.landing-section#service-area(aria-labelledby="map-panel-title"
         div.map-panel__contact(data-map-panel-contact, hidden)
           label.map-panel__phone-label(for="map-panel-phone") Номер телефона
           input.map-panel__input#map-panel-phone(type="tel", name="phone", inputmode="tel", autocomplete="tel", placeholder="+7 (___) ___-__-__", required, disabled, data-map-panel-phone)
-          label.map-panel__consent
+          label.map-panel__consent.landing-consent
             input(type="checkbox", name="privacy_consent", required, disabled, data-map-panel-consent)
             span Согласен(на) с политикой конфиденциальности
         input(type="hidden", name="coords", data-map-panel-coords)

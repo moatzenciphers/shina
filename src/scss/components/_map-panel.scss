@@ -1,10 +1,12 @@
+.map-panel {
+  padding-right: 0;
+}
+
 .map-panel__inner {
   display: grid;
   grid-template-columns: minmax(0, 46%) minmax(0, 54%);
   min-height: 640px;
   overflow: hidden;
-  border: 1px solid var(--landing-divider);
-  background: var(--color-landing-bg);
 }
 
 .map-panel__content {
@@ -12,6 +14,7 @@
   z-index: 2;
   align-self: center;
   padding: clamp(24px, 3vw, 48px);
+  padding-left: 0;
 }
 
 .map-panel__eyebrow {
@@ -98,20 +101,6 @@
   font-weight: 700;
 }
 
-.map-panel__consent {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  color: var(--color-muted);
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.map-panel__consent input {
-  accent-color: var(--color-accent);
-  margin-top: 3px;
-}
-
 .map-panel__form--checked .map-panel__submit {
   grid-column: 1 / -1;
   grid-row: auto;
@@ -127,22 +116,15 @@
   min-width: 0;
   min-height: 640px;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 50%, #11303b, var(--color-landing-bg) 75%);
-}
-
-.map-panel__visual::before {
-  position: absolute;
-  z-index: 1;
-  inset: 0 auto 0 0;
-  width: 18%;
-  background: linear-gradient(90deg, var(--color-landing-bg), transparent);
-  content: "";
-  pointer-events: none;
 }
 
 .map-panel__canvas {
   position: absolute;
   inset: 0;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 100%);
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
 }
 
 .map-panel__canvas [class*="-ground-pane"] {
@@ -187,11 +169,16 @@
   .map-panel__inner {
     grid-template-columns: minmax(0, 1fr);
     min-height: 0;
+    overflow: visible;
+  }
+
+  .map-panel {
+    padding-right: var(--landing-section-padding);
   }
 
   .map-panel__content {
-    min-height: 680px;
     padding: 24px;
+    padding-inline: 0;
     pointer-events: none;
   }
 
@@ -213,8 +200,13 @@
   }
 
   .map-panel__visual {
-    min-height: 530px;
-    margin-top: -230px;
+    min-height: 400px;
+    margin-left: calc(var(--landing-section-padding) * -1);
+    width: calc(100% + var(--landing-section-padding) * 2);
+  }
+
+  .map-panel__canvas {
+    mask-image: unset;
   }
 
   .map-panel__form--checked {
@@ -222,10 +214,4 @@
     box-shadow: 0 0 0 24px var(--color-landing-bg);
   }
 
-  .map-panel__visual::before {
-    inset: 0 0 auto;
-    width: auto;
-    height: 18%;
-    background: linear-gradient(180deg, var(--color-landing-bg), transparent);
-  }
 }

@@ -1,0 +1,105 @@
+.gallery-grid__panel {
+  width: 100%;
+}
+
+.gallery-grid__header {
+  display: block;
+}
+
+.gallery-grid__eyebrow { margin-bottom: 8px; }
+
+.gallery-grid__track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.gallery-grid__card {
+  min-width: 0;
+  margin: 0;
+}
+
+.gallery-grid__card:first-child { grid-column: 1 / -1; position: relative; }
+
+.gallery-grid__link {
+  position: relative;
+  display: block;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.gallery-grid__link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.gallery-grid__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.gallery-grid__card:first-child .gallery-grid__image { aspect-ratio: 2.65 / 1; }
+
+.gallery-grid__caption {
+  display: grid;
+  gap: 2px;
+  padding-top: 8px;
+}
+
+.gallery-grid__card:first-child .gallery-grid__caption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 48px 20px 16px;
+  border-radius: 0 0 6px 6px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, .78));
+}
+
+.gallery-grid__card-title { font-size: clamp(16px, 1.4vw, 22px); line-height: 1.25; }
+.gallery-grid__place { color: var(--color-muted); font-size: 16px; }
+.gallery-grid__controls { display: none; }
+
+.gallery-grid__footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--landing-divider);
+}
+
+@media (max-width: 850px) {
+  .gallery-grid__track {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    margin-top: 24px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .gallery-grid__track::-webkit-scrollbar { display: none; }
+  .gallery-grid__card { position: relative; flex: 0 0 100%; scroll-snap-align: start; }
+  .gallery-grid__image,
+  .gallery-grid__card:first-child .gallery-grid__image { aspect-ratio: 1 / 1; }
+  .gallery-grid__caption,
+  .gallery-grid__card:first-child .gallery-grid__caption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 56px 12px 12px;
+    border-radius: 0 0 6px 6px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, .85));
+  }
+
+  .gallery-grid__card-title { font-size: 18px; }
+  .gallery-grid__place { font-size: 14px; }
+  .gallery-grid__controls { display: flex; gap: 16px; margin-top: 16px; }
+  .gallery-grid__arrow { flex: 1 1 0; }
+  .gallery-grid__footer { justify-content: center; margin-top: 16px; }
+}

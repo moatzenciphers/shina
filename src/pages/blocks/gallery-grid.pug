@@ -1,0 +1,33 @@
+-
+  const visits = [
+    { image: require('../../img/visit-home.jpg'), alt: 'Мастер меняет колесо во дворе рядом с выездным автомобилем', title: 'Замена колеса у дома', place: 'Москва, вечерний выезд' },
+    { image: require('../../img/visit-puncture.jpg'), alt: 'Мастер ремонтирует прокол автомобильной шины на парковке', title: 'Ремонт прокола на парковке', place: 'Москва, бизнес-центр' },
+    { image: require('../../img/visit-evening.jpg'), alt: 'Мастер привёз колесо на выездном автомобиле вечером', title: 'Выездной шиномонтаж вечером', place: 'Москва, жилой комплекс' },
+    { image: require('../../img/visit-battery.jpg'), alt: 'Мастер запускает двигатель автомобиля на дороге', title: 'Запуск автомобиля на выезде', place: 'Москва, трасса МКАД' }
+  ];
+
+section.gallery-grid.landing-section#visits(aria-labelledby="gallery-grid-title")
+  div.gallery-grid__panel
+    header.gallery-grid__header
+      div.gallery-grid__heading
+        p.gallery-grid__eyebrow.landing-eyebrow ФОТО ВЫЕЗДОВ
+        h2.gallery-grid__title.landing-title.landing-title--section#gallery-grid-title Работаем там, где помощь нужна сейчас
+    div.gallery-grid__track(data-gallery-slider, tabindex="0", aria-label="Фотографии выездов")
+      each visit in visits
+        figure.gallery-grid__card
+          a.gallery-grid__link(href=visit.image, data-gallery="visits", data-title=visit.title, data-description=visit.place, aria-label=`Открыть фото: ${visit.title}`)
+            img.gallery-grid__image(src=visit.image, alt=visit.alt, loading="lazy", decoding="async")
+            span.gallery-grid__caption
+              strong.gallery-grid__card-title= visit.title
+              span.gallery-grid__place= visit.place
+    div.gallery-grid__controls(role="group", aria-label="Листать фотографии выездов")
+      button.landing-slider-arrow.gallery-grid__arrow(type="button", data-gallery-prev, aria-label="Предыдущий выезд")
+        svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+          path(d="M26 16H6m8-8-8 8 8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
+      button.landing-slider-arrow.landing-slider-arrow--next.gallery-grid__arrow(type="button", data-gallery-next, aria-label="Следующий выезд")
+        svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+          path(d="M6 16h20m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
+    footer.gallery-grid__footer
+      a.gallery-grid__all.landing-more-link(href="/vyezdy/") Посмотреть больше выездов
+        svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+          path(d="M5 16h22m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")

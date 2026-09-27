@@ -41,7 +41,7 @@ const carTypeLabels = {
   passenger: 'Легковой',
   crossover: 'Кроссовер',
   suv: 'Внедорожник',
-  commercial: 'Спецтехника, грузовое авто',
+  commercial: 'Спецтехника, грузовое',
 };
 
 const addonLabels = {
@@ -91,11 +91,18 @@ const orderFieldNames = {
 
 let submittedOrderRows = null;
 let isCalculatorSheetExpanded = false;
+let isCalculatorSheetContentScrolled = false;
+let isCalculatorSheetDetailsVisible = false;
 let calculatorSheetAddress = '';
+let calculatorDetailsHideTimerId = null;
 let suppressCalculatorToggleClick = false;
+let addressFocusViewportTimerId = null;
 
-const calculatorSheetDragThreshold = 56;
+const calculatorSheetDragThreshold = 24;
 const calculatorSheetMoveThreshold = 6;
+const calculatorContentScrollThreshold = 12;
+const calculatorDetailsHideDelay = 700;
+const addressFocusViewportReleaseDelay = 260;
 const calculatorDesktopQuery = '(min-width: 1024px)';
 
 const isDesktopCalculatorLayout = () => {
@@ -124,15 +131,7 @@ export const resetArrivalTime = () => {
   state.arrivalTime = null;
 };
 
-const getRouteDurationMinutes = (route) => {
-  const durationSeconds = [route.getJamsTime?.(), route.getTime?.()].find(
-    (value) => Number.isFinite(value) && value > 0,
-  );
-
-  return durationSeconds ? Math.ceil(durationSeconds / 60) : null;
-};
-
-const setArrivalTimeByMinutes = (minutes) => {
+export const setArrivalTimeByMinutes = (minutes) => {
   if (!Number.isFinite(minutes) || minutes <= 0) {
     state.arrivalTime = fixedArrivalTime;
     updateSummary();
@@ -143,10 +142,6 @@ const setArrivalTimeByMinutes = (minutes) => {
 
   state.arrivalTime = [minArrivalTime, minArrivalTime + 20];
   updateSummary();
-};
-
-export const setArrivalTimeByRoute = (route) => {
-  setArrivalTimeByMinutes(getRouteDurationMinutes(route));
 };
 
 const getActiveCalloutTariff = () => {
@@ -263,6 +258,10 @@ const getPhoneInput = () => {
   const orderForm = document.querySelector('[data-order-form]');
 
   return orderForm?.querySelector('input[type="tel"]') || document.querySelector('input[type="tel"]');
+};
+
+const getPersonalDataConsentInput = () => {
+  return document.querySelector('[data-personal-data-consent]');
 };
 
 const formatTimeRange = (time) => {
@@ -482,10 +481,11 @@ const isPhoneComplete = (value) => {
 
 const syncOrderSendButton = () => {
   const phoneInput = getPhoneInput();
+  const consentInput = getPersonalDataConsentInput();
   const sendButton = document.querySelector('[data-order-send]');
 
   if (sendButton) {
-    sendButton.disabled = !isPhoneComplete(phoneInput?.value);
+    sendButton.disabled = !isPhoneComplete(phoneInput?.value) || !consentInput?.checked;
   }
 };
 
@@ -493,6 +493,48 @@ const getCssNumber = (value, fallback = 0) => {
   const number = Number.parseFloat(value);
 
   return Number.isFinite(number) ? number : fallback;
+};
+
+const getElementOuterHeight = (element) => {
+  if (!element) {
+    return 0;
+  }
+
+  const styles = window.getComputedStyle(element);
+  const marginTop = getCssNumber(styles.marginTop);
+  const marginBottom = getCssNumber(styles.marginBottom);
+
+  return element.offsetHeight + marginTop + marginBottom;
+};
+
+const syncHeroHeightWithCalculator = (calculator, height = null) => {
+  const orderScreen = document.querySelector('[data-screen="order"]');
+
+  if (!orderScreen) {
+    return;
+  }
+
+  if (isDesktopCalculatorLayout()) {
+    orderScreen.style.removeProperty('--calculator-sheet-height');
+    orderScreen.style.removeProperty('--hero-height');
+    return;
+  }
+
+  const sheetHeight = Number.isFinite(height) ? height : calculator?.getBoundingClientRect().height;
+
+  if (!Number.isFinite(sheetHeight) || sheetHeight <= 0) {
+    return;
+  }
+
+  const roundedHeight = Math.round(sheetHeight);
+
+  orderScreen.style.setProperty('--calculator-sheet-height', `${roundedHeight}px`);
+};
+
+const setHeroHeightDragState = (isDragging) => {
+  document
+    .querySelector('[data-screen="order"]')
+    ?.classList.toggle('order-screen--calculator-dragging', isDragging);
 };
 
 const getCalculatorCollapsedHeight = (calculator) => {
@@ -507,9 +549,11 @@ const getCalculatorCollapsedHeight = (calculator) => {
   const calculatorStyles = window.getComputedStyle(calculator);
   const paddingTop = getCssNumber(calculatorStyles.paddingTop);
   const paddingBottom = getCssNumber(calculatorStyles.paddingBottom);
+  const introHeight = getElementOuterHeight(calculator.querySelector('.calculator__intro'));
 
   if (isConfirmStep) {
     const phoneField = orderForm.querySelector('.phone-field');
+    const consentField = orderForm.querySelector('.personal-consent');
     const footer = orderForm.querySelector('.order-confirm__footer');
 
     if (!phoneField || !footer) {
@@ -518,18 +562,32 @@ const getCalculatorCollapsedHeight = (calculator) => {
 
     const formStyles = window.getComputedStyle(orderForm);
     const formGap = getCssNumber(formStyles.rowGap || formStyles.gap, 0);
-    const height = paddingTop + handle.offsetHeight + phoneField.offsetHeight + formGap + footer.offsetHeight + paddingBottom;
+    const consentHeight = getElementOuterHeight(consentField);
+    const consentGap = consentHeight ? formGap : 0;
+    const height = paddingTop +
+      handle.offsetHeight +
+      introHeight +
+      phoneField.offsetHeight +
+      formGap +
+      consentHeight +
+      consentGap +
+      footer.offsetHeight +
+      paddingBottom;
 
     return Math.ceil(height);
   }
 
-  if (!hasEnteredAddress()) {
-    return 128;
-  }
-
   const form = calculator.querySelector('[data-calculator-form]');
   const addressField = calculator.querySelector('.address-field');
-  const footer = calculator.querySelector('.calculator__footer');
+  const footer = calculator.querySelector('.calculator__footer-row');
+
+  if (!hasEnteredAddress()) {
+    if (!addressField) {
+      return 178;
+    }
+
+    return Math.ceil(paddingTop + handle.offsetHeight + introHeight + addressField.offsetHeight + paddingBottom);
+  }
 
   if (!form || !addressField || !footer) {
     return 292;
@@ -537,9 +595,59 @@ const getCalculatorCollapsedHeight = (calculator) => {
 
   const formStyles = window.getComputedStyle(form);
   const formGap = getCssNumber(formStyles.rowGap || formStyles.gap, 0);
-  const height = paddingTop + handle.offsetHeight + addressField.offsetHeight + formGap + footer.offsetHeight + paddingBottom;
+  const height = paddingTop + handle.offsetHeight + introHeight + addressField.offsetHeight + formGap + footer.offsetHeight + paddingBottom;
 
   return Math.ceil(height);
+};
+
+const getStableViewportHeight = () => {
+  return Math.max(
+    window.innerHeight || 0,
+    window.visualViewport?.height || 0,
+    document.documentElement.clientHeight || 0,
+  );
+};
+
+const getCalculatorExpandedHeight = () => {
+  const viewportHeight = getStableViewportHeight();
+
+  return Math.max(220, Math.min(viewportHeight * 0.7, viewportHeight - 24));
+};
+
+const getCalculatorContentScrolledHeight = () => {
+  const viewportHeight = getStableViewportHeight();
+
+  return Math.max(220, viewportHeight - 72);
+};
+
+const getCalculatorExpandedTargetHeight = () => {
+  return isCalculatorSheetContentScrolled ? getCalculatorContentScrolledHeight() : getCalculatorExpandedHeight();
+};
+
+const clearCalculatorDetailsHideTimer = () => {
+  window.clearTimeout(calculatorDetailsHideTimerId);
+  calculatorDetailsHideTimerId = null;
+};
+
+const completeCalculatorDetailsHide = (calculator) => {
+  clearCalculatorDetailsHideTimer();
+  isCalculatorSheetDetailsVisible = false;
+  calculator?.classList.remove('calculator--details-visible', 'calculator--closing');
+};
+
+const hideCalculatorDetailsAfterClose = (calculator) => {
+  clearCalculatorDetailsHideTimer();
+  calculator?.classList.add('calculator--closing');
+
+  calculatorDetailsHideTimerId = window.setTimeout(() => {
+    completeCalculatorDetailsHide(calculator);
+  }, calculatorDetailsHideDelay);
+};
+
+const showCalculatorDetails = (calculator) => {
+  clearCalculatorDetailsHideTimer();
+  isCalculatorSheetDetailsVisible = true;
+  calculator?.classList.remove('calculator--closing');
 };
 
 const syncCalculatorSheet = () => {
@@ -560,24 +668,39 @@ const syncCalculatorSheet = () => {
 
   if (isDesktopCalculatorLayout()) {
     isCalculatorSheetExpanded = true;
+    isCalculatorSheetContentScrolled = false;
   }
 
   calculatorSheetAddress = currentAddress;
 
   const isExpanded = isCalculatorSheetExpanded;
-  const hasVisibleDetails = isExpanded;
+
+  if (!isExpanded) {
+    isCalculatorSheetContentScrolled = false;
+  }
+
+  if (isExpanded) {
+    showCalculatorDetails(calculator);
+  } else if (isCalculatorSheetDetailsVisible && !calculatorDetailsHideTimerId) {
+    hideCalculatorDetailsAfterClose(calculator);
+  }
 
   calculator.classList.toggle('calculator--expanded', isExpanded);
   calculator.classList.toggle('calculator--collapsed', !isExpanded);
+  calculator.classList.toggle('calculator--content-scrolled', isExpanded && isCalculatorSheetContentScrolled);
   calculator.classList.toggle('calculator--has-address', hasAddress);
   calculator.classList.toggle('calculator--has-compact-confirm', Boolean(isConfirmStep));
-  calculator.classList.toggle('calculator--details-visible', hasVisibleDetails);
+  calculator.classList.toggle('calculator--details-visible', isCalculatorSheetDetailsVisible);
+
+  const collapsedHeight = getCalculatorCollapsedHeight(calculator);
 
   if (hasAddress || isConfirmStep) {
-    calculator.style.setProperty('--calculator-collapsed-height', `${getCalculatorCollapsedHeight(calculator)}px`);
+    calculator.style.setProperty('--calculator-collapsed-height', `${collapsedHeight}px`);
   } else {
     calculator.style.removeProperty('--calculator-collapsed-height');
   }
+
+  syncHeroHeightWithCalculator(calculator, isExpanded ? getCalculatorExpandedHeight() : collapsedHeight);
 
   if (toggleButton) {
     toggleButton.setAttribute('aria-expanded', String(isExpanded));
@@ -587,6 +710,9 @@ const syncCalculatorSheet = () => {
 
 const setCalculatorSheetExpanded = (isExpanded) => {
   isCalculatorSheetExpanded = isDesktopCalculatorLayout() || Boolean(isExpanded);
+  if (!isCalculatorSheetExpanded) {
+    isCalculatorSheetContentScrolled = false;
+  }
   calculatorSheetAddress = state.address;
   syncCalculatorSheet();
 };
@@ -595,32 +721,88 @@ export const expandCalculatorSheet = () => {
   setCalculatorSheetExpanded(true);
 };
 
+const lockAddressFocusViewport = () => {
+  if (isDesktopCalculatorLayout()) {
+    return;
+  }
+
+  window.clearTimeout(addressFocusViewportTimerId);
+
+  const viewportHeight = getStableViewportHeight();
+  const calculator = document.querySelector('[data-calculator]');
+
+  if (!viewportHeight) {
+    return;
+  }
+
+  document.documentElement.style.setProperty('--app-viewport-height', `${Math.round(viewportHeight)}px`);
+  calculator?.style.setProperty('--calculator-address-expanded-height', `${Math.round(viewportHeight * 0.7)}px`);
+};
+
+const releaseAddressFocusViewport = () => {
+  window.clearTimeout(addressFocusViewportTimerId);
+
+  addressFocusViewportTimerId = window.setTimeout(() => {
+    document.documentElement.style.removeProperty('--app-viewport-height');
+    document.querySelector('[data-calculator]')?.style.removeProperty('--calculator-address-expanded-height');
+  }, addressFocusViewportReleaseDelay);
+};
+
+const expandCalculatorSheetForAddressInput = () => {
+  lockAddressFocusViewport();
+  isCalculatorSheetContentScrolled = !isDesktopCalculatorLayout();
+  setCalculatorSheetExpanded(true);
+
+  window.requestAnimationFrame(() => {
+    document.querySelector('[data-calculator]')?.scrollTo({
+      top: 0,
+    });
+  });
+};
+
 export const collapseCalculatorSheet = () => {
   setCalculatorSheetExpanded(false);
 };
 
 const getCalculatorSheetHeights = () => {
-  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
   const calculator = document.querySelector('[data-calculator]');
   const collapsedHeight = getCalculatorCollapsedHeight(calculator);
 
   return {
     collapsed: collapsedHeight,
-    expanded: Math.max(220, Math.min(viewportHeight * 0.64, viewportHeight - 24)),
+    expanded: getCalculatorExpandedTargetHeight(),
   };
 };
 
 const setCalculatorSheetDragHeight = (calculator, height) => {
   calculator.style.setProperty('--calculator-current-height', `${Math.round(height)}px`);
+  syncHeroHeightWithCalculator(calculator, Math.min(height, getCalculatorExpandedHeight()));
 };
 
 const resetCalculatorSheetDrag = (calculator) => {
   calculator.style.removeProperty('--calculator-current-height');
   calculator.classList.remove('calculator--dragging', 'calculator--drag-preview-expanded');
+  setHeroHeightDragState(false);
 };
 
 const getCalculatorSheetDragHeight = (dragState, deltaY) => {
   return clamp(dragState.startHeight - deltaY, dragState.heights.collapsed, dragState.heights.expanded);
+};
+
+const syncCalculatorContentScrollState = (calculator) => {
+  if (!calculator || isDesktopCalculatorLayout() || !isCalculatorSheetExpanded) {
+    return;
+  }
+
+  const scrollTop = calculator.scrollTop || 0;
+  const shouldUseContentScrolledHeight = scrollTop > calculatorContentScrollThreshold;
+
+  if (!shouldUseContentScrolledHeight || isCalculatorSheetContentScrolled) {
+    return;
+  }
+
+  isCalculatorSheetContentScrolled = true;
+  syncCalculatorSheet();
 };
 
 const initCalculatorSheetDrag = ({ calculator, toggleButton }) => {
@@ -661,21 +843,18 @@ const initCalculatorSheetDrag = ({ calculator, toggleButton }) => {
       return;
     }
 
-    if (!hasEnteredAddress()) {
+    if (dragState.startsExpanded) {
+      setCalculatorSheetExpanded(deltaY < calculatorSheetDragThreshold);
+    } else {
+      setCalculatorSheetExpanded(deltaY <= -calculatorSheetDragThreshold);
+    }
+
+    if (!hasEnteredAddress() && !dragState.startsExpanded) {
       if (nextHeight > dragState.heights.collapsed + calculatorSheetDragThreshold) {
         setCalculatorSheetExpanded(true);
       } else {
         setCalculatorSheetExpanded(false);
       }
-
-      dragState = null;
-      return;
-    }
-
-    if (dragState.startsExpanded) {
-      setCalculatorSheetExpanded(deltaY < calculatorSheetDragThreshold);
-    } else {
-      setCalculatorSheetExpanded(deltaY <= -calculatorSheetDragThreshold);
     }
 
     dragState = null;
@@ -697,6 +876,7 @@ const initCalculatorSheetDrag = ({ calculator, toggleButton }) => {
     dragState.startHeight = dragState.startsExpanded ? dragState.heights.expanded : dragState.heights.collapsed;
 
     calculator.classList.add('calculator--dragging');
+    setHeroHeightDragState(true);
 
     try {
       toggleButton.setPointerCapture?.(event.pointerId);
@@ -911,6 +1091,8 @@ export const initCalculator = () => {
   const form = document.querySelector('[data-calculator-form]');
   const orderForm = document.querySelector('[data-order-form]');
   const phoneInput = getPhoneInput();
+  const personalDataConsentInput = getPersonalDataConsentInput();
+  const calculator = document.querySelector('[data-calculator]');
   const calculatorToggle = document.querySelector('[data-calculator-toggle]');
   const addressInput = document.querySelector('[data-address-input]');
   const orderBackButton = document.querySelector('[data-order-back]');
@@ -918,9 +1100,9 @@ export const initCalculator = () => {
 
   initPhoneMask(phoneInput);
 
-  addressInput?.addEventListener('focus', () => {
-    setCalculatorSheetExpanded(true);
-  });
+  addressInput?.addEventListener('focus', expandCalculatorSheetForAddressInput);
+  addressInput?.addEventListener('click', expandCalculatorSheetForAddressInput);
+  addressInput?.addEventListener('blur', releaseAddressFocusViewport);
 
   calculatorToggle?.addEventListener('click', (event) => {
     if (suppressCalculatorToggleClick) {
@@ -935,8 +1117,24 @@ export const initCalculator = () => {
   });
 
   initCalculatorSheetDrag({
-    calculator: document.querySelector('[data-calculator]'),
+    calculator,
     toggleButton: calculatorToggle,
+  });
+
+  calculator?.addEventListener('scroll', () => {
+    syncCalculatorContentScrollState(calculator);
+  }, { passive: true });
+  calculator?.addEventListener('transitionend', (event) => {
+    if (
+      event.target !== calculator ||
+      event.propertyName !== 'height' ||
+      isCalculatorSheetExpanded ||
+      !isCalculatorSheetDetailsVisible
+    ) {
+      return;
+    }
+
+    completeCalculatorDetailsHide(calculator);
   });
 
   const desktopLayoutMedia = window.matchMedia?.(calculatorDesktopQuery);
@@ -948,6 +1146,8 @@ export const initCalculator = () => {
 
     syncCalculatorSheet();
   });
+
+  window.addEventListener('resize', syncCalculatorSheet);
 
   diameterRange?.addEventListener('input', () => {
     syncDiameterSlider({
@@ -984,14 +1184,17 @@ export const initCalculator = () => {
     setCalculatorSheetExpanded(true);
     syncOrderSendButton();
     syncOrderHiddenFields();
-    phoneInput?.focus();
   });
 
   orderForm?.addEventListener('submit', (event) => {
-    if (!isPhoneComplete(phoneInput?.value)) {
+    if (!isPhoneComplete(phoneInput?.value) || !personalDataConsentInput?.checked) {
       event.preventDefault();
       event.stopPropagation();
-      phoneInput?.focus();
+      if (!isPhoneComplete(phoneInput?.value)) {
+        phoneInput?.focus();
+      } else {
+        personalDataConsentInput?.focus();
+      }
       return;
     }
 
@@ -1020,6 +1223,10 @@ export const initCalculator = () => {
   phoneInput?.addEventListener('blur', () => {
     syncOrderSendButton();
     syncOrderHiddenFields();
+  });
+
+  personalDataConsentInput?.addEventListener('change', () => {
+    syncOrderSendButton();
   });
 
   orderBackButton?.addEventListener('click', () => {

@@ -19,6 +19,7 @@ html(lang="ru")
       window.__YANDEX_MAPS_URL__ = !{JSON.stringify(yandexMapsUrl || '')};
       window.__YANDEX_MAPS_DISABLED__ = !{JSON.stringify(!yandexMapsUrl)};
       window.__YANDEX_SUGGEST_DISABLED__ = !{JSON.stringify(Boolean(yandexMapsUrl && !hasYandexSuggestApiKey))};
+      window.__OPENROUTESERVICE_API_KEY__ = !{JSON.stringify(openRouteServiceApiKey || '')};
   body
     div.landing(data-landing)
       main.landing__main
@@ -43,21 +44,34 @@ html(lang="ru")
         section.order-screen(aria-label="Заказ шиномонтажа")
           header.hero
             div.hero__map-placeholder(data-service-map, role="img", aria-label="Место для карты")
+            div.map-attribution
+              | ©&nbsp;
+              a(href="https://openrouteservice.org/", target="_blank", rel="noopener noreferrer") openrouteservice.org
+              | &nbsp;by HeiGIT | Map data ©&nbsp;
+              a(href="https://www.openstreetmap.org/copyright", target="_blank", rel="noopener noreferrer") OpenStreetMap contributors
             div.map-overlay
               div.map-overlay__zoom(aria-label="Масштаб карты")
                 button.map-overlay__control(type="button", aria-label="Приблизить карту", data-service-map-zoom="in")
                   svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
-                      path(fill="currentColor" d="M5 13v-1h6V6h1v6h6v1h-6v6h-1v-6z")
+                      path(fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z")
                 button.map-overlay__control(type="button", aria-label="Отдалить карту", data-service-map-zoom="out")
                   svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
-                    path(fill="currentColor" d="M5 13v-1h13v1z")
+                    path(fill="currentColor" d="M19 12.998H5v-2h14z")
               button.map-overlay__location(type="button", aria-label="Использовать текущее местоположение", data-location-button)
                   svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
                       path(fill="currentColor" d="M11.5 21.45v-1.461q-3.125-.293-5.16-2.328q-2.036-2.036-2.328-5.161H2.55v-1h1.462q.292-3.125 2.328-5.16t5.16-2.328V2.55h1v1.462q3.125.292 5.16 2.328t2.329 5.16h1.461v1h-1.461q-.293 3.125-2.328 5.16q-2.036 2.036-5.161 2.329v1.461zm5.45-4.5Q19 14.9 19 12t-2.05-4.95T12 5T7.05 7.05T5 12t2.05 4.95T12 19t4.95-2.05m-7.073-2.827Q9 13.246 9 12t.877-2.123T12 9t2.123.877T15 12t-.877 2.123T12 15t-2.123-.877m3.536-.71Q14 12.825 14 12t-.587-1.412T12 10t-1.412.588T10 12t.588 1.413T12 14t1.413-.587M12 12")
           section.calculator(data-calculator)
             button.calculator__handle(type="button", aria-label="Развернуть калькулятор", aria-expanded="false", data-calculator-toggle)
               span(aria-hidden="true")
-            h2.visually-hidden Калькулятор заказа
+            header.calculator__intro
+              div.calculator__intro-copy
+                h1.calculator__title Выездной
+                  br
+                  | шиномонтаж #[span 24/7]
+                p.calculator__subtitle приедем за #[span 30-60] минут
+              a.calculator__call(href="tel:+70000000000", aria-label="Позвонить")
+                svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                  path(fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21")
             form.calculator__form(action="#", data-calculator-form, autocomplete="off")
 
               fieldset.calculator__section
@@ -98,7 +112,7 @@ html(lang="ru")
                     span.option-card__label Внедорожник
                   button.option-card(type="button", data-option-name="carType", data-option-value="commercial", data-service-only="conditioner", aria-pressed="false", hidden)
                     img(src=furaIcon, alt="", loading="lazy", decoding="async")
-                    span.option-card__label Спецтехника, грузовое авто
+                    span.option-card__label Спецтехника, грузовое
 
               fieldset.calculator__section.calculator__section--details(data-service-section="diameter")
                 legend.calculator__legend Диаметр колес
@@ -159,21 +173,29 @@ html(lang="ru")
                     span.checkbox-card__label Доставка
                     span.checkbox-card__price +3 500 ₽
 
-              div.calculator__footer.calculator__section--details
-                div.order-summary(aria-live="polite")
-                  div.order-summary__item
-                    span.order-summary__label Стоимость
-                    span.order-summary__line
-                      span(data-price-prefix) от
-                      output.order-summary__value(data-price-output, for="diameter-range") 2 700
-                      span(data-price-unit) ₽
-                  div.order-summary__item
-                    span.order-summary__label Время прибытия
-                    span.order-summary__line
-                      output.order-summary__value(data-time-output) —
-                      span(data-time-unit) мин
+              div.calculator__footer-row
+                div.calculator__footer-main
+                  button.calculator__footer.calculator__section--details(type="submit", data-order-submit)
+                    span.order-summary(aria-live="polite")
+                      span.order-summary__item
+                        span.order-summary__label Стоимость
+                        span.order-summary__line
+                          span(data-price-prefix) от
+                          output.order-summary__value(data-price-output, for="diameter-range") 2 700
+                          span(data-price-unit) ₽
+                      | |
+                      span.order-summary__item
+                        span.order-summary__label Время прибытия
+                        span.order-summary__line
+                          output.order-summary__value(data-time-output) —
+                          span(data-time-unit) мин
+                    svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                      path(fill="currentColor" d="M4 12h12.25L11 6.75l.66-.75l6.5 6.5l-6.5 6.5l-.66-.75L16.25 13H4z")
+                a.calculator__footer-call.calculator__section--details(href="tel:+70000000000", aria-label="Позвонить")
+                  svg.icon-circle.icon-circle--small(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24")
+                    path(fill="currentColor" d="M4.05 21q-.45 0-.75-.3t-.3-.75V15.9q0-.325.225-.587t.575-.363l3.45-.7q.35-.05.713.063t.587.337L10.9 17q.95-.55 1.8-1.213t1.625-1.437q.825-.8 1.513-1.662t1.187-1.788L14.6 8.45q-.2-.2-.275-.475T14.3 7.3l.65-3.5q.05-.325.325-.562T15.9 3h4.05q.45 0 .75.3t.3.75q0 3.125-1.362 6.175t-3.863 5.55t-5.55 3.863T4.05 21")
 
-                button.primary-button(type="submit", data-order-submit) Продолжить
+                p.calculator__footer-disclaimer Цены указаны за неполный комплекс. Для уточнения деталей вам позвонит оператор.
 
             form.order-confirm(action="#", data-order-form, hidden)
               h2.order-confirm__title Подтверждение заявки
@@ -204,6 +226,9 @@ html(lang="ru")
               label.phone-field(for="order-phone")
                 span.phone-field__label Телефон для связи
                 input#order-phone.phone-field__input(type="tel", name="phone", inputmode="tel", autocomplete="tel", placeholder="+7 (___) ___-__-__")
+              label.personal-consent
+                input.personal-consent__control(type="checkbox", name="personal_data_consent", value="yes", required, data-personal-data-consent)
+                span.personal-consent__text Я принимаю согласие на обработку персональных данных
               div.order-confirm__footer
                 button.secondary-button(type="button", data-order-back) Назад
                 button.primary-button(type="submit", data-order-send, disabled) Отправить
@@ -247,3 +272,8 @@ html(lang="ru")
                 path(fill="currentColor" d="M14.935 16.223L11.5 12.789V7.923h1v4.464l3.123 3.123zM11.5 6V4h1v2zm6.5 6.5v-1h2v1zM11.5 20v-2h1v2zM4 12.5v-1h2v1zm8.003 8.5q-1.867 0-3.51-.708q-1.643-.709-2.859-1.924t-1.925-2.856T3 12.003t.709-3.51Q4.417 6.85 5.63 5.634t2.857-1.925T11.997 3t3.51.709q1.643.708 2.859 1.922t1.925 2.857t.709 3.509t-.708 3.51t-1.924 2.859t-2.856 1.925t-3.509.709M12 20q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8")
               strong 24/7
               span.trust-panel__text работаем круглосуточно
+          div.cookie-consent(data-cookie-consent, role="dialog", aria-live="polite", aria-label="Согласие на использование cookie", hidden)
+            div.cookie-consent__content
+              h2.cookie-consent__title Мы используем cookie
+              p.cookie-consent__text Cookie помогают сайту работать стабильно и улучшать сервис.
+            button.primary-button.cookie-consent__button(type="button", data-cookie-consent-accept) Принять

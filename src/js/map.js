@@ -3,7 +3,7 @@ import {
   collapseCalculatorSheet,
   resetArrivalTime,
   setAddress,
-  setArrivalTimeByRoute,
+  setArrivalTimeByMinutes,
   updateSummary,
 } from './calculator';
 import {
@@ -29,8 +29,12 @@ const serviceMapState = {
   markerLayouts: {},
   masterCollection: null,
   customerPlacemark: null,
-  ignoreNextClickAfterSheetClose: false,
+  lastBounds: null,
+  resizeFrameId: null,
+  resizeObserver: null,
+  resizeTimeoutId: null,
   route: null,
+  routeAbortController: null,
   requestId: 0,
 };
 
@@ -48,8 +52,54 @@ const yandexMapsState = {
 };
 
 const desktopMapQuery = '(min-width: 1024px)';
+const addressLocationResolvingText = 'Определяем местоположение';
+const openRouteServiceDirectionsUrl = 'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
 
 const getYandexMapsUrl = () => String(window.__YANDEX_MAPS_URL__ || '');
+const getOpenRouteServiceApiKey = () => String(window.__OPENROUTESERVICE_API_KEY__ || '');
+
+const getAddressInputValue = (input) => {
+  if (!input) {
+    return '';
+  }
+
+  if (input.value === addressLocationResolvingText) {
+    return input.dataset.locationPreviousValue || '';
+  }
+
+  return input.value;
+};
+
+const setAddressInputResolving = (isResolving) => {
+  const input = document.querySelector('[data-address-input]');
+
+  if (!input) {
+    return;
+  }
+
+  if (isResolving) {
+    if (!('locationPreviousValue' in input.dataset)) {
+      input.dataset.locationPreviousValue = input.value;
+      input.dataset.locationPreviousPlaceholder = input.getAttribute('placeholder') || '';
+    }
+
+    input.value = addressLocationResolvingText;
+    input.placeholder = addressLocationResolvingText;
+    input.disabled = true;
+    input.setAttribute('aria-busy', 'true');
+    return;
+  }
+
+  if (input.value === addressLocationResolvingText) {
+    input.value = input.dataset.locationPreviousValue || '';
+  }
+
+  input.placeholder = input.dataset.locationPreviousPlaceholder || 'Введите адрес';
+  input.disabled = false;
+  input.removeAttribute('aria-busy');
+  delete input.dataset.locationPreviousValue;
+  delete input.dataset.locationPreviousPlaceholder;
+};
 
 const setYandexMapsMissingStatus = () => {
   setLocationStatus('Укажите YANDEX_MAPS_API_KEY и YANDEX_SUGGEST_API_KEY в .env для карт и подсказок.');
@@ -57,6 +107,20 @@ const setYandexMapsMissingStatus = () => {
 
 const isDesktopMapLayout = () => {
   return window.matchMedia?.(desktopMapQuery).matches || false;
+};
+
+const syncServiceMapBehaviors = () => {
+  const map = serviceMapState.instance;
+
+  if (!map?.behaviors) {
+    return;
+  }
+
+  if (isDesktopMapLayout()) {
+    map.behaviors.enable('scrollZoom');
+  } else {
+    map.behaviors.disable('scrollZoom');
+  }
 };
 
 const isCalculatorSheetOpen = () => {
@@ -107,11 +171,18 @@ export const loadYandexMaps = () => {
 
     const handleLoad = () => {
       if (!window.ymaps) {
+        yandexMapsState.promise = null;
         reject(new Error('Yandex Maps API did not expose window.ymaps'));
         return;
       }
 
-      window.ymaps.ready(() => resolve(window.ymaps));
+      window.ymaps.ready(
+        () => resolve(window.ymaps),
+        () => {
+          yandexMapsState.promise = null;
+          reject(new Error('Yandex Maps API failed to initialize'));
+        },
+      );
     };
 
     script.addEventListener('load', handleLoad, { once: true });
@@ -286,10 +357,9 @@ const initServiceMap = () => {
   );
 
   serviceMapState.instance.behaviors.disable([
-    'scrollZoom',
-    'dblClickZoom',
     'rightMouseButtonMagnifier',
   ]);
+  syncServiceMapBehaviors();
 
   container.addEventListener('pointerdown', (event) => {
     if (!canUseServiceMapAsAddressPicker()) {
@@ -308,23 +378,14 @@ const initServiceMap = () => {
       return;
     }
 
-    serviceMapState.ignoreNextClickAfterSheetClose = true;
     collapseCalculatorSheet();
-
-    window.setTimeout(() => {
-      serviceMapState.ignoreNextClickAfterSheetClose = false;
-    }, 350);
+    scheduleServiceMapRefit();
   }, {
     capture: true,
   });
 
   serviceMapState.instance.events.add('click', (event) => {
     if (!canUseServiceMapAsAddressPicker()) {
-      return;
-    }
-
-    if (serviceMapState.ignoreNextClickAfterSheetClose) {
-      serviceMapState.ignoreNextClickAfterSheetClose = false;
       return;
     }
 
@@ -341,6 +402,13 @@ const initServiceMap = () => {
   });
 
   serviceMapState.instance.geoObjects.add(serviceMapState.masterCollection);
+  if ('ResizeObserver' in window && !serviceMapState.resizeObserver) {
+    serviceMapState.resizeObserver = new ResizeObserver(scheduleServiceMapRefit);
+    serviceMapState.resizeObserver.observe(container);
+  } else {
+    window.addEventListener('resize', scheduleServiceMapRefit);
+  }
+
   container.classList.add('hero__map-placeholder--ready');
   container.classList.remove('hero__map-placeholder--loading');
 
@@ -350,18 +418,21 @@ const initServiceMap = () => {
 const clearServiceMapRoute = () => {
   const map = serviceMapState.instance;
 
+  serviceMapState.routeAbortController?.abort();
+  serviceMapState.routeAbortController = null;
+
   if (!map) {
     return;
-  }
-
-  if (serviceMapState.route) {
-    map.geoObjects.remove(serviceMapState.route);
-    serviceMapState.route = null;
   }
 
   if (serviceMapState.customerPlacemark) {
     map.geoObjects.remove(serviceMapState.customerPlacemark);
     serviceMapState.customerPlacemark = null;
+  }
+
+  if (serviceMapState.route) {
+    map.geoObjects.remove(serviceMapState.route);
+    serviceMapState.route = null;
   }
 };
 
@@ -392,86 +463,6 @@ const resetServiceMapToMasters = () => {
   fitAllMasters();
 };
 
-const hideRouteWaypoints = (route) => {
-  try {
-    route.getWayPoints().options.set({
-      visible: false,
-    });
-  } catch {
-    // Some Yandex route implementations expose waypoints differently.
-  }
-};
-
-const mergeBounds = (...boundsList) => {
-  const points = boundsList
-    .filter(Boolean)
-    .flat()
-    .filter(Boolean);
-
-  if (!points.length) {
-    return null;
-  }
-
-  return getBoundsFromPoints(points);
-};
-
-const isServiceMapPoint = (value) => {
-  return (
-    Array.isArray(value) &&
-    value.length >= 2 &&
-    Number.isFinite(Number(value[0])) &&
-    Number.isFinite(Number(value[1]))
-  );
-};
-
-const collectServiceMapPoints = (value, points = []) => {
-  if (isServiceMapPoint(value)) {
-    points.push([Number(value[0]), Number(value[1])]);
-    return points;
-  }
-
-  if (Array.isArray(value)) {
-    value.forEach((item) => collectServiceMapPoints(item, points));
-  }
-
-  return points;
-};
-
-const getRoutePathPoints = (route) => {
-  const points = [];
-  const paths = route.getPaths?.();
-
-  if (!paths) {
-    return points;
-  }
-
-  const collectPath = (path) => {
-    const coordinates = path.geometry?.getCoordinates?.();
-
-    collectServiceMapPoints(coordinates, points);
-  };
-
-  if (typeof paths.each === 'function') {
-    paths.each(collectPath);
-    return points;
-  }
-
-  const pathsCount = paths.getLength?.() || 0;
-
-  for (let index = 0; index < pathsCount; index += 1) {
-    collectPath(paths.get(index));
-  }
-
-  return points;
-};
-
-const getRouteBounds = (route, fallbackPoints = []) => {
-  const routePoints = getRoutePathPoints(route);
-  const points = routePoints.length ? routePoints : fallbackPoints;
-
-  return points.length ? getBoundsFromPoints(points) : null;
-};
-
 const normalizeServiceMapBounds = (bounds) => {
   if (!bounds) {
     return null;
@@ -494,10 +485,11 @@ const normalizeServiceMapBounds = (bounds) => {
 
 const getServiceMapZoomMargin = (map) => {
   const [width = 0, height = 0] = map.container.getSize?.() || [];
-  const horizontalMargin = Math.min(Math.round(width * 0.12), 28);
-  const verticalMargin = Math.min(Math.round(height * 0.14), 30);
+  const horizontalMargin = Math.min(Math.round(width * 0.12), 36);
+  const verticalMargin = Math.min(Math.round(height * 0.14), 36);
+  const bottomSheetOverlap = isDesktopMapLayout() ? 0 : 42;
 
-  return [verticalMargin, horizontalMargin, verticalMargin, horizontalMargin];
+  return [verticalMargin, horizontalMargin, verticalMargin + bottomSheetOverlap, horizontalMargin];
 };
 
 const getServiceMapFitZoom = (map, bounds) => {
@@ -519,6 +511,32 @@ const getServiceMapFitZoom = (map, bounds) => {
   return clamp(Math.min(zoomByWidth, zoomByHeight), minZoom, maxZoom);
 };
 
+const getCoordsFromMercatorPoint = ({ x, y }) => {
+  const lng = x * 360 - 180;
+  const lat = (180 / Math.PI) * (2 * Math.atan(Math.exp((0.5 - y) * 2 * Math.PI)) - Math.PI / 2);
+
+  return [lat, lng];
+};
+
+const getServiceMapFitCenter = (map, bounds, zoom, zoomMargin) => {
+  const tileSize = 256;
+  const [width = 0, height = 0] = map.container.getSize?.() || [];
+  const [topMargin, rightMargin, bottomMargin, leftMargin] = zoomMargin;
+  const viewportWidth = Math.max(width - leftMargin - rightMargin, 1);
+  const viewportHeight = Math.max(height - topMargin - bottomMargin, 1);
+  const contentCenterX = leftMargin + viewportWidth / 2;
+  const contentCenterY = topMargin + viewportHeight / 2;
+  const fullCenterX = width / 2;
+  const fullCenterY = height / 2;
+  const pixelsPerWorld = tileSize * (2 ** zoom);
+  const center = getMercatorPoint(getBoundsCenter(bounds));
+
+  return getCoordsFromMercatorPoint({
+    x: center.x - (contentCenterX - fullCenterX) / pixelsPerWorld,
+    y: center.y - (contentCenterY - fullCenterY) / pixelsPerWorld,
+  });
+};
+
 const fitServiceMap = (bounds) => {
   const map = serviceMapState.instance;
   const normalizedBounds = normalizeServiceMapBounds(bounds);
@@ -527,7 +545,7 @@ const fitServiceMap = (bounds) => {
     return;
   }
 
-  const center = getBoundsCenter(normalizedBounds);
+  serviceMapState.lastBounds = normalizedBounds;
 
   window.requestAnimationFrame(() => {
     map.container.fitToViewport();
@@ -537,6 +555,7 @@ const fitServiceMap = (bounds) => {
 
       const zoom = getServiceMapFitZoom(map, normalizedBounds);
       const zoomMargin = getServiceMapZoomMargin(map);
+      const center = getServiceMapFitCenter(map, normalizedBounds, zoom, zoomMargin);
       const setRouteCamera = () => {
         map.setCenter(center, zoom, {
           checkZoomRange: true,
@@ -569,6 +588,27 @@ const fitServiceMap = (bounds) => {
   });
 };
 
+const refitServiceMap = () => {
+  if (!serviceMapState.lastBounds) {
+    serviceMapState.instance?.container?.fitToViewport();
+    return;
+  }
+
+  fitServiceMap(serviceMapState.lastBounds);
+};
+
+const scheduleServiceMapRefit = () => {
+  window.cancelAnimationFrame(serviceMapState.resizeFrameId);
+  window.clearTimeout(serviceMapState.resizeTimeoutId);
+
+  serviceMapState.resizeFrameId = window.requestAnimationFrame(() => {
+    serviceMapState.resizeFrameId = null;
+    refitServiceMap();
+  });
+
+  serviceMapState.resizeTimeoutId = window.setTimeout(refitServiceMap, 520);
+};
+
 const fitAllMasters = () => {
   fitServiceMap(getBoundsFromPoints(moscowMasterPoints.map((master) => master.coords)));
 };
@@ -585,6 +625,45 @@ const renderInitialServiceMap = () => {
     showAllMasters();
     fitAllMasters();
   }).catch(() => {});
+};
+
+const requestOpenRouteServiceRoute = async (startCoords, endCoords, signal) => {
+  const apiKey = getOpenRouteServiceApiKey();
+
+  if (!apiKey) {
+    throw new Error('OPENROUTESERVICE_API_KEY is not configured');
+  }
+
+  const response = await fetch(openRouteServiceDirectionsUrl, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/geo+json',
+      Authorization: apiKey,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      coordinates: [startCoords, endCoords].map(([lat, lng]) => [lng, lat]),
+    }),
+    signal,
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenRouteService request failed with status ${response.status}`);
+  }
+
+  const data = await response.json();
+  const feature = data.features?.[0];
+  const durationSeconds = Number(feature?.properties?.summary?.duration);
+  const routeCoords = feature?.geometry?.coordinates?.map(([lng, lat]) => [Number(lat), Number(lng)]);
+  const hasValidRoute = Array.isArray(routeCoords) && routeCoords.length >= 2 && routeCoords.every(
+    ([lat, lng]) => Number.isFinite(lat) && Number.isFinite(lng),
+  );
+
+  if (!hasValidRoute || !Number.isFinite(durationSeconds) || durationSeconds <= 0) {
+    throw new Error('OpenRouteService returned an invalid route');
+  }
+
+  return { durationSeconds, routeCoords };
 };
 
 const renderServiceMapForCoords = (customerCoords) => {
@@ -605,19 +684,29 @@ const renderServiceMapForCoords = (customerCoords) => {
     serviceMapState.customerPlacemark = createCustomerPlacemark(customerCoords);
     map.geoObjects.add(serviceMapState.customerPlacemark);
 
-    window.ymaps.route([nearestMaster.coords, customerCoords], {
-      mapStateAutoApply: false,
-      routingMode: 'auto',
-    }).then(
-      (route) => {
+    const applyRouteFallback = () => {
+      if (requestId !== serviceMapState.requestId) {
+        return;
+      }
+
+      serviceMapState.routeAbortController = null;
+      state.arrivalTime = fixedArrivalTime;
+      updateSummary();
+      fitServiceMap(getBoundsFromPoints([nearestMaster.coords, customerCoords]));
+    };
+
+    const routeAbortController = new AbortController();
+    serviceMapState.routeAbortController = routeAbortController;
+
+    requestOpenRouteServiceRoute(nearestMaster.coords, customerCoords, routeAbortController.signal).then(
+      ({ durationSeconds, routeCoords }) => {
         if (requestId !== serviceMapState.requestId) {
           return;
         }
 
-        serviceMapState.route = route;
-        hideRouteWaypoints(route);
-
-        route.getPaths().options.set({
+        serviceMapState.routeAbortController = null;
+        setArrivalTimeByMinutes(durationSeconds / 60);
+        serviceMapState.route = new window.ymaps.Polyline(routeCoords, {}, {
           opacity: 1,
           strokeColor: '#ff9f1a',
           strokeOpacity: 0.96,
@@ -625,15 +714,13 @@ const renderServiceMapForCoords = (customerCoords) => {
           strokeWidth: 6,
           zIndex: 10,
         });
-
-        map.geoObjects.add(route);
-        setArrivalTimeByRoute(route);
-        fitServiceMap(mergeBounds(getRouteBounds(route), getBoundsFromPoints([nearestMaster.coords, customerCoords])));
+        map.geoObjects.add(serviceMapState.route);
+        fitServiceMap(getBoundsFromPoints(routeCoords));
       },
-      () => {
-        state.arrivalTime = fixedArrivalTime;
-        updateSummary();
-        fitServiceMap(getBoundsFromPoints([nearestMaster.coords, customerCoords]));
+      (error) => {
+        if (error?.name !== 'AbortError') {
+          applyRouteFallback();
+        }
       },
     );
   }).catch(() => {
@@ -646,16 +733,15 @@ const applyAddressFromCoords = (coords, { fallbackAddress = `${coords[0].toFixed
 
   closeYandexSuggest(input);
   resetArrivalTime();
-
-  if (input) {
-    input.value = fallbackAddress;
-  }
-
-  setAddress(fallbackAddress);
-  updateSummary();
+  setLocationStatus('Определяем адрес...');
 
   if (!window.ymaps?.geocode) {
+    if (input) {
+      input.value = fallbackAddress;
+    }
+
     serviceMapState.lastRenderedAddress = fallbackAddress;
+    setAddress(fallbackAddress);
     setServiceLocationByCoords(coords);
     showServiceLocationStatus();
     updateSummary();
@@ -794,18 +880,26 @@ const fillAddressByCoordinates = (coords) => {
 
 const requestBrowserLocation = () => {
   if (!navigator.geolocation) {
+    setAddressInputResolving(false);
     setLocationStatus('Браузер не поддерживает геолокацию.');
     return;
   }
 
+  setAddressInputResolving(true);
   setLocationStatus('Определяем местоположение...');
   resetArrivalTime();
   resetServiceLocation();
   updateSummary();
 
   navigator.geolocation.getCurrentPosition(
-    ({ coords }) => fillAddressByCoordinates(coords),
-    () => setLocationStatus('Не удалось получить текущее местоположение. Введите адрес вручную.'),
+    ({ coords }) => {
+      fillAddressByCoordinates(coords);
+      setAddressInputResolving(false);
+    },
+    () => {
+      setAddressInputResolving(false);
+      setLocationStatus('Не удалось получить текущее местоположение. Введите адрес вручную.');
+    },
     {
       enableHighAccuracy: true,
       timeout: 15000,
@@ -820,6 +914,7 @@ const requestYandexLocation = () => {
     return;
   }
 
+  setAddressInputResolving(true);
   setLocationStatus('Определяем местоположение...');
   resetArrivalTime();
   resetServiceLocation();
@@ -835,21 +930,25 @@ const requestYandexLocation = () => {
       const geoObject = result.geoObjects.get(0);
       const address = geoObject?.getAddressLine?.() || geoObject?.properties.get('text');
       const coords = geoObject?.geometry?.getCoordinates?.();
+      const fallbackAddress = Array.isArray(coords) ? coords.join(', ') : getAddressInputValue(input);
+      const resolvedAddress = address || fallbackAddress;
 
       if (input) {
-        input.value = address || input.value;
+        input.value = resolvedAddress || input.value;
       }
 
-      serviceMapState.lastRenderedAddress = (address || input?.value || '').trim();
-      setAddress(address || input?.value || '');
+      serviceMapState.lastRenderedAddress = resolvedAddress.trim();
+      setAddress(resolvedAddress);
 
       if (!coords) {
+        setAddressInputResolving(false);
         updateSummary();
         setLocationStatus('Не удалось определить координаты. Введите адрес вручную.', 'error');
         return;
       }
 
       if (!setServiceLocationByCoords(coords, geoObject)) {
+        setAddressInputResolving(false);
         resetServiceMapToMasters();
         updateSummary();
         showServiceLocationStatus();
@@ -859,6 +958,7 @@ const requestYandexLocation = () => {
       showServiceLocationStatus();
       updateSummary();
       renderServiceMapForCoords(coords);
+      setAddressInputResolving(false);
     },
     requestBrowserLocation,
   );
@@ -1135,6 +1235,7 @@ export const initYandexAddress = () => {
   const mapPickerApply = document.querySelector('[data-map-picker-apply]');
   const serviceMapZoomButtons = document.querySelectorAll('[data-service-map-zoom]');
   const mapPickerZoomButtons = document.querySelectorAll('[data-map-picker-zoom]');
+  const desktopLayoutMedia = window.matchMedia?.(desktopMapQuery);
 
   if (!input) {
     return;
@@ -1182,6 +1283,17 @@ export const initYandexAddress = () => {
       changeMapPickerZoom(button.dataset.mapPickerZoom === 'in' ? 1 : -1);
     });
   });
+
+  const handleServiceMapLayoutChange = () => {
+    syncServiceMapBehaviors();
+    scheduleServiceMapRefit();
+  };
+
+  if (desktopLayoutMedia?.addEventListener) {
+    desktopLayoutMedia.addEventListener('change', handleServiceMapLayoutChange);
+  } else {
+    desktopLayoutMedia?.addListener?.(handleServiceMapLayoutChange);
+  }
 
   if (window.__YANDEX_MAPS_DISABLED__ || !getYandexMapsUrl()) {
     setYandexMapsMissingStatus();

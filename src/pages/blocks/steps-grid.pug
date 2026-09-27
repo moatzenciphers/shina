@@ -1,0 +1,24 @@
+-
+  const steps = [
+    { title: 'Укажите адрес и услугу', text: 'Выберите, что случилось, добавьте параметры автомобиля и получите предварительный расчёт.' },
+    { title: 'Подтвердите заявку', text: 'Для срочного заказа покажем ориентировочное время приезда. Несрочный выезд можно запланировать на удобные дату и время.' },
+    { title: 'Мастер приедет на оборудованном автомобиле', text: 'Специалист привезёт инструменты и оборудование для выбранной работы на месте.' },
+    { title: 'Примите и оплатите работу', text: 'Перед началом мастер подтвердит стоимость. После выполнения вы проверите результат и оплатите заказ.' }
+  ];
+
+section.steps-grid.landing-section#process(aria-labelledby="steps-grid-title")
+  header.steps-grid__header
+    p.steps-grid__eyebrow.landing-eyebrow КАК ПРОХОДИТ ВЫЕЗД
+    h2.steps-grid__title.landing-title.landing-title--section#steps-grid-title От заявки до готового автомобиля — четыре шага
+  ol.steps-grid__items
+    each step, index in steps
+      li.steps-grid__item
+        span.steps-grid__number(aria-hidden="true")= String(index + 1).padStart(2, '0')
+        div.steps-grid__item-content
+          h3.steps-grid__item-title.landing-subtitle= step.title
+          p.steps-grid__item-text.landing-text= step.text
+  div.steps-grid__footer
+    button.steps-grid__cta.landing-cta(type="button", data-open-calculator)
+      span Рассчитать стоимость
+      svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+        path(d="M5 16h21m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="square")

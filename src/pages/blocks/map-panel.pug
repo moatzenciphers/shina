@@ -1,0 +1,28 @@
+section.map-panel.landing-section#service-area(aria-labelledby="map-panel-title", data-map-panel)
+  div.map-panel__inner
+    div.map-panel__content
+      p.map-panel__eyebrow.landing-eyebrow ЗОНА ВЫЕЗДА
+      h2.map-panel__title.landing-title.landing-title--section#map-panel-title Выезжаем по Москве<br>и Московской области
+      p.map-panel__lead.landing-text Москва и Подмосковье. За МКАД стоимость выезда зависит от расстояния.
+      form.map-panel__form(data-map-panel-form, novalidate)
+        div.map-panel__address-row
+          label.visually-hidden(for="map-panel-address") Адрес выезда
+          input.map-panel__input#map-panel-address(type="text", name="address", placeholder="Введите адрес", autocomplete="street-address", required, data-map-panel-address)
+        p.map-panel__hint.landing-text Покажем время прибытия и стоимость выезда.
+        p.map-panel__status(role="status", aria-live="polite", data-map-panel-status, hidden)
+        div.map-panel__contact(data-map-panel-contact, hidden)
+          label.map-panel__phone-label(for="map-panel-phone") Номер телефона
+          input.map-panel__input#map-panel-phone(type="tel", name="phone", inputmode="tel", autocomplete="tel", placeholder="+7 (___) ___-__-__", required, disabled, data-map-panel-phone)
+          label.map-panel__consent
+            input(type="checkbox", name="privacy_consent", required, disabled, data-map-panel-consent)
+            span Согласен(на) с политикой конфиденциальности
+        input(type="hidden", name="coords", data-map-panel-coords)
+        input(type="hidden", name="callout_price", data-map-panel-price)
+        input(type="hidden", name="arrival_time", data-map-panel-arrival)
+        button.map-panel__submit.landing-cta(type="submit", data-map-panel-submit)
+          span(data-map-panel-submit-text) Проверить адрес
+          svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+            path(d="M5 16h21m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="square")
+    div.map-panel__visual
+      div.map-panel__canvas(data-map-panel-canvas, role="application", aria-label="Карта зоны выезда по Москве и Московской области")
+      p.map-panel__map-loading(data-map-panel-loading) Загружаем карту…

@@ -1,0 +1,35 @@
+-
+  const rows = [
+    {
+      image: require('../../img/back.png'),
+      alt: 'Мастер обслуживает автомобиль с выездным оборудованием',
+      points: [
+        { title: 'Оснащённые выездные автомобили', text: 'Инструменты и оборудование для работы на месте.' },
+        { title: 'Мастера с практическим опытом', text: 'Заказ получает специалист по нужному типу неисправности.' },
+        { title: 'Поддержка до завершения заказа', text: 'Оператор остаётся на связи до окончания работ.' }
+      ]
+    },
+    {
+      image: require('../../img/remont.jpg'),
+      alt: 'Ремонт автомобильной шины',
+      points: [
+        { title: 'Стоимость согласовывается до начала', text: 'Дополнительные работы и цену объясняем и согласуем до выполнения.' },
+        { title: 'Гарантия на выполненные работы', text: 'Условия зависят от услуги и фиксируются в заказе.' },
+        { title: 'Бережная работа с автомобилем', text: 'Подходящий инструмент, соблюдение момента затяжки и проверка результата.' }
+      ]
+    }
+  ];
+
+section.media-rows.landing-section(aria-labelledby="media-rows-title")
+  header.media-rows__header
+    p.media-rows__eyebrow.landing-eyebrow ПОЧЕМУ НАМ МОЖНО ДОВЕРЯТЬ
+    h2.media-rows__title.landing-title.landing-title--section#media-rows-title Отвечаем за работу и заранее объясняем стоимость
+  div.media-rows__items
+    each row in rows
+      div.media-rows__row
+        img.media-rows__image(src=row.image, alt=row.alt, loading="lazy", decoding="async")
+        ul.media-rows__list
+          each point in row.points
+            li.media-rows__point
+              h3.media-rows__point-title.landing-subtitle= point.title
+              p.media-rows__point-text.landing-text= point.text

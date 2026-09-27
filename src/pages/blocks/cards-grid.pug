@@ -1,0 +1,30 @@
+-
+  const cards = [
+    { id: 'service-seasonal', title: 'Сезонная замена шин', href: '/uslugi/sezonnaya-zamena-shin/', price: 'от 4 600 ₽' },
+    { id: 'service-puncture', title: 'Ремонт прокола', href: '/uslugi/remont-prokola/', price: 'от 3 500 ₽' },
+    { id: 'service-sidewall', title: 'Ремонт боковых порезов и грыж', href: '/uslugi/remont-bokovyh-porezov/', price: 'от 4 500 ₽' },
+    { id: 'service-locknuts', title: 'Снятие секреток', href: '/uslugi/snyatie-sekretok/', price: 'от 2 500 ₽' },
+    { id: 'service-wheels', title: 'Правка дисков', href: '/uslugi/pravka-diskov/', price: 'от 3 000 ₽' },
+    { id: 'service-jumpstart', title: 'Прикурка автомобиля', href: '/uslugi/prikurka-avtomobilya/', price: 'от 2 500 ₽' },
+    { id: 'service-fuel', title: 'Доставка топлива', href: '/uslugi/dostavka-topliva/', price: 'от 2 500 ₽', note: 'без стоимости топлива' },
+    { id: 'service-battery', title: 'Замена аккумулятора', href: '/uslugi/zamena-akkumulyatora/', price: 'от 3 000 ₽' }
+  ];
+
+section.cards-grid.landing-section#services(aria-labelledby="cards-grid-title")
+  header.cards-grid__header
+    p.cards-grid__eyebrow.landing-eyebrow УСЛУГИ И ЦЕНЫ
+    h2.cards-grid__title.landing-title.landing-title--section#cards-grid-title Выездной шиномонтаж и помощь на дороге
+    p.cards-grid__intro.landing-text Ориентировочные цены указаны «от». Точная стоимость зависит от автомобиля, диаметра колёс, объёма работ, адреса и времени выезда.
+  div.cards-grid__items
+    each card in cards
+      article.cards-grid__item(id=card.id, class=card.note ? 'cards-grid__item--note' : '')
+        a.cards-grid__link.landing-subtitle(href=card.href, data-open-calculator)
+          span= card.title
+          svg.cards-grid__arrow(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+            path(d="M5 16h21m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="square")
+        if card.note
+          p.cards-grid__price-note= card.note
+        p.cards-grid__price= card.price
+  footer.cards-grid__footer
+    p.cards-grid__footer-text.landing-text Также выполняем хранение шин, отогрев автомобиля, заправку кондиционера, подбор, доставку и установку шин и дисков.
+    a.cards-grid__all-link(href="/uslugi/") Посмотреть все услуги

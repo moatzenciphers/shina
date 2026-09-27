@@ -83,7 +83,7 @@ const closeYandexSuggest = (input = document.querySelector('[data-address-input]
   }
 };
 
-const loadYandexMaps = () => {
+export const loadYandexMaps = () => {
   if (window.ymaps) {
     return new Promise((resolve) => {
       window.ymaps.ready(() => resolve(window.ymaps));
@@ -1192,5 +1192,9 @@ export const initYandexAddress = () => {
     setLocationStatus('Укажите YANDEX_SUGGEST_API_KEY в .env для подсказок.');
   }
 
-  warmUpYandexMaps(input);
+  if (input.closest('[data-app]')?.hidden) {
+    document.addEventListener('app:calculator-open', () => warmUpYandexMaps(input), { once: true });
+  } else {
+    warmUpYandexMaps(input);
+  }
 };

@@ -360,12 +360,6 @@ export const diameterOptions = Array.from({ length: 13 }, (_, index) => {
     label: `R${value}`,
   };
 });
-export const reviewsPerPage = 10;
-export const reviewsApiEndpoint = '/wp-json/shina/v1/reviews';
-export const photosPerPage = 10;
-export const photosApiEndpoint = '/wp-json/shina/v1/photos';
-export const faqPerPage = 20;
-export const faqApiEndpoint = '/wp-json/shina/v1/faq';
 
 function seededRandom(seed) {
   let value = seed;

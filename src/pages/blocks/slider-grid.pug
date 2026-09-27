@@ -1,0 +1,38 @@
+-
+  const avatarPhoto = require('../../img/author.jpg');
+  const reviews = [
+    { text: 'Проколол колесо поздно вечером. Мастер приехал быстро, объяснил стоимость и всё сделал прямо на парковке.', service: 'Ремонт прокола', author: 'Алексей К.', initials: 'АК', date: '18 сентября 2026', dateTime: '2026-09-18', photo: avatarPhoto },
+    { text: 'Записалась на замену шин к удобному времени. Приехали во двор, аккуратно поменяли комплект и проверили давление.', service: 'Сезонная замена шин', author: 'Мария С.', initials: 'МС', date: '12 сентября 2026', dateTime: '2026-09-12' },
+    { text: 'После морозной ночи машина не завелась. Мастер приехал с пусковым устройством, запустил двигатель и проверил аккумулятор.', service: 'Прикурка автомобиля', author: 'Игорь П.', initials: 'ИП', date: '4 сентября 2026', dateTime: '2026-09-04' },
+    { text: 'Топливо закончилось на дороге. Оператор уточнил место, водитель привёз канистру и помог продолжить путь.', service: 'Доставка топлива', author: 'Елена М.', initials: 'ЕМ', date: '28 августа 2026', dateTime: '2026-08-28' },
+    { text: 'Стояли за МКАД с повреждённым колесом. Сразу назвали время приезда и согласовали цену до начала ремонта.', service: 'Выезд за МКАД', author: 'Дмитрий А.', initials: 'ДА', date: '21 августа 2026', dateTime: '2026-08-21' },
+    { text: 'Выбрал дату заранее. Мастер приехал вовремя с оборудованием, после работы показал результат.', service: 'Запланированный выезд', author: 'Ольга В.', initials: 'ОВ', date: '14 августа 2026', dateTime: '2026-08-14' }
+  ];
+
+section.slider-grid.landing-section#reviews(aria-labelledby="slider-grid-title")
+  header.slider-grid__header
+    p.slider-grid__eyebrow.landing-eyebrow ОТЗЫВЫ КЛИЕНТОВ
+    h2.slider-grid__title.landing-title.landing-title--section#slider-grid-title Что говорят клиенты
+    p.slider-grid__lead.landing-text Срочные выезды, сезонная замена колёс и помощь на дороге.
+  div.slider-grid__track(data-review-slider, tabindex="0", aria-label="Отзывы клиентов")
+    each review in reviews
+      article.slider-grid__item
+        span.slider-grid__stars(role="img", aria-label="5 из 5 звёзд") ★★★★★
+        blockquote.slider-grid__quote= review.text
+        p.slider-grid__service= review.service
+        div.slider-grid__author
+          if review.photo
+            img.slider-grid__avatar(src=review.photo, alt="", loading="lazy", decoding="async")
+          else
+            span.slider-grid__avatar.slider-grid__avatar--initials(aria-hidden="true")= review.initials
+          div.slider-grid__author-meta
+            cite.slider-grid__author-name= review.author
+            time.slider-grid__date(datetime=review.dateTime)= review.date
+  div.slider-grid__controls(role="group", aria-label="Управление отзывами")
+    button.slider-grid__arrow(type="button", data-review-prev, aria-label="Предыдущий отзыв") ←
+    span.slider-grid__counter(aria-live="polite")
+      span(data-review-current) 01
+      span.slider-grid__counter-total  / 06
+    button.slider-grid__arrow.slider-grid__arrow--next(type="button", data-review-next, aria-label="Следующий отзыв") →
+  footer.slider-grid__footer
+    a.slider-grid__all(href="/otzyvy/") Смотреть все отзывы

@@ -1,0 +1,120 @@
+.quick-call-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  padding: 24px;
+  background: rgba(0, 8, 12, .78);
+}
+
+.quick-call-dialog {
+  position: relative;
+  width: min(100%, 480px);
+  max-height: calc(100svh - 48px);
+  overflow-y: auto;
+  padding: 40px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  background: var(--color-landing-bg);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .45);
+}
+
+.quick-call-dialog__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-size: 32px;
+  line-height: 1;
+}
+
+.quick-call-dialog__eyebrow {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.quick-call-dialog__description {
+  margin: 12px 0 24px;
+}
+
+.quick-call-dialog__form {
+  display: grid;
+  gap: 12px;
+}
+
+.quick-call-dialog__label {
+  font-weight: 700;
+}
+
+.quick-call-dialog__input {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, .32);
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-text);
+}
+
+.quick-call-dialog__input::placeholder {
+  color: var(--color-muted);
+}
+
+.quick-call-dialog__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-block: 8px;
+  color: var(--color-muted);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.quick-call-dialog__consent input {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin: 2px 0 0;
+  accent-color: var(--color-accent);
+}
+
+.quick-call-dialog__submit {
+  min-height: 54px;
+  font-size: 18px;
+}
+
+.quick-call-dialog__status {
+  margin: 4px 0 0;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.quick-call-dialog button:focus-visible,
+.quick-call-dialog input:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.quick-call-open {
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .quick-call-backdrop {
+    padding: 16px;
+  }
+
+  .quick-call-dialog {
+    max-height: calc(100svh - 32px);
+    padding: 32px 24px;
+  }
+}
+

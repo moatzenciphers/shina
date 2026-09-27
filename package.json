@@ -22,7 +22,6 @@
     "webpack-dev-server": "^5.2.0"
   },
   "dependencies": {
-    "glightbox": "^3.3.1",
     "inputmask": "^5.0.9",
     "masonry-layout": "^4.2.2"
   }

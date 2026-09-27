@@ -1,0 +1,91 @@
+.steps-grid__eyebrow {
+  margin-bottom: 8px;
+}
+
+.steps-grid__items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 48px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps-grid__item {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 32px;
+  min-width: 0;
+  padding: 28px 32px;
+}
+
+.steps-grid__item:nth-child(odd) {
+  padding-left: 0;
+}
+
+.steps-grid__item:nth-child(even) {
+  border-left: 1px solid var(--landing-divider);
+}
+
+.steps-grid__item:nth-child(-n + 2) {
+  padding-top: 0;
+  border-bottom: 1px solid var(--landing-divider);
+}
+
+.steps-grid__item:nth-child(n + 3) {
+  padding-bottom: 0;
+}
+
+.steps-grid__number {
+  color: var(--color-accent);
+  font-size: clamp(28px, 2vw, 36px);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.steps-grid__item-text {
+  margin-top: 12px;
+}
+
+.steps-grid__footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+}
+
+@media (max-width: 850px) {
+  .steps-grid__items {
+    display: block;
+    margin-top: 24px;
+  }
+
+  .steps-grid__item,
+  .steps-grid__item:nth-child(odd),
+  .steps-grid__item:nth-child(even),
+  .steps-grid__item:nth-child(-n + 2),
+  .steps-grid__item:nth-child(n + 3) {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 16px;
+    padding: 16px 0;
+    border: 0;
+  }
+
+  .steps-grid__item + .steps-grid__item {
+    border-top: 1px solid var(--landing-divider);
+  }
+
+  .steps-grid__number {
+    font-size: 28px;
+  }
+
+  .steps-grid__item-text {
+    margin-top: 4px;
+  }
+
+  .steps-grid__footer {
+    margin-top: 8px;
+  }
+
+  .steps-grid__cta {
+    width: 100%;
+  }
+}

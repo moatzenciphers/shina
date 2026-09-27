@@ -1,0 +1,29 @@
+.hero__status,
+.calculator,
+.trust-panel__item {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+}
+
+.hero__status {
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 12px;
+  color: var(--color-muted);
+  background: var(--color-surface-muted);
+  z-index: 2;
+}
+
+.hero__status [data-hero-status-text] span {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #18d56b;
+}

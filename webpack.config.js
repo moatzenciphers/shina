@@ -17,6 +17,7 @@ const getYandexMapsUrl = () => {
     load: [
       'Map',
       'Placemark',
+      'Polygon',
       'GeoObjectCollection',
       'SuggestView',
       'geocode',

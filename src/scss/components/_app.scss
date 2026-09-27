@@ -1,0 +1,39 @@
+.app {
+  width: min(100%, 600px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding-bottom: 0;
+  background: var(--color-bg);
+}
+
+.app__screens {
+  padding: 0;
+}
+
+.order-screen {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .app {
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+  }
+
+  .app__screens {
+    width: 100%;
+    height: 100dvh;
+    padding: 0;
+  }
+
+  .order-screen {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(360px, 3fr);
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+}

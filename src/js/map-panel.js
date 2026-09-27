@@ -1,0 +1,270 @@
+import Inputmask from 'inputmask';
+
+import { fixedArrivalTime, mkadPolygon, moscowCenter, moscowMasterPoints, nightTariff, serviceGeocodeBounds, tariffs } from './config';
+import { loadYandexMaps } from './map';
+import { getServiceLocationByCoords } from './service-location';
+import { formatPrice, getDistanceBetweenCoords, roundUpToStep } from './utils';
+
+const isNight = () => {
+  const hour = Number(new Intl.DateTimeFormat('ru-RU', {
+    hour: '2-digit', hour12: false, timeZone: 'Europe/Moscow',
+  }).format(new Date()).replace(/\D/g, '')) % 24;
+  const { startHour, endHour } = nightTariff;
+
+  if (startHour === endHour) return false;
+  return startHour > endHour ? hour >= startHour || hour < endHour : hour >= startHour && hour < endHour;
+};
+
+const getCalloutPrice = (location) => {
+  const mode = isNight() ? 'night' : 'day';
+  return location.insideMkad
+    ? tariffs.callout.insideMkad[mode]
+    : tariffs.callout.outsideMkad[mode] + location.distanceOutsideKm * tariffs.callout.outsideMkad.perKm;
+};
+
+export const initMapPanel = () => {
+  const panel = document.querySelector('[data-map-panel]');
+  const form = panel?.querySelector('[data-map-panel-form]');
+  const input = panel?.querySelector('[data-map-panel-address]');
+  const phone = panel?.querySelector('[data-map-panel-phone]');
+  const consent = panel?.querySelector('[data-map-panel-consent]');
+  const contact = panel?.querySelector('[data-map-panel-contact]');
+  const status = panel?.querySelector('[data-map-panel-status]');
+  const loading = panel?.querySelector('[data-map-panel-loading]');
+  const canvas = panel?.querySelector('[data-map-panel-canvas]');
+  const submitText = panel?.querySelector('[data-map-panel-submit-text]');
+  const coordsField = panel?.querySelector('[data-map-panel-coords]');
+  const priceField = panel?.querySelector('[data-map-panel-price]');
+  const arrivalField = panel?.querySelector('[data-map-panel-arrival]');
+
+  if (!form || !input || !phone || !consent || !contact || !status || !canvas) return;
+
+  Inputmask({ mask: '+7 (999) 999-99-99', showMaskOnHover: false }).mask(phone);
+
+  let map = null;
+  let marker = null;
+  let suggest = null;
+  let checkedAddress = '';
+  let requestId = 0;
+
+  const showStatus = (message, type = '') => {
+    status.textContent = message;
+    status.dataset.status = type;
+    status.hidden = !message;
+  };
+
+  const resetCheck = () => {
+    requestId += 1;
+    checkedAddress = '';
+    form.classList.remove('map-panel__form--checked');
+    contact.hidden = true;
+    phone.disabled = true;
+    consent.disabled = true;
+    phone.setCustomValidity('');
+    submitText.textContent = 'Проверить адрес';
+    coordsField.value = '';
+    priceField.value = '';
+    arrivalField.value = '';
+    showStatus('');
+    if (map && marker) map.geoObjects.remove(marker);
+    marker = null;
+  };
+
+  const showPoint = (coords, denied = false) => {
+    if (!map) return;
+    if (marker) map.geoObjects.remove(marker);
+    marker = new window.ymaps.Placemark(coords, {}, {
+      preset: 'islands#circleDotIcon',
+      iconColor: denied ? '#d95050' : '#ff9f1a',
+    });
+    map.geoObjects.add(marker);
+    map.setCenter(coords, 13, { checkZoomRange: true, duration: 250 });
+  };
+
+  const showEstimate = (location, arrival = fixedArrivalTime) => {
+    const price = getCalloutPrice(location);
+    const range = Array.isArray(arrival) ? arrival : fixedArrivalTime;
+    priceField.value = String(price);
+    arrivalField.value = `${range[0]}–${range[1]} мин`;
+    const distance = location.insideMkad ? 'В пределах МКАД' : `За МКАД: ${location.distanceOutsideKm} км`;
+    showStatus(`${distance}. Выезд от ${formatPrice(price)} ₽, прибытие ориентировочно ${arrivalField.value}.`, 'success');
+  };
+
+  const getArrivalByRoute = (coords) => {
+    const nearest = moscowMasterPoints.reduce((best, point) => {
+      const distance = getDistanceBetweenCoords(point.coords, coords);
+      return !best || distance < best.distance ? { ...point, distance } : best;
+    }, null);
+
+    if (!nearest || !window.ymaps?.route) return Promise.resolve(fixedArrivalTime);
+    return new Promise((resolve) => {
+      const timeout = window.setTimeout(() => resolve(fixedArrivalTime), 3500);
+      const finish = (arrival) => {
+        window.clearTimeout(timeout);
+        resolve(arrival);
+      };
+      try {
+        window.ymaps.route([nearest.coords, coords], { routingMode: 'auto' }).then(
+          (route) => {
+            const seconds = [route.getJamsTime?.(), route.getTime?.()].find((value) => Number.isFinite(value) && value > 0);
+            if (!seconds) return finish(fixedArrivalTime);
+            const start = Math.max(15, roundUpToStep(Math.ceil(seconds / 60), 5));
+            finish([start, start + 20]);
+          },
+          () => finish(fixedArrivalTime),
+        );
+      } catch {
+        finish(fixedArrivalTime);
+      }
+    });
+  };
+
+  const acceptGeoObject = async (geoObject, currentRequest, fallbackAddress = '') => {
+    if (currentRequest !== requestId) return;
+    const coords = geoObject?.geometry?.getCoordinates?.();
+    if (!coords) {
+      showStatus('Не удалось определить адрес. Уточните улицу и дом.', 'error');
+      return;
+    }
+
+    const address = geoObject.getAddressLine?.() || geoObject.properties?.get?.('text') || fallbackAddress;
+    const location = getServiceLocationByCoords(coords, geoObject);
+    showPoint(coords, location.status === 'denied');
+
+    if (location.status === 'denied') {
+      showStatus('Вызов невозможен по этому адресу. Работаем только по Москве и Московской области.', 'error');
+      return;
+    }
+
+    const arrival = await getArrivalByRoute(coords);
+    if (currentRequest !== requestId) return;
+    input.value = address;
+    checkedAddress = address;
+    form.classList.add('map-panel__form--checked');
+    coordsField.value = coords.join(', ');
+    contact.hidden = false;
+    phone.disabled = false;
+    consent.disabled = false;
+    submitText.textContent = 'Отправить заявку';
+    showEstimate(location, arrival);
+    window.requestAnimationFrame(() => map?.container.fitToViewport());
+  };
+
+  const checkAddress = async (address) => {
+    const normalized = address.trim();
+    resetCheck();
+    if (normalized.length < 6) {
+      showStatus('Введите улицу и дом для проверки адреса.', 'error');
+      input.focus();
+      return;
+    }
+
+    const currentRequest = requestId;
+    showStatus('Проверяем адрес…');
+    try {
+      await loadYandexMaps();
+      const result = await window.ymaps.geocode(normalized, { boundedBy: serviceGeocodeBounds, results: 1 });
+      await acceptGeoObject(result.geoObjects.get(0), currentRequest, normalized);
+    } catch {
+      if (currentRequest === requestId) showStatus('Не удалось проверить адрес. Попробуйте ещё раз.', 'error');
+    }
+  };
+
+  const initMap = async () => {
+    try {
+      await loadYandexMaps();
+      map = new window.ymaps.Map(canvas, { center: moscowCenter, zoom: 9, controls: [] }, {
+        suppressMapOpenBlock: true,
+        yandexMapDisablePoiInteractivity: true,
+      });
+      map.behaviors.disable(['scrollZoom', 'dblClickZoom', 'rightMouseButtonMagnifier']);
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(() => map.container.fitToViewport()).observe(canvas);
+      }
+      if (window.ymaps.Polygon) {
+        map.geoObjects.add(new window.ymaps.Polygon([mkadPolygon], {}, {
+          fillOpacity: 0,
+          strokeColor: '#ff9f1a',
+          strokeOpacity: .9,
+          strokeWidth: 3,
+          interactivityModel: 'default#silent',
+        }));
+      }
+      loading.hidden = true;
+      map.events.add('click', async (event) => {
+        const coords = event.get('coords');
+        if (!Array.isArray(coords)) return;
+        resetCheck();
+        const currentRequest = requestId;
+        showStatus('Проверяем выбранную точку…');
+        try {
+          const result = await window.ymaps.geocode(coords, { results: 1 });
+          await acceptGeoObject(result.geoObjects.get(0), currentRequest);
+        } catch {
+          if (currentRequest === requestId) showStatus('Не удалось определить выбранную точку.', 'error');
+        }
+      });
+    } catch {
+      loading.textContent = 'Карта не загрузилась. Проверьте ключ Яндекс Карт.';
+    }
+  };
+
+  const initSuggest = async () => {
+    if (suggest || window.__YANDEX_SUGGEST_DISABLED__) return;
+    try {
+      await loadYandexMaps();
+      if (!window.ymaps?.SuggestView) return;
+      suggest = new window.ymaps.SuggestView(input, { results: 5 });
+      suggest.events.add('select', (event) => {
+        const address = event.get('item')?.value;
+        if (address) {
+          input.value = address;
+          checkAddress(address);
+        }
+      });
+    } catch {
+      // Ошибку загрузки карты покажет проверка адреса.
+    }
+  };
+
+  input.addEventListener('focus', initSuggest);
+  input.addEventListener('input', resetCheck);
+  phone.addEventListener('input', () => phone.setCustomValidity(''));
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!checkedAddress || input.value.trim() !== checkedAddress) {
+      checkAddress(input.value);
+      return;
+    }
+    if (!phone.inputmask?.isComplete()) {
+      phone.setCustomValidity('Введите номер телефона полностью.');
+      phone.reportValidity();
+      phone.focus();
+      return;
+    }
+    if (!consent.checked) {
+      consent.reportValidity();
+      return;
+    }
+
+    const request = new CustomEvent('map-panel:submit', {
+      bubbles: true,
+      cancelable: true,
+      detail: Object.fromEntries(new FormData(form)),
+    });
+    form.dispatchEvent(request);
+    if (!request.defaultPrevented) showStatus('Отправка заявок пока не подключена.', 'error');
+  });
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      observer.disconnect();
+      initMap();
+    }, { rootMargin: '300px' });
+    observer.observe(panel);
+  } else {
+    initMap();
+  }
+};

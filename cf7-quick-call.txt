@@ -1,0 +1,4 @@
+<label class="quick-call-dialog__label" for="quick-call-phone">Номер телефона</label>
+[tel* phone id:quick-call-phone class:quick-call-dialog__input autocomplete:tel placeholder "+7 (___) ___-__-__"]
+[acceptance privacy_consent class:landing-consent class:quick-call-dialog__consent] Согласен(на) с политикой конфиденциальности [/acceptance]
+<button class="quick-call-dialog__submit landing-cta" type="submit">Отправить заявку</button>

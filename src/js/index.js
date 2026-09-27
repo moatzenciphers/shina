@@ -11,6 +11,12 @@ import { initSplitForm } from './split-form';
 import { initSiteFooter } from './site-footer';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const wpOrderForm = document.querySelector('.app .wpcf7 form');
+  if (wpOrderForm) {
+    wpOrderForm.classList.add('order-confirm');
+    wpOrderForm.dataset.orderForm = '';
+    wpOrderForm.hidden = true;
+  }
   initCalculator();
   initYandexAddress();
   initLanding();

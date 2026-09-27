@@ -1,0 +1,1115 @@
+[
+  {
+    "key": "group_landing_front_page_flexible",
+    "title": "Лендинг: блоки главной",
+    "fields": [
+      {
+        "key": "field_landing_blocks",
+        "label": "Блоки страницы",
+        "name": "blocks",
+        "type": "flexible_content",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "button_label": "Добавить блок",
+        "layouts": {
+          "layout_landing_hero": {
+            "key": "layout_landing_hero",
+            "name": "hero",
+            "label": "Первый экран",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_landing_hero_eyebrow",
+                "label": "Надпись над заголовком",
+                "name": "hero_eyebrow",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": ""
+              },
+              {
+                "key": "field_landing_hero_title",
+                "label": "Заголовок",
+                "name": "hero_title",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "ВЫЕЗДНОЙ ШИНОМОНТАЖ 24/7"
+              },
+              {
+                "key": "field_landing_hero_lead",
+                "label": "Описание",
+                "name": "hero_lead",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Быстро приедем в любую точку Москвы и МО. Поможем продолжить движение.",
+                "rows": 3,
+                "new_lines": ""
+              },
+              {
+                "key": "field_landing_hero_background",
+                "label": "Фоновое изображение",
+                "name": "hero_background",
+                "type": "image",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "return_format": "id",
+                "preview_size": "medium",
+                "library": "all"
+              },
+              {
+                "key": "field_landing_hero_button",
+                "label": "Текст кнопки",
+                "name": "hero_button",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Вызвать мастера"
+              },
+              {
+                "key": "field_landing_hero_prices",
+                "label": "Тарифы",
+                "name": "hero_prices",
+                "type": "repeater",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "layout": "block",
+                "button_label": "Добавить",
+                "min": 0,
+                "max": 3,
+                "sub_fields": [
+                  {
+                    "key": "field_landing_hero_prices_label",
+                    "label": "Подпись",
+                    "name": "label",
+                    "type": "text",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "default_value": ""
+                  },
+                  {
+                    "key": "field_landing_hero_prices_price",
+                    "label": "Цена",
+                    "name": "price",
+                    "type": "text",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "default_value": ""
+                  }
+                ]
+              },
+              {
+                "key": "field_landing_hero_minimum",
+                "label": "Минимальный заказ",
+                "name": "hero_minimum",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "от 2 500 ₽"
+              }
+            ],
+            "min": "",
+            "max": ""
+          },
+          "layout_landing_features_grid": {
+            "key": "layout_landing_features_grid",
+            "name": "features_grid",
+            "label": "Четыре преимущества",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_landing_features_eyebrow",
+                "label": "Надпись над заголовком",
+                "name": "features_eyebrow",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "ПОМОЩЬ РЯДОМ"
+              },
+              {
+                "key": "field_landing_features_title",
+                "label": "Заголовок",
+                "name": "features_title",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Поможем на месте — без эвакуатора и поездки в сервис"
+              },
+              {
+                "key": "field_landing_features_items",
+                "label": "Преимущества",
+                "name": "features_items",
+                "type": "repeater",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "layout": "block",
+                "button_label": "Добавить",
+                "min": 0,
+                "max": 4,
+                "sub_fields": [
+                  {
+                    "key": "field_landing_features_items_title",
+                    "label": "Название",
+                    "name": "title",
+                    "type": "text",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "default_value": ""
+                  },
+                  {
+                    "key": "field_landing_features_items_text",
+                    "label": "Описание",
+                    "name": "text",
+                    "type": "textarea",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "default_value": "",
+                    "rows": 3,
+                    "new_lines": ""
+                  }
+                ]
+              },
+              {
+                "key": "field_landing_features_note",
+                "label": "Текст под списком",
+                "name": "features_note",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Не хотите заполнять калькулятор? Оставьте номер — оператор перезвонит в течение 2 минут.",
+                "rows": 3,
+                "new_lines": ""
+              },
+              {
+                "key": "field_landing_features_button",
+                "label": "Текст кнопки",
+                "name": "features_button",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Быстрый вызов"
+              }
+            ],
+            "min": "",
+            "max": ""
+          },
+          "layout_landing_steps_grid": {
+            "key": "layout_landing_steps_grid",
+            "name": "steps_grid",
+            "label": "Шаги заказа",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_landing_steps_eyebrow",
+                "label": "Надпись над заголовком",
+                "name": "steps_eyebrow",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "КАК ПРОХОДИТ ВЫЕЗД"
+              },
+              {
+                "key": "field_landing_steps_title",
+                "label": "Заголовок",
+                "name": "steps_title",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "От заявки до готового автомобиля — четыре шага"
+              },
+              {
+                "key": "field_landing_steps_items",
+                "label": "Шаги",
+                "name": "steps_items",
+                "type": "repeater",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "layout": "block",
+                "button_label": "Добавить",
+                "min": 0,
+                "max": 4,
+                "sub_fields": [
+                  {
+                    "key": "field_landing_steps_items_title",
+                    "label": "Название",
+                    "name": "title",
+                    "type": "text",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "default_value": ""
+                  },
+                  {
+                    "key": "field_landing_steps_items_text",
+                    "label": "Описание",
+                    "name": "text",
+                    "type": "textarea",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "default_value": "",
+                    "rows": 3,
+                    "new_lines": ""
+                  }
+                ]
+              },
+              {
+                "key": "field_landing_steps_button",
+                "label": "Текст кнопки",
+                "name": "steps_button",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Рассчитать стоимость"
+              }
+            ],
+            "min": "",
+            "max": ""
+          },
+          "layout_landing_cards_grid": {
+            "key": "layout_landing_cards_grid",
+            "name": "cards_grid",
+            "label": "Услуги и цены",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_landing_services_eyebrow",
+                "label": "Надпись над заголовком",
+                "name": "services_eyebrow",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "УСЛУГИ И ЦЕНЫ"
+              },
+              {
+                "key": "field_landing_services_title",
+                "label": "Заголовок",
+                "name": "services_title",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Выездной шиномонтаж и помощь на дороге"
+              },
+              {
+                "key": "field_landing_services_intro",
+                "label": "Вводный текст",
+                "name": "services_intro",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Ориентировочные цены указаны «от». Точная стоимость зависит от автомобиля, объёма работ, адреса и времени выезда.",
+                "rows": 3,
+                "new_lines": ""
+              },
+              {
+                "key": "field_landing_services_posts",
+                "label": "Выбранные услуги",
+                "name": "services_posts",
+                "type": "relationship",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "instructions": "Если оставить пустым, выводятся последние опубликованные записи.",
+                "post_type": [
+                  "services"
+                ],
+                "taxonomy": [],
+                "filters": [
+                  "search"
+                ],
+                "return_format": "id",
+                "min": 0,
+                "max": 0
+              },
+              {
+                "key": "field_landing_services_count",
+                "label": "Число услуг при автоматическом выводе",
+                "name": "services_count",
+                "type": "number",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": 8,
+                "min": 1,
+                "max": 24
+              },
+              {
+                "key": "field_landing_services_footer",
+                "label": "Текст внизу",
+                "name": "services_footer",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "",
+                "rows": 3,
+                "new_lines": ""
+              }
+            ],
+            "min": "",
+            "max": ""
+          },
+          "layout_landing_media_rows": {
+            "key": "layout_landing_media_rows",
+            "name": "media_rows",
+            "label": "Ряды с фото и списком",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_landing_media_eyebrow",
+                "label": "Надпись над заголовком",
+                "name": "media_eyebrow",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "ПОЧЕМУ НАМ МОЖНО ДОВЕРЯТЬ"
+              },
+              {
+                "key": "field_landing_media_title",
+                "label": "Заголовок",
+                "name": "media_title",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Отвечаем за работу и заранее объясняем стоимость"
+              },
+              {
+                "key": "field_landing_media_items",
+                "label": "Ряды",
+                "name": "media_items",
+                "type": "repeater",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "layout": "block",
+                "button_label": "Добавить",
+                "min": 0,
+                "max": 2,
+                "sub_fields": [
+                  {
+                    "key": "field_landing_media_items_image",
+                    "label": "Изображение",
+                    "name": "image",
+                    "type": "image",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "return_format": "id",
+                    "preview_size": "medium",
+                    "library": "all"
+                  },
+                  {
+                    "key": "field_landing_media_items_points",
+                    "label": "Пункты",
+                    "name": "points",
+                    "type": "repeater",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "layout": "block",
+                    "button_label": "Добавить",
+                    "min": 0,
+                    "max": 3,
+                    "sub_fields": [
+                      {
+                        "key": "field_landing_media_items_points_title",
+                        "label": "Заголовок",
+                        "name": "title",
+                        "type": "text",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                          "width": "",
+                          "class": "",
+                          "id": ""
+                        },
+                        "default_value": ""
+                      },
+                      {
+                        "key": "field_landing_media_items_points_text",
+                        "label": "Описание",
+                        "name": "text",
+                        "type": "textarea",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                          "width": "",
+                          "class": "",
+                          "id": ""
+                        },
+                        "default_value": "",
+                        "rows": 3,
+                        "new_lines": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "min": "",
+            "max": ""
+          },
+          "layout_landing_slider_grid": {
+            "key": "layout_landing_slider_grid",
+            "name": "slider_grid",
+            "label": "Отзывы",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_landing_reviews_eyebrow",
+                "label": "Надпись над заголовком",
+                "name": "reviews_eyebrow",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "ОТЗЫВЫ КЛИЕНТОВ"
+              },
+              {
+                "key": "field_landing_reviews_title",
+                "label": "Заголовок",
+                "name": "reviews_title",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Что говорят клиенты"
+              },
+              {
+                "key": "field_landing_reviews_lead",
+                "label": "Описание",
+                "name": "reviews_lead",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "",
+                "rows": 3,
+                "new_lines": ""
+              },
+              {
+                "key": "field_landing_reviews_posts",
+                "label": "Выбранные отзывы",
+                "name": "reviews_posts",
+                "type": "relationship",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "instructions": "Если оставить пустым, выводятся последние опубликованные записи.",
+                "post_type": [
+                  "reviews"
+                ],
+                "taxonomy": [],
+                "filters": [
+                  "search"
+                ],
+                "return_format": "id",
+                "min": 0,
+                "max": 0
+              },
+              {
+                "key": "field_landing_reviews_count",
+                "label": "Число отзывов при автоматическом выводе",
+                "name": "reviews_count",
+                "type": "number",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": 6,
+                "min": 1,
+                "max": 18
+              }
+            ],
+            "min": "",
+            "max": ""
+          },
+          "layout_landing_map_panel": {
+            "key": "layout_landing_map_panel",
+            "name": "map_panel",
+            "label": "Карта зоны выезда",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_landing_map_eyebrow",
+                "label": "Надпись над заголовком",
+                "name": "map_eyebrow",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "ЗОНА ВЫЕЗДА"
+              },
+              {
+                "key": "field_landing_map_title",
+                "label": "Заголовок",
+                "name": "map_title",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Выезжаем по Москве и Московской области"
+              },
+              {
+                "key": "field_landing_map_lead",
+                "label": "Описание",
+                "name": "map_lead",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Москва и Подмосковье. За МКАД стоимость выезда зависит от расстояния.",
+                "rows": 3,
+                "new_lines": ""
+              },
+              {
+                "key": "field_landing_map_form_shortcode",
+                "label": "Шорткод CF7 для проверки адреса",
+                "name": "map_form_shortcode",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": ""
+              }
+            ],
+            "min": "",
+            "max": ""
+          },
+          "layout_landing_gallery_grid": {
+            "key": "layout_landing_gallery_grid",
+            "name": "gallery_grid",
+            "label": "Фото выездов",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_landing_gallery_eyebrow",
+                "label": "Надпись над заголовком",
+                "name": "gallery_eyebrow",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "ФОТО ВЫЕЗДОВ"
+              },
+              {
+                "key": "field_landing_gallery_title",
+                "label": "Заголовок",
+                "name": "gallery_title",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Работаем там, где помощь нужна сейчас"
+              },
+              {
+                "key": "field_landing_gallery_images",
+                "label": "Фотографии из медиабиблиотеки",
+                "name": "gallery_images",
+                "type": "gallery",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "instructions": "Подписи берутся из поля shina_photo_label на вложении или из его названия.",
+                "return_format": "id",
+                "preview_size": "medium",
+                "insert": "append",
+                "library": "all",
+                "min": 0,
+                "max": 12
+              }
+            ],
+            "min": "",
+            "max": ""
+          },
+          "layout_landing_accordion_grid": {
+            "key": "layout_landing_accordion_grid",
+            "name": "accordion_grid",
+            "label": "Частые вопросы",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_landing_faq_eyebrow",
+                "label": "Надпись над заголовком",
+                "name": "faq_eyebrow",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "ЧАСТЫЕ ВОПРОСЫ"
+              },
+              {
+                "key": "field_landing_faq_title",
+                "label": "Заголовок",
+                "name": "faq_title",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Ответы на вопросы о выездном шиномонтаже"
+              },
+              {
+                "key": "field_landing_faq_mode",
+                "label": "Источник вопросов",
+                "name": "faq_mode",
+                "type": "select",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "choices": {
+                  "latest": "Последние 10",
+                  "selected": "Выбрать вручную"
+                },
+                "default_value": "latest",
+                "return_format": "value",
+                "ui": 1
+              },
+              {
+                "key": "field_landing_faq_posts",
+                "label": "Выбранные вопросы",
+                "name": "faq_posts",
+                "type": "relationship",
+                "required": 0,
+                "conditional_logic": [
+                  [
+                    {
+                      "field": "field_landing_faq_mode",
+                      "operator": "==",
+                      "value": "selected"
+                    }
+                  ]
+                ],
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "post_type": [
+                  "faq"
+                ],
+                "taxonomy": [],
+                "filters": [
+                  "search"
+                ],
+                "return_format": "id",
+                "min": 0,
+                "max": 10
+              }
+            ],
+            "min": "",
+            "max": ""
+          },
+          "layout_landing_split_form": {
+            "key": "layout_landing_split_form",
+            "name": "split_form",
+            "label": "Форма помощи",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_landing_help_eyebrow",
+                "label": "Надпись над заголовком",
+                "name": "help_eyebrow",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "НУЖНА ПОМОЩЬ?"
+              },
+              {
+                "key": "field_landing_help_title",
+                "label": "Заголовок",
+                "name": "help_title",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Не знаете, какая услуга нужна?"
+              },
+              {
+                "key": "field_landing_help_lead",
+                "label": "Описание",
+                "name": "help_lead",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Опишите, что произошло. Оператор разберётся в ситуации, уточнит детали и перезвонит в течение 2 минут.",
+                "rows": 3,
+                "new_lines": ""
+              },
+              {
+                "key": "field_landing_help_form_shortcode",
+                "label": "Шорткод CF7 формы помощи",
+                "name": "help_form_shortcode",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": ""
+              },
+              {
+                "key": "field_landing_help_note",
+                "label": "Пояснение под формой",
+                "name": "help_note",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Калькулятор покажет предварительную стоимость и время приезда.",
+                "rows": 3,
+                "new_lines": ""
+              }
+            ],
+            "min": "",
+            "max": ""
+          }
+        },
+        "min": 0,
+        "max": 0
+      },
+      {
+        "key": "field_landing_quick_call_shortcode",
+        "label": "Шорткод CF7 быстрого вызова",
+        "name": "quick_call_shortcode",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_landing_calculator_form_shortcode",
+        "label": "Шорткод CF7 подтверждения калькулятора",
+        "name": "calculator_form_shortcode",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page_type",
+          "operator": "==",
+          "value": "front_page"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "show_in_rest": 0,
+    "description": "Порядок блоков задаётся гибким содержимым. Хедер и футер управляются отдельно.",
+    "modified": 1790522732
+  },
+  {
+    "key": "group_landing_service_price",
+    "title": "Услуга: цена на главной",
+    "fields": [
+      {
+        "key": "field_landing_service_price_from",
+        "label": "Цена от, ₽",
+        "name": "service_price_from",
+        "type": "number",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "instructions": "Число без знака рубля.",
+        "min": 0,
+        "step": 1
+      },
+      {
+        "key": "field_landing_service_price_note",
+        "label": "Пояснение под ценой",
+        "name": "service_price_note",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "services"
+        }
+      ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "show_in_rest": 1,
+    "modified": 1790522732
+  }
+]

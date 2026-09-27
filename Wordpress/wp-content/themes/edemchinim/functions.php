@@ -626,6 +626,15 @@ add_action('rest_api_init', 'edemchinim_register_rest_routes');
 function edemchinim_scripts()
 {
 	wp_enqueue_style('edemchinim-style', get_stylesheet_uri(), array(), _S_VERSION);
+	if (is_front_page()) {
+		$landing_css = get_template_directory() . '/js/landing.css';
+		$landing_js = get_template_directory() . '/js/landing.js';
+		if (file_exists($landing_css) && file_exists($landing_js)) {
+			wp_enqueue_style('edemchinim-landing', get_template_directory_uri() . '/js/landing.css', array('edemchinim-style'), (string) filemtime($landing_css));
+			wp_enqueue_script('edemchinim-landing', get_template_directory_uri() . '/js/landing.js', array(), (string) filemtime($landing_js), true);
+		}
+		return;
+	}
 	wp_enqueue_script('edemchinim-main', get_template_directory_uri() . '/js/main.min.js', array(), _S_VERSION, true);
 	wp_add_inline_script(
 		'edemchinim-main',

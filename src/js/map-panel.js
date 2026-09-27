@@ -24,20 +24,29 @@ const getCalloutPrice = (location) => {
 
 export const initMapPanel = () => {
   const panel = document.querySelector('[data-map-panel]');
-  const form = panel?.querySelector('[data-map-panel-form]');
-  const input = panel?.querySelector('[data-map-panel-address]');
-  const phone = panel?.querySelector('[data-map-panel-phone]');
-  const consent = panel?.querySelector('[data-map-panel-consent]');
+  const form = panel?.querySelector('.wpcf7 form, [data-map-panel-form]');
+  const input = panel?.querySelector('[data-map-panel-address], #map-panel-address');
+  const phone = panel?.querySelector('[data-map-panel-phone], #map-panel-phone');
+  const consent = panel?.querySelector('[data-map-panel-consent], input[name="privacy_consent"]');
   const contact = panel?.querySelector('[data-map-panel-contact]');
   const status = panel?.querySelector('[data-map-panel-status]');
   const loading = panel?.querySelector('[data-map-panel-loading]');
   const canvas = panel?.querySelector('[data-map-panel-canvas]');
   const submitText = panel?.querySelector('[data-map-panel-submit-text]');
-  const coordsField = panel?.querySelector('[data-map-panel-coords]');
-  const priceField = panel?.querySelector('[data-map-panel-price]');
-  const arrivalField = panel?.querySelector('[data-map-panel-arrival]');
+  const coordsField = panel?.querySelector('[data-map-panel-coords], #map-panel-coords');
+  const priceField = panel?.querySelector('[data-map-panel-price], #map-panel-price');
+  const arrivalField = panel?.querySelector('[data-map-panel-arrival], #map-panel-arrival');
 
-  if (!form || !input || !phone || !consent || !contact || !status || !canvas) return;
+  if (!form || !input || !phone || !consent || !contact || !status || !canvas || !coordsField || !priceField || !arrivalField || !submitText) return;
+  form.classList.add('map-panel__form');
+  phone.disabled = true;
+  consent.disabled = true;
+
+  panel.addEventListener('wpcf7mailsent', () => showStatus('Заявка отправлена. Скоро свяжемся с вами.', 'success'));
+  panel.addEventListener('wpcf7invalid', () => showStatus('Проверьте заполнение полей.', 'error'));
+  panel.addEventListener('wpcf7unaccepted', () => showStatus('Подтвердите согласие с политикой конфиденциальности.', 'error'));
+  panel.addEventListener('wpcf7mailfailed', () => showStatus('Не удалось отправить заявку. Попробуйте позже.', 'error'));
+  panel.addEventListener('wpcf7spam', () => showStatus('Не удалось отправить заявку. Попробуйте позже.', 'error'));
 
   Inputmask({ mask: '+7 (999) 999-99-99', showMaskOnHover: false }).mask(phone);
 
@@ -232,21 +241,29 @@ export const initMapPanel = () => {
   phone.addEventListener('input', () => phone.setCustomValidity(''));
 
   form.addEventListener('submit', (event) => {
-    event.preventDefault();
     if (!checkedAddress || input.value.trim() !== checkedAddress) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
       checkAddress(input.value);
       return;
     }
     if (!phone.inputmask?.isComplete()) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
       phone.setCustomValidity('Введите номер телефона полностью.');
       phone.reportValidity();
       phone.focus();
       return;
     }
     if (!consent.checked) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
       consent.reportValidity();
       return;
     }
+
+    if (form.closest('.wpcf7')) return;
+    event.preventDefault();
 
     const request = new CustomEvent('map-panel:submit', {
       bubbles: true,
@@ -255,7 +272,7 @@ export const initMapPanel = () => {
     });
     form.dispatchEvent(request);
     if (!request.defaultPrevented) showStatus('Отправка заявок пока не подключена.', 'error');
-  });
+  }, true);
 
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {

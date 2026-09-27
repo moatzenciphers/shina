@@ -1,0 +1,27 @@
+<h2 class="order-confirm__title">Подтверждение заявки</h2>
+<dl class="order-details" data-order-details></dl>
+[hidden order_service]
+[hidden order_service_key]
+[hidden order_address]
+[hidden order_car_type]
+[hidden order_car_type_key]
+[hidden order_diameter]
+[hidden order_diameter_key]
+[hidden order_addons]
+[hidden order_addon_keys]
+[hidden order_price]
+[hidden order_price_value]
+[hidden order_callout_price_value]
+[hidden order_service_price_value]
+[hidden order_arrival_time]
+[hidden order_tariff]
+[hidden order_is_night_tariff]
+[hidden order_location_status]
+[hidden order_inside_mkad]
+[hidden order_distance_outside_mkad_km]
+[hidden order_coords]
+[hidden order_phone]
+[hidden order_details]
+[hidden order_payload]
+<label class="phone-field" for="order-phone"><span class="phone-field__label">Телефон для связи</span>[tel* phone id:order-phone class:phone-field__input autocomplete:tel placeholder "+7 (___) ___-__-__"]</label>
+<div class="order-confirm__footer"><button class="secondary-button" type="button" data-order-back>Назад</button><button class="primary-button" type="submit" data-order-send disabled>Отправить</button></div>

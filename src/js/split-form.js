@@ -3,7 +3,7 @@ import Inputmask from 'inputmask';
 export const initSplitForm = () => {
   const section = document.querySelector('.split-form');
   const form = section?.querySelector('[data-split-form], .wpcf7 form');
-  const phone = form?.querySelector('[data-split-form-phone]');
+  const phone = form?.querySelector('[data-split-form-phone], #help-phone');
   const status = section?.querySelector('[data-split-form-status]');
   if (!section || !status) return;
 
@@ -16,10 +16,13 @@ export const initSplitForm = () => {
   // CF7 sends its own Ajax request; its DOM events are the source of submission status.
   section.addEventListener('wpcf7mailsent', () => showStatus('Заявка отправлена. Скоро свяжемся с вами.', 'success'));
   section.addEventListener('wpcf7invalid', () => showStatus('Проверьте заполнение полей.', 'error'));
+  section.addEventListener('wpcf7unaccepted', () => showStatus('Подтвердите согласие с политикой конфиденциальности.', 'error'));
   section.addEventListener('wpcf7mailfailed', () => showStatus('Не удалось отправить заявку. Попробуйте позже.', 'error'));
   section.addEventListener('wpcf7spam', () => showStatus('Не удалось отправить заявку. Попробуйте позже.', 'error'));
 
   if (!form || !phone) return;
+
+  form.classList.add('split-form__form');
 
   Inputmask({ mask: '+7 (999) 999-99-99', showMaskOnHover: false }).mask(phone);
   phone.addEventListener('input', () => {

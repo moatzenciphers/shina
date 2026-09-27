@@ -10,9 +10,10 @@ export const initLanding = () => {
   const mobileMenuQuery = window.matchMedia('(max-width: 850px)');
   let returnFocus = null;
 
-  if (!landing || !app || !menu || !hero) return;
+  if (!landing || !app) return;
 
   const setMenuOpen = (open, restoreFocus = false) => {
+    if (!hero || !menu) return;
     const isOpen = Boolean(open && mobileMenuQuery.matches);
     hero.classList.toggle('landing-hero--menu-open', isOpen);
     document.body.classList.toggle('landing-menu-open', isOpen);
@@ -53,7 +54,7 @@ export const initLanding = () => {
     setMenuOpen(!hero.classList.contains('landing-hero--menu-open'), true);
   });
 
-  menu.querySelectorAll('[data-menu-expand]').forEach((link) => {
+  menu?.querySelectorAll('[data-menu-expand]').forEach((link) => {
     link.addEventListener('click', (event) => {
       if (!mobileMenuQuery.matches) return;
       event.preventDefault();
@@ -76,7 +77,7 @@ export const initLanding = () => {
   mobileMenuQuery.addEventListener('change', () => setMenuOpen(false));
 
   document.addEventListener('keydown', (event) => {
-    if (!hero.classList.contains('landing-hero--menu-open')) return;
+    if (!hero?.classList.contains('landing-hero--menu-open')) return;
 
     if (event.key === 'Escape') {
       setMenuOpen(false, true);

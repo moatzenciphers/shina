@@ -3,12 +3,30 @@ import Inputmask from 'inputmask';
 export const initQuickCall = () => {
   const backdrop = document.querySelector('[data-quick-call-dialog]');
   const dialog = backdrop?.querySelector('[role="dialog"]');
-  const form = backdrop?.querySelector('[data-quick-call-form]');
-  const phone = backdrop?.querySelector('[data-quick-call-phone]');
+  const form = backdrop?.querySelector('.wpcf7 form, [data-quick-call-form]');
+  const phone = backdrop?.querySelector('[data-quick-call-phone], #quick-call-phone');
   const status = backdrop?.querySelector('[data-quick-call-status]');
   let opener = null;
 
   if (!backdrop || !dialog || !form || !phone || !status) return;
+
+  form.classList.add('quick-call-dialog__form');
+  backdrop.addEventListener('wpcf7mailsent', () => {
+    status.textContent = 'Заявка отправлена. Скоро свяжемся с вами.';
+    status.hidden = false;
+  });
+  backdrop.addEventListener('wpcf7invalid', () => {
+    status.textContent = 'Проверьте номер телефона и согласие.';
+    status.hidden = false;
+  });
+  backdrop.addEventListener('wpcf7unaccepted', () => {
+    status.textContent = 'Подтвердите согласие с политикой конфиденциальности.';
+    status.hidden = false;
+  });
+  backdrop.addEventListener('wpcf7mailfailed', () => {
+    status.textContent = 'Не удалось отправить заявку. Попробуйте позже.';
+    status.hidden = false;
+  });
 
   Inputmask({ mask: '+7 (999) 999-99-99', showMaskOnHover: false }).mask(phone);
 
@@ -65,14 +83,17 @@ export const initQuickCall = () => {
   });
 
   form.addEventListener('submit', (event) => {
-    event.preventDefault();
-
     if (!phone.inputmask?.isComplete()) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
       phone.setCustomValidity('Введите номер телефона полностью.');
       phone.reportValidity();
       phone.focus();
       return;
     }
+
+    if (form.closest('.wpcf7')) return;
+    event.preventDefault();
 
     // The frontend has no callback endpoint yet. This event lets the future integration handle the request.
     const request = new CustomEvent('quick-call:submit', {
@@ -86,5 +107,5 @@ export const initQuickCall = () => {
       status.textContent = 'Отправка заявок пока не подключена.';
       status.hidden = false;
     }
-  });
+  }, true);
 };

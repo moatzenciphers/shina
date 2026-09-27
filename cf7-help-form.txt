@@ -1,0 +1,11 @@
+<div class="split-form__fields">
+  <label class="split-form__field" for="help-phone"><span class="split-form__label">Телефон</span>[tel* phone id:help-phone class:split-form__input autocomplete:tel placeholder "+7 (___) ___-__-__"]</label>
+  <label class="split-form__field" for="help-address"><span class="split-form__label">Адрес</span>[text* address id:help-address class:split-form__input autocomplete:street-address placeholder "Город, улица, дом"]</label>
+  <label class="split-form__field split-form__field--wide" for="help-details"><span class="split-form__label">Что случилось?</span>[textarea* details id:help-details class:split-form__input class:split-form__message placeholder "Например: спустило переднее колесо, автомобиль стоит на парковке и не может ехать"]</label>
+</div>
+<div class="split-form__actions">
+  <button class="split-form__submit landing-cta" type="submit"><span>Получить помощь</span><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 16h21m-8-8 8 8-8 8" stroke="currentColor" stroke-width="2"/></svg></button>
+  <span class="split-form__or">или</span>
+  <button class="split-form__calculator" type="button" data-open-calculator><span>Рассчитать стоимость</span></button>
+</div>
+[acceptance privacy_consent class:landing-consent class:split-form__consent] Согласен(на) с политикой конфиденциальности [/acceptance]

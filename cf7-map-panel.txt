@@ -1,0 +1,15 @@
+<div class="map-panel__address-row">
+  <label class="visually-hidden" for="map-panel-address">Адрес выезда</label>
+  [text* address id:map-panel-address class:map-panel__input autocomplete:street-address placeholder "Введите адрес"]
+</div>
+<p class="map-panel__hint landing-text">Покажем время прибытия и стоимость выезда.</p>
+<p class="map-panel__status" role="status" aria-live="polite" data-map-panel-status hidden></p>
+<div class="map-panel__contact" data-map-panel-contact hidden>
+  <label class="map-panel__phone-label" for="map-panel-phone">Номер телефона</label>
+  [tel* phone id:map-panel-phone class:map-panel__input autocomplete:tel placeholder "+7 (___) ___-__-__"]
+  [acceptance privacy_consent class:landing-consent class:map-panel__consent] Согласен(на) с политикой конфиденциальности [/acceptance]
+</div>
+[hidden coords id:map-panel-coords]
+[hidden callout_price id:map-panel-price]
+[hidden arrival_time id:map-panel-arrival]
+<button class="map-panel__submit landing-cta" type="submit"><span data-map-panel-submit-text>Проверить адрес</span><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 16h21m-8-8 8 8-8 8" stroke="currentColor" stroke-width="2"/></svg></button>

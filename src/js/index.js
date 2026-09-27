@@ -1,7 +1,7 @@
 import '../scss/main.scss';
 
 import { initCalculator } from './calculator';
-import { initFaqScreen } from './faq';
+import { initCookieConsent } from './cookie-consent';
 import { initYandexAddress } from './map';
 import { initLanding } from './landing';
 import { initQuickCall } from './quick-call';
@@ -20,8 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initCalculator();
   initYandexAddress();
-  initReviewsScreen();
-  initPhotosScreen();
-  initFaqScreen();
-  initScreens();
+  initLanding();
+  initQuickCall();
+  initReviewSlider();
+  initMapPanel();
+  initGalleryGrid();
+  initSplitForm();
+  initSiteFooter();
+  initCookieConsent();
 });

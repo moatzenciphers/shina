@@ -19,6 +19,7 @@ section.slider-grid.landing-section#reviews(aria-labelledby="slider-grid-title")
       article.slider-grid__item
         span.slider-grid__stars(role="img", aria-label="5 из 5 звёзд") ★★★★★
         blockquote.slider-grid__quote= review.text
+        button.slider-grid__more(type="button", data-review-open, hidden) Читать полностью
         p.slider-grid__service= review.service
         div.slider-grid__author
           if review.photo
@@ -38,6 +39,16 @@ section.slider-grid.landing-section#reviews(aria-labelledby="slider-grid-title")
     button.landing-slider-arrow.landing-slider-arrow--next.slider-grid__arrow(type="button", data-review-next, aria-label="Следующий отзыв")
       svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
         path(d="M6 16h20m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
+  dialog.slider-grid__dialog(data-review-dialog, aria-labelledby="slider-grid-dialog-title")
+    div.slider-grid__dialog-inner
+      button.slider-grid__dialog-close(type="button", data-review-close, aria-label="Закрыть отзыв") ×
+      h3.slider-grid__dialog-title#slider-grid-dialog-title Отзыв клиента
+      span.slider-grid__stars(data-review-dialog-stars, role="img")
+      blockquote.slider-grid__dialog-quote(data-review-dialog-text)
+      p.slider-grid__dialog-service(data-review-dialog-service)
+      div.slider-grid__dialog-author
+        cite(data-review-dialog-author)
+        time(data-review-dialog-date)
   footer.slider-grid__footer
     a.slider-grid__all.landing-more-link(href="/otzyvy/") Смотреть все отзывы
       svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")

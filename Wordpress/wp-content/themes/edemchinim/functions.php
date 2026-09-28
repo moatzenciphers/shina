@@ -620,6 +620,29 @@ if (! function_exists('edemchinim_register_rest_routes')) {
 }
 add_action('rest_api_init', 'edemchinim_register_rest_routes');
 
+if (! function_exists('edemchinim_is_placeholder_master_points_map')) {
+	function edemchinim_is_placeholder_master_points_map($value)
+	{
+		$map = is_string($value) ? json_decode($value, true) : $value;
+		$marks = is_array($map) ? ($map['marks'] ?? null) : null;
+		if (! is_array($marks) || count($marks) !== 30) {
+			return false;
+		}
+
+		$coordinates = array();
+		foreach ($marks as $mark) {
+			$coords = is_array($mark) ? ($mark['coords'] ?? null) : null;
+			if (! is_array($coords) || ! isset($coords[0], $coords[1]) || ! is_numeric($coords[0]) || ! is_numeric($coords[1])) {
+				return false;
+			}
+			$coordinates[] = sprintf('%.6F,%.6F', (float) $coords[0], (float) $coords[1]);
+		}
+
+		// The coordinates shipped as the old 30-point demo map.
+		return hash('sha256', implode('|', $coordinates)) === '3b85361b438e4d0f405b79b3356e02815190ecd122078ede07dc092fa568abcb';
+	}
+}
+
 if (! function_exists('edemchinim_normalize_master_points')) {
 	function edemchinim_normalize_master_points($value)
 	{
@@ -631,7 +654,7 @@ if (! function_exists('edemchinim_normalize_master_points')) {
 			}
 		}
 
-		if (! is_array($value)) {
+		if (! is_array($value) || edemchinim_is_placeholder_master_points_map($value)) {
 			return array();
 		}
 
@@ -678,7 +701,11 @@ if (! function_exists('edemchinim_prepare_calculator_config')) {
 			return array();
 		}
 
-		$config['master_points'] = edemchinim_normalize_master_points($config['master_points'] ?? array());
+		$master_points = $config['master_points'] ?? array();
+		if (edemchinim_is_placeholder_master_points_map($master_points)) {
+			$master_points = edemchinim_build_legacy_master_points_map(100);
+		}
+		$config['master_points'] = edemchinim_normalize_master_points($master_points);
 
 		return $config;
 	}
@@ -783,7 +810,7 @@ if (! function_exists('edemchinim_load_master_points_yandex_map')) {
 		$raw_value = is_string($value) ? wp_unslash($value) : $value;
 		$decoded = is_string($raw_value) ? json_decode($raw_value, true) : $raw_value;
 
-		if (is_array($decoded) && isset($decoded['marks'])) {
+		if (is_array($decoded) && isset($decoded['marks']) && ! edemchinim_is_placeholder_master_points_map($decoded)) {
 			return wp_json_encode($decoded);
 		}
 
@@ -821,11 +848,10 @@ if (! function_exists('edemchinim_prepare_master_points_yandex_map_field')) {
 		$raw_value = is_string($value) ? wp_unslash($value) : $value;
 		$map = is_string($raw_value) ? json_decode($raw_value, true) : $raw_value;
 
-		if (! is_array($map) || ! isset($map['marks'])) {
+		if (! is_array($map) || ! isset($map['marks']) || edemchinim_is_placeholder_master_points_map($map)) {
+			$legacy_map = edemchinim_build_legacy_master_points_map(100);
 			$default_map = ! empty($field['default_value']) ? json_decode((string) $field['default_value'], true) : null;
-			$map = is_array($default_map) && isset($default_map['marks'])
-				? $default_map
-				: edemchinim_build_legacy_master_points_map(100);
+			$map = ! empty($legacy_map['marks']) ? $legacy_map : $default_map;
 		}
 
 		$field['value'] = edemchinim_sanitize_yandex_map_value($map, 'options', $field);
@@ -918,6 +944,13 @@ function edemchinim_scripts()
 {
 	$calculator_config = function_exists('get_field') ? get_field('shina_calculator_config', 'options') : array();
 	$calculator_config = edemchinim_prepare_calculator_config($calculator_config);
+	$ors_key = defined('SHINA_OPENROUTESERVICE_API_KEY') ? SHINA_OPENROUTESERVICE_API_KEY : getenv('OPENROUTESERVICE_API_KEY');
+	if (! $ors_key && function_exists('get_field')) {
+		$ors_key = get_field('shina_openrouteservice_api_key', 'options');
+	}
+	$ors_key = is_scalar($ors_key) ? trim((string) $ors_key) : '';
+	$runtime_config = 'window.shinaCalculatorConfig = ' . wp_json_encode($calculator_config) . ';'
+		. 'window.__OPENROUTESERVICE_API_KEY__ = ' . wp_json_encode($ors_key) . ';';
 
 	wp_enqueue_style('edemchinim-style', get_stylesheet_uri(), array(), _S_VERSION);
 	if (is_front_page()) {
@@ -926,15 +959,12 @@ function edemchinim_scripts()
 		if (file_exists($landing_css) && file_exists($landing_js)) {
 			wp_enqueue_style('edemchinim-landing', get_template_directory_uri() . '/js/landing.css', array('edemchinim-style'), (string) filemtime($landing_css));
 			wp_enqueue_script('edemchinim-landing', get_template_directory_uri() . '/js/landing.js', array(), (string) filemtime($landing_js), true);
+			wp_add_inline_script('edemchinim-landing', $runtime_config, 'before');
 		}
 		return;
 	}
 	wp_enqueue_script('edemchinim-main', get_template_directory_uri() . '/js/main.min.js', array(), _S_VERSION, true);
-	wp_add_inline_script(
-		'edemchinim-main',
-		'window.shinaCalculatorConfig = ' . wp_json_encode($calculator_config) . ';',
-		'before'
-	);
+	wp_add_inline_script('edemchinim-main', $runtime_config, 'before');
 }
 add_action('wp_enqueue_scripts', 'edemchinim_scripts');
 

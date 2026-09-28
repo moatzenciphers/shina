@@ -21,6 +21,7 @@ $archive = get_post_type_archive_link('reviews');
 		<article class="slider-grid__item">
 			<span class="slider-grid__stars" role="img" aria-label="<?php echo esc_attr(sprintf('Оценка %s из 5', $rating)); ?>"><?php echo esc_html(str_repeat('★', max(0, min(5, (int) round($rating))))); ?></span>
 			<blockquote class="slider-grid__quote"><?php echo esc_html(wp_strip_all_tags($review->post_content)); ?></blockquote>
+			<button class="slider-grid__more" type="button" data-review-open hidden>Читать полностью</button>
 			<p class="slider-grid__service"><?php echo esc_html($service_names[$service_key] ?? ''); ?></p>
 			<div class="slider-grid__author">
 				<?php if (has_post_thumbnail($review)) : echo get_the_post_thumbnail($review, 'thumbnail', array('class' => 'slider-grid__avatar', 'alt' => '', 'loading' => 'lazy')); else : ?><span class="slider-grid__avatar slider-grid__avatar--initials" aria-hidden="true"><?php echo esc_html(mb_substr(get_the_title($review), 0, 1)); ?></span><?php endif; ?>
@@ -35,5 +36,15 @@ $archive = get_post_type_archive_link('reviews');
 		<button class="landing-slider-arrow landing-slider-arrow--next slider-grid__arrow" type="button" data-review-next aria-label="Следующий отзыв"><?php edemchinim_landing_arrow(); ?></button>
 	</div>
 	<?php endif; ?>
+	<dialog class="slider-grid__dialog" data-review-dialog aria-labelledby="slider-grid-dialog-title">
+		<div class="slider-grid__dialog-inner">
+			<button class="slider-grid__dialog-close" type="button" data-review-close aria-label="Закрыть отзыв">×</button>
+			<h3 class="slider-grid__dialog-title" id="slider-grid-dialog-title">Отзыв клиента</h3>
+			<span class="slider-grid__stars" data-review-dialog-stars role="img"></span>
+			<blockquote class="slider-grid__dialog-quote" data-review-dialog-text></blockquote>
+			<p class="slider-grid__dialog-service" data-review-dialog-service></p>
+			<div class="slider-grid__dialog-author"><cite data-review-dialog-author></cite><time data-review-dialog-date></time></div>
+		</div>
+	</dialog>
 	<footer class="slider-grid__footer"><?php if ($archive) : ?><a class="slider-grid__all landing-more-link" href="<?php echo esc_url($archive); ?>">Смотреть все отзывы<?php edemchinim_landing_arrow(); ?></a><?php endif; ?></footer>
 </section>

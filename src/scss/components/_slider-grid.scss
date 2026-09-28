@@ -51,6 +51,107 @@
   line-height: 1.4;
 }
 
+.slider-grid__track--expandable .slider-grid__quote {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+}
+
+.slider-grid__more {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-accent);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.slider-grid__more[hidden] {
+  display: none;
+}
+
+.slider-grid__dialog {
+  width: min(600px, calc(100% - 32px));
+  max-height: min(80svh, 720px);
+  padding: 0;
+  border: 1px solid var(--landing-divider);
+  background: var(--color-landing-bg);
+  color: var(--color-text);
+  overflow-y: auto;
+}
+
+.slider-grid__dialog::backdrop {
+  background: rgba(0, 0, 0, .75);
+}
+
+.slider-grid__dialog-inner {
+  position: relative;
+  padding: 32px;
+}
+
+.slider-grid__dialog-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--landing-divider);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.slider-grid__dialog-title {
+  margin: 0 48px 24px 0;
+  font-size: 28px;
+}
+
+.slider-grid__dialog-quote {
+  margin: 16px 0 0;
+  font-size: 18px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+
+.slider-grid__dialog-service {
+  margin: 16px 0 24px;
+  color: var(--color-muted);
+}
+
+.slider-grid__dialog-author {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--landing-divider);
+}
+
+.slider-grid__dialog-author cite {
+  font-style: normal;
+  font-weight: 700;
+}
+
+.slider-grid__dialog-author time {
+  color: var(--color-muted);
+}
+
+.review-dialog-open {
+  overflow: hidden;
+}
+
+.slider-grid__more:focus-visible,
+.slider-grid__dialog-close:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 4px;
+}
+
 .slider-grid__service {
   margin: 12px 0 16px;
   color: var(--color-muted);
@@ -117,6 +218,10 @@
     font-size: 16px;
   }
 
+  .slider-grid__dialog-inner { padding: 24px; }
+  .slider-grid__dialog-title { font-size: 24px; }
+  .slider-grid__dialog-quote { font-size: 17px; }
+
   .slider-grid__track {
     display: flex;
     overflow-x: auto;
@@ -137,8 +242,8 @@
     min-height: 330px;
     flex: 0 0 calc(100% - 64px);
     padding: 0 24px 0 0;
-    border: 0;
-    border-right: 1px solid var(--landing-divider);
+    border: 0 !important;
+    border-right: 1px solid var(--landing-divider) !important;
     scroll-snap-align: start;
   }
 

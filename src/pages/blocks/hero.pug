@@ -14,6 +14,8 @@
   const landingServicesHref = '#services';
 
 section.landing-hero(aria-labelledby="landing-hero-title")
+  picture.landing-hero__picture(aria-hidden="true")
+    img(src=require('../../img/back.png'), alt="")
   header.landing-hero__header
     a.landing-hero__brand(href="#top", aria-label="Едем-чиним — на главную")
       svg.landing-hero__brand-car(viewBox="0 0 132 31", fill="none", aria-hidden="true")

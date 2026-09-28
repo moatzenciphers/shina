@@ -4,8 +4,10 @@ import { initCalculator } from './calculator';
 import { initCookieConsent } from './cookie-consent';
 import { initYandexAddress } from './map';
 import { initLanding } from './landing';
+import { initMobileActions } from './mobile-actions';
 import { initQuickCall } from './quick-call';
 import { initReviewSlider } from './review-slider';
+import './review-dialog';
 import { initMapPanel } from './map-panel';
 import { initGalleryGrid } from './gallery-grid';
 import { initSplitForm } from './split-form';
@@ -21,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCalculator();
   initYandexAddress();
   initLanding();
+  initMobileActions();
   initQuickCall();
   initReviewSlider();
   initMapPanel();

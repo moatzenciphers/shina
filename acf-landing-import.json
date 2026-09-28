@@ -84,6 +84,22 @@
                 "library": "all"
               },
               {
+                "key": "field_landing_hero_background_mobile",
+                "label": "Фоновое изображение для мобильных устройств",
+                "name": "hero_background_mobile",
+                "type": "image",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "return_format": "id",
+                "preview_size": "medium",
+                "library": "all"
+              },
+              {
                 "key": "field_landing_hero_button",
                 "label": "Текст кнопки",
                 "name": "hero_button",
@@ -1060,8 +1076,24 @@
   },
   {
     "key": "group_landing_service_price",
-    "title": "Услуга: цена на главной",
+    "title": "Услуга: карточка на главной",
     "fields": [
+      {
+        "key": "field_landing_service_card_description",
+        "label": "Текст карточки на главной",
+        "name": "service_card_description",
+        "type": "textarea",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "rows": 3,
+        "new_lines": ""
+      },
       {
         "key": "field_landing_service_price_from",
         "label": "Цена от, ₽",

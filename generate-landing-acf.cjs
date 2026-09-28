@@ -35,6 +35,7 @@ const layouts = [
     ...heading('hero', '', 'ВЫЕЗДНОЙ ШИНОМОНТАЖ 24/7'),
     area('hero_lead', 'Описание', 'Быстро приедем в любую точку Москвы и МО. Поможем продолжить движение.'),
     image('hero_background', 'Фоновое изображение'),
+    image('hero_background_mobile', 'Фоновое изображение для мобильных устройств'),
     text('hero_button', 'Текст кнопки', 'Вызвать мастера'),
     repeater('hero_prices', 'Тарифы', [text('label', 'Подпись'), text('price', 'Цена')], 3),
     text('hero_minimum', 'Минимальный заказ', 'от 2 500 ₽'),
@@ -118,8 +119,9 @@ const groups = [
     modified: Math.floor(Date.now() / 1000),
   },
   {
-    key: 'group_landing_service_price', title: 'Услуга: цена на главной',
+    key: 'group_landing_service_price', title: 'Услуга: карточка на главной',
     fields: [
+      area('service_card_description', 'Текст карточки на главной'),
       field('service_price_from', 'Цена от, ₽', 'number', { instructions: 'Число без знака рубля.', min: 0, step: 1 }),
       text('service_price_note', 'Пояснение под ценой'),
     ],

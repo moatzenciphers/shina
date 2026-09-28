@@ -1,13 +1,13 @@
 -
   const cards = [
-    { id: 'service-seasonal', title: 'Сезонная замена шин', href: '/uslugi/sezonnaya-zamena-shin/', price: 'от 4 600 ₽' },
-    { id: 'service-puncture', title: 'Ремонт прокола', href: '/uslugi/remont-prokola/', price: 'от 3 500 ₽' },
-    { id: 'service-sidewall', title: 'Ремонт боковых порезов и грыж', href: '/uslugi/remont-bokovyh-porezov/', price: 'от 4 500 ₽' },
-    { id: 'service-locknuts', title: 'Снятие секреток', href: '/uslugi/snyatie-sekretok/', price: 'от 2 500 ₽' },
-    { id: 'service-wheels', title: 'Правка дисков', href: '/uslugi/pravka-diskov/', price: 'от 3 000 ₽' },
-    { id: 'service-jumpstart', title: 'Прикурка автомобиля', href: '/uslugi/prikurka-avtomobilya/', price: 'от 2 500 ₽' },
-    { id: 'service-fuel', title: 'Доставка топлива', href: '/uslugi/dostavka-topliva/', price: 'от 2 500 ₽', note: 'без стоимости топлива' },
-    { id: 'service-battery', title: 'Замена аккумулятора', href: '/uslugi/zamena-akkumulyatora/', price: 'от 3 000 ₽' }
+    { id: 'service-seasonal', title: 'Сезонная замена шин', description: 'Замена комплекта колёс у вашего автомобиля.', href: '/uslugi/sezonnaya-zamena-shin/', price: 'от 4 600 ₽' },
+    { id: 'service-puncture', title: 'Ремонт прокола', description: 'Осмотр и ремонт повреждённого колеса.', href: '/uslugi/remont-prokola/', price: 'от 3 500 ₽' },
+    { id: 'service-sidewall', title: 'Ремонт боковых порезов и грыж', description: 'Оценка повреждения и возможного ремонта.', href: '/uslugi/remont-bokovyh-porezov/', price: 'от 4 500 ₽' },
+    { id: 'service-locknuts', title: 'Снятие секреток', description: 'Помощь при утере ключа от секретного крепежа.', href: '/uslugi/snyatie-sekretok/', price: 'от 2 500 ₽' },
+    { id: 'service-wheels', title: 'Правка дисков', description: 'Проверка и восстановление геометрии диска.', href: '/uslugi/pravka-diskov/', price: 'от 3 000 ₽' },
+    { id: 'service-jumpstart', title: 'Прикурка автомобиля', description: 'Помощь при разряженном аккумуляторе.', href: '/uslugi/prikurka-avtomobilya/', price: 'от 2 500 ₽' },
+    { id: 'service-fuel', title: 'Доставка топлива', description: 'Привезём топливо к вашему автомобилю.', href: '/uslugi/dostavka-topliva/', price: 'от 2 500 ₽', note: 'без стоимости топлива' },
+    { id: 'service-battery', title: 'Замена аккумулятора', description: 'Помощь с заменой аккумулятора на месте.', href: '/uslugi/zamena-akkumulyatora/', price: 'от 3 000 ₽' }
   ];
 
 section.cards-grid.landing-section#services(aria-labelledby="cards-grid-title")
@@ -17,14 +17,17 @@ section.cards-grid.landing-section#services(aria-labelledby="cards-grid-title")
     p.cards-grid__intro.landing-text Ориентировочные цены указаны «от». Точная стоимость зависит от автомобиля, диаметра колёс, объёма работ, адреса и времени выезда.
   div.cards-grid__items
     each card in cards
-      article.cards-grid__item(id=card.id, class=card.note ? 'cards-grid__item--note' : '')
-        a.cards-grid__link.landing-subtitle(href=card.href, data-open-calculator)
-          span= card.title
-          svg.cards-grid__arrow(viewBox="0 0 32 32", fill="none", aria-hidden="true")
-            path(d="M5 16h21m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="square")
-        if card.note
-          p.cards-grid__price-note= card.note
-        p.cards-grid__price= card.price
+      article.cards-grid__item(id=card.id)
+        a.cards-grid__link.landing-subtitle(href=card.href, data-open-calculator)= card.title
+        p.cards-grid__description= card.description
+        div.cards-grid__bottom
+          div.cards-grid__price-group
+            if card.note
+              p.cards-grid__price-note= card.note
+            p.cards-grid__price= card.price
+          span.cards-grid__details(aria-hidden="true")
+            svg.cards-grid__arrow(viewBox="0 0 24 24", fill="none")
+              path(d="M5 19 19 5M7 5h12v12", stroke="currentColor", stroke-width="2", stroke-linecap="square")
   footer.cards-grid__footer
     p.cards-grid__footer-text.landing-text Также выполняем хранение шин, отогрев автомобиля, заправку кондиционера, подбор, доставку и установку шин и дисков.
     a.cards-grid__all-link.landing-more-link(href="/uslugi/") Посмотреть все услуги

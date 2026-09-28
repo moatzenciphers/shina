@@ -40,6 +40,7 @@
   aspect-ratio: 2 / 1;
   border-radius: 6px;
   object-fit: cover;
+  height: auto;
 }
 
 .gallery-grid__card:first-child .gallery-grid__image { aspect-ratio: 2.65 / 1; }
@@ -85,7 +86,7 @@
   .gallery-grid__track::-webkit-scrollbar { display: none; }
   .gallery-grid__card { position: relative; flex: 0 0 100%; scroll-snap-align: start; }
   .gallery-grid__image,
-  .gallery-grid__card:first-child .gallery-grid__image { aspect-ratio: 1 / 1; }
+  .gallery-grid__card:first-child .gallery-grid__image { aspect-ratio: 1 / 1; height: auto;}
   .gallery-grid__caption,
   .gallery-grid__card:first-child .gallery-grid__caption {
     position: absolute;

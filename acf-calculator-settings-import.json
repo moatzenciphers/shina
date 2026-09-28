@@ -1,755 +1,770 @@
 [
-    {
-        "key": "group_shina_calculator_settings",
-        "title": "Шиномонтаж: тарифы калькулятора",
-        "fields": [
-            {
-                "key": "field_shina_calculator_config",
-                "label": "Тарифы и настройки расчета",
-                "name": "shina_calculator_config",
-                "type": "group",
-                "instructions": "Обычные числовые поля для расчета цены. Эти значения автоматически передаются на фронт.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "layout": "block",
-                "sub_fields": [
-                    {
-                        "key": "field_shina_calc_tab_general",
-                        "label": "Общее",
-                        "name": "",
-                        "type": "tab",
-                        "placement": "top",
-                        "endpoint": 0
-                    },
-                    {
-                        "key": "field_shina_calc_arrival_time",
-                        "label": "Время прибытия по умолчанию",
-                        "name": "arrival_time",
-                        "type": "group",
-                        "layout": "block",
-                        "sub_fields": [
-                            {
-                                "key": "field_shina_calc_arrival_min",
-                                "label": "Минимум",
-                                "name": "min",
-                                "type": "number",
-                                "default_value": 40,
-                                "min": 0,
-                                "step": 1,
-                                "append": "мин"
-                            },
-                            {
-                                "key": "field_shina_calc_arrival_max",
-                                "label": "Максимум",
-                                "name": "max",
-                                "type": "number",
-                                "default_value": 60,
-                                "min": 0,
-                                "step": 1,
-                                "append": "мин"
-                            }
-                        ]
-                    },
-                    {
-                        "key": "field_shina_calc_night_tariff",
-                        "label": "Ночной тариф",
-                        "name": "night_tariff",
-                        "type": "group",
-                        "layout": "block",
-                        "sub_fields": [
-                            {
-                                "key": "field_shina_calc_night_start_hour",
-                                "label": "Начало",
-                                "name": "start_hour",
-                                "type": "number",
-                                "default_value": 22,
-                                "min": 0,
-                                "max": 23,
-                                "step": 1,
-                                "append": ":00"
-                            },
-                            {
-                                "key": "field_shina_calc_night_end_hour",
-                                "label": "Окончание",
-                                "name": "end_hour",
-                                "type": "number",
-                                "default_value": 7,
-                                "min": 0,
-                                "max": 23,
-                                "step": 1,
-                                "append": ":00"
-                            }
-                        ]
-                    },
-                    {
-                        "key": "field_shina_calc_master_points",
-                        "label": "Точки мастеров на карте",
-                        "name": "master_points",
-                        "type": "yandex-map",
-                        "instructions": "Кликните по карте, чтобы добавить точку мастера. Точки можно перемещать и удалять, а название мастера указывать в содержимом метки.",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "height": 600,
-                        "center_lat": "55.755864",
-                        "center_lng": "37.617698",
-                        "zoom": 9,
-                        "map_type": "map",
-                        "zoom_control": 1,
-                        "scroll_zoom": 1,
-                        "return_format": "array",
-                        "default_value": "{\"center_lat\":55.755864,\"center_lng\":37.617698,\"zoom\":9,\"type\":\"map\",\"marks\":[{\"id\":1,\"content\":\"Мастер 1\",\"type\":\"Point\",\"coords\":[55.755864,37.617698],\"circle_size\":0},{\"id\":2,\"content\":\"Мастер 2\",\"type\":\"Point\",\"coords\":[55.760186,37.618711],\"circle_size\":0},{\"id\":3,\"content\":\"Мастер 3\",\"type\":\"Point\",\"coords\":[55.752023,37.617499],\"circle_size\":0},{\"id\":4,\"content\":\"Мастер 4\",\"type\":\"Point\",\"coords\":[55.741469,37.620393],\"circle_size\":0},{\"id\":5,\"content\":\"Мастер 5\",\"type\":\"Point\",\"coords\":[55.769808,37.638992],\"circle_size\":0},{\"id\":6,\"content\":\"Мастер 6\",\"type\":\"Point\",\"coords\":[55.781402,37.598055],\"circle_size\":0},{\"id\":7,\"content\":\"Мастер 7\",\"type\":\"Point\",\"coords\":[55.790311,37.679173],\"circle_size\":0},{\"id\":8,\"content\":\"Мастер 8\",\"type\":\"Point\",\"coords\":[55.807794,37.638699],\"circle_size\":0},{\"id\":9,\"content\":\"Мастер 9\",\"type\":\"Point\",\"coords\":[55.819542,37.611271],\"circle_size\":0},{\"id\":10,\"content\":\"Мастер 10\",\"type\":\"Point\",\"coords\":[55.831903,37.411961],\"circle_size\":0},{\"id\":11,\"content\":\"Мастер 11\",\"type\":\"Point\",\"coords\":[55.792236,37.493095],\"circle_size\":0},{\"id\":12,\"content\":\"Мастер 12\",\"type\":\"Point\",\"coords\":[55.728995,37.601175],\"circle_size\":0},{\"id\":13,\"content\":\"Мастер 13\",\"type\":\"Point\",\"coords\":[55.707073,37.657794],\"circle_size\":0},{\"id\":14,\"content\":\"Мастер 14\",\"type\":\"Point\",\"coords\":[55.655814,37.648819],\"circle_size\":0},{\"id\":15,\"content\":\"Мастер 15\",\"type\":\"Point\",\"coords\":[55.676494,37.504583],\"circle_size\":0},{\"id\":16,\"content\":\"Мастер 16\",\"type\":\"Point\",\"coords\":[55.689827,37.573221],\"circle_size\":0},{\"id\":17,\"content\":\"Мастер 17\",\"type\":\"Point\",\"coords\":[55.711192,37.748496],\"circle_size\":0},{\"id\":18,\"content\":\"Мастер 18\",\"type\":\"Point\",\"coords\":[55.742214,37.800022],\"circle_size\":0},{\"id\":19,\"content\":\"Мастер 19\",\"type\":\"Point\",\"coords\":[55.765558,37.842731],\"circle_size\":0},{\"id\":20,\"content\":\"Мастер 20\",\"type\":\"Point\",\"coords\":[55.810304,37.798365],\"circle_size\":0},{\"id\":21,\"content\":\"Мастер 21\",\"type\":\"Point\",\"coords\":[55.861625,37.689205],\"circle_size\":0},{\"id\":22,\"content\":\"Мастер 22\",\"type\":\"Point\",\"coords\":[55.875637,37.568556],\"circle_size\":0},{\"id\":23,\"content\":\"Мастер 23\",\"type\":\"Point\",\"coords\":[55.851121,37.476193],\"circle_size\":0},{\"id\":24,\"content\":\"Мастер 24\",\"type\":\"Point\",\"coords\":[55.818653,37.497531],\"circle_size\":0},{\"id\":25,\"content\":\"Мастер 25\",\"type\":\"Point\",\"coords\":[55.744789,37.400476],\"circle_size\":0},{\"id\":26,\"content\":\"Мастер 26\",\"type\":\"Point\",\"coords\":[55.700341,37.414289],\"circle_size\":0},{\"id\":27,\"content\":\"Мастер 27\",\"type\":\"Point\",\"coords\":[55.637995,37.484245],\"circle_size\":0},{\"id\":28,\"content\":\"Мастер 28\",\"type\":\"Point\",\"coords\":[55.612626,37.606161],\"circle_size\":0},{\"id\":29,\"content\":\"Мастер 29\",\"type\":\"Point\",\"coords\":[55.625578,37.743391],\"circle_size\":0},{\"id\":30,\"content\":\"Мастер 30\",\"type\":\"Point\",\"coords\":[55.690901,37.829522],\"circle_size\":0}]}"
-                    },
-                    {
-                        "key": "field_shina_calc_callout",
-                        "label": "Выезд",
-                        "name": "callout",
-                        "type": "group",
-                        "layout": "block",
-                        "sub_fields": [
-                            {
-                                "key": "field_shina_calc_inside_mkad",
-                                "label": "В пределах МКАД",
-                                "name": "inside_mkad",
-                                "type": "group",
-                                "layout": "table",
-                                "sub_fields": [
-                                    {
-                                        "key": "field_shina_calc_inside_mkad_day",
-                                        "label": "День",
-                                        "name": "day",
-                                        "type": "number",
-                                        "default_value": 1500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_inside_mkad_night",
-                                        "label": "Ночь",
-                                        "name": "night",
-                                        "type": "number",
-                                        "default_value": 2000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    }
-                                ]
-                            },
-                            {
-                                "key": "field_shina_calc_outside_mkad",
-                                "label": "За МКАД",
-                                "name": "outside_mkad",
-                                "type": "group",
-                                "layout": "table",
-                                "sub_fields": [
-                                    {
-                                        "key": "field_shina_calc_outside_mkad_day",
-                                        "label": "День",
-                                        "name": "day",
-                                        "type": "number",
-                                        "default_value": 2000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_outside_mkad_night",
-                                        "label": "Ночь",
-                                        "name": "night",
-                                        "type": "number",
-                                        "default_value": 2500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_outside_mkad_per_km",
-                                        "label": "За км",
-                                        "name": "per_km",
-                                        "type": "number",
-                                        "default_value": 40,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽/км"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "key": "field_shina_calc_tire_multipliers",
-                        "label": "Наценки для шинных работ",
-                        "name": "tire_multipliers",
-                        "type": "group",
-                        "instructions": "Укажите 20 для +20%, 40 для +40%.",
-                        "layout": "table",
-                        "sub_fields": [
-                            {
-                                "key": "field_shina_calc_crossover_percent",
-                                "label": "Кроссовер",
-                                "name": "crossover_percent",
-                                "type": "number",
-                                "default_value": 20,
-                                "min": 0,
-                                "step": 1,
-                                "append": "%"
-                            },
-                            {
-                                "key": "field_shina_calc_suv_percent",
-                                "label": "Внедорожник",
-                                "name": "suv_percent",
-                                "type": "number",
-                                "default_value": 40,
-                                "min": 0,
-                                "step": 1,
-                                "append": "%"
-                            },
-                            {
-                                "key": "field_shina_calc_low_profile_percent",
-                                "label": "Низкий профиль",
-                                "name": "low_profile_percent",
-                                "type": "number",
-                                "default_value": 20,
-                                "min": 0,
-                                "step": 1,
-                                "append": "%"
-                            },
-                            {
-                                "key": "field_shina_calc_reinforced_tire_percent",
-                                "label": "Run Flat / C / AT",
-                                "name": "reinforced_tire_percent",
-                                "type": "number",
-                                "default_value": 40,
-                                "min": 0,
-                                "step": 1,
-                                "append": "%"
-                            }
-                        ]
-                    },
-                    {
-                        "key": "field_shina_calc_tab_seasonal",
-                        "label": "Сезонная замена",
-                        "name": "",
-                        "type": "tab",
-                        "placement": "top",
-                        "endpoint": 0
-                    },
-                    {
-                        "key": "field_shina_calc_seasonal",
-                        "label": "Сезонная замена",
-                        "name": "seasonal",
-                        "type": "group",
-                        "layout": "block",
-                        "sub_fields": [
-                            {
-                                "key": "field_shina_calc_seasonal_diameter",
-                                "label": "Стоимость по диаметру",
-                                "name": "diameter",
-                                "type": "group",
-                                "layout": "table",
-                                "sub_fields": [
-                                    {
-                                        "key": "field_shina_calc_seasonal_r12",
-                                        "label": "R12",
-                                        "name": "r12",
-                                        "type": "number",
-                                        "default_value": 3100,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_seasonal_r13",
-                                        "label": "R13",
-                                        "name": "r13",
-                                        "type": "number",
-                                        "default_value": 3100,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_seasonal_r14",
-                                        "label": "R14",
-                                        "name": "r14",
-                                        "type": "number",
-                                        "default_value": 3100,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_seasonal_r15",
-                                        "label": "R15",
-                                        "name": "r15",
-                                        "type": "number",
-                                        "default_value": 3100,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_seasonal_r16",
-                                        "label": "R16",
-                                        "name": "r16",
-                                        "type": "number",
-                                        "default_value": 3500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_seasonal_r17",
-                                        "label": "R17",
-                                        "name": "r17",
-                                        "type": "number",
-                                        "default_value": 4000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_seasonal_r18",
-                                        "label": "R18",
-                                        "name": "r18",
-                                        "type": "number",
-                                        "default_value": 4500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_seasonal_r19",
-                                        "label": "R19",
-                                        "name": "r19",
-                                        "type": "number",
-                                        "default_value": 5000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_seasonal_r20",
-                                        "label": "R20",
-                                        "name": "r20",
-                                        "type": "number",
-                                        "default_value": 5500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_seasonal_r21",
-                                        "label": "R21",
-                                        "name": "r21",
-                                        "type": "number",
-                                        "default_value": 6500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_seasonal_r22",
-                                        "label": "R22",
-                                        "name": "r22",
-                                        "type": "number",
-                                        "default_value": 7500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_seasonal_r23",
-                                        "label": "R23",
-                                        "name": "r23",
-                                        "type": "number",
-                                        "default_value": 8500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_seasonal_r24",
-                                        "label": "R24",
-                                        "name": "r24",
-                                        "type": "number",
-                                        "default_value": 10000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    }
-                                ]
-                            },
-                            {
-                                "key": "field_shina_calc_seasonal_addons",
-                                "label": "Дополнительные услуги",
-                                "name": "addons",
-                                "type": "group",
-                                "layout": "table",
-                                "sub_fields": [
-                                    {
-                                        "key": "field_shina_calc_copper_grease",
-                                        "label": "Медная смазка",
-                                        "name": "copper_grease",
-                                        "type": "number",
-                                        "default_value": 700,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_hub_cleaning",
-                                        "label": "Механическая чистка ступиц",
-                                        "name": "hub_cleaning",
-                                        "type": "number",
-                                        "default_value": 800,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "key": "field_shina_calc_tab_puncture",
-                        "label": "Ремонт прокола",
-                        "name": "",
-                        "type": "tab",
-                        "placement": "top",
-                        "endpoint": 0
-                    },
-                    {
-                        "key": "field_shina_calc_puncture",
-                        "label": "Ремонт прокола",
-                        "name": "puncture",
-                        "type": "group",
-                        "layout": "block",
-                        "sub_fields": [
-                            {
-                                "key": "field_shina_calc_puncture_diameter",
-                                "label": "Стоимость по диаметру",
-                                "name": "diameter",
-                                "type": "group",
-                                "layout": "table",
-                                "sub_fields": [
-                                    {
-                                        "key": "field_shina_calc_puncture_r12",
-                                        "label": "R12",
-                                        "name": "r12",
-                                        "type": "number",
-                                        "default_value": 2000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_puncture_r13",
-                                        "label": "R13",
-                                        "name": "r13",
-                                        "type": "number",
-                                        "default_value": 2000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_puncture_r14",
-                                        "label": "R14",
-                                        "name": "r14",
-                                        "type": "number",
-                                        "default_value": 2000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_puncture_r15",
-                                        "label": "R15",
-                                        "name": "r15",
-                                        "type": "number",
-                                        "default_value": 2000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_puncture_r16",
-                                        "label": "R16",
-                                        "name": "r16",
-                                        "type": "number",
-                                        "default_value": 2000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_puncture_r17",
-                                        "label": "R17",
-                                        "name": "r17",
-                                        "type": "number",
-                                        "default_value": 2000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_puncture_r18",
-                                        "label": "R18",
-                                        "name": "r18",
-                                        "type": "number",
-                                        "default_value": 2500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_puncture_r19",
-                                        "label": "R19",
-                                        "name": "r19",
-                                        "type": "number",
-                                        "default_value": 2500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_puncture_r20",
-                                        "label": "R20",
-                                        "name": "r20",
-                                        "type": "number",
-                                        "default_value": 3000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_puncture_r21",
-                                        "label": "R21",
-                                        "name": "r21",
-                                        "type": "number",
-                                        "default_value": 3500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_puncture_r22",
-                                        "label": "R22",
-                                        "name": "r22",
-                                        "type": "number",
-                                        "default_value": 4500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_puncture_r23",
-                                        "label": "R23",
-                                        "name": "r23",
-                                        "type": "number",
-                                        "default_value": 6000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_puncture_r24",
-                                        "label": "R24",
-                                        "name": "r24",
-                                        "type": "number",
-                                        "default_value": 6000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "key": "field_shina_calc_tab_conditioner",
-                        "label": "Заправка кондиционера",
-                        "name": "",
-                        "type": "tab",
-                        "placement": "top",
-                        "endpoint": 0
-                    },
-                    {
-                        "key": "field_shina_calc_conditioner",
-                        "label": "Заправка кондиционера",
-                        "name": "conditioner",
-                        "type": "group",
-                        "layout": "block",
-                        "sub_fields": [
-                            {
-                                "key": "field_shina_calc_conditioner_base",
-                                "label": "Базовая цена",
-                                "name": "base",
-                                "type": "number",
-                                "default_value": 4800,
-                                "min": 0,
-                                "step": 1,
-                                "append": "₽"
-                            },
-                            {
-                                "key": "field_shina_calc_conditioner_addons",
-                                "label": "Дополнительные услуги",
-                                "name": "addons",
-                                "type": "group",
-                                "layout": "table",
-                                "sub_fields": [
-                                    {
-                                        "key": "field_shina_calc_freon134",
-                                        "label": "Дополнительно фреон 134А 100 г",
-                                        "name": "freon134",
-                                        "type": "number",
-                                        "default_value": 500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_antibacterial",
-                                        "label": "Антибактериальная обработка системы",
-                                        "name": "antibacterial",
-                                        "type": "number",
-                                        "default_value": 500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    }
-                                ]
-                            },
-                            {
-                                "key": "field_shina_calc_conditioner_multipliers",
-                                "label": "Наценки",
-                                "name": "multipliers",
-                                "type": "group",
-                                "instructions": "Укажите 70 для +70%, 100 для +100%.",
-                                "layout": "table",
-                                "sub_fields": [
-                                    {
-                                        "key": "field_shina_calc_extra_circuit_percent",
-                                        "label": "Дополнительный контур",
-                                        "name": "extra_circuit_percent",
-                                        "type": "number",
-                                        "default_value": 70,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "%"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_commercial_percent",
-                                        "label": "Спецтехника, грузовое",
-                                        "name": "commercial_percent",
-                                        "type": "number",
-                                        "default_value": 100,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "%"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "key": "field_shina_calc_tab_storage",
-                        "label": "Хранение колес",
-                        "name": "",
-                        "type": "tab",
-                        "placement": "top",
-                        "endpoint": 0
-                    },
-                    {
-                        "key": "field_shina_calc_storage",
-                        "label": "Хранение колес",
-                        "name": "storage",
-                        "type": "group",
-                        "layout": "block",
-                        "sub_fields": [
-                            {
-                                "key": "field_shina_calc_storage_diameter",
-                                "label": "Стоимость по диаметру",
-                                "name": "diameter",
-                                "type": "group",
-                                "layout": "table",
-                                "sub_fields": [
-                                    {
-                                        "key": "field_shina_calc_storage_r12_16",
-                                        "label": "R12-R16",
-                                        "name": "r12_16",
-                                        "type": "number",
-                                        "default_value": 5000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_storage_r17_19",
-                                        "label": "R17-R19",
-                                        "name": "r17_19",
-                                        "type": "number",
-                                        "default_value": 5500,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    },
-                                    {
-                                        "key": "field_shina_calc_storage_r20_24",
-                                        "label": "R20-R24",
-                                        "name": "r20_24",
-                                        "type": "number",
-                                        "default_value": 6000,
-                                        "min": 0,
-                                        "step": 1,
-                                        "append": "₽"
-                                    }
-                                ]
-                            },
-                            {
-                                "key": "field_shina_calc_storage_delivery",
-                                "label": "Доставка",
-                                "name": "delivery",
-                                "type": "number",
-                                "default_value": 3500,
-                                "min": 0,
-                                "step": 1,
-                                "append": "₽"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
-        "location": [
-            [
-                {
-                    "param": "options_page",
-                    "operator": "==",
-                    "value": "shina-calculator-settings"
-                }
+  {
+    "key": "group_shina_calculator_settings",
+    "title": "Шиномонтаж: тарифы калькулятора",
+    "fields": [
+      {
+        "key": "field_shina_calculator_config",
+        "label": "Тарифы и настройки расчета",
+        "name": "shina_calculator_config",
+        "type": "group",
+        "instructions": "Обычные числовые поля для расчета цены. Эти значения автоматически передаются на фронт.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "block",
+        "sub_fields": [
+          {
+            "key": "field_shina_calc_tab_general",
+            "label": "Общее",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+          },
+          {
+            "key": "field_shina_calc_arrival_time",
+            "label": "Время прибытия по умолчанию",
+            "name": "arrival_time",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+              {
+                "key": "field_shina_calc_arrival_min",
+                "label": "Минимум",
+                "name": "min",
+                "type": "number",
+                "default_value": 40,
+                "min": 0,
+                "step": 1,
+                "append": "мин"
+              },
+              {
+                "key": "field_shina_calc_arrival_max",
+                "label": "Максимум",
+                "name": "max",
+                "type": "number",
+                "default_value": 60,
+                "min": 0,
+                "step": 1,
+                "append": "мин"
+              }
             ]
-        ],
-        "menu_order": 0,
-        "position": "normal",
-        "style": "default",
-        "label_placement": "top",
-        "instruction_placement": "label",
-        "hide_on_screen": "",
-        "active": true,
-        "description": "Поля для цен, наценок, времени прибытия и точек мастеров. Используйте slug страницы настроек: shina-calculator-settings.",
-        "show_in_rest": 0,
-        "modified": 1782000000
-    }
+          },
+          {
+            "key": "field_shina_calc_night_tariff",
+            "label": "Ночной тариф",
+            "name": "night_tariff",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+              {
+                "key": "field_shina_calc_night_start_hour",
+                "label": "Начало",
+                "name": "start_hour",
+                "type": "number",
+                "default_value": 22,
+                "min": 0,
+                "max": 23,
+                "step": 1,
+                "append": ":00"
+              },
+              {
+                "key": "field_shina_calc_night_end_hour",
+                "label": "Окончание",
+                "name": "end_hour",
+                "type": "number",
+                "default_value": 7,
+                "min": 0,
+                "max": 23,
+                "step": 1,
+                "append": ":00"
+              }
+            ]
+          },
+          {
+            "key": "field_shina_calc_master_points",
+            "label": "Точки мастеров на карте",
+            "name": "master_points",
+            "type": "yandex-map",
+            "instructions": "Кликните по карте, чтобы добавить точку мастера. Точки можно перемещать и удалять, а название мастера указывать в содержимом метки.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "height": 600,
+            "center_lat": "55.755864",
+            "center_lng": "37.617698",
+            "zoom": 9,
+            "map_type": "map",
+            "zoom_control": 1,
+            "scroll_zoom": 1,
+            "return_format": "array",
+            "default_value": "{\"center_lat\":55.755864,\"center_lng\":37.617698,\"zoom\":9,\"type\":\"map\",\"marks\":[]}"
+          },
+          {
+            "key": "field_shina_calc_callout",
+            "label": "Выезд",
+            "name": "callout",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+              {
+                "key": "field_shina_calc_inside_mkad",
+                "label": "В пределах МКАД",
+                "name": "inside_mkad",
+                "type": "group",
+                "layout": "table",
+                "sub_fields": [
+                  {
+                    "key": "field_shina_calc_inside_mkad_day",
+                    "label": "День",
+                    "name": "day",
+                    "type": "number",
+                    "default_value": 1500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_inside_mkad_night",
+                    "label": "Ночь",
+                    "name": "night",
+                    "type": "number",
+                    "default_value": 2000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  }
+                ]
+              },
+              {
+                "key": "field_shina_calc_outside_mkad",
+                "label": "За МКАД",
+                "name": "outside_mkad",
+                "type": "group",
+                "layout": "table",
+                "sub_fields": [
+                  {
+                    "key": "field_shina_calc_outside_mkad_day",
+                    "label": "День",
+                    "name": "day",
+                    "type": "number",
+                    "default_value": 2000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_outside_mkad_night",
+                    "label": "Ночь",
+                    "name": "night",
+                    "type": "number",
+                    "default_value": 2500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_outside_mkad_per_km",
+                    "label": "За км",
+                    "name": "per_km",
+                    "type": "number",
+                    "default_value": 40,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽/км"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "field_shina_calc_tire_multipliers",
+            "label": "Наценки для шинных работ",
+            "name": "tire_multipliers",
+            "type": "group",
+            "instructions": "Укажите 20 для +20%, 40 для +40%.",
+            "layout": "table",
+            "sub_fields": [
+              {
+                "key": "field_shina_calc_crossover_percent",
+                "label": "Кроссовер",
+                "name": "crossover_percent",
+                "type": "number",
+                "default_value": 20,
+                "min": 0,
+                "step": 1,
+                "append": "%"
+              },
+              {
+                "key": "field_shina_calc_suv_percent",
+                "label": "Внедорожник",
+                "name": "suv_percent",
+                "type": "number",
+                "default_value": 40,
+                "min": 0,
+                "step": 1,
+                "append": "%"
+              },
+              {
+                "key": "field_shina_calc_low_profile_percent",
+                "label": "Низкий профиль",
+                "name": "low_profile_percent",
+                "type": "number",
+                "default_value": 20,
+                "min": 0,
+                "step": 1,
+                "append": "%"
+              },
+              {
+                "key": "field_shina_calc_reinforced_tire_percent",
+                "label": "Run Flat / C / AT",
+                "name": "reinforced_tire_percent",
+                "type": "number",
+                "default_value": 40,
+                "min": 0,
+                "step": 1,
+                "append": "%"
+              }
+            ]
+          },
+          {
+            "key": "field_shina_calc_tab_seasonal",
+            "label": "Сезонная замена",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+          },
+          {
+            "key": "field_shina_calc_seasonal",
+            "label": "Сезонная замена",
+            "name": "seasonal",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+              {
+                "key": "field_shina_calc_seasonal_diameter",
+                "label": "Стоимость по диаметру",
+                "name": "diameter",
+                "type": "group",
+                "layout": "table",
+                "sub_fields": [
+                  {
+                    "key": "field_shina_calc_seasonal_r12",
+                    "label": "R12",
+                    "name": "r12",
+                    "type": "number",
+                    "default_value": 3100,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_seasonal_r13",
+                    "label": "R13",
+                    "name": "r13",
+                    "type": "number",
+                    "default_value": 3100,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_seasonal_r14",
+                    "label": "R14",
+                    "name": "r14",
+                    "type": "number",
+                    "default_value": 3100,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_seasonal_r15",
+                    "label": "R15",
+                    "name": "r15",
+                    "type": "number",
+                    "default_value": 3100,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_seasonal_r16",
+                    "label": "R16",
+                    "name": "r16",
+                    "type": "number",
+                    "default_value": 3500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_seasonal_r17",
+                    "label": "R17",
+                    "name": "r17",
+                    "type": "number",
+                    "default_value": 4000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_seasonal_r18",
+                    "label": "R18",
+                    "name": "r18",
+                    "type": "number",
+                    "default_value": 4500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_seasonal_r19",
+                    "label": "R19",
+                    "name": "r19",
+                    "type": "number",
+                    "default_value": 5000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_seasonal_r20",
+                    "label": "R20",
+                    "name": "r20",
+                    "type": "number",
+                    "default_value": 5500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_seasonal_r21",
+                    "label": "R21",
+                    "name": "r21",
+                    "type": "number",
+                    "default_value": 6500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_seasonal_r22",
+                    "label": "R22",
+                    "name": "r22",
+                    "type": "number",
+                    "default_value": 7500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_seasonal_r23",
+                    "label": "R23",
+                    "name": "r23",
+                    "type": "number",
+                    "default_value": 8500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_seasonal_r24",
+                    "label": "R24",
+                    "name": "r24",
+                    "type": "number",
+                    "default_value": 10000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  }
+                ]
+              },
+              {
+                "key": "field_shina_calc_seasonal_addons",
+                "label": "Дополнительные услуги",
+                "name": "addons",
+                "type": "group",
+                "layout": "table",
+                "sub_fields": [
+                  {
+                    "key": "field_shina_calc_copper_grease",
+                    "label": "Медная смазка",
+                    "name": "copper_grease",
+                    "type": "number",
+                    "default_value": 700,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_hub_cleaning",
+                    "label": "Механическая чистка ступиц",
+                    "name": "hub_cleaning",
+                    "type": "number",
+                    "default_value": 800,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "field_shina_calc_tab_puncture",
+            "label": "Ремонт прокола",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+          },
+          {
+            "key": "field_shina_calc_puncture",
+            "label": "Ремонт прокола",
+            "name": "puncture",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+              {
+                "key": "field_shina_calc_puncture_diameter",
+                "label": "Стоимость по диаметру",
+                "name": "diameter",
+                "type": "group",
+                "layout": "table",
+                "sub_fields": [
+                  {
+                    "key": "field_shina_calc_puncture_r12",
+                    "label": "R12",
+                    "name": "r12",
+                    "type": "number",
+                    "default_value": 2000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_puncture_r13",
+                    "label": "R13",
+                    "name": "r13",
+                    "type": "number",
+                    "default_value": 2000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_puncture_r14",
+                    "label": "R14",
+                    "name": "r14",
+                    "type": "number",
+                    "default_value": 2000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_puncture_r15",
+                    "label": "R15",
+                    "name": "r15",
+                    "type": "number",
+                    "default_value": 2000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_puncture_r16",
+                    "label": "R16",
+                    "name": "r16",
+                    "type": "number",
+                    "default_value": 2000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_puncture_r17",
+                    "label": "R17",
+                    "name": "r17",
+                    "type": "number",
+                    "default_value": 2000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_puncture_r18",
+                    "label": "R18",
+                    "name": "r18",
+                    "type": "number",
+                    "default_value": 2500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_puncture_r19",
+                    "label": "R19",
+                    "name": "r19",
+                    "type": "number",
+                    "default_value": 2500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_puncture_r20",
+                    "label": "R20",
+                    "name": "r20",
+                    "type": "number",
+                    "default_value": 3000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_puncture_r21",
+                    "label": "R21",
+                    "name": "r21",
+                    "type": "number",
+                    "default_value": 3500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_puncture_r22",
+                    "label": "R22",
+                    "name": "r22",
+                    "type": "number",
+                    "default_value": 4500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_puncture_r23",
+                    "label": "R23",
+                    "name": "r23",
+                    "type": "number",
+                    "default_value": 6000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_puncture_r24",
+                    "label": "R24",
+                    "name": "r24",
+                    "type": "number",
+                    "default_value": 6000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "field_shina_calc_tab_conditioner",
+            "label": "Заправка кондиционера",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+          },
+          {
+            "key": "field_shina_calc_conditioner",
+            "label": "Заправка кондиционера",
+            "name": "conditioner",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+              {
+                "key": "field_shina_calc_conditioner_base",
+                "label": "Базовая цена",
+                "name": "base",
+                "type": "number",
+                "default_value": 4800,
+                "min": 0,
+                "step": 1,
+                "append": "₽"
+              },
+              {
+                "key": "field_shina_calc_conditioner_addons",
+                "label": "Дополнительные услуги",
+                "name": "addons",
+                "type": "group",
+                "layout": "table",
+                "sub_fields": [
+                  {
+                    "key": "field_shina_calc_freon134",
+                    "label": "Дополнительно фреон 134А 100 г",
+                    "name": "freon134",
+                    "type": "number",
+                    "default_value": 500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_antibacterial",
+                    "label": "Антибактериальная обработка системы",
+                    "name": "antibacterial",
+                    "type": "number",
+                    "default_value": 500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  }
+                ]
+              },
+              {
+                "key": "field_shina_calc_conditioner_multipliers",
+                "label": "Наценки",
+                "name": "multipliers",
+                "type": "group",
+                "instructions": "Укажите 70 для +70%, 100 для +100%.",
+                "layout": "table",
+                "sub_fields": [
+                  {
+                    "key": "field_shina_calc_extra_circuit_percent",
+                    "label": "Дополнительный контур",
+                    "name": "extra_circuit_percent",
+                    "type": "number",
+                    "default_value": 70,
+                    "min": 0,
+                    "step": 1,
+                    "append": "%"
+                  },
+                  {
+                    "key": "field_shina_calc_commercial_percent",
+                    "label": "Спецтехника, грузовое",
+                    "name": "commercial_percent",
+                    "type": "number",
+                    "default_value": 100,
+                    "min": 0,
+                    "step": 1,
+                    "append": "%"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "field_shina_calc_tab_storage",
+            "label": "Хранение колес",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+          },
+          {
+            "key": "field_shina_calc_storage",
+            "label": "Хранение колес",
+            "name": "storage",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+              {
+                "key": "field_shina_calc_storage_diameter",
+                "label": "Стоимость по диаметру",
+                "name": "diameter",
+                "type": "group",
+                "layout": "table",
+                "sub_fields": [
+                  {
+                    "key": "field_shina_calc_storage_r12_16",
+                    "label": "R12-R16",
+                    "name": "r12_16",
+                    "type": "number",
+                    "default_value": 5000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_storage_r17_19",
+                    "label": "R17-R19",
+                    "name": "r17_19",
+                    "type": "number",
+                    "default_value": 5500,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  },
+                  {
+                    "key": "field_shina_calc_storage_r20_24",
+                    "label": "R20-R24",
+                    "name": "r20_24",
+                    "type": "number",
+                    "default_value": 6000,
+                    "min": 0,
+                    "step": 1,
+                    "append": "₽"
+                  }
+                ]
+              },
+              {
+                "key": "field_shina_calc_storage_delivery",
+                "label": "Доставка",
+                "name": "delivery",
+                "type": "number",
+                "default_value": 3500,
+                "min": 0,
+                "step": 1,
+                "append": "₽"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "field_shina_openrouteservice_api_key",
+        "label": "Ключ OpenRouteService для расчёта времени",
+        "name": "shina_openrouteservice_api_key",
+        "type": "password",
+        "instructions": "Используется калькулятором и формой карты для расчёта времени по дорожному маршруту. Можно также задать SHINA_OPENROUTESERVICE_API_KEY в wp-config.php или OPENROUTESERVICE_API_KEY в окружении сервера.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "shina-calculator-settings"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Поля для цен, наценок, времени прибытия и точек мастеров. Используйте slug страницы настроек: shina-calculator-settings.",
+    "show_in_rest": 0,
+    "modified": 1782000000
+  }
 ]

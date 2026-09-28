@@ -9,8 +9,10 @@ export const initLanding = () => {
   const hero = landing?.querySelector('.landing-hero');
   const mobileMenuQuery = window.matchMedia('(max-width: 850px)');
   let returnFocus = null;
+  let landingScrollY = 0;
 
   if (!landing || !app) return;
+  document.body.classList.add('landing-page');
 
   const setMenuOpen = (open, restoreFocus = false) => {
     if (!hero || !menu) return;
@@ -25,6 +27,7 @@ export const initLanding = () => {
 
   const openCalculator = (trigger) => {
     returnFocus = trigger;
+    landingScrollY = window.scrollY;
     landing.hidden = true;
     app.hidden = false;
     window.scrollTo({ top: 0 });
@@ -44,9 +47,12 @@ export const initLanding = () => {
   closeButton?.addEventListener('click', () => {
     app.hidden = true;
     landing.hidden = false;
-    if (returnFocus?.isConnected) {
+    window.scrollTo({ top: landingScrollY });
+    document.dispatchEvent(new Event('landing:shown'));
+    if (returnFocus?.isConnected && !returnFocus.hidden) {
       returnFocus.focus({ preventScroll: true });
-      returnFocus.scrollIntoView({ block: 'center' });
+    } else {
+      menuToggle?.focus({ preventScroll: true });
     }
   });
 

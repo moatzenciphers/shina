@@ -26,6 +26,7 @@ $landing_layouts = array(
 			<?php endwhile; ?>
 		<?php endif; ?>
 	</main>
+	<?php get_template_part('template-parts/landing-mobile-actions'); ?>
 </div>
 <?php
 get_template_part('template-parts/landing-quick-call');

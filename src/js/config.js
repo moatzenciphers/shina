@@ -117,7 +117,7 @@ export const defaultCalculatorConfig = {
     startHour: 22,
     endHour: 7,
   },
-  masterPoints: createMoscowMasterPoints(30),
+  masterPoints: [],
   tireMultipliers: {
     crossover: 0.2,
     suv: 0.4,
@@ -424,31 +424,3 @@ export const diameterOptions = Array.from({ length: 13 }, (_, index) => {
     label: `R${value}`,
   };
 });
-
-function seededRandom(seed) {
-  let value = seed;
-
-  return () => {
-    value = (value * 9301 + 49297) % 233280;
-    return value / 233280;
-  };
-}
-
-function createMoscowMasterPoints(count) {
-  const random = seededRandom(247);
-  const points = [];
-
-  for (let index = 0; index < count; index += 1) {
-    const angle = random() * Math.PI * 2;
-    const radius = Math.sqrt(random());
-    const lat = moscowCenter[0] + Math.sin(angle) * radius * 0.18;
-    const lng = moscowCenter[1] + Math.cos(angle) * radius * 0.32;
-
-    points.push({
-      id: `master-${index + 1}`,
-      coords: [Number(lat.toFixed(6)), Number(lng.toFixed(6))],
-    });
-  }
-
-  return points;
-}

@@ -1,7 +1,10 @@
 <?php
 /** Hero block for the flexible landing page. */
 $image_id = edemchinim_landing_image_id(edemchinim_landing_sub('hero_background'));
+$mobile_image_id = edemchinim_landing_image_id(edemchinim_landing_sub('hero_background_mobile'));
 $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'full') : '';
+$mobile_image_url = $mobile_image_id ? wp_get_attachment_image_url($mobile_image_id, 'full') : '';
+$image_url = $image_url ?: get_template_directory_uri() . '/img/back.png';
 $prices = edemchinim_landing_sub('hero_prices', array());
 if (! $prices) {
 	$prices = array(
@@ -10,7 +13,13 @@ if (! $prices) {
 	);
 }
 ?>
-<section class="landing-hero" aria-labelledby="landing-hero-title"<?php if ($image_url) : ?> style="--landing-hero-image: url('<?php echo esc_url($image_url); ?>')"<?php endif; ?>>
+<section class="landing-hero" aria-labelledby="landing-hero-title">
+	<picture class="landing-hero__picture" aria-hidden="true">
+		<?php if ($mobile_image_url) : ?>
+			<source media="(max-width: 850px)" srcset="<?php echo esc_url($mobile_image_url); ?>">
+		<?php endif; ?>
+		<img src="<?php echo esc_url($image_url); ?>" alt="" decoding="async" fetchpriority="high">
+	</picture>
 	<div class="landing-hero__content" id="top">
 		<p class="landing-hero__outline" aria-hidden="true"><span>ЕДЕМ–</span><span>ЧИНИМ</span></p>
 		<h1 class="landing-hero__title landing-title landing-title--hero" id="landing-hero-title"><?php echo nl2br(esc_html(edemchinim_landing_sub('hero_title', 'ВЫЕЗДНОЙ ШИНОМОНТАЖ 24/7'))); ?></h1>

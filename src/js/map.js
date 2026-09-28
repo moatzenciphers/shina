@@ -269,7 +269,7 @@ const getServiceMarkerOptions = (type, radius) => {
   };
 };
 
-const createMasterPlacemark = (master) => {
+export const createMasterPlacemark = (master, initiallyVisible = false) => {
   return new window.ymaps.Placemark(
     master.coords,
     {
@@ -283,8 +283,8 @@ const createMasterPlacemark = (master) => {
       interactiveZIndex: false,
       openBalloonOnClick: false,
       openHintOnHover: false,
-      opacity: 0,
-      visible: false,
+      opacity: initiallyVisible ? 1 : 0,
+      visible: initiallyVisible,
       zIndex: 1000,
       zIndexActive: 1000,
       ...getServiceMarkerOptions('master', 16),
@@ -610,6 +610,11 @@ const scheduleServiceMapRefit = () => {
 };
 
 const fitAllMasters = () => {
+  if (!moscowMasterPoints.length) {
+    serviceMapState.lastBounds = null;
+    serviceMapState.instance?.setCenter(moscowCenter, 10);
+    return;
+  }
   fitServiceMap(getBoundsFromPoints(moscowMasterPoints.map((master) => master.coords)));
 };
 
@@ -627,7 +632,7 @@ const renderInitialServiceMap = () => {
   }).catch(() => {});
 };
 
-const requestOpenRouteServiceRoute = async (startCoords, endCoords, signal) => {
+export const requestOpenRouteServiceRoute = async (startCoords, endCoords, signal) => {
   const apiKey = getOpenRouteServiceApiKey();
 
   if (!apiKey) {

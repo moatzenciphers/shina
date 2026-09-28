@@ -1,7 +1,7 @@
 import Inputmask from 'inputmask';
 
 import { fixedArrivalTime, mkadPolygon, moscowCenter, moscowMasterPoints, nightTariff, serviceGeocodeBounds, tariffs } from './config';
-import { loadYandexMaps } from './map';
+import { createMasterPlacemark, loadYandexMaps, requestOpenRouteServiceRoute } from './map';
 import { getServiceLocationByCoords } from './service-location';
 import { formatPrice, getDistanceBetweenCoords, roundUpToStep } from './utils';
 
@@ -90,42 +90,37 @@ export const initMapPanel = () => {
     map.setCenter(coords, 13, { checkZoomRange: true, duration: 250 });
   };
 
-  const showEstimate = (location, arrival = fixedArrivalTime) => {
+  const showEstimate = (location, arrival) => {
     const price = getCalloutPrice(location);
-    const range = Array.isArray(arrival) ? arrival : fixedArrivalTime;
+    const range = arrival.range;
     priceField.value = String(price);
     arrivalField.value = `${range[0]}–${range[1]} мин`;
     const distance = location.insideMkad ? 'В пределах МКАД' : `За МКАД: ${location.distanceOutsideKm} км`;
-    showStatus(`${distance}. Выезд от ${formatPrice(price)} ₽, прибытие ориентировочно ${arrivalField.value}.`, 'success');
+    const timeNote = arrival.calculated
+      ? `прибытие ориентировочно ${arrivalField.value}`
+      : `прибытие ориентировочно ${arrivalField.value} (маршрут не рассчитан, время уточним)`;
+    showStatus(`${distance}. Выезд от ${formatPrice(price)} ₽, ${timeNote}.`, 'success');
   };
 
-  const getArrivalByRoute = (coords) => {
+  const getArrivalByRoute = async (coords) => {
     const nearest = moscowMasterPoints.reduce((best, point) => {
       const distance = getDistanceBetweenCoords(point.coords, coords);
       return !best || distance < best.distance ? { ...point, distance } : best;
     }, null);
 
-    if (!nearest || !window.ymaps?.route) return Promise.resolve(fixedArrivalTime);
-    return new Promise((resolve) => {
-      const timeout = window.setTimeout(() => resolve(fixedArrivalTime), 3500);
-      const finish = (arrival) => {
-        window.clearTimeout(timeout);
-        resolve(arrival);
-      };
-      try {
-        window.ymaps.route([nearest.coords, coords], { routingMode: 'auto' }).then(
-          (route) => {
-            const seconds = [route.getJamsTime?.(), route.getTime?.()].find((value) => Number.isFinite(value) && value > 0);
-            if (!seconds) return finish(fixedArrivalTime);
-            const start = Math.max(15, roundUpToStep(Math.ceil(seconds / 60), 5));
-            finish([start, start + 20]);
-          },
-          () => finish(fixedArrivalTime),
-        );
-      } catch {
-        finish(fixedArrivalTime);
-      }
-    });
+    if (!nearest) return { range: fixedArrivalTime, calculated: false };
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 10000);
+    try {
+      const { durationSeconds } = await requestOpenRouteServiceRoute(nearest.coords, coords, controller.signal);
+      const start = Math.max(15, roundUpToStep(durationSeconds / 60, 5));
+      return { range: [start, start + 20], calculated: true };
+    } catch {
+      return { range: fixedArrivalTime, calculated: false };
+    } finally {
+      window.clearTimeout(timeout);
+    }
   };
 
   const acceptGeoObject = async (geoObject, currentRequest, fallbackAddress = '') => {
@@ -187,6 +182,9 @@ export const initMapPanel = () => {
         yandexMapDisablePoiInteractivity: true,
       });
       map.behaviors.disable(['scrollZoom', 'dblClickZoom', 'rightMouseButtonMagnifier']);
+      const masters = new window.ymaps.GeoObjectCollection();
+      moscowMasterPoints.forEach((master) => masters.add(createMasterPlacemark(master, true)));
+      map.geoObjects.add(masters);
       if ('ResizeObserver' in window) {
         new ResizeObserver(() => map.container.fitToViewport()).observe(canvas);
       }

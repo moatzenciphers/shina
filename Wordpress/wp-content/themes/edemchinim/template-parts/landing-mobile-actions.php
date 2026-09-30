@@ -4,6 +4,7 @@ $mobile_actions_phone_href = edemchinim_phone_href($mobile_actions_phone);
 ?>
 <nav class="mobile-actions" aria-label="Быстрые действия" data-mobile-actions>
   <a class="mobile-actions__phone" href="<?php echo esc_url($mobile_actions_phone_href); ?>" aria-label="<?php echo esc_attr(sprintf('Позвонить: %s', $mobile_actions_phone)); ?>">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 2.5a2 2 0 0 0-2.1.5L2.9 4.6a3 3 0 0 0-.7 3.1c2.2 6.4 7.4 11.6 13.8 13.8a3 3 0 0 0 3.1-.7l1.6-1.6a2 2 0 0 0 .5-2.1l-.9-2.7a2 2 0 0 0-2.1-1.3l-2.8.3a2 2 0 0 0-1.2.6l-1 1a15 15 0 0 1-4.2-4.2l1-1a2 2 0 0 0 .6-1.2l.3-2.8a2 2 0 0 0-1.3-2.1z"/></svg>
     <span><?php echo esc_html($mobile_actions_phone); ?></span>
   </a>
   <button class="mobile-actions__calculator" type="button" aria-label="Открыть калькулятор" data-open-calculator data-mobile-calculator hidden>

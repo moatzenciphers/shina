@@ -42,7 +42,9 @@ module.exports = (_, argv) => {
   const isProduction = argv.mode === 'production';
 
   return {
-    entry: path.resolve(__dirname, 'src/js/index.js'),
+    entry: {
+      main: path.resolve(__dirname, 'src/js/index.js'),
+    },
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: 'js/[name].[contenthash:8].js',
@@ -110,6 +112,7 @@ module.exports = (_, argv) => {
         filename: 'index.html',
         inject: 'body',
         scriptLoading: 'defer',
+        chunks: ['main'],
         templateParameters: {
           yandexMapsUrl: getYandexMapsUrl(),
           hasYandexSuggestApiKey: hasYandexSuggestApiKey(),

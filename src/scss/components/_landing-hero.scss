@@ -26,9 +26,10 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  width: auto;
-  max-width: none;
+  width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: right bottom;
 }
 
 .landing-hero::before {
@@ -41,240 +42,18 @@
   content: "";
 }
 
-.landing-hero__header {
-  position: relative;
-  z-index: 2;
+.landing--wp-header .landing-hero {
+  height: calc(100svh - 72px);max-height: 1080px;
+}
+
+.landing-hero__inner {
   display: flex;
-  align-items: center;
-  gap: 32px;
-  min-height: 72px;
-  padding: 8px var(--landing-gutter);
-  background: rgba(0, 13, 19, .68);
-}
-
-.landing-hero__brand {
-  display: grid;
-  width: 160px;
-  flex: 0 0 auto;
-  justify-items: start;
-  color: var(--color-text);
-  text-decoration: none;
-}
-
-.landing-hero__brand-car {
-  width: 122px;
-  height: 28px;
-  color: var(--color-accent);
-}
-
-.landing-hero__brand-name {
-  font-size: 16px;
-  font-weight: 800;
-  font-style: italic;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.landing-hero__nav,
-.landing-hero__header-actions {
-  display: flex;
-  align-items: center;
-}
-
-.landing-hero__nav {
-  align-self: stretch;
-}
-
-.landing-hero__nav-list,
-.landing-hero__submenu,
-.landing-hero__subsubmenu {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.landing-hero__nav-list {
-  display: flex;
-  align-items: center;
-  gap: clamp(16px, 2vw, 32px);
-}
-
-.landing-hero__nav-item {
-  position: relative;
-}
-
-.landing-hero__nav a,
-.landing-hero__nav-button,
-.landing-hero__submenu-button {
-  color: var(--color-text);
-  text-decoration: none;
-}
-
-.landing-hero__nav-button,
-.landing-hero__submenu-button {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  text-align: left;
-}
-
-.landing-hero__nav a:hover,
-.landing-hero__nav-button:hover,
-.landing-hero__submenu-button:hover {
-  color: var(--color-accent);
-}
-
-.landing-hero__chevron {
-  width: 9px;
-  height: 9px;
-  flex: 0 0 auto;
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: rotate(45deg) translateY(-2px);
-  transition: transform .2s ease;
-}
-
-.landing-hero__nav-item--services > .landing-hero__nav-button {
-  gap: 8px;
-}
-
-.landing-hero__nav-item--services:hover > .landing-hero__nav-button .landing-hero__chevron,
-.landing-hero__nav-item--services:focus-within > .landing-hero__nav-button .landing-hero__chevron {
-  transform: rotate(225deg) translate(-2px, -2px);
-}
-
-.landing-hero__submenu,
-.landing-hero__subsubmenu {
-  position: absolute;
-  z-index: 5;
-  min-width: 230px;
-  padding: 8px;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, .35);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity .18s ease, visibility .18s ease;
-}
-
-.landing-hero__submenu {
-  top: calc(100% + 20px);
-  left: -16px;
-}
-
-.landing-hero__nav-item--services::after {
-  position: absolute;
-  top: 100%;
-  left: -16px;
-  width: 260px;
-  height: 22px;
-  content: "";
-}
-
-.landing-hero__subsubmenu {
-  top: -9px;
-  left: calc(100% + 8px);
-}
-
-.landing-hero__nav-item--services:hover > .landing-hero__submenu,
-.landing-hero__nav-item--services:focus-within > .landing-hero__submenu,
-.landing-hero__submenu-item:hover > .landing-hero__subsubmenu,
-.landing-hero__submenu-item:focus-within > .landing-hero__subsubmenu {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-.landing-hero__submenu-item {
-  position: relative;
-}
-
-.landing-hero__submenu-item::after {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  width: 10px;
-  height: 100%;
-  content: "";
-}
-
-.landing-hero__submenu-button,
-.landing-hero__subsubmenu a {
+  flex-direction: column;
   width: 100%;
-  min-height: 42px;
-  padding: 10px 12px;
-  font-size: 14px;
-}
-
-.landing-hero__subsubmenu a {
-  display: block;
-}
-
-.landing-hero__all-link {
-  display: none;
-}
-
-.landing-hero__submenu-button .landing-hero__chevron {
-  transform: rotate(-45deg);
-}
-
-.landing-hero__menu-footer {
-  display: none;
-}
-
-.landing-hero__header-actions {
-  gap: 16px;
-  margin-left: auto;
-}
-
-.landing-hero__phone {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--color-text);
-  font-size: 18px;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.landing-hero__phone svg {
-  width: 24px;
-  height: 24px;
-  color: var(--color-accent);
-}
-
-.landing-hero__header-cta {
-  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
-}
-
-.landing-hero__header-cta {
-  min-height: 42px;
-  padding: 2px;
-  border: 0;
-  background: var(--color-accent);
-  color: var(--color-text);
-  white-space: nowrap;
-}
-
-.landing-hero__header-cta span {
-  display: grid;
-  min-height: 38px;
-  place-items: center;
-  padding: 6px 18px;
-  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-  background: var(--color-landing-bg);
-  transition: background .2s ease, color .2s ease;
-}
-
-.landing-hero__header-cta:hover span {
-  background: var(--color-accent);
-  color: var(--color-bg);
+  max-width: 1770px;
+  min-height: 0;
+  flex: 1;
+  margin-inline: auto;
 }
 
 .landing-hero__content > .landing-hero__cta {
@@ -303,10 +82,6 @@
 .landing-hero__content > .landing-hero__cta:hover::before,
 .landing-hero__content > .landing-hero__cta:focus-visible::before {
   background: var(--color-accent-hover);
-}
-
-.landing-hero__menu-toggle {
-  display: none;
 }
 
 .landing-hero__content {
@@ -399,12 +174,6 @@
   outline-offset: 4px;
 }
 
-@media (max-width: 1250px) {
-  .landing-hero__header { gap: 20px; }
-  .landing-hero__brand { width: 136px; }
-  .landing-hero__phone span { display: none; }
-}
-
 @media (max-width: 850px) {
   .landing-hero { background: radial-gradient(ellipse at 50% 25%, #0c1d25, var(--color-landing-bg) 75%); }
   .landing-hero::before { display: none; }
@@ -421,104 +190,6 @@
     height: 100%;
     object-fit: cover;
   }
-  .landing-hero__header { min-height: 72px; padding: 12px var(--landing-gutter); background: transparent; }
-  .landing-hero--menu-open .landing-hero__header {
-    position: fixed;
-    inset: 0 0 auto;
-    z-index: 11;
-    border-bottom: 1px solid rgba(255, 255, 255, .3);
-    background: var(--color-landing-bg);
-  }
-  .landing-hero__brand { width: auto; }
-  .landing-hero__brand-car { width: 100px; height: 24px; }
-  .landing-hero__brand-name { font-size: 13px; }
-  .landing-hero__header-cta { display: none; }
-  .landing-hero__header-actions { gap: 20px; }
-  .landing-hero__phone svg { width: 26px; height: 26px; }
-  .landing-hero__nav {
-    position: fixed;
-    inset: 72px 0 0;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    padding: 48px var(--landing-gutter) 32px;
-    background: radial-gradient(ellipse at 50% 30%, #0c1d25, var(--color-landing-bg) 80%);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity .22s ease, visibility .22s ease;
-  }
-  .landing-hero--menu-open .landing-hero__nav {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-  .landing-hero__nav-list { display: block; width: 100%; }
-  .landing-hero__nav-item { border-bottom: 1px solid rgba(255, 255, 255, .32); }
-  .landing-hero__nav-item > a,
-  .landing-hero__nav-item > .landing-hero__nav-button {
-    display: flex;
-    width: 100%;
-    min-height: 72px;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 0;
-    font-size: clamp(24px, 6vw, 32px);
-    font-weight: 800;
-    line-height: 1.1;
-  }
-  .landing-hero__nav-item--services > .landing-hero__nav-button .landing-hero__chevron { display: block; }
-  .landing-hero__nav-item--services::after { display: none; }
-  .landing-hero__submenu,
-  .landing-hero__subsubmenu {
-    position: static;
-    display: none;
-    min-width: 0;
-    padding: 0 0 12px 16px;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition: none;
-  }
-  .landing-hero__nav-button[aria-expanded="true"] + .landing-hero__submenu,
-  .landing-hero__submenu-button[aria-expanded="true"] + .landing-hero__subsubmenu { display: block; }
-  .landing-hero__all-link { display: block; }
-  .landing-hero__all-link a {
-    display: block;
-    min-height: 54px;
-    padding: 8px 0;
-    font-size: 19px;
-    display: flex;
-    align-items: center;
-  }
-  .landing-hero__nav-button[aria-expanded="true"] .landing-hero__chevron,
-  .landing-hero__submenu-button[aria-expanded="true"] .landing-hero__chevron { transform: rotate(225deg) translate(-2px, -2px); }
-  .landing-hero__submenu-item { border-top: 1px solid rgba(255, 255, 255, .14); }
-  .landing-hero__submenu-item::after { display: none; }
-  .landing-hero__submenu-button { min-height: 54px; padding: 8px 0; font-size: 19px; }
-  .landing-hero__submenu-button .landing-hero__chevron { transform: rotate(45deg) translateY(-2px); }
-  .landing-hero__subsubmenu a { min-height: 42px; padding: 10px 0; font-size: 16px; }
-  .landing-hero__menu-footer { display: block; margin-top: auto; padding-top: 56px; }
-  .landing-hero__menu-footer p { margin: 0 0 20px; font-size: 18px; line-height: 1.4; }
-  .landing-hero__menu-footer .landing-hero__cta { display: flex; width: 100%; }
-  .landing-hero__menu-toggle {
-    display: grid;
-    align-content: center;
-    gap: 5px;
-    width: 32px;
-    height: 32px;
-    padding: 4px;
-    border: 0;
-    background: transparent;
-  }
-  .landing-hero__menu-toggle span { width: 24px; height: 2px; background: var(--color-text); transition: transform .2s ease, opacity .2s ease; }
-  .landing-hero--menu-open .landing-hero__menu-toggle span:first-child { transform: translateY(7px) rotate(45deg); }
-  .landing-hero--menu-open .landing-hero__menu-toggle span:nth-child(2) { opacity: 0; }
-  .landing-hero--menu-open .landing-hero__menu-toggle span:last-child { transform: translateY(-7px) rotate(-45deg); }
   .landing-hero__content { padding-block: 60px 380px; }
   .landing-hero__outline { display: none; }
   .landing-hero__lead { margin: 12px 0 16px; }
@@ -532,13 +203,4 @@
 
 @media (max-width: 420px) {
   .landing-hero__content { padding-top: 60px; }
-}
-
-.landing-menu-open { overflow: hidden; }
-
-@media (prefers-reduced-motion: reduce) {
-  .landing-hero__nav,
-  .landing-hero__chevron,
-  .landing-hero__menu-toggle span,
-  .landing-hero__header-cta span { transition: none; }
 }

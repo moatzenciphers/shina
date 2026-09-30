@@ -9,6 +9,8 @@
 .landing-section {
   padding: var(--landing-section-padding) var(--landing-gutter);
   background: radial-gradient(ellipse at 50% 50%, #0b202a 0%, var(--color-landing-bg) 78%);
+  max-width: 1770px;
+  margin-inline: auto;
 }
 
 .landing-title,

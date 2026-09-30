@@ -52,6 +52,8 @@ function edemchinim_setup()
 	register_nav_menus(
 		array(
 			'menu-1' => esc_html__('Primary', 'edemchinim'),
+			'landing-primary' => esc_html__('Шапка лендинга', 'edemchinim'),
+			'site-footer' => esc_html__('Футер сайта', 'edemchinim'),
 		)
 	);
 
@@ -103,6 +105,9 @@ function edemchinim_setup()
 	);
 }
 add_action('after_setup_theme', 'edemchinim_setup');
+
+require_once get_template_directory() . '/inc/class-site-nav-walker.php';
+require_once get_template_directory() . '/inc/class-site-footer-walker.php';
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -953,18 +958,13 @@ function edemchinim_scripts()
 		. 'window.__OPENROUTESERVICE_API_KEY__ = ' . wp_json_encode($ors_key) . ';';
 
 	wp_enqueue_style('edemchinim-style', get_stylesheet_uri(), array(), _S_VERSION);
-	if (is_front_page()) {
-		$landing_css = get_template_directory() . '/js/landing.css';
-		$landing_js = get_template_directory() . '/js/landing.js';
-		if (file_exists($landing_css) && file_exists($landing_js)) {
-			wp_enqueue_style('edemchinim-landing', get_template_directory_uri() . '/js/landing.css', array('edemchinim-style'), (string) filemtime($landing_css));
-			wp_enqueue_script('edemchinim-landing', get_template_directory_uri() . '/js/landing.js', array(), (string) filemtime($landing_js), true);
-			wp_add_inline_script('edemchinim-landing', $runtime_config, 'before');
-		}
-		return;
+	$site_css = get_template_directory() . '/js/site.css';
+	$site_js = get_template_directory() . '/js/site.js';
+	if (file_exists($site_css) && file_exists($site_js)) {
+		wp_enqueue_style('edemchinim-site', get_template_directory_uri() . '/js/site.css', array('edemchinim-style'), (string) filemtime($site_css));
+		wp_enqueue_script('edemchinim-site', get_template_directory_uri() . '/js/site.js', array(), (string) filemtime($site_js), true);
+		wp_add_inline_script('edemchinim-site', $runtime_config, 'before');
 	}
-	wp_enqueue_script('edemchinim-main', get_template_directory_uri() . '/js/main.min.js', array(), _S_VERSION, true);
-	wp_add_inline_script('edemchinim-main', $runtime_config, 'before');
 }
 add_action('wp_enqueue_scripts', 'edemchinim_scripts');
 

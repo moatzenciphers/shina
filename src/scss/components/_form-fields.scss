@@ -1,0 +1,17 @@
+:where(.landing, .app, .site) :is(input:not([type]), input[type="text"], input[type="tel"], input[type="email"], input[type="number"], input[type="search"], input[type="url"], input[type="password"], textarea, select):not(.address-field__input) {
+  border: 0;
+  border-bottom: 1px solid var(--color-muted);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--color-text);
+  outline: none;
+}
+
+:where(.landing, .app, .site) :is(input[type="text"], input[type="tel"], input[type="email"], input[type="number"], input[type="search"], input[type="url"], input[type="password"], textarea, select):not(.address-field__input):focus {
+  border-bottom-color: var(--color-accent);
+}
+
+.address-field:focus-within {
+  border-bottom-color: var(--color-accent);
+}

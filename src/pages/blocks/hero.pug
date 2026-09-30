@@ -16,7 +16,7 @@
 section.landing-hero(aria-labelledby="landing-hero-title")
   picture.landing-hero__picture(aria-hidden="true")
     img(src=require('../../img/back.png'), alt="")
-  header.landing-hero__header
+  header.landing-hero__header(data-site-header)
     a.landing-hero__brand(href="#top", aria-label="Едем-чиним — на главную")
       svg.landing-hero__brand-car(viewBox="0 0 132 31", fill="none", aria-hidden="true")
         path(d="M5 23c6-5 16-6 28-6 9-8 18-12 35-12 15 0 27 4 39 12 10 0 16 2 20 6M15 23h20m62 0h23M46 13c18-5 33-5 48 2" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round")
@@ -63,21 +63,22 @@ section.landing-hero(aria-labelledby="landing-hero-title")
         span
         span
         span
-  div.landing-hero__content#top
-    p.landing-hero__outline(aria-hidden="true")
-      span ЕДЕМ–
-      span ЧИНИМ
-    h1.landing-hero__title.landing-title.landing-title--hero#landing-hero-title ВЫЕЗДНОЙ<br>ШИНОМОНТАЖ 24/7
-    p.landing-hero__lead.landing-text.landing-text--hero Быстро приедем в любую точку Москвы и МО.<br class="landing-hero__desktop-break"> Поможем продолжить движение.
-    button.landing-hero__cta.landing-cta(type="button", data-open-calculator)
-      span Вызвать мастера
-      svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
-        path(d="M5 16h21m-8-8 8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="square")
-    div.landing-hero__prices(aria-label="Стоимость выезда")
-      div.landing-hero__price
-        span Выезд в пределах МКАД —
-        strong от 1 500 ₽
-      div.landing-hero__price
-        span Выезд за МКАД —
-        strong от 2 000 ₽ + 40 ₽/км
-      p.landing-hero__minimum Минимальный заказ — #[strong от 2 500 ₽]
+  div.landing-hero__inner
+    div.landing-hero__content#top
+      p.landing-hero__outline(aria-hidden="true")
+        span ЕДЕМ–
+        span ЧИНИМ
+      h1.landing-hero__title.landing-title.landing-title--hero#landing-hero-title ВЫЕЗДНОЙ<br>ШИНОМОНТАЖ 24/7
+      p.landing-hero__lead.landing-text.landing-text--hero Быстро приедем в любую точку Москвы и МО.<br class="landing-hero__desktop-break"> Поможем продолжить движение.
+      button.landing-hero__cta.landing-cta(type="button", data-open-calculator)
+        span Вызвать мастера
+        svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+          path(d="M5 16h21m-8-8 8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="square")
+      div.landing-hero__prices(aria-label="Стоимость выезда")
+        div.landing-hero__price
+          span Выезд в пределах МКАД —
+          strong от 1 500 ₽
+        div.landing-hero__price
+          span Выезд за МКАД —
+          strong от 2 000 ₽ + 40 ₽/км
+        p.landing-hero__minimum Минимальный заказ — #[strong от 2 500 ₽]

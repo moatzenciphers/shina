@@ -1079,6 +1079,8 @@ const syncDiameterSlider = ({ shouldUpdateSummary = false } = {}) => {
 };
 
 export const initCalculator = () => {
+  if (!document.querySelector('[data-calculator]') || !document.querySelector('[data-calculator-form]')) return;
+
   document.addEventListener('click', (event) => {
     const optionButton = event.target.closest('[data-option-name]');
 

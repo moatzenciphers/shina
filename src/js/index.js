@@ -4,6 +4,7 @@ import { initCalculator } from './calculator';
 import { initCookieConsent } from './cookie-consent';
 import { initYandexAddress } from './map';
 import { initLanding } from './landing';
+import { initSiteHeader } from './site-header';
 import { initMobileActions } from './mobile-actions';
 import { initQuickCall } from './quick-call';
 import { initReviewSlider } from './review-slider';
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initCalculator();
   initYandexAddress();
+  initSiteHeader();
   initLanding();
   initMobileActions();
   initQuickCall();

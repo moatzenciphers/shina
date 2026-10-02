@@ -29,5 +29,4 @@ $landing_layouts = array(
 </div>
 <?php
 get_template_part('template-parts/landing-quick-call');
-get_template_part('template-parts/landing-calculator');
 get_footer();

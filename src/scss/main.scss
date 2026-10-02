@@ -7,6 +7,7 @@
 @use "components/trust-panel";
 @use "components/landing-shared";
 @use "components/site-header";
+@use "components/header-services";
 @use "components/landing-hero";
 @use "components/features-grid";
 @use "components/steps-grid";
@@ -21,3 +22,5 @@
 @use "components/mobile-actions";
 @use "components/quick-call-dialog";
 @use "components/form-fields";
+@use "components/button-outlines";
+@use "components/service-icons";

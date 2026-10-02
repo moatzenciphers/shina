@@ -3,12 +3,20 @@
 $header_phone = edemchinim_get_option_field('shina_phone', '+7 (000) 000-00-00');
 $header_phone_href = edemchinim_phone_href($header_phone);
 $menu_location = has_nav_menu('landing-primary') ? 'landing-primary' : 'menu-1';
-$calculator_href = is_front_page() ? '#calculator' : home_url('/#calculator');
+$calculator_href = edemchinim_calculator_url();
+$calculator_config = edemchinim_prepare_calculator_config(function_exists('get_field') ? get_field('shina_calculator_config', 'options') : array());
+$crew_count = count($calculator_config['master_points'] ?? array());
+$last_digits = $crew_count % 100;
+$crew_word = $last_digits >= 11 && $last_digits <= 14 ? 'экипажей' : ($crew_count % 10 === 1 ? 'экипаж' : (in_array($crew_count % 10, array(2, 3, 4), true) ? 'экипажа' : 'экипажей'));
 ?>
 <header class="landing-hero__header" data-site-header>
     <a class="landing-hero__brand" href="<?php echo esc_url(home_url('/')); ?>" aria-label="Едем-чиним — на главную">
         <svg class="landing-hero__brand-car" viewBox="0 0 132 31" fill="none" aria-hidden="true"><path d="M5 23c6-5 16-6 28-6 9-8 18-12 35-12 15 0 27 4 39 12 10 0 16 2 20 6M15 23h20m62 0h23M46 13c18-5 33-5 48 2" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span class="landing-hero__brand-name">ЕДЕМ–ЧИНИМ</span>
+    </a>
+    <a class="landing-hero__crews" href="<?php echo esc_url($calculator_href); ?>" data-open-calculator>
+        <span class="landing-hero__activity" aria-hidden="true"></span><span><strong><?php echo esc_html($crew_count . ' ' . $crew_word); ?></strong> <span class="landing-hero__crews-note">на линии</span></span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
     </a>
     <nav class="landing-hero__nav" id="landing-hero-menu" aria-label="Разделы сайта" data-landing-menu>
         <?php

@@ -14,26 +14,11 @@ html(lang="ru")
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(name="theme-color", content="#080c12")
-    title Выездной шиномонтаж 24/7
+    title Калькулятор вызова мастера
     script.
       window.__YANDEX_MAPS_URL__ = !{JSON.stringify(yandexMapsUrl || '')};
       window.__YANDEX_MAPS_DISABLED__ = !{JSON.stringify(!yandexMapsUrl)};
       window.__YANDEX_SUGGEST_DISABLED__ = !{JSON.stringify(Boolean(yandexMapsUrl && !hasYandexSuggestApiKey))};
       window.__OPENROUTESERVICE_API_KEY__ = !{JSON.stringify(openRouteServiceApiKey || '')};
-  body
-    div.landing(data-landing)
-      include blocks/site-header.pug
-      main.landing__main
-        include blocks/hero.pug
-        include blocks/features-grid.pug
-        include blocks/steps-grid.pug
-        include blocks/cards-grid.pug
-        include blocks/media-rows.pug
-        include blocks/slider-grid.pug
-        include blocks/map-panel.pug
-        include blocks/gallery-grid.pug
-        include blocks/accordion-grid.pug
-        include blocks/split-form.pug
-      include blocks/site-footer.pug
-      include blocks/mobile-actions.pug
-    include blocks/quick-call-dialog.pug
+  body.calculator-page
+    include blocks/calculator.pug

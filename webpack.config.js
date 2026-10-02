@@ -44,6 +44,7 @@ module.exports = (_, argv) => {
   return {
     entry: {
       main: path.resolve(__dirname, 'src/js/index.js'),
+      calculator: path.resolve(__dirname, 'src/js/calculator-entry.js'),
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -119,6 +120,7 @@ module.exports = (_, argv) => {
           openRouteServiceApiKey: getOpenRouteServiceApiKey(),
         },
       }),
+      new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src/pages/calculator.pug'), filename: 'calculator.html', chunks: ['main', 'calculator'], inject: 'body', scriptLoading: 'defer', templateParameters: { yandexMapsUrl: getYandexMapsUrl(), hasYandexSuggestApiKey: hasYandexSuggestApiKey(), openRouteServiceApiKey: getOpenRouteServiceApiKey() } }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash:8].css',
       }),

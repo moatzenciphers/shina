@@ -47,6 +47,7 @@ class Edemchinim_Site_Footer_Walker extends Walker_Nav_Menu
         }
 
         $url = (string) $item->url;
+        $calculator_link = wp_parse_url($url, PHP_URL_FRAGMENT) === 'calculator';
         $has_fragment = (bool) wp_parse_url($url, PHP_URL_FRAGMENT);
         $is_current = ! $has_fragment && (! empty($item->current) || in_array('current-menu-item', $classes, true));
         $output .= '<li>';
@@ -55,6 +56,7 @@ class Edemchinim_Site_Footer_Walker extends Walker_Nav_Menu
             return;
         }
 
+        if (wp_parse_url($url, PHP_URL_FRAGMENT) === 'calculator') $url = edemchinim_calculator_url();
         if (! is_front_page() && strpos($url, '#') === 0 && $url !== '#') {
             $url = home_url('/' . $url);
         }
@@ -65,7 +67,7 @@ class Edemchinim_Site_Footer_Walker extends Walker_Nav_Menu
         if (! empty($item->xfn)) {
             $output .= ' rel="' . esc_attr($item->xfn) . '"';
         }
-        if (is_front_page() && wp_parse_url($url, PHP_URL_FRAGMENT) === 'calculator') {
+        if ($calculator_link) {
             $output .= ' data-open-calculator';
         }
         $output .= '>' . esc_html($title) . '</a>';

@@ -1,5 +1,36 @@
 [
   {
+    "key": "group_landing_review_caption",
+    "title": "Лендинг: подпись отзывов",
+    "fields": [
+      {
+        "key": "field_landing_reviews_count_text",
+        "label": "Подпись количества отзывов",
+        "name": "reviews_count_text",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "Отзывы клиентов",
+        "instructions": "Готовый текст для первого экрана и блока отзывов. Например: Более 2000 отзывов. Количество автоматически не подсчитывается."
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "main-option"
+        }
+      ]
+    ],
+    "active": true
+  },
+  {
     "key": "group_landing_front_page_flexible",
     "title": "Лендинг: блоки главной",
     "fields": [
@@ -52,10 +83,10 @@
                 "default_value": "ВЫЕЗДНОЙ ШИНОМОНТАЖ 24/7"
               },
               {
-                "key": "field_landing_hero_lead",
-                "label": "Описание",
-                "name": "hero_lead",
-                "type": "textarea",
+                "key": "field_landing_hero_offer",
+                "label": "Короткий оффер",
+                "name": "hero_offer",
+                "type": "text",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -63,9 +94,68 @@
                   "class": "",
                   "id": ""
                 },
-                "default_value": "Быстро приедем в любую точку Москвы и МО. Поможем продолжить движение.",
-                "rows": 3,
-                "new_lines": ""
+                "default_value": "Приедем и починим на месте."
+              },
+              {
+                "key": "field_landing_hero_benefits",
+                "label": "Преимущества первого экрана",
+                "name": "hero_benefits",
+                "type": "repeater",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "layout": "block",
+                "button_label": "Добавить",
+                "min": 0,
+                "max": 3,
+                "sub_fields": [
+                  {
+                    "key": "field_landing_hero_benefits_title",
+                    "label": "Основной текст",
+                    "name": "title",
+                    "type": "text",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "default_value": ""
+                  },
+                  {
+                    "key": "field_landing_hero_benefits_text",
+                    "label": "Подпись",
+                    "name": "text",
+                    "type": "text",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "default_value": ""
+                  },
+                  {
+                    "key": "field_landing_hero_benefits_icon",
+                    "label": "SVG-код иконки",
+                    "name": "icon",
+                    "type": "text",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "instructions": "Полный SVG-код с цветом currentColor. Если оставить пустым, используется стандартная иконка."
+                  }
+                ]
               },
               {
                 "key": "field_landing_hero_background",
@@ -100,22 +190,8 @@
                 "library": "all"
               },
               {
-                "key": "field_landing_hero_button",
-                "label": "Текст кнопки",
-                "name": "hero_button",
-                "type": "text",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                  "width": "",
-                  "class": "",
-                  "id": ""
-                },
-                "default_value": "Вызвать мастера"
-              },
-              {
                 "key": "field_landing_hero_prices",
-                "label": "Тарифы",
+                "label": "Стоимость выезда",
                 "name": "hero_prices",
                 "type": "repeater",
                 "required": 0,
@@ -128,7 +204,7 @@
                 "layout": "block",
                 "button_label": "Добавить",
                 "min": 0,
-                "max": 3,
+                "max": 2,
                 "sub_fields": [
                   {
                     "key": "field_landing_hero_prices_label",
@@ -161,10 +237,10 @@
                 ]
               },
               {
-                "key": "field_landing_hero_minimum",
-                "label": "Минимальный заказ",
-                "name": "hero_minimum",
-                "type": "text",
+                "key": "field_landing_hero_rating",
+                "label": "Рейтинг из 5",
+                "name": "hero_rating",
+                "type": "number",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -172,7 +248,11 @@
                   "class": "",
                   "id": ""
                 },
-                "default_value": "от 2 500 ₽"
+                "default_value": 4.9,
+                "min": 0,
+                "max": 5,
+                "step": 0.1,
+                "instructions": "Подпись отзывов задаётся в общих настройках главной."
               }
             ],
             "min": "",
@@ -700,7 +780,7 @@
                 ],
                 "return_format": "id",
                 "min": 0,
-                "max": 0
+                "max": 9
               },
               {
                 "key": "field_landing_reviews_count",
@@ -714,9 +794,9 @@
                   "class": "",
                   "id": ""
                 },
-                "default_value": 6,
+                "default_value": 9,
                 "min": 1,
-                "max": 18
+                "max": 9
               }
             ],
             "min": "",
@@ -1072,12 +1152,108 @@
     "active": true,
     "show_in_rest": 0,
     "description": "Порядок блоков задаётся гибким содержимым. Хедер и футер управляются отдельно.",
-    "modified": 1790522732
+    "modified": 1790953739
+  },
+  {
+    "key": "group_landing_review_service",
+    "title": "Отзыв: услуга и заголовок",
+    "fields": [
+      {
+        "key": "field_landing_review_service",
+        "label": "Услуга",
+        "name": "review_service",
+        "type": "post_object",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "post_type": [
+          "services"
+        ],
+        "return_format": "id",
+        "allow_null": 1,
+        "multiple": 0,
+        "ui": 1,
+        "instructions": "Выберите услугу, к которой относится этот существующий отзыв. Из неё берутся название и иконка для карточки и фильтра."
+      },
+      {
+        "key": "field_landing_review_heading",
+        "label": "Короткий заголовок отзыва",
+        "name": "review_heading",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "reviews"
+        }
+      ]
+    ],
+    "active": true
+  },
+  {
+    "key": "group_calculator_page",
+    "title": "Калькулятор: форма заказа",
+    "fields": [
+      {
+        "key": "field_calculator_page_shortcode",
+        "label": "Шорткод CF7 подтверждения калькулятора",
+        "name": "calculator_form_shortcode",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page_template",
+          "operator": "==",
+          "value": "page-calculator.php"
+        }
+      ]
+    ],
+    "active": true
   },
   {
     "key": "group_landing_service_price",
     "title": "Услуга: карточка на главной",
     "fields": [
+      {
+        "key": "field_landing_service_icon",
+        "label": "SVG-код иконки услуги",
+        "name": "service_icon",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "instructions": "Вставьте полный SVG-код. Используйте currentColor для цвета. Одна иконка используется в меню, карточке услуги и отзывах; активный код и внешние ссылки удаляются."
+      },
       {
         "key": "field_landing_service_card_description",
         "label": "Текст карточки на главной",
@@ -1142,6 +1318,6 @@
     "hide_on_screen": "",
     "active": true,
     "show_in_rest": 1,
-    "modified": 1790522732
+    "modified": 1790953739
   }
 ]

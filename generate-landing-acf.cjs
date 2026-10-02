@@ -33,12 +33,12 @@ const heading = (prefix, eyebrow, title) => [
 const layouts = [
   layout('hero', 'Первый экран', [
     ...heading('hero', '', 'ВЫЕЗДНОЙ ШИНОМОНТАЖ 24/7'),
-    area('hero_lead', 'Описание', 'Быстро приедем в любую точку Москвы и МО. Поможем продолжить движение.'),
+    text('hero_offer', 'Короткий оффер', 'Приедем и починим на месте.'),
+    repeater('hero_benefits', 'Преимущества первого экрана', [text('title', 'Основной текст'), text('text', 'Подпись'), field('icon', 'SVG-код иконки', 'text', { instructions: 'Полный SVG-код с цветом currentColor. Если оставить пустым, используется стандартная иконка.' })], 3),
     image('hero_background', 'Фоновое изображение'),
     image('hero_background_mobile', 'Фоновое изображение для мобильных устройств'),
-    text('hero_button', 'Текст кнопки', 'Вызвать мастера'),
-    repeater('hero_prices', 'Тарифы', [text('label', 'Подпись'), text('price', 'Цена')], 3),
-    text('hero_minimum', 'Минимальный заказ', 'от 2 500 ₽'),
+    repeater('hero_prices', 'Стоимость выезда', [text('label', 'Подпись'), text('price', 'Цена')], 2),
+    field('hero_rating', 'Рейтинг из 5', 'number', { default_value: 4.9, min: 0, max: 5, step: 0.1, instructions: 'Подпись отзывов задаётся в общих настройках главной.' }),
   ]),
   layout('features_grid', 'Четыре преимущества', [
     ...heading('features', 'ПОМОЩЬ РЯДОМ', 'Поможем на месте — без эвакуатора и поездки в сервис'),
@@ -68,8 +68,8 @@ const layouts = [
   layout('slider_grid', 'Отзывы', [
     ...heading('reviews', 'ОТЗЫВЫ КЛИЕНТОВ', 'Что говорят клиенты'),
     area('reviews_lead', 'Описание'),
-    relation('reviews_posts', 'Выбранные отзывы', 'reviews'),
-    field('reviews_count', 'Число отзывов при автоматическом выводе', 'number', { default_value: 6, min: 1, max: 18 }),
+    { ...relation('reviews_posts', 'Выбранные отзывы', 'reviews'), max: 9 },
+    field('reviews_count', 'Число отзывов при автоматическом выводе', 'number', { default_value: 9, min: 1, max: 9 }),
   ]),
   layout('map_panel', 'Карта зоны выезда', [
     ...heading('map', 'ЗОНА ВЫЕЗДА', 'Выезжаем по Москве и Московской области'),
@@ -103,6 +103,9 @@ const layouts = [
 ];
 
 const groups = [
+  { key: 'group_landing_review_caption', title: 'Лендинг: подпись отзывов', fields: [
+    field('reviews_count_text', 'Подпись количества отзывов', 'text', { default_value: 'Отзывы клиентов', instructions: 'Готовый текст для первого экрана и блока отзывов. Например: Более 2000 отзывов. Количество автоматически не подсчитывается.' }),
+  ], location: [[{ param: 'options_page', operator: '==', value: 'main-option' }]], active: true },
   {
     key: 'group_landing_front_page_flexible', title: 'Лендинг: блоки главной',
     fields: [
@@ -118,9 +121,15 @@ const groups = [
     description: 'Порядок блоков задаётся гибким содержимым. Хедер и футер управляются отдельно.',
     modified: Math.floor(Date.now() / 1000),
   },
+  { key: 'group_landing_review_service', title: 'Отзыв: услуга и заголовок', fields: [
+    field('review_service', 'Услуга', 'post_object', { post_type: ['services'], return_format: 'id', allow_null: 1, multiple: 0, ui: 1, instructions: 'Выберите услугу, к которой относится этот существующий отзыв. Из неё берутся название и иконка для карточки и фильтра.' }),
+    text('review_heading', 'Короткий заголовок отзыва'),
+  ], location: [[{ param: 'post_type', operator: '==', value: 'reviews' }]], active: true },
+  { key: 'group_calculator_page', title: 'Калькулятор: форма заказа', fields: [{ ...text('calculator_form_shortcode', 'Шорткод CF7 подтверждения калькулятора'), key: 'field_calculator_page_shortcode' }], location: [[{ param: 'page_template', operator: '==', value: 'page-calculator.php' }]], active: true },
   {
     key: 'group_landing_service_price', title: 'Услуга: карточка на главной',
     fields: [
+      field('service_icon', 'SVG-код иконки услуги', 'text', { default_value: '', instructions: 'Вставьте полный SVG-код. Используйте currentColor для цвета. Одна иконка используется в меню, карточке услуги и отзывах; активный код и внешние ссылки удаляются.' }),
       area('service_card_description', 'Текст карточки на главной'),
       field('service_price_from', 'Цена от, ₽', 'number', { instructions: 'Число без знака рубля.', min: 0, step: 1 }),
       text('service_price_note', 'Пояснение под ценой'),
@@ -132,4 +141,6 @@ const groups = [
   },
 ];
 
+require('fs').writeFileSync(require('path').join(__dirname, 'Wordpress/wp-content/themes/edemchinim/inc/acf-review-fields.json'), JSON.stringify(groups.find(group => group.key === 'group_landing_review_service'), null, 2) + '\n');
+require('fs').writeFileSync(require('path').join(__dirname, 'Wordpress/wp-content/themes/edemchinim/inc/acf-review-caption.json'), JSON.stringify(groups.find(group => group.key === 'group_landing_review_caption'), null, 2) + '\n');
 process.stdout.write(`${JSON.stringify(groups, null, 2)}\n`);

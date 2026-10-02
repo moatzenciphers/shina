@@ -1,8 +1,7 @@
 import '../scss/main.scss';
 
-import { initCalculator } from './calculator';
+import { initButtonOutlines } from './button-outlines';
 import { initCookieConsent } from './cookie-consent';
-import { initYandexAddress } from './map';
 import { initLanding } from './landing';
 import { initSiteHeader } from './site-header';
 import { initMobileActions } from './mobile-actions';
@@ -13,16 +12,9 @@ import { initMapPanel } from './map-panel';
 import { initGalleryGrid } from './gallery-grid';
 import { initSplitForm } from './split-form';
 import { initSiteFooter } from './site-footer';
+import { initServiceFilters } from './service-filters';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const wpOrderForm = document.querySelector('.app .wpcf7 form');
-  if (wpOrderForm) {
-    wpOrderForm.classList.add('order-confirm');
-    wpOrderForm.dataset.orderForm = '';
-    wpOrderForm.hidden = true;
-  }
-  initCalculator();
-  initYandexAddress();
   initSiteHeader();
   initLanding();
   initMobileActions();
@@ -32,5 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initGalleryGrid();
   initSplitForm();
   initSiteFooter();
+  initServiceFilters();
   initCookieConsent();
+  initButtonOutlines();
 });

@@ -1,26 +1,37 @@
--
-  const avatarPhoto = require('../../img/author.jpg');
-  const reviews = [
-    { text: 'Проколол колесо поздно вечером. Мастер приехал быстро, объяснил стоимость и всё сделал прямо на парковке.', service: 'Ремонт прокола', author: 'Алексей К.', initials: 'АК', date: '18 сентября 2026', dateTime: '2026-09-18', photo: avatarPhoto },
-    { text: 'Записалась на замену шин к удобному времени. Приехали во двор, аккуратно поменяли комплект и проверили давление.', service: 'Сезонная замена шин', author: 'Мария С.', initials: 'МС', date: '12 сентября 2026', dateTime: '2026-09-12' },
-    { text: 'После морозной ночи машина не завелась. Мастер приехал с пусковым устройством, запустил двигатель и проверил аккумулятор.', service: 'Прикурка автомобиля', author: 'Игорь П.', initials: 'ИП', date: '4 сентября 2026', dateTime: '2026-09-04' },
-    { text: 'Топливо закончилось на дороге. Оператор уточнил место, водитель привёз канистру и помог продолжить путь.', service: 'Доставка топлива', author: 'Елена М.', initials: 'ЕМ', date: '28 августа 2026', dateTime: '2026-08-28' },
-    { text: 'Стояли за МКАД с повреждённым колесом. Сразу назвали время приезда и согласовали цену до начала ремонта.', service: 'Выезд за МКАД', author: 'Дмитрий А.', initials: 'ДА', date: '21 августа 2026', dateTime: '2026-08-21' },
-    { text: 'Выбрал дату заранее. Мастер приехал вовремя с оборудованием, после работы показал результат.', service: 'Запланированный выезд', author: 'Ольга В.', initials: 'ОВ', date: '14 августа 2026', dateTime: '2026-08-14' }
-  ];
+- const reviews = require('../data/reviews.js');
 
-section.slider-grid.landing-section#reviews(aria-labelledby="slider-grid-title")
+section.slider-grid.landing-section#reviews(aria-labelledby="slider-grid-title", data-review-catalog)
   header.slider-grid__header
     p.slider-grid__eyebrow.landing-eyebrow ОТЗЫВЫ КЛИЕНТОВ
     h2.slider-grid__title.landing-title.landing-title--section#slider-grid-title Что говорят клиенты
     p.slider-grid__lead.landing-text Срочные выезды, сезонная замена колёс и помощь на дороге.
-  div.slider-grid__track(data-review-slider, tabindex="0", aria-label="Отзывы клиентов")
+    div.slider-grid__rating
+      span.slider-grid__stars(aria-hidden="true") ★★★★★
+      strong 5,0 из 5
+      span Отзывы клиентов
+  div.slider-grid__filters.cards-grid__filters(role="group", aria-label="Отзывы по услугам")
+    each label in ['Все', ...new Set(reviews.map(review => review.service))]
+      button.cards-grid__filter(type="button", data-review-filter=label === 'Все' ? 'all' : label, aria-pressed=label === 'Все' ? 'true' : 'false', aria-controls="reviews-track")= label
+  p.visually-hidden(data-review-filter-status, role="status", aria-live="polite")
+  div.slider-grid__track#reviews-track(data-review-slider, tabindex="0", aria-label="Отзывы клиентов")
     each review in reviews
-      article.slider-grid__item
+      article.slider-grid__item(data-review-card, data-review-service=review.service)
         span.slider-grid__stars(role="img", aria-label="5 из 5 звёзд") ★★★★★
-        blockquote.slider-grid__quote= review.text
-        button.slider-grid__more(type="button", data-review-open, hidden) Читать полностью
-        p.slider-grid__service= review.service
+        div.slider-grid__body
+          div.slider-grid__text
+            if review.heading
+              h3.slider-grid__review-heading= review.heading
+            blockquote.slider-grid__quote= review.text
+            button.slider-grid__more(type="button", data-review-open, hidden) Читать полностью
+          if review.photos && review.photos.length
+            div.slider-grid__photos(data-review-photos)
+              each photo in review.photos
+                a(href=photo, data-review-photo, data-gallery=`review-${review.dateTime}`, aria-label="Открыть фото из отзыва")
+                  img(src=photo, alt="Иллюстрация работ для макета отзыва", loading="lazy")
+        p.slider-grid__service
+          svg.slider-grid__service-icon(viewBox="0 0 24 24", fill="none", aria-hidden="true")
+            path(d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z M12 4v16 M4 12h16 M6.3 6.3l11.4 11.4 M6.3 17.7 17.7 6.3", stroke="currentColor", stroke-width="1.6", stroke-linecap="round", stroke-linejoin="round")
+          span= review.service
         div.slider-grid__author
           if review.photo
             img.slider-grid__avatar(src=review.photo, alt="", loading="lazy", decoding="async")
@@ -35,7 +46,7 @@ section.slider-grid.landing-section#reviews(aria-labelledby="slider-grid-title")
         path(d="M26 16H6m8-8-8 8 8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
     span.slider-grid__counter(aria-live="polite")
       span(data-review-current) 01
-      span.slider-grid__counter-total  / 06
+      span.slider-grid__counter-total  / #[span(data-review-total)= reviews.length.toString().padStart(2, '0')]
     button.landing-slider-arrow.landing-slider-arrow--next.slider-grid__arrow(type="button", data-review-next, aria-label="Следующий отзыв")
       svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
         path(d="M6 16h20m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
@@ -45,11 +56,12 @@ section.slider-grid.landing-section#reviews(aria-labelledby="slider-grid-title")
       h3.slider-grid__dialog-title#slider-grid-dialog-title Отзыв клиента
       span.slider-grid__stars(data-review-dialog-stars, role="img")
       blockquote.slider-grid__dialog-quote(data-review-dialog-text)
+      div.slider-grid__dialog-photos(data-review-dialog-photos)
       p.slider-grid__dialog-service(data-review-dialog-service)
       div.slider-grid__dialog-author
         cite(data-review-dialog-author)
         time(data-review-dialog-date)
   footer.slider-grid__footer
-    a.slider-grid__all.landing-more-link(href="/otzyvy/") Смотреть все отзывы
+    a.slider-grid__all.landing-more-link(href="/otzyvy/") Больше отзывов
       svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
         path(d="M5 16h22m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")

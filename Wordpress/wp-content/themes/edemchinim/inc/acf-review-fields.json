@@ -1,0 +1,51 @@
+{
+  "key": "group_landing_review_service",
+  "title": "Отзыв: услуга и заголовок",
+  "fields": [
+    {
+      "key": "field_landing_review_service",
+      "label": "Услуга",
+      "name": "review_service",
+      "type": "post_object",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "services"
+      ],
+      "return_format": "id",
+      "allow_null": 1,
+      "multiple": 0,
+      "ui": 1,
+      "instructions": "Выберите услугу, к которой относится этот существующий отзыв. Из неё берутся название и иконка для карточки и фильтра."
+    },
+    {
+      "key": "field_landing_review_heading",
+      "label": "Короткий заголовок отзыва",
+      "name": "review_heading",
+      "type": "text",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": ""
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "reviews"
+      }
+    ]
+  ],
+  "active": true
+}

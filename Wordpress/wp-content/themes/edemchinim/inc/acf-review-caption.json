@@ -1,0 +1,31 @@
+{
+  "key": "group_landing_review_caption",
+  "title": "Лендинг: подпись отзывов",
+  "fields": [
+    {
+      "key": "field_landing_reviews_count_text",
+      "label": "Подпись количества отзывов",
+      "name": "reviews_count_text",
+      "type": "text",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "Отзывы клиентов",
+      "instructions": "Готовый текст для первого экрана и блока отзывов. Например: Более 2000 отзывов. Количество автоматически не подсчитывается."
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "options_page",
+        "operator": "==",
+        "value": "main-option"
+      }
+    ]
+  ],
+  "active": true
+}

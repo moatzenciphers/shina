@@ -1,7 +1,7 @@
 import Inputmask from 'inputmask';
 
 import { fixedArrivalTime, mkadPolygon, moscowCenter, moscowMasterPoints, nightTariff, serviceGeocodeBounds, tariffs } from './config';
-import { createMasterPlacemark, loadYandexMaps, requestOpenRouteServiceRoute } from './map';
+import { createMasterPlacemark, loadYandexMaps, requestOpenRouteServiceRoute } from './map-shared';
 import { getServiceLocationByCoords } from './service-location';
 import { formatPrice, getDistanceBetweenCoords, roundUpToStep } from './utils';
 

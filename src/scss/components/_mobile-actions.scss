@@ -73,17 +73,6 @@ body.landing-page .bottom-nav {
     color: var(--color-text);
   }
 
-  .mobile-actions__calculator::before {
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    background: var(--color-accent);
-    clip-path: polygon(evenodd,
-      0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 0,
-      2px 2px, calc(100% - 2px) 2px, calc(100% - 2px) calc(100% - 12px), calc(100% - 12px) calc(100% - 2px), 2px calc(100% - 2px), 2px 2px);
-    content: '';
-  }
-
   .mobile-actions__calculator svg {
     width: 28px;
     height: 28px;
@@ -93,11 +82,6 @@ body.landing-page .bottom-nav {
   .mobile-actions__calculator:hover,
   .mobile-actions__calculator:focus-visible {
     transform: translateY(-2px);
-  }
-
-  .mobile-actions__calculator:hover::before,
-  .mobile-actions__calculator:focus-visible::before {
-    background: var(--color-accent-hover);
   }
 
   .mobile-actions--single {

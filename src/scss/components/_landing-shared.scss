@@ -166,20 +166,11 @@
   transition: background .2s ease, opacity .2s ease;
 }
 
-.landing-slider-arrow::before {
-  position: absolute;
-  inset: 1px;
-  background: var(--color-landing-bg);
-  clip-path: polygon(11px 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%, 0 11px);
-  content: "";
-}
-
 .landing-slider-arrow--next {
   background: var(--color-accent);
   color: var(--color-bg);
 }
 
-.landing-slider-arrow--next::before { display: none; }
 .landing-slider-arrow:hover:not(:disabled) { background: var(--color-accent-hover); }
 .landing-slider-arrow:disabled { opacity: .4; cursor: default; }
 .landing-slider-arrow:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }

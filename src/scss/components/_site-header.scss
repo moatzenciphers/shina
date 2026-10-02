@@ -453,3 +453,57 @@
   .landing-hero__menu-toggle span,
   .landing-hero__header-cta span { transition: none; }
 }
+
+// Fleet CTA uses a plain rectangular white outline.
+.landing-hero__crews {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-text);
+  white-space: nowrap;
+  color: var(--color-text);
+  font-size: 15px;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.landing-hero__crews-note { color: var(--color-muted); }
+.landing-hero__activity { width: 10px; height: 10px; flex: 0 0 auto; border-radius: 50%; background: var(--color-live); }
+.landing-hero__crews svg { width: 18px; height: 18px; flex: 0 0 auto;}
+.landing-hero__crews:hover { color: var(--color-accent); }
+@media (min-width: 851px) and (max-width: 1450px) {
+  .landing-hero__header { gap: 16px; }
+  .landing-hero__nav-list { gap: 16px; font-size: 14px; }
+  .landing-hero__brand { width: 128px; }
+  .landing-hero__phone { font-size: 15px; gap: 8px; }
+  .landing-hero__crews { font-size: 13px; padding-inline: 12px; gap: 6px; }
+  .landing-hero__crews-note { display: block; }
+  .landing-hero__header-cta span { padding-inline: 12px; font-size: 14px; }
+  .landing-hero__header-actions { gap: 12px; }
+}
+@media (min-width: 851px) and (max-width: 1100px) {
+  .landing-hero__header { gap: 10px; }
+  .landing-hero__nav-list { gap: 10px; font-size: 13px; }
+  .landing-hero__brand { width: 108px; }
+  .landing-hero__brand-car { width: 108px; }
+  .landing-hero__brand-name { font-size: 14px; }
+  .landing-hero__crews { padding-inline: 10px; font-size: 12px; }
+}
+@media (max-width: 850px) {
+  .landing-hero__header { justify-content: space-between; gap: 10px; }
+  .landing-hero__header-actions { margin-left: 0; }
+  .landing-hero__crews { gap: 6px; padding: 8px; font-size: 12px; }
+  .landing-hero__activity { width: 8px; height: 8px; }
+  .landing-hero__crews svg { width: 16px; height: 16px; }
+  .landing-hero__crews-note { display: inline; font-size: inherit; }
+}
+@media (max-width: 360px) {
+  .landing-hero__brand-car { width: 84px; }
+  .landing-hero__brand-name { font-size: 11px; }
+  .landing-hero__header { gap: 6px; }
+  .landing-hero__crews { gap: 4px; padding-inline: 6px; font-size: 10px; }
+  .landing-hero__crews svg { width: 12px; height: 12px; }
+}

@@ -1,79 +1,41 @@
 -
-  const landingNav = [
-    { label: 'О нас', href: '#about' },
-    { label: 'Отзывы', href: '#reviews' },
-    { label: 'Статьи', href: '#articles' },
-    { label: 'Контакты', href: '#contacts' }
-  ];
-  const landingServices = [
-    { label: 'Сезонная замена', href: '#service-seasonal', allLabel: 'Все о сезонной замене', children: ['Легковой автомобиль', 'Кроссовер', 'Внедорожник'] },
-    { label: 'Ремонт прокола', href: '#service-puncture', allLabel: 'Все о ремонте прокола', children: ['Низкий профиль', 'Run Flat / C / AT'] },
-    { label: 'Хранение шин', href: '#service-storage', allLabel: 'Все о хранении шин', children: ['Доставка'] },
-    { label: 'Заправка кондиционера', href: '#service-conditioner', allLabel: 'Все о заправке кондиционера', children: ['Фреон 134А', 'Антибактериальная обработка', 'Дополнительный контур'] }
-  ];
-  const landingServicesHref = '#services';
+  const reviews = require('../data/reviews.js');
 
 section.landing-hero(aria-labelledby="landing-hero-title")
   picture.landing-hero__picture(aria-hidden="true")
-    img(src=require('../../img/back.png'), alt="")
-  header.landing-hero__header(data-site-header)
-    a.landing-hero__brand(href="#top", aria-label="Едем-чиним — на главную")
-      svg.landing-hero__brand-car(viewBox="0 0 132 31", fill="none", aria-hidden="true")
-        path(d="M5 23c6-5 16-6 28-6 9-8 18-12 35-12 15 0 27 4 39 12 10 0 16 2 20 6M15 23h20m62 0h23M46 13c18-5 33-5 48 2" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round")
-      span.landing-hero__brand-name ЕДЕМ–ЧИНИМ
-    nav.landing-hero__nav#landing-hero-menu(aria-label="Разделы сайта", data-landing-menu)
-      ul.landing-hero__nav-list
-        li.landing-hero__nav-item.landing-hero__nav-item--services(data-menu-item)
-          a.landing-hero__nav-button(href=landingServicesHref, aria-expanded="false", aria-controls="landing-services", data-menu-expand)
-            span Услуги
-            span.landing-hero__chevron(aria-hidden="true")
-          ul.landing-hero__submenu#landing-services
-            if landingServicesHref
-              li.landing-hero__all-link
-                a(href=landingServicesHref) Рассчитать стоимость
-            each service, index in landingServices
-              li.landing-hero__submenu-item(data-menu-item)
-                a.landing-hero__submenu-button(href=service.href, aria-expanded="false", aria-controls=`landing-service-${index}`, data-menu-expand)
-                  span= service.label
-                  span.landing-hero__chevron(aria-hidden="true")
-                ul.landing-hero__subsubmenu(id=`landing-service-${index}`)
-                  if service.href
-                    li.landing-hero__all-link
-                      a(href=service.href)= service.allLabel
-                  each child in service.children
-                    li
-                      a(href="#calculator", data-open-calculator)= child
-        each item in landingNav
-          li.landing-hero__nav-item
-            a(href=item.href)= item.label
-      div.landing-hero__menu-footer
-        p Выездной шиномонтаж в Москве и МО<br>Работаем 24/7
-        button.landing-hero__cta.landing-cta(type="button", data-open-calculator)
-          span Вызвать мастера
-          svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
-            path(d="M5 16h21m-8-8 8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="square")
-    div.landing-hero__header-actions
-      a.landing-hero__phone(href="tel:+74950000000", aria-label="Позвонить: +7 (495) 000-00-00")
-        svg(viewBox="0 0 24 24", fill="currentColor", aria-hidden="true")
-          path(d="M6.6 2.5a2 2 0 0 0-2.1.5L2.9 4.6a3 3 0 0 0-.7 3.1c2.2 6.4 7.4 11.6 13.8 13.8a3 3 0 0 0 3.1-.7l1.6-1.6a2 2 0 0 0 .5-2.1l-.9-2.7a2 2 0 0 0-2.1-1.3l-2.8.3a2 2 0 0 0-1.2.6l-1 1a15 15 0 0 1-4.2-4.2l1-1a2 2 0 0 0 .6-1.2l.3-2.8a2 2 0 0 0-1.3-2.1z")
-        span +7 (495) 000-00-00
-      button.landing-hero__header-cta(type="button", data-open-calculator)
-        span Вызвать мастера
-      button.landing-hero__menu-toggle(type="button", aria-label="Открыть меню", aria-expanded="false", aria-controls="landing-hero-menu", data-landing-menu-toggle)
-        span
-        span
-        span
+    img(src=require('../../img/desktop-hero.jpg'), alt="")
   div.landing-hero__inner
     div.landing-hero__content#top
-      p.landing-hero__outline(aria-hidden="true")
-        span ЕДЕМ–
-        span ЧИНИМ
-      h1.landing-hero__title.landing-title.landing-title--hero#landing-hero-title ВЫЕЗДНОЙ<br>ШИНОМОНТАЖ 24/7
-      p.landing-hero__lead.landing-text.landing-text--hero Быстро приедем в любую точку Москвы и МО.<br class="landing-hero__desktop-break"> Поможем продолжить движение.
-      button.landing-hero__cta.landing-cta(type="button", data-open-calculator)
-        span Вызвать мастера
+      a.landing-hero__rating(href="#reviews", aria-label="Наш рейтинг 4,9 из 5. Отзывы клиентов")
+        span.landing-hero__rating-label НАШ РЕЙТИНГ
+        span.landing-hero__rating-row
+          span.landing-hero__stars(aria-hidden="true")
+            each index in [0, 1, 2, 3, 4]
+              svg(viewBox="0 0 24 24")
+                path.landing-hero__star-base(d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2-6.2 3.2 1.2-6.8-5-4.9 6.9-1Z")
+                path.landing-hero__star-fill(d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2-6.2 3.2 1.2-6.8-5-4.9 6.9-1Z", style=index === 4 ? 'clip-path: inset(0 10% 0 0)' : '')
+          span.landing-hero__rating-value #[strong 4,9] из 5
+          span.landing-hero__rating-count Отзывы клиентов
+      h1.landing-hero__title#landing-hero-title
+        span.landing-hero__title-first ВЫЕЗДНОЙ
+        span.landing-hero__title-second ШИНОМОНТАЖ
+        span.landing-hero__hours(aria-label="24/7")
+          span(aria-hidden="true") 24/
+          span(aria-hidden="true") 7
+      p.landing-hero__lead Приедем и починим на месте.
+      ul.landing-hero__benefits
+        each benefit in [{title: 'Быстрый выезд', text: 'от 15 минут', icon: 'M12 8v5l3 2 M9 2h6 M12 2v3 M18 6l2-2 M21 14a9 9 0 1 1-18 0 9 9 0 0 1 18 0'}, {title: 'Прозрачная стоимость', text: 'до начала работ', icon: 'M6 3h9l4 4v14l-3-2-4 2-4-2-3 2V3Z M14 3v5h5 M8 11h7 M8 15h7'}, {title: 'Гарантия', text: 'на работы и материалы', icon: 'M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6l-9-4Z M8 12l3 3 5-6'}]
+          li
+            svg(viewBox="0 0 24 24", fill="none", aria-hidden="true")
+              path(d=benefit.icon, stroke="currentColor", stroke-width="1.6", stroke-linecap="round", stroke-linejoin="round")
+            div
+              strong= benefit.title
+              span= benefit.text
+      div.landing-hero__visual-space(aria-hidden="true")
+      a.landing-hero__cta.landing-cta(href="./calculator.html", data-open-calculator)
+        span Рассчитать стоимость
         svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
-          path(d="M5 16h21m-8-8 8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="square")
+          path(d="M5 16h22m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
       div.landing-hero__prices(aria-label="Стоимость выезда")
         div.landing-hero__price
           span Выезд в пределах МКАД —
@@ -81,4 +43,3 @@ section.landing-hero(aria-labelledby="landing-hero-title")
         div.landing-hero__price
           span Выезд за МКАД —
           strong от 2 000 ₽ + 40 ₽/км
-        p.landing-hero__minimum Минимальный заказ — #[strong от 2 500 ₽]

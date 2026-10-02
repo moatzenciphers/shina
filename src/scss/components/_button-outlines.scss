@@ -1,0 +1,56 @@
+.button-outline {
+  position: relative;
+  isolation: isolate;
+  border: 0;
+  background: transparent;
+  clip-path: none;
+}
+.button-outline > svg.button-outline__frame {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  color: var(--button-outline-color, var(--color-accent));
+  fill: var(--button-outline-fill, transparent);
+  stroke: currentColor;
+  stroke-linejoin: miter;
+  pointer-events: none;
+  transform: none;
+  transition: fill .1s ease, color .1s ease;
+}
+.landing-hero__header-cta.button-outline,
+.split-form__calculator.button-outline,
+.landing-slider-arrow.button-outline,
+.mobile-actions__calculator.button-outline { background: transparent; clip-path: none; }
+.landing-hero__header-cta.button-outline span,
+.split-form__calculator.button-outline span { background: transparent; clip-path: none; }
+.split-form__calculator.button-outline,
+.landing-slider-arrow.button-outline { --button-outline-color: var(--color-text); }
+.button-outline:hover,
+.button-outline:focus-visible {
+  --button-outline-fill: transparent;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.button-outline:hover span,
+.button-outline:focus-visible span { background: transparent !important; color: inherit; }
+.button-outline:hover > svg:not(.button-outline__frame),
+.button-outline:focus-visible > svg:not(.button-outline__frame) { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .button-outline > svg.button-outline__frame { transition: none; }
+}
+
+// Keep the fleet border rectangular even if an older script adds the outline class.
+.landing-hero__crews,
+.landing-hero__crews.button-outline {
+  border: 1px solid #fff;
+  border-radius: 0;
+  background: transparent;
+  background-image: none;
+  clip-path: none;
+  box-shadow: none;
+}
+.landing-hero__crews > svg.button-outline__frame { display: none; }

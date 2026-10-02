@@ -1,3 +1,4 @@
+import GLightbox from 'glightbox';
 // Shared by the standalone WordPress asset and the frontend bundle.
 const initReviewDialog = () => {
   const track = document.querySelector('[data-review-slider]');
@@ -11,7 +12,10 @@ const initReviewDialog = () => {
   const service = dialog.querySelector('[data-review-dialog-service]');
   const author = dialog.querySelector('[data-review-dialog-author]');
   const date = dialog.querySelector('[data-review-dialog-date]');
+  const photos = dialog.querySelector('[data-review-dialog-photos]');
+  const heading = dialog.querySelector('.slider-grid__dialog-title');
   let opener = null;
+  GLightbox({ selector: '[data-review-photo]', loop: false });
 
   track.classList.add('slider-grid__track--expandable');
 
@@ -33,7 +37,10 @@ const initReviewDialog = () => {
     stars.textContent = cardStars?.textContent || '';
     stars.setAttribute('aria-label', cardStars?.getAttribute('aria-label') || '');
     text.textContent = card.querySelector('.slider-grid__quote')?.textContent || '';
-    service.textContent = card.querySelector('.slider-grid__service')?.textContent || '';
+    const serviceLabel = card.querySelector('.slider-grid__service');
+    service.replaceChildren(...Array.from(serviceLabel?.childNodes || []).map((node) => node.cloneNode(true)));
+    if (heading) heading.textContent = card.querySelector('.slider-grid__review-heading')?.textContent || 'Отзыв клиента';
+    if (photos) photos.replaceChildren(...Array.from(card.querySelectorAll('[data-review-photos] img')).map((photo) => photo.cloneNode(true)));
     author.textContent = card.querySelector('.slider-grid__author-name')?.textContent || '';
     date.textContent = cardDate?.textContent || '';
     date.dateTime = cardDate?.dateTime || '';
@@ -51,6 +58,7 @@ const initReviewDialog = () => {
     opener?.focus();
   });
 
+  document.addEventListener('reviews:filtered', () => window.requestAnimationFrame(syncButtons));
   window.addEventListener('resize', syncButtons);
   document.fonts?.ready.then(syncButtons);
   syncButtons();

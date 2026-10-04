@@ -13,7 +13,7 @@ section.slider-grid.landing-section#reviews(aria-labelledby="slider-grid-title",
     each label in ['Все', ...new Set(reviews.map(review => review.service))]
       button.cards-grid__filter(type="button", data-review-filter=label === 'Все' ? 'all' : label, aria-pressed=label === 'Все' ? 'true' : 'false', aria-controls="reviews-track")= label
   p.visually-hidden(data-review-filter-status, role="status", aria-live="polite")
-  div.slider-grid__track#reviews-track(data-review-slider, tabindex="0", aria-label="Отзывы клиентов")
+  div.slider-grid__track#reviews-track(data-review-slider, aria-label="Отзывы клиентов")
     each review in reviews
       article.slider-grid__item(data-review-card, data-review-service=review.service)
         span.slider-grid__stars(role="img", aria-label="5 из 5 звёзд") ★★★★★
@@ -40,16 +40,6 @@ section.slider-grid.landing-section#reviews(aria-labelledby="slider-grid-title",
           div.slider-grid__author-meta
             cite.slider-grid__author-name= review.author
             time.slider-grid__date(datetime=review.dateTime)= review.date
-  div.slider-grid__controls(role="group", aria-label="Управление отзывами")
-    button.landing-slider-arrow.slider-grid__arrow(type="button", data-review-prev, aria-label="Предыдущий отзыв")
-      svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
-        path(d="M26 16H6m8-8-8 8 8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
-    span.slider-grid__counter(aria-live="polite")
-      span(data-review-current) 01
-      span.slider-grid__counter-total  / #[span(data-review-total)= reviews.length.toString().padStart(2, '0')]
-    button.landing-slider-arrow.landing-slider-arrow--next.slider-grid__arrow(type="button", data-review-next, aria-label="Следующий отзыв")
-      svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
-        path(d="M6 16h20m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
   dialog.slider-grid__dialog(data-review-dialog, aria-labelledby="slider-grid-dialog-title")
     div.slider-grid__dialog-inner
       button.slider-grid__dialog-close(type="button", data-review-close, aria-label="Закрыть отзыв") ×

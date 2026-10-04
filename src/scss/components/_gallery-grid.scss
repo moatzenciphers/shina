@@ -61,8 +61,8 @@
   background: linear-gradient(transparent, rgba(0, 0, 0, .78));
 }
 
-.gallery-grid__card-title { font-size: clamp(16px, 1.4vw, 22px); line-height: 1.25; }
-.gallery-grid__place { color: var(--color-muted); font-size: 16px; }
+.gallery-grid__card-title { font-size: var(--font-size-subtitle); line-height: 1.25; }
+.gallery-grid__place { color: var(--color-muted); font-size: var(--font-size-body); }
 .gallery-grid__controls { display: none; }
 
 .gallery-grid__footer {
@@ -98,8 +98,8 @@
     background: linear-gradient(transparent, rgba(0, 0, 0, .85));
   }
 
-  .gallery-grid__card-title { font-size: 18px; }
-  .gallery-grid__place { font-size: 14px; }
+  .gallery-grid__card-title { font-size: var(--font-size-large); }
+  .gallery-grid__place { font-size: var(--font-size-small); }
   .gallery-grid__controls { display: flex; gap: 16px; margin-top: 16px; }
   .gallery-grid__arrow { flex: 1 1 0; }
   .gallery-grid__footer { justify-content: center; margin-top: 16px; }

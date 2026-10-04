@@ -35,7 +35,7 @@ foreach ($posts as $review) {
         <?php endforeach; ?>
     </div>
     <p class="visually-hidden" data-review-filter-status role="status" aria-live="polite"></p>
-	<div id="reviews-track" class="slider-grid__track" data-review-slider tabindex="0" aria-label="Отзывы клиентов">
+	<div id="reviews-track" class="slider-grid__track" data-review-slider aria-label="Отзывы клиентов">
 		<?php foreach ($posts as $review) :
 			$rating = (float) edemchinim_get_field('shina_review_rating', $review->ID, 5);
 			$date = edemchinim_get_field('shina_review_date', $review->ID, get_the_date('Y-m-d', $review->ID));
@@ -60,11 +60,6 @@ foreach ($posts as $review) {
 			</div>
 		</article>
 		<?php endforeach; ?>
-	</div>
-	<div class="slider-grid__controls" role="group" aria-label="Управление отзывами">
-		<button class="landing-slider-arrow slider-grid__arrow" type="button" data-review-prev aria-label="Предыдущий отзыв"><?php edemchinim_landing_arrow('left'); ?></button>
-		<span class="slider-grid__counter" aria-live="polite"><span data-review-current>01</span><span class="slider-grid__counter-total"> / <span data-review-total><?php echo esc_html(sprintf('%02d', count($posts))); ?></span></span></span>
-		<button class="landing-slider-arrow landing-slider-arrow--next slider-grid__arrow" type="button" data-review-next aria-label="Следующий отзыв"><?php edemchinim_landing_arrow(); ?></button>
 	</div>
 	<?php endif; ?>
 	<dialog class="slider-grid__dialog" data-review-dialog aria-labelledby="slider-grid-dialog-title">

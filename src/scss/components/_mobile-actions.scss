@@ -42,7 +42,7 @@ body.landing-page .bottom-nav {
     background: var(--color-accent);
     color: var(--color-bg);
     font-size: clamp(15px, 4.8vw, 20px);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     line-height: 1.2;
     white-space: nowrap;
   }

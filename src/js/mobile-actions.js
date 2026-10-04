@@ -24,7 +24,9 @@ export const initMobileActions = () => {
       return;
     }
     const otherButtons = document.querySelectorAll('[data-open-calculator]:not([data-mobile-calculator])');
-    calculatorButton.hidden = Array.from(otherButtons).some(isVisibleInViewport);
+    calculatorButton.hidden = Array.from(otherButtons).some((button) => (
+      !button.closest('[data-site-header-root]') && isVisibleInViewport(button)
+    ));
     panel.classList.toggle('mobile-actions--single', calculatorButton.hidden);
   };
 

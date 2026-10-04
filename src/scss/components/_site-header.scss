@@ -2,12 +2,10 @@
   --landing-gutter: clamp(24px, 4vw, 80px);
   --color-landing-bg: #06141b;
   --color-accent-hover: #ffad39;
-  --font-main: "Google Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   position: sticky;
   top: 0;
   z-index: 20;
   background: var(--color-landing-bg);
-  font-family: var(--font-main, Arial, sans-serif);
 }
 
 .landing-hero__header {
@@ -18,7 +16,6 @@
   gap: 32px;
   min-height: 72px;
   padding: 8px var(--landing-gutter);
-  background: rgba(0, 13, 19, .68);
   margin-inline: auto;
   max-width: 1770px;
 }
@@ -39,8 +36,8 @@
 }
 
 .landing-hero__brand-name {
-  font-size: 16px;
-  font-weight: 800;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
   font-style: italic;
   line-height: 1;
   white-space: nowrap;
@@ -181,7 +178,7 @@
   justify-content: space-between;
   gap: 16px;
   padding: 10px 12px;
-  font-size: 14px;
+  font-size: var(--font-size-small);
   line-height: 1.35;
 }
 
@@ -228,8 +225,8 @@
   align-items: center;
   gap: 12px;
   color: var(--color-text);
-  font-size: 18px;
-  font-weight: 700;
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -304,7 +301,7 @@
   background: var(--color-accent);
   clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
   color: var(--color-bg);
-  font-size: 20px;
+  font-size: var(--font-size-control);
   text-decoration: none;
 }
 
@@ -348,7 +345,7 @@
   }
   .landing-hero__brand { width: auto; }
   .landing-hero__brand-car { width: 100px; height: auto; }
-  .landing-hero__brand-name { font-size: 13px; }
+  .landing-hero__brand-name { font-size: var(--font-size-small); }
   .landing-hero__header-cta { display: none; }
   .landing-hero__header-actions { gap: 20px; }
   .landing-hero__phone { display: none; }
@@ -383,7 +380,7 @@
     justify-content: space-between;
     padding: 12px 0;
     font-size: clamp(24px, 6vw, 32px);
-    font-weight: 800;
+    font-weight: var(--font-weight-bold);
     line-height: 1.1;
   }
   .landing-hero__nav-item--services > .landing-hero__nav-button .landing-hero__chevron { display: block; }
@@ -411,7 +408,7 @@
     display: block;
     min-height: 54px;
     padding: 8px 0;
-    font-size: 19px;
+    font-size: var(--font-size-large);
     display: flex;
     align-items: center;
   }
@@ -420,12 +417,12 @@
   .landing-hero__submenu-item { border-top: 1px solid rgba(255, 255, 255, .14); }
   .landing-hero__submenu-item::after { display: none; }
   .landing-hero__submenu-item > a,
-  .landing-hero__submenu-item > .landing-hero__nav-current { min-height: 54px; padding: 8px 0; background: transparent; font-size: 19px; }
+  .landing-hero__submenu-item > .landing-hero__nav-current { min-height: 54px; padding: 8px 0; background: transparent; font-size: var(--font-size-large); }
   .landing-hero__submenu-button .landing-hero__chevron { transform: rotate(45deg) translateY(-2px); }
   .landing-hero__subsubmenu > li > a,
-  .landing-hero__subsubmenu > li > .landing-hero__nav-current { min-height: 42px; padding: 10px 0; background: transparent; font-size: 16px; }
+  .landing-hero__subsubmenu > li > .landing-hero__nav-current { min-height: 42px; padding: 10px 0; background: transparent; font-size: var(--font-size-body); }
   .landing-hero__menu-footer { display: block; margin-top: auto; padding-top: 56px; }
-  .landing-hero__menu-footer p { margin: 0 0 20px; font-size: 18px; line-height: 1.4; }
+  .landing-hero__menu-footer p { margin: 0 0 20px; font-size: var(--font-size-large); line-height: 1.4; }
   .landing-hero__menu-footer .landing-hero__cta { display: flex; width: 100%; }
   .landing-hero__menu-toggle {
     display: grid;
@@ -466,7 +463,7 @@
   border: 1px solid var(--color-text);
   white-space: nowrap;
   color: var(--color-text);
-  font-size: 15px;
+  font-size: var(--font-size-body);
   line-height: 1.2;
   text-decoration: none;
 }
@@ -476,34 +473,34 @@
 .landing-hero__crews:hover { color: var(--color-accent); }
 @media (min-width: 851px) and (max-width: 1450px) {
   .landing-hero__header { gap: 16px; }
-  .landing-hero__nav-list { gap: 16px; font-size: 14px; }
+  .landing-hero__nav-list { gap: 16px; font-size: var(--font-size-small); }
   .landing-hero__brand { width: 128px; }
-  .landing-hero__phone { font-size: 15px; gap: 8px; }
-  .landing-hero__crews { font-size: 13px; padding-inline: 12px; gap: 6px; }
+  .landing-hero__phone { font-size: var(--font-size-body); gap: 8px; }
+  .landing-hero__crews { font-size: var(--font-size-small); padding-inline: 12px; gap: 6px; }
   .landing-hero__crews-note { display: block; }
-  .landing-hero__header-cta span { padding-inline: 12px; font-size: 14px; }
+  .landing-hero__header-cta span { padding-inline: 12px; font-size: var(--font-size-small); }
   .landing-hero__header-actions { gap: 12px; }
 }
 @media (min-width: 851px) and (max-width: 1100px) {
   .landing-hero__header { gap: 10px; }
-  .landing-hero__nav-list { gap: 10px; font-size: 13px; }
+  .landing-hero__nav-list { gap: 10px; font-size: var(--font-size-small); }
   .landing-hero__brand { width: 108px; }
   .landing-hero__brand-car { width: 108px; }
-  .landing-hero__brand-name { font-size: 14px; }
-  .landing-hero__crews { padding-inline: 10px; font-size: 12px; }
+  .landing-hero__brand-name { font-size: var(--font-size-small); }
+  .landing-hero__crews { padding-inline: 10px; font-size: var(--font-size-compact); }
 }
 @media (max-width: 850px) {
   .landing-hero__header { justify-content: space-between; gap: 10px; }
   .landing-hero__header-actions { margin-left: 0; }
-  .landing-hero__crews { gap: 6px; padding: 8px; font-size: 12px; }
+  .landing-hero__crews { gap: 6px; padding: 8px; font-size: var(--font-size-compact); }
   .landing-hero__activity { width: 8px; height: 8px; }
   .landing-hero__crews svg { width: 16px; height: 16px; }
   .landing-hero__crews-note { display: inline; font-size: inherit; }
 }
 @media (max-width: 360px) {
   .landing-hero__brand-car { width: 84px; }
-  .landing-hero__brand-name { font-size: 11px; }
+  .landing-hero__brand-name { font-size: var(--font-size-compact); }
   .landing-hero__header { gap: 6px; }
-  .landing-hero__crews { gap: 4px; padding-inline: 6px; font-size: 10px; }
+  .landing-hero__crews { gap: 4px; padding-inline: 6px; font-size: var(--font-size-compact); }
   .landing-hero__crews svg { width: 12px; height: 12px; }
 }

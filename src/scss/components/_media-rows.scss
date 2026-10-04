@@ -59,12 +59,12 @@
 }
 
 .media-rows__point-title {
-  font-size: clamp(18px, 1.3vw, 22px);
+  font-size: var(--font-size-subtitle);
 }
 
 .media-rows__point-text {
   margin-top: 4px;
-  font-size: clamp(14px, 1.1vw, 18px);
+  font-size: var(--font-size-text);
 }
 
 @media (max-width: 850px) {
@@ -93,10 +93,10 @@
   }
 
   .media-rows__point-title {
-    font-size: 18px;
+    font-size: var(--font-size-large);
   }
 
   .media-rows__point-text {
-    font-size: 14px;
+    font-size: var(--font-size-body);
   }
 }

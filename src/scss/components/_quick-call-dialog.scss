@@ -38,7 +38,7 @@
 
 .quick-call-dialog__eyebrow {
   margin: 0 0 8px;
-  font-size: 14px;
+  font-size: var(--font-size-small);
 }
 
 .quick-call-dialog__description {
@@ -51,7 +51,7 @@
 }
 
 .quick-call-dialog__label {
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .quick-call-dialog__input {
@@ -74,13 +74,13 @@
 
 .quick-call-dialog__submit {
   min-height: 54px;
-  font-size: 18px;
+  font-size: var(--font-size-large);
 }
 
 .quick-call-dialog__status {
   margin: 4px 0 0;
   color: var(--color-muted);
-  font-size: 14px;
+  font-size: var(--font-size-small);
 }
 
 .quick-call-dialog button:focus-visible,

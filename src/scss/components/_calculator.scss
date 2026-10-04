@@ -131,8 +131,8 @@
 .calculator__legend {
   padding: 0;
   margin-bottom: 12px;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
 }
 
 .calculator__footer {
@@ -215,7 +215,7 @@
 
 .checkbox-card__price {
   color: var(--color-accent);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   white-space: nowrap;
 }
 
@@ -295,7 +295,7 @@
   min-height: 20px;
   margin: 0;
   color: var(--color-muted);
-  font-size: 14px;
+  font-size: var(--font-size-small);
 }
 
 .address-status:empty {
@@ -340,8 +340,8 @@
 
 .diameter-slider__value {
   color: var(--color-text);
-  font-size: 18px;
-  font-weight: 700;
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
 }
 
 .diameter-slider__control {
@@ -403,7 +403,7 @@
   display: flex;
   justify-content: space-between;
   color: var(--color-muted);
-  font-size: 12px;
+  font-size: var(--font-size-compact);
 }
 
 .diameter-slider__marks span {
@@ -411,12 +411,12 @@
 }
 
 [class*="ymaps"][class*="suggest"] {
+  font-family: var(--font-main) !important;
   overflow: hidden !important;
   margin-top: 8px !important;
   border: none;
   background: var(--color-surface) !important;
   color: var(--color-text) !important;
-  font-family: var(--font-main) !important;
   z-index: 50 !important;
 }
 
@@ -433,8 +433,8 @@
 }
 
 [class*="ymaps"][class*="suggest"] * {
-  color: var(--color-text) !important;
   font-family: var(--font-main) !important;
+  color: var(--color-text) !important;
 }
 
 [class*="ymaps"][class*="suggest-item"] {
@@ -483,7 +483,7 @@
 
 .order-summary__value {
   font-size: 24px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .primary-button {
@@ -491,7 +491,7 @@
   border-color: var(--color-accent);
   background: var(--color-accent);
   color: #111111;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .primary-button:disabled {
@@ -502,7 +502,7 @@
 .secondary-button {
   min-height: 42px;
   background: var(--color-surface-muted);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .order-confirm,

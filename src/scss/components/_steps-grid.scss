@@ -38,7 +38,7 @@
 .steps-grid__number {
   color: var(--color-accent);
   font-size: clamp(28px, 2vw, 36px);
-  font-weight: 800;
+  font-weight: var(--font-weight-bold);
   line-height: 1.1;
 }
 

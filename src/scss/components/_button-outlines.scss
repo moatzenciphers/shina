@@ -30,7 +30,7 @@
 .landing-slider-arrow.button-outline { --button-outline-color: var(--color-text); }
 .button-outline:hover,
 .button-outline:focus-visible {
-  --button-outline-fill: transparent;
+  --button-outline-fill: var(--color-menu-hover);
   background: transparent !important;
   box-shadow: none !important;
   transform: none !important;
@@ -46,7 +46,7 @@
 // Keep the fleet border rectangular even if an older script adds the outline class.
 .landing-hero__crews,
 .landing-hero__crews.button-outline {
-  border: 1px solid #fff;
+  border: 1px solid var(--landing-divider);
   border-radius: 0;
   background: transparent;
   background-image: none;

@@ -96,8 +96,8 @@
 
 .map-overlay__zoom {
   position: absolute;
-  top: 68px;
-  left: 14px;
+  bottom: 68px;
+  right: 14px;
   display: grid;
   gap: 8px;
 }
@@ -115,8 +115,8 @@
 
 .map-overlay__location {
   position: absolute;
-  top: 14px;
-  left: 14px;
+  bottom: 14px;
+  right: 14px;
   width: 44px;
   height: 44px;
   display: grid;

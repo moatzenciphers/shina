@@ -35,7 +35,7 @@ class Edemchinim_Site_Footer_Walker extends Walker_Nav_Menu
             $group_class = 'site-footer__group' . ($this->service_group ? ' site-footer__group--services' : '');
             $output .= '<div class="' . esc_attr($group_class) . '">';
             if ($has_children) {
-                $output .= '<button class="site-footer__toggle" type="button" aria-expanded="false" aria-controls="' . esc_attr($this->group_id) . '" data-footer-toggle><span>' . esc_html($title) . '</span><span class="site-footer__chevron" aria-hidden="true"></span></button>';
+                $output .= '<button class="site-footer__toggle" type="button" aria-expanded="false" aria-controls="' . esc_attr($this->group_id) . '" data-footer-toggle><span>' . esc_html($title) . '</span><svg class="site-footer__chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="M3 5.5 8 10.5 13 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>';
             } else {
                 $output .= '<span class="site-footer__toggle site-footer__toggle--plain">' . esc_html($title) . '</span>';
             }

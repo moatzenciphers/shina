@@ -28,7 +28,8 @@ footer.site-footer.landing-section#contacts
         div.site-footer__group.site-footer__group--services
           button.site-footer__toggle(type="button", aria-expanded="false", aria-controls="footer-services", data-footer-toggle)
             span УСЛУГИ
-            span.site-footer__chevron(aria-hidden="true")
+            svg.site-footer__chevron(viewBox="0 0 16 16", fill="none", aria-hidden="true", focusable="false")
+              path(d="M3 5.5 8 10.5 13 5.5", stroke="currentColor", stroke-width="1.6", stroke-linecap="round", stroke-linejoin="round")
           div.site-footer__links.site-footer__service-columns#footer-services
             each column in serviceColumns
               ul.site-footer__link-list
@@ -38,7 +39,8 @@ footer.site-footer.landing-section#contacts
         div.site-footer__group
           button.site-footer__toggle(type="button", aria-expanded="false", aria-controls="footer-clients", data-footer-toggle)
             span КЛИЕНТАМ
-            span.site-footer__chevron(aria-hidden="true")
+            svg.site-footer__chevron(viewBox="0 0 16 16", fill="none", aria-hidden="true", focusable="false")
+              path(d="M3 5.5 8 10.5 13 5.5", stroke="currentColor", stroke-width="1.6", stroke-linecap="round", stroke-linejoin="round")
           div.site-footer__links#footer-clients
             ul.site-footer__link-list
               each item in clientLinks
@@ -50,7 +52,8 @@ footer.site-footer.landing-section#contacts
         div.site-footer__group
           button.site-footer__toggle(type="button", aria-expanded="false", aria-controls="footer-documents", data-footer-toggle)
             span ДОКУМЕНТЫ
-            span.site-footer__chevron(aria-hidden="true")
+            svg.site-footer__chevron(viewBox="0 0 16 16", fill="none", aria-hidden="true", focusable="false")
+              path(d="M3 5.5 8 10.5 13 5.5", stroke="currentColor", stroke-width="1.6", stroke-linecap="round", stroke-linejoin="round")
           div.site-footer__links#footer-documents
             ul.site-footer__link-list
               each document in documentLinks

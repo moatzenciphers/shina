@@ -55,7 +55,7 @@
 }
 .cards-grid__card-heading { display: flex; align-items: center; gap: 16px; }
 .cards-grid__icon { width: 42px; height: 42px; flex: 0 0 42px; color: var(--color-accent); }
-.cards-grid__card-heading .landing-subtitle { font-size: var(--font-size-subtitle); }
+.cards-grid__card-heading .landing-subtitle { font-size: var(--font-size-subtitle); transition: 0.1s color;}
 .cards-grid__empty { margin: 24px 0 0; color: var(--color-muted); }
 
 .cards-grid__link {
@@ -116,6 +116,7 @@
   font-weight: var(--font-weight-bold);
   white-space: nowrap;
   pointer-events: none;
+  transition: 0.1s color;
 }
 
 .cards-grid__details::before {
@@ -124,22 +125,30 @@
   text-decoration-color: var(--color-accent);
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
+  transition: 0.1s color;
 }
 
 .cards-grid__arrow {
   width: 18px;
   height: 18px;
-  transition: transform .2s ease;
+  transition: transform .1s ease;
 }
 
-.cards-grid__item:hover .cards-grid__arrow,
-.cards-grid__item:focus-within .cards-grid__arrow {
-  transform: translate(3px, -3px);
-}
-
-.cards-grid__item:focus-within {
-  outline: 2px solid var(--color-accent);
+.cards-grid__item {
+  outline: 1px solid rgba(0,0,0,0);
   outline-offset: -2px;
+  transition: 0.1s outline;
+}
+
+.cards-grid__item:hover .cards-grid__details::before,
+.cards-grid__item:hover .cards-grid__card-heading .landing-subtitle,
+.cards-grid__item:hover .cards-grid__details {
+  color: var(--color-accent);
+}
+
+.cards-grid__item:focus-within,
+.cards-grid__item:hover {
+  outline: 1px solid var(--color-accent);
 }
 
 .cards-grid__footer {

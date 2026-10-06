@@ -29,7 +29,8 @@ div.site-header-shell(data-site-header-root)
         li.landing-hero__nav-item.landing-hero__nav-item--services.landing-hero__nav-item--catalog(data-menu-item)
           a.landing-hero__nav-button(href=landingServicesHref, aria-expanded="false", aria-controls="landing-services", data-menu-expand)
             span Услуги
-            span.landing-hero__chevron(aria-hidden="true")
+            svg.landing-hero__chevron(viewBox="0 0 16 16", fill="none", aria-hidden="true", focusable="false")
+              path(d="M3 5.5 8 10.5 13 5.5", stroke="currentColor", stroke-width="1.6", stroke-linecap="round", stroke-linejoin="round")
           ul.landing-hero__submenu.header-services#landing-services
             each group in landingServices
               li.header-services__category

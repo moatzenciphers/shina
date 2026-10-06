@@ -47,7 +47,7 @@
 
 .accordion-grid__question::after {
   transform: translateY(-50%) rotate(90deg);
-  transition: transform .2s ease;
+  transition: transform .1s ease;
 }
 
 .accordion-grid__item[open] .accordion-grid__question::after {

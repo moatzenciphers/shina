@@ -62,7 +62,7 @@
   padding: 8px 16px;
   background: var(--color-landing-bg);
   clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-  transition: background .2s ease, color .2s ease;
+  transition: background .1s ease, color .1s ease;
 }
 
 .split-form__calculator:hover span {

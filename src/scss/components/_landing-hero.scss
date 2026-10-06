@@ -70,28 +70,31 @@
 
 
 @media (max-width: 850px) {
+  .landing-hero__picture img {
+    object-fit: contain;
+  }
   .landing-hero::before { background: linear-gradient(180deg, #06141b 0%, rgba(6,20,27,.98) 22%, rgba(6,20,27,.9) 43%, rgba(6,20,27,.25) 74%, rgba(6,20,27,.76) 100%); }
   .landing-hero { --hero-available-height: calc(100svh - 72px - 84px - env(safe-area-inset-bottom)); }
   .landing-hero__inner { align-items: stretch; }
   .landing-hero__content { display: flex; flex-direction: column; min-height: var(--hero-available-height); padding-top: 24px; padding-bottom: 12px; }
   .landing-hero__content > * { flex-shrink: 0; }
-  .landing-hero__rating { padding-bottom: 16px; }
+  .landing-hero__rating { padding-bottom: 16px; width: 100%;}
   .landing-hero__rating-label { font-size: var(--font-size-compact); }
   .landing-hero__rating-row { gap: 12px; flex-wrap: wrap; }
   .landing-hero__stars { gap: 2px; }
   .landing-hero__stars svg { width: 22px; height: 22px; }
   .landing-hero__rating-value { font-size: var(--font-size-body); }
   .landing-hero__rating-count { padding-left: 12px; font-size: var(--font-size-small); }
-  .landing-hero__title { width: 100%; grid-template-columns: auto 1fr; gap: 0 14px; margin-top: 20px; font-size: 28px; }
+  .landing-hero__title { width: 100%; grid-template-columns: auto 1fr; gap: 0 14px; margin-top: 20px; font-size: 7.3vw; }
   .landing-hero__title-first { grid-column: 1; }
   .landing-hero__title-second { grid-column: 1; }
   .landing-hero__hours { grid-column: 2; grid-row: 1 / 3;  font-size: 2lh; justify-self: start; }
   .landing-hero__lead { margin: 12px 0 16px; font-size: clamp(18px, 4.5vw, 28px); }
   .landing-hero__benefits { width: 100%; max-width: none; align-self: stretch; gap: 12px; }
-  .landing-hero__benefits li { display: block; }
+  .landing-hero__benefits li { display: block; text-align: center;}
   .landing-hero__benefits li + li { padding-left: 12px; }
   .landing-hero__benefits svg { width: 28px; height: 28px; margin-bottom: 8px; }
-  .landing-hero__benefits strong { font-size: clamp(12px, 3vw, 16px); }
+  .landing-hero__benefits strong { font-size: clamp(12px, 3vw, 16px); text-wrap: balance}
   .landing-hero__benefits span { margin-top: 4px; font-size: clamp(12px, 2.7vw, 14px); }
   .landing-hero__visual-space { flex: 1 0 12px; height: auto; }
   .landing-hero__content > .landing-hero__cta { width: 100%; gap: 12px; font-size: var(--font-size-large); }

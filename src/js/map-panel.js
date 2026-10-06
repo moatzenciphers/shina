@@ -32,6 +32,8 @@ export const initMapPanel = () => {
   const status = panel?.querySelector('[data-map-panel-status]');
   const loading = panel?.querySelector('[data-map-panel-loading]');
   const canvas = panel?.querySelector('[data-map-panel-canvas]');
+  const zoomButtons = panel ? Array.from(panel.querySelectorAll('[data-map-panel-zoom]')) : [];
+  const locationButton = panel?.querySelector('[data-map-panel-location]');
   const submitText = panel?.querySelector('[data-map-panel-submit-text]');
   const coordsField = panel?.querySelector('[data-map-panel-coords], #map-panel-coords');
   const priceField = panel?.querySelector('[data-map-panel-price], #map-panel-price');
@@ -198,6 +200,8 @@ export const initMapPanel = () => {
         }));
       }
       loading.hidden = true;
+      zoomButtons.forEach((button) => { button.disabled = false; });
+      if (locationButton) locationButton.disabled = false;
       map.events.add('click', async (event) => {
         const coords = event.get('coords');
         if (!Array.isArray(coords)) return;
@@ -233,6 +237,48 @@ export const initMapPanel = () => {
       // Ошибку загрузки карты покажет проверка адреса.
     }
   };
+
+  zoomButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!map) return;
+      const step = button.dataset.mapPanelZoom === 'in' ? 1 : -1;
+      map.setZoom(Math.max(3, Math.min(19, map.getZoom() + step)), { checkZoomRange: true, duration: 180 });
+    });
+  });
+
+  locationButton?.addEventListener('click', async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (!map || locationButton.disabled) return;
+    resetCheck();
+    const currentRequest = requestId;
+    locationButton.disabled = true;
+    locationButton.setAttribute('aria-busy', 'true');
+    showStatus('Определяем местоположение…');
+    try {
+      let geoObject;
+      try {
+        const result = await window.ymaps.geolocation.get({ provider: 'browser', autoReverseGeocode: true, timeout: 15000 });
+        geoObject = result.geoObjects.get(0);
+        if (!geoObject) throw new Error('Location unavailable');
+      } catch {
+        const position = await new Promise((resolve, reject) => {
+          if (!navigator.geolocation) return reject(new Error('Geolocation unavailable'));
+          navigator.geolocation.getCurrentPosition(resolve, reject, { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 });
+        });
+        const result = await window.ymaps.geocode([position.coords.latitude, position.coords.longitude], { results: 1 });
+        geoObject = result.geoObjects.get(0);
+      }
+      await acceptGeoObject(geoObject, currentRequest);
+    } catch {
+      if (currentRequest === requestId) showStatus('Не удалось определить местоположение. Разрешите доступ к геолокации или введите адрес вручную.', 'error');
+    } finally {
+      locationButton.disabled = false;
+      locationButton.removeAttribute('aria-busy');
+    }
+  });
 
   input.addEventListener('focus', initSuggest);
   input.addEventListener('input', resetCheck);

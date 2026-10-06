@@ -1,0 +1,8 @@
+// Lock the root only: a second scroll container on body breaks sticky headers.
+html.glightbox-open { overflow: hidden; }
+body.glightbox-open { overflow: visible; }
+
+// GLightbox's injected margin duplicates the space reserved by scrollbar-gutter.
+@supports (scrollbar-gutter: stable) {
+  body.glightbox-open.gscrollbar-fixer { margin-right: 0 !important; }
+}

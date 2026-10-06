@@ -54,3 +54,24 @@
   box-shadow: none;
 }
 .landing-hero__crews > svg.button-outline__frame { display: none; }
+
+// Blur only inside the angled frame, leaving the cut corners transparent.
+.button-outline::after {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: var(--color-outline-backdrop);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+}
+.mobile-actions__calculator.button-outline::after {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+}
+.landing-hero__crews {
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.landing-hero__crews.button-outline::after { clip-path: none; }

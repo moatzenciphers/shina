@@ -123,7 +123,7 @@ class Edemchinim_Site_Nav_Walker extends Walker_Nav_Menu
             $output .= '>' . $title;
         }
         if ($has_children) {
-            $output .= '<span class="landing-hero__chevron" aria-hidden="true"></span>';
+            $output .= '<svg class="landing-hero__chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="M3 5.5 8 10.5 13 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         }
         $output .= $is_current ? '</span>' : '</a>';
     }

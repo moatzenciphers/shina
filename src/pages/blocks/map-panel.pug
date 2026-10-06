@@ -26,3 +26,16 @@ section.map-panel.landing-section#service-area(aria-labelledby="map-panel-title"
     div.map-panel__visual
       div.map-panel__canvas(data-map-panel-canvas, role="application", aria-label="Карта зоны выезда по Москве и Московской области")
       p.map-panel__map-loading(data-map-panel-loading) Загружаем карту…
+      div.map-overlay.map-panel__controls
+        div.map-overlay__zoom(aria-label="Масштаб карты")
+          button.map-overlay__control(type="button", aria-label="Приблизить карту", data-map-panel-zoom="in", disabled)
+            svg(viewBox="0 0 24 24", width="24", height="24", fill="none", aria-hidden="true")
+              path(d="M5 12h14M12 5v14", stroke="currentColor", stroke-width="2")
+          button.map-overlay__control(type="button", aria-label="Отдалить карту", data-map-panel-zoom="out", disabled)
+            svg(viewBox="0 0 24 24", width="24", height="24", fill="none", aria-hidden="true")
+              path(d="M5 12h14", stroke="currentColor", stroke-width="2")
+        button.map-overlay__location(type="button", aria-label="Использовать текущее местоположение", data-map-panel-location, disabled)
+          svg(viewBox="0 0 24 24", width="24", height="24", fill="none", aria-hidden="true")
+            circle(cx="12", cy="12", r="7", stroke="currentColor", stroke-width="1.6")
+            circle(cx="12", cy="12", r="2", stroke="currentColor", stroke-width="1.6")
+            path(d="M12 2v3M12 19v3M2 12h3M19 12h3", stroke="currentColor", stroke-width="1.6")

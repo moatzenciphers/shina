@@ -19,6 +19,7 @@
   --color-text: #ffffff;
   --color-muted: rgba(255, 255, 255, 0.68);
   --color-accent: #ff9f1a;
+  --color-outline-backdrop: rgba(6, 20, 27, .22);
   --color-menu-hover: rgba(255, 159, 26, .12);
   --color-accent-hover: #ffad39;
   --color-landing-bg: #06141b;
@@ -29,6 +30,11 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+// Keep the page width unchanged when a modal locks body scrolling.
+html {
+  scrollbar-gutter: stable;
 }
 
 body {

@@ -4,7 +4,11 @@ import { initCookieConsent } from './cookie-consent';
 
 document.addEventListener('DOMContentLoaded', () => {
   const orderForm = document.querySelector('.app .wpcf7 form');
-  if (orderForm) {
+  const orderWrapper = orderForm?.parentElement.closest('[data-order-form]');
+  if (orderForm && orderWrapper) {
+    orderForm.hidden = false;
+    orderForm.removeAttribute('data-order-form');
+  } else if (orderForm) {
     orderForm.classList.add('order-confirm');
     orderForm.dataset.orderForm = '';
     orderForm.hidden = true;

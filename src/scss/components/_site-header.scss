@@ -432,7 +432,7 @@
   .landing-hero__submenu-button .landing-hero__chevron { transform: rotate(0deg); }
   .landing-hero__subsubmenu > li > a,
   .landing-hero__subsubmenu > li > .landing-hero__nav-current { min-height: 42px; padding: 10px 0; background: transparent; font-size: var(--font-size-body); }
-  .landing-hero__menu-footer { display: block; margin-top: auto; padding-top: 56px; }
+  .landing-hero__menu-footer { display: block; margin-top: auto; padding-top: 56px; width: 100%;}
   .landing-hero__menu-footer p { margin: 0 0 20px; font-size: var(--font-size-large); line-height: 1.4; }
   .landing-hero__menu-footer .landing-hero__cta { display: flex; width: 100%; }
   .landing-hero__menu-toggle {

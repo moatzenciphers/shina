@@ -4,7 +4,7 @@ div.app#app(data-app)
       path(d="M27 16H5m8-8-8 8 8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
     span На главную
   main.app__screens
-    section.order-screen(aria-label="Заказ шиномонтажа")
+    section.order-screen(data-screen="order", aria-label="Заказ шиномонтажа")
       header.hero
         div.hero__map-placeholder(data-service-map, role="img", aria-label="Место для карты")
         div.map-attribution
@@ -49,32 +49,32 @@ div.app#app(data-app)
             legend.calculator__legend Услуга
             div.option-grid.option-grid--services(data-option-group="service")
               button.option-card.option-card--active(type="button", data-option-name="service", data-option-value="seasonal", aria-pressed="true")
-                img(src=seasonIcon, alt="", loading="lazy", decoding="async")
+                img(src=require('../../img/season.svg'), alt="", loading="lazy", decoding="async")
                 span.option-card__label Сезонная замена
               button.option-card(type="button", data-option-name="service", data-option-value="puncture", aria-pressed="false")
-                img(src=prokolIcon, alt="", loading="lazy", decoding="async")
+                img(src=require('../../img/prokol.svg'), alt="", loading="lazy", decoding="async")
                 span.option-card__label Ремонт прокола
               button.option-card(type="button", data-option-name="service", data-option-value="conditioner", aria-pressed="false")
-                img(src=condIcon, alt="", loading="lazy", decoding="async")
+                img(src=require('../../img/cond.svg'), alt="", loading="lazy", decoding="async")
                 span.option-card__label Заправка кондиционера
               button.option-card(type="button", data-option-name="service", data-option-value="storage", aria-pressed="false")
-                img(src=storageIcon, alt="", loading="lazy", decoding="async")
+                img(src=require('../../img/storage.svg'), alt="", loading="lazy", decoding="async")
                 span.option-card__label Хранение шин
 
           fieldset.calculator__section.calculator__section--details(data-service-section="vehicle")
             legend.calculator__legend Тип автомобиля
             div.option-grid.option-grid--cars(data-option-group="carType")
               button.option-card.option-card--active(type="button", data-option-name="carType", data-option-value="passenger", aria-pressed="true")
-                img(src=lightIcon, alt="", loading="lazy", decoding="async")
+                img(src=require('../../img/light.svg'), alt="", loading="lazy", decoding="async")
                 span.option-card__label Легковой
               button.option-card(type="button", data-option-name="carType", data-option-value="crossover", aria-pressed="false")
-                img(src=crossIcon, alt="", loading="lazy", decoding="async")
+                img(src=require('../../img/cross.svg'), alt="", loading="lazy", decoding="async")
                 span.option-card__label Кроссовер
               button.option-card(type="button", data-option-name="carType", data-option-value="suv", aria-pressed="false")
-                img(src=offroadIcon, alt="", loading="lazy", decoding="async")
+                img(src=require('../../img/offroad.svg'), alt="", loading="lazy", decoding="async")
                 span.option-card__label Внедорожник
               button.option-card(type="button", data-option-name="carType", data-option-value="commercial", data-service-only="conditioner", aria-pressed="false", hidden)
-                img(src=furaIcon, alt="", loading="lazy", decoding="async")
+                img(src=require('../../img/fura.svg'), alt="", loading="lazy", decoding="async")
                 span.option-card__label Спецтехника, грузовое
 
           fieldset.calculator__section.calculator__section--details(data-service-section="diameter")

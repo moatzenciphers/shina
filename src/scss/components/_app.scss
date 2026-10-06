@@ -11,6 +11,9 @@
 }
 
 .order-screen {
+  --calculator-sheet-height: 220px;
+  --hero-height: calc(var(--app-viewport-height) - var(--calculator-sheet-height) + 22px);
+
   position: relative;
   min-height: 100dvh;
   overflow: hidden;
@@ -31,7 +34,7 @@
 
   .order-screen {
     display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(360px, 3fr);
+    grid-template-columns: minmax(0, 7fr) minmax(540px, 3fr);
     height: 100dvh;
     min-height: 100dvh;
     overflow: hidden;

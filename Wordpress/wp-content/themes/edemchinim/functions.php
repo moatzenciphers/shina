@@ -971,11 +971,15 @@ function edemchinim_scripts()
 		. 'window.__OPENROUTESERVICE_API_KEY__ = ' . wp_json_encode($ors_key) . ';'
         . 'window.__CALCULATOR_URL__ = ' . wp_json_encode(edemchinim_calculator_url()) . ';';
 
-	wp_enqueue_style('edemchinim-style', get_stylesheet_uri(), array(), _S_VERSION);
+	$site_style_dependencies = array();
+	if (! is_page_template('page-calculator.php')) {
+		wp_enqueue_style('edemchinim-style', get_stylesheet_uri(), array(), _S_VERSION);
+		$site_style_dependencies[] = 'edemchinim-style';
+	}
 	$site_css = get_template_directory() . '/js/site.css';
 	$site_js = get_template_directory() . '/js/site.js';
 	if (file_exists($site_css) && file_exists($site_js)) {
-		wp_enqueue_style('edemchinim-site', get_template_directory_uri() . '/js/site.css', array('edemchinim-style'), (string) filemtime($site_css));
+		wp_enqueue_style('edemchinim-site', get_template_directory_uri() . '/js/site.css', $site_style_dependencies, (string) filemtime($site_css));
 		wp_enqueue_script('edemchinim-site', get_template_directory_uri() . '/js/site.js', array(), (string) filemtime($site_js), true);
 		wp_add_inline_script('edemchinim-site', $runtime_config, 'before');
 	}

@@ -24,6 +24,7 @@
   --color-accent-hover: #ffad39;
   --color-landing-bg: #06141b;
   --color-map-placeholder: #3b3f46;
+  --app-viewport-height: 100dvh;
 }
 
 *,
@@ -107,3 +108,7 @@ body .glightbox-clean .gslide-title,
 body .glightbox-clean .gslide-desc { font-family: inherit; }
 body .glightbox-clean .gslide-title { font-weight: var(--font-weight-bold); }
 body .glightbox-clean .gslide-desc { font-size: var(--font-size-small); }
+
+.wpcf7-response-output {
+  display: none;
+}

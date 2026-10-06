@@ -482,7 +482,7 @@ const isPhoneComplete = (value) => {
 const syncOrderSendButton = () => {
   const phoneInput = getPhoneInput();
   const consentInput = getPersonalDataConsentInput();
-  const sendButton = document.querySelector('[data-order-send]');
+  const sendButton = document.querySelector('[data-order-form] [data-order-send], [data-order-form] .wpcf7-submit');
 
   if (sendButton) {
     sendButton.disabled = !isPhoneComplete(phoneInput?.value) || !consentInput?.checked;

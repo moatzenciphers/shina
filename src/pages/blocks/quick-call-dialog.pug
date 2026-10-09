@@ -1,6 +1,8 @@
 div.quick-call-backdrop(data-quick-call-dialog, hidden)
   div.quick-call-dialog#quick-call-dialog(role="dialog", aria-modal="true", aria-labelledby="quick-call-title", aria-describedby="quick-call-description")
-    button.quick-call-dialog__close(type="button", data-quick-call-close, aria-label="Закрыть форму") ×
+    button.quick-call-dialog__close(type="button", data-quick-call-close, aria-label="Закрыть форму")
+      svg(viewBox="0 0 24 24", width="24", height="24", fill="none", aria-hidden="true", focusable="false")
+        path(d="m6 6 12 12M18 6 6 18", stroke="currentColor", stroke-width="2", stroke-linecap="round")
     p.quick-call-dialog__eyebrow.landing-eyebrow ПОМОЩЬ РЯДОМ
     h2.quick-call-dialog__title.landing-title.landing-title--dialog#quick-call-title Быстрый вызов
     p.quick-call-dialog__description.landing-text.landing-text--dialog#quick-call-description Оставьте номер телефона, чтобы оператор мог вам перезвонить.

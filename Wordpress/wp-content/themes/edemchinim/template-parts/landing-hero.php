@@ -48,7 +48,7 @@ $benefits = array_slice($benefits, 0, 3);
                     <span class="landing-hero__rating-count"><?php echo esc_html($review_caption); ?></span>
                 </span>
             </a>
-            <h1 class="landing-hero__title" id="landing-hero-title"><span class="landing-hero__title-first"><?php echo esc_html($title_lines[0]); ?></span><span class="landing-hero__title-second"><?php echo esc_html($title_lines[1] ?? 'ШИНОМОНТАЖ'); ?></span><span class="landing-hero__hours" aria-label="24/7"><span aria-hidden="true">24/</span><span aria-hidden="true">7</span></span></h1>
+            <h1 class="landing-hero__title" id="landing-hero-title"><span class="landing-hero__title-first"><?php echo esc_html($title_lines[0]); ?></span><span class="landing-hero__title-second"><?php echo esc_html($title_lines[1] ?? 'ШИНОМОНТАЖ'); ?></span><span class="landing-hero__hours" aria-label="24/7"><span aria-hidden="true">24/7</span></span></h1>
             <p class="landing-hero__lead"><?php echo esc_html(edemchinim_landing_sub('hero_offer', 'Приедем и починим на месте.')); ?></p>
             <ul class="landing-hero__benefits">
                 <?php foreach ($benefits as $index => $benefit) :

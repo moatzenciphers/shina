@@ -63,6 +63,9 @@
 }
 
 .slider-grid__dialog-close {
+  display: grid;
+  place-items: center;
+  padding: 0;
   position: absolute;
   top: 16px;
   right: 16px;
@@ -153,3 +156,5 @@
   .slider-grid__item--featured .slider-grid__photos a { width: min(120px, calc((100% - 12px) / 2)); }
   .slider-grid__footer { justify-content: flex-start; margin-top: 24px; }
 }
+
+.slider-grid__dialog-close svg { display: block; width: 24px; height: 24px; }

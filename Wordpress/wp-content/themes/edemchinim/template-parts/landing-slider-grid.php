@@ -64,7 +64,7 @@ foreach ($posts as $review) {
 	<?php endif; ?>
 	<dialog class="slider-grid__dialog" data-review-dialog aria-labelledby="slider-grid-dialog-title">
 		<div class="slider-grid__dialog-inner">
-			<button class="slider-grid__dialog-close" type="button" data-review-close aria-label="Закрыть отзыв">×</button>
+			<button class="slider-grid__dialog-close" type="button" data-review-close aria-label="Закрыть отзыв"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
 			<h3 class="slider-grid__dialog-title" id="slider-grid-dialog-title">Отзыв клиента</h3>
 			<span class="slider-grid__stars" data-review-dialog-stars role="img"></span>
 			<blockquote class="slider-grid__dialog-quote" data-review-dialog-text></blockquote>

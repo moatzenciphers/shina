@@ -2,7 +2,7 @@
 <?php if ($shortcode) : ?>
 <div class="quick-call-backdrop" data-quick-call-dialog hidden>
 	<div class="quick-call-dialog" id="quick-call-dialog" role="dialog" aria-modal="true" aria-labelledby="quick-call-title" aria-describedby="quick-call-description">
-		<button class="quick-call-dialog__close" type="button" data-quick-call-close aria-label="Закрыть форму">×</button>
+		<button class="quick-call-dialog__close" type="button" data-quick-call-close aria-label="Закрыть форму"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
 		<p class="quick-call-dialog__eyebrow landing-eyebrow">ПОМОЩЬ РЯДОМ</p>
 		<h2 class="quick-call-dialog__title landing-title landing-title--dialog" id="quick-call-title">Быстрый вызов</h2>
 		<p class="quick-call-dialog__description landing-text landing-text--dialog" id="quick-call-description">Оставьте номер телефона, чтобы оператор мог вам перезвонить.</p>

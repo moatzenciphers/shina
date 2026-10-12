@@ -136,6 +136,18 @@ module.exports = (_, argv) => {
         inject: 'body',
         scriptLoading: 'defer',
       }),
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'src/pages/seasonal.pug'),
+        filename: 'seasonal.html',
+        templateParameters: {
+          yandexMapsUrl: getYandexMapsUrl(),
+          hasYandexSuggestApiKey: hasYandexSuggestApiKey(),
+          openRouteServiceApiKey: getOpenRouteServiceApiKey(),
+        },
+        chunks: ['main'],
+        inject: 'body',
+        scriptLoading: 'defer',
+      }),
     ],
   };
 };

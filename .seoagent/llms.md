@@ -6,4 +6,5 @@
 
 - [Conditioner](https://едем-чиним.рф/data/conditioner)
 - [Conditioner Page](https://едем-чиним.рф/data/conditioner-page)
+- [Seasonal Page](https://едем-чиним.рф/data/seasonal-page)
 - [Seasonal Prices](https://едем-чиним.рф/data/seasonal-prices)

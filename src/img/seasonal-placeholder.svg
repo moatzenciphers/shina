@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#10151b"/>
+  <g stroke="#ff9f1a" stroke-width="4" opacity=".32">
+    <circle cx="1160" cy="385" r="110"/>
+    <circle cx="1160" cy="385" r="78"/>
+    <circle cx="1160" cy="385" r="20"/>
+    <path d="M1160 307v58m0 40v58m-78-78h58m40 0h58m-133-55 41 41m28 28 41 41m-110 0 41-41m28-28 41-41"/>
+  </g>
+  <g fill="#ffffff" opacity=".6" font-family="Arial, sans-serif" text-anchor="middle">
+    <text x="1160" y="590" font-size="32">Фото сезонной</text>
+    <text x="1160" y="635" font-size="32">замены шин</text>
+    <text x="1160" y="690" font-size="24">Заглушка</text>
+  </g>
+</svg>

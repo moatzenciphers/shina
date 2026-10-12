@@ -60,6 +60,15 @@ button {
   cursor: pointer;
 }
 
+[data-href] {
+  cursor: pointer;
+}
+
+[data-href]:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
 input[type="checkbox"] {
   appearance: none;
   width: 20px;

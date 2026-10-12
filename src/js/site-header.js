@@ -6,8 +6,15 @@ export const initSiteHeader = () => {
   const root = header.closest('[data-landing], [data-site-header-root]') || header.parentElement;
   const menu = header.querySelector('[data-landing-menu]');
   const menuToggle = header.querySelector('[data-landing-menu-toggle]');
-  const mobileQuery = window.matchMedia('(max-width: 850px)');
+  const mobileQuery = window.matchMedia('(max-width: 961px)');
   if (!root || !menu || !menuToggle) return;
+
+  const syncLinkRoles = () => {
+    header.querySelectorAll('[data-href][data-menu-expand]').forEach((item) => {
+      item.setAttribute('role', mobileQuery.matches ? 'button' : 'link');
+    });
+  };
+  syncLinkRoles();
 
   const setMenuOpen = (open, restoreFocus = false) => {
     const isOpen = Boolean(open && mobileQuery.matches);
@@ -16,7 +23,7 @@ export const initSiteHeader = () => {
     menuToggle.setAttribute('aria-expanded', String(isOpen));
     menuToggle.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
     if (isOpen) {
-      menu.querySelector('[data-menu-expand], a, button')?.focus();
+      menu.querySelector('[data-menu-expand], a, button, [data-href]')?.focus();
     } else {
       menu.querySelectorAll('[data-menu-expand]').forEach((item) => item.setAttribute('aria-expanded', 'false'));
       if (restoreFocus) menuToggle.focus();
@@ -33,7 +40,7 @@ export const initSiteHeader = () => {
       event.preventDefault();
       item.setAttribute('aria-expanded', String(item.getAttribute('aria-expanded') !== 'true'));
     });
-    if (item.tagName === 'SPAN') {
+    if (item.tagName === 'SPAN' && !item.hasAttribute('data-href')) {
       item.addEventListener('keydown', (event) => {
         if (mobileQuery.matches && (event.key === 'Enter' || event.key === ' ')) {
           event.preventDefault();
@@ -60,10 +67,13 @@ export const initSiteHeader = () => {
   });
 
   menu.addEventListener('click', (event) => {
-    if (event.target.closest('a:not([data-menu-expand])')) setMenuOpen(false);
+    if (event.target.closest('a:not([data-menu-expand]), [data-href]:not([data-menu-expand])')) setMenuOpen(false);
   });
 
-  mobileQuery.addEventListener('change', () => setMenuOpen(false));
+  mobileQuery.addEventListener('change', () => {
+    syncLinkRoles();
+    setMenuOpen(false);
+  });
   document.addEventListener('site-header:close-menu', () => setMenuOpen(false));
 
   document.addEventListener('keydown', (event) => {
@@ -74,7 +84,8 @@ export const initSiteHeader = () => {
     }
     if (event.key !== 'Tab') return;
 
-    const focusable = Array.from(header.querySelectorAll('a, button, [data-menu-expand][tabindex="0"]'))
+    const focusable = Array.from(header.querySelectorAll('a, button, [data-href], [data-menu-expand][tabindex="0"]'))
+      .filter((element) => element.tabIndex >= 0 && !element.disabled)
       .filter((element) => element.getClientRects().length > 0 && getComputedStyle(element).visibility === 'visible');
     const first = focusable[0];
     const last = focusable[focusable.length - 1];

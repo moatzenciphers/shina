@@ -1,0 +1,101 @@
+.columns-list__eyebrow {
+  margin-bottom: 16px;
+}
+
+.columns-list__title {
+  max-width: 24ch;
+}
+
+.columns-list__description {
+  margin-top: 24px;
+}
+
+.columns-list__columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--landing-divider);
+}
+
+.columns-list__column {
+  min-width: 0;
+  padding-right: 40px;
+}
+
+.columns-list__column + .columns-list__column {
+  padding-right: 0;
+  padding-left: 40px;
+  border-left: 1px solid var(--landing-divider);
+}
+
+.columns-list__subtitle {
+  max-width: 28ch;
+  min-height: 2.4em;
+}
+
+.columns-list__items {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.columns-list__item {
+  padding: 20px 0;
+}
+
+.columns-list__item + .columns-list__item {
+  border-top: 1px solid var(--landing-divider);
+}
+
+.columns-list__item .landing-text {
+  max-width: 30ch;
+}
+
+.columns-list__item:last-child {
+  padding-bottom: 0;
+}
+
+.columns-list__footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 32px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--landing-divider);
+}
+
+.columns-list__note {
+  max-width: 56ch;
+}
+
+@media (max-width: 850px) {
+  .columns-list__eyebrow { margin-bottom: 8px; }
+  .columns-list__description { margin-top: 16px; }
+  .columns-list__columns {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 24px;
+    padding-top: 16px;
+  }
+  .columns-list__column,
+  .columns-list__column + .columns-list__column {
+    padding: 0;
+    border-left: 0;
+  }
+  .columns-list__column + .columns-list__column {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--landing-divider);
+  }
+  .columns-list__subtitle { min-height: 0; }
+  .columns-list__items { margin-top: 0; }
+  .columns-list__item { padding-block: 12px; }
+  .columns-list__footer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+    padding-top: 20px;
+  }
+  .columns-list__cta { width: 100%; }
+}

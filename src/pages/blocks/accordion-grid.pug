@@ -1,5 +1,6 @@
 -
-  const questions = [
+  const block = (locals.servicePage && locals.servicePage.faq);
+  const questions = (block && block.columns) || [
     [
       { question: 'Как быстро приедет мастер?', answer: 'При срочном заказе ориентировочное время подачи — 15–30 минут. Оно зависит от пробок, погоды, адреса и загрузки мастеров. Точное время сообщит оператор после подтверждения заявки.' },
       { question: 'Как формируется стоимость?', answer: 'Стоимость зависит от выбранной услуги, автомобиля, объёма работ и адреса выезда. Предварительную сумму покажет калькулятор, а окончательную мастер согласует с вами до начала работы.' },
@@ -19,7 +20,7 @@
 section.accordion-grid.landing-section#faq(aria-labelledby="accordion-grid-title")
   header.accordion-grid__header
     p.accordion-grid__eyebrow.landing-eyebrow ЧАСТЫЕ ВОПРОСЫ
-    h2.accordion-grid__title.landing-title.landing-title--section#accordion-grid-title Ответы на вопросы о выездном шиномонтаже
+    h2.accordion-grid__title.landing-title.landing-title--section#accordion-grid-title= (block && block.title) || 'Ответы на вопросы о выездном шиномонтаже'
   div.accordion-grid__columns
     each column, columnIndex in questions
       div.accordion-grid__column

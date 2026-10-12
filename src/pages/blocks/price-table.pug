@@ -1,0 +1,46 @@
+-
+  const priceFormatter = new Intl.NumberFormat('ru-RU');
+  const formatTablePrice = (value) => typeof value === 'number' ? `${priceFormatter.format(value)}\u00a0₽` : value;
+
+section.price-table.landing-section(id=priceTable.id, aria-labelledby="price-table-title")
+  div.price-table__inner
+    header.price-table__header
+      p.price-table__eyebrow.landing-eyebrow= priceTable.eyebrow
+      h2.price-table__title.landing-title.landing-title--section#price-table-title= priceTable.title
+      p.price-table__description.landing-text= priceTable.description
+    table.price-table__table.price-table__table--main(class=priceTable.headings.length === 2 ? 'price-table__table--compact' : null)
+      caption.visually-hidden= priceTable.title
+      colgroup
+        col.price-table__label-column
+        each heading in priceTable.headings.slice(1)
+          col
+      thead
+        tr
+          each heading in priceTable.headings
+            th(scope="col")= heading
+      tbody
+        each row in priceTable.rows
+          tr
+            th(scope="row")= row.label
+            each price in row.prices
+              td.price-table__price= formatTablePrice(price)
+    each group, index in priceTable.groups
+      div.price-table__group
+        h3.price-table__group-title.landing-eyebrow(id=`price-table-group-${index}`)= group.title
+        table.price-table__table.price-table__table--details(aria-labelledby=`price-table-group-${index}`)
+          colgroup
+            col
+            col.price-table__value-column
+          tbody
+            each row in group.rows
+              tr
+                th(scope="row")= row.label
+                td.price-table__price= formatTablePrice(row.value)
+        if group.note
+          p.price-table__group-note.landing-text= group.note
+    div.price-table__footer
+      button.price-table__cta.landing-cta(type="button", data-open-calculator)
+        span= priceTable.button
+        svg(viewBox="0 0 32 32", fill="none", aria-hidden="true", focusable="false")
+          path(d="M5 16h21m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="square")
+      p.price-table__note.landing-text= priceTable.note

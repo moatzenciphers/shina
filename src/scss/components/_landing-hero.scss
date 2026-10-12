@@ -63,7 +63,7 @@
 .app__back svg { width: 20px; height: 20px; }
 
 .landing-hero button:focus-visible,
-.landing-hero a:focus-visible,
+.landing-hero :is(a, :where([data-href])):focus-visible,
 .app__back:focus-visible {
   outline: 2px solid var(--color-text);
   outline-offset: 4px;

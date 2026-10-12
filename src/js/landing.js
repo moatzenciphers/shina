@@ -3,8 +3,9 @@ export const initLanding = () => {
   const calculatorUrl = window.__CALCULATOR_URL__ || './calculator.html';
   document.querySelectorAll('[data-open-calculator]').forEach((trigger) => {
     if (trigger.tagName === 'A') trigger.href = calculatorUrl;
+    if (trigger.hasAttribute('data-href')) trigger.dataset.href = calculatorUrl;
     trigger.addEventListener('click', (event) => {
-      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
       try { sessionStorage.setItem('calculatorPreviousPage', window.location.href); } catch {}
       window.location.assign(calculatorUrl);

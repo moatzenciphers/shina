@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#10151b"/>
+  <g stroke="#ff9f1a" stroke-width="4" opacity=".32">
+    <path d="M1160 280v220m-95-165 190 110m-190 0 190-110"/>
+    <path d="m1140 300 20-20 20 20m-40 180 20 20 20-20m-105-125 10-20 27 2m136 83 27 5 10-20m-210 25 10 20 27-3m136-80 27-7 10 20"/>
+  </g>
+  <g fill="#ffffff" opacity=".6" font-family="Arial, sans-serif" text-anchor="middle">
+    <text x="1160" y="590" font-size="32">Фото заправки</text>
+    <text x="1160" y="635" font-size="32">автокондиционера</text>
+    <text x="1160" y="690" font-size="24">Заглушка</text>
+  </g>
+</svg>

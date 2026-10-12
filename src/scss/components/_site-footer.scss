@@ -14,13 +14,12 @@
 .site-footer__panel {
   max-width: 1770px;
   margin-inline: auto;
-  padding: 0 var(--landing-gutter);
 }
 
 .site-footer--wp { padding-top: clamp(32px, 5vw, 80px); }
 .site-footer__description { color: var(--color-muted); line-height: 1.4; }
-.site-footer__contacts a { color: inherit; text-decoration: none; }
-.site-footer__contacts a:hover { color: var(--color-accent); }
+.site-footer__contacts :is(a, :where([data-href])) { color: inherit; text-decoration: none; }
+.site-footer__contacts :is(a, :where([data-href])):hover { color: var(--color-accent); }
 .site-footer__toggle--plain { cursor: default; }
 
 .site-footer__top {
@@ -83,8 +82,8 @@
 .site-footer__service-columns--menu .site-footer__link-list { display: block; columns: 2; column-gap: 24px; }
 .site-footer__service-columns--menu .site-footer__link-list li { break-inside: avoid; margin-bottom: 10px; }
 .site-footer__link-list { display: grid; align-content: start; gap: 10px; margin: 0; padding: 0; list-style: none; }
-.site-footer__link-list a, .site-footer__active { color: var(--color-muted); line-height: 1.4; text-decoration: none; }
-.site-footer__link-list a:hover { color: var(--color-accent); }
+.site-footer__link-list :is(a, :where([data-href])), .site-footer__active { color: var(--color-muted); line-height: 1.4; text-decoration: none; }
+.site-footer__link-list :is(a, :where([data-href])):hover { color: var(--color-accent); }
 .site-footer__active { color: var(--color-accent); font-weight: var(--font-weight-bold); }
 
 .site-footer__bottom {
@@ -100,7 +99,7 @@
 }
 
 .site-footer__bottom p { margin: 0; }
-.site-footer a:focus-visible, .site-footer button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+.site-footer :is(a, :where([data-href])):focus-visible, .site-footer button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
 
 @media (min-width: 1101px) {
   .site-footer__chevron { display: none; }
@@ -126,7 +125,7 @@
   .site-footer__service-columns--menu .site-footer__link-list li { margin-bottom: 0; }
   .site-footer { --landing-gutter: 24px; padding-bottom: 96px;}
   .site-footer__link-list { gap: 0; }
-  .site-footer__link-list a, .site-footer__active { display: block; padding: 8px 0; font-size: var(--font-size-body); }
+  .site-footer__link-list :is(a, :where([data-href])), .site-footer__active { display: block; padding: 8px 0; font-size: var(--font-size-body); }
   .site-footer__bottom { display: grid; gap: 20px; margin-top: 0; border-top: 0; padding-block: 20px; font-size: var(--font-size-small); }
 }
 

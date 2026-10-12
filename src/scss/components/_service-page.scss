@@ -1,0 +1,26 @@
+.landing-hero--service .landing-title--hero { max-width: 22ch; margin: 16px 0 24px; }
+.landing-hero--service .landing-text--hero { max-width: 56ch; }
+.landing-hero--service .landing-hero__benefits { max-width: 800px; margin-block: 32px; }
+.landing-hero--service .landing-hero__benefits li { grid-template-columns: minmax(0, 1fr); }
+.landing-hero--service .landing-hero__benefits li::before { display: none; }
+.landing-hero--service .landing-hero__benefits strong { white-space: normal; }
+.service-page__price-note { max-width: 56ch; margin-top: 16px; font-size: var(--font-size-small); }
+.service-photo-placeholder {
+  display: grid;
+  min-height: 240px;
+  place-items: center;
+  aspect-ratio: 2 / 1;
+  padding: 24px;
+  border: 1px dashed var(--landing-divider);
+  background: var(--color-surface);
+  color: var(--color-muted);
+  font-size: var(--font-size-body);
+  text-align: center;
+}
+.media-rows__row:nth-child(even) .service-photo-placeholder { grid-column: 2; grid-row: 1; }
+@media (max-width: 850px) {
+  .landing-hero--service .landing-hero__benefits { margin-block: 24px; }
+  .landing-hero--service .landing-hero__benefits li { grid-template-columns: minmax(0, 1fr); }
+  .landing-hero--service .landing-cta { width: 100%; }
+  .media-rows__row:nth-child(even) .service-photo-placeholder { grid-column: auto; grid-row: auto; }
+}

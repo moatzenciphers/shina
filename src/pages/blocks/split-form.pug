@@ -1,10 +1,14 @@
+- const block = (locals.servicePage && locals.servicePage.form);
+
 section.split-form.landing-section#help(aria-labelledby="split-form-title")
   div.split-form__inner
     header.split-form__intro
       p.split-form__eyebrow.landing-eyebrow НУЖНА ПОМОЩЬ?
-      h2.split-form__title.landing-title.landing-title--section#split-form-title Не знаете, какая услуга нужна?
-      p.split-form__lead.landing-text Опишите, что произошло. Оператор разберётся в ситуации, уточнит детали и перезвонит в течение 2 минут.
+      h2.split-form__title.landing-title.landing-title--section#split-form-title= (block && block.title) || 'Не знаете, какая услуга нужна?'
+      p.split-form__lead.landing-text= (block && block.lead) || 'Опишите, что произошло. Оператор разберётся в ситуации, уточнит детали и перезвонит в течение 2 минут.'
     form.split-form__form(data-split-form)
+      if locals.servicePage
+        input(type="hidden", name="service", value=locals.servicePage.serviceKey)
       div.split-form__fields
         label.split-form__field(for="help-phone")
           span.split-form__label Телефон
@@ -14,7 +18,7 @@ section.split-form.landing-section#help(aria-labelledby="split-form-title")
           input.split-form__input#help-address(type="text", name="address", autocomplete="street-address", placeholder="Город, улица, дом", required)
         label.split-form__field.split-form__field--wide(for="help-details")
           span.split-form__label Что случилось?
-          textarea.split-form__input.split-form__message#help-details(name="details", rows="4", placeholder="Например: спустило переднее колесо, автомобиль стоит на парковке и не может ехать", required)
+          textarea.split-form__input.split-form__message#help-details(name="details", rows="4", placeholder=(block && block.placeholder) || 'Например: спустило переднее колесо, автомобиль стоит на парковке и не может ехать', required)
       div.split-form__actions
         button.split-form__submit.landing-cta(type="submit")
           span Получить помощь

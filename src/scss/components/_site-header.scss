@@ -72,7 +72,7 @@
   position: relative;
 }
 
-.landing-hero__nav a,
+.landing-hero__nav :is(a, :where([data-href])),
 .landing-hero__nav-current,
 .landing-hero__nav-button,
 .landing-hero__submenu-button {
@@ -92,7 +92,7 @@
   text-align: left;
 }
 
-.landing-hero__nav a:hover,
+.landing-hero__nav :is(a, :where([data-href])):hover,
 .landing-hero__nav-button:hover,
 .landing-hero__submenu-button:hover {
   color: var(--color-accent);
@@ -170,10 +170,10 @@
 
 .landing-hero__subsubmenu-item { margin: 0; }
 
-.landing-hero__submenu-item > a,
+.landing-hero__submenu-item > :is(a, :where([data-href])),
 .landing-hero__submenu-item > .landing-hero__submenu-button,
 .landing-hero__submenu-item > .landing-hero__nav-current,
-.landing-hero__subsubmenu > li > a,
+.landing-hero__subsubmenu > li > :is(a, :where([data-href])),
 .landing-hero__subsubmenu > li > .landing-hero__nav-current {
   display: flex;
   min-height: 42px;
@@ -185,10 +185,10 @@
   line-height: 1.35;
 }
 
-.landing-hero__submenu-item > a:hover,
-.landing-hero__submenu-item > a:focus-visible,
-.landing-hero__subsubmenu > li > a:hover,
-.landing-hero__subsubmenu > li > a:focus-visible {
+.landing-hero__submenu-item > :is(a, :where([data-href])):hover,
+.landing-hero__submenu-item > :is(a, :where([data-href])):focus-visible,
+.landing-hero__subsubmenu > li > :is(a, :where([data-href])):hover,
+.landing-hero__subsubmenu > li > :is(a, :where([data-href])):focus-visible {
   background: var(--color-surface-muted);
 }
 
@@ -202,7 +202,7 @@
 }
 
 .landing-hero__submenu-button,
-.landing-hero__subsubmenu a {
+.landing-hero__subsubmenu :is(a, :where([data-href])) {
   width: 100%;
 }
 
@@ -287,7 +287,7 @@
 }
 
 .landing-hero__header button:focus-visible,
-.landing-hero__header a:focus-visible,
+.landing-hero__header :is(a, :where([data-href])):focus-visible,
 .landing-hero__header [data-menu-expand]:focus-visible {
   outline: 2px solid var(--color-text);
   outline-offset: 4px;
@@ -380,7 +380,7 @@
   }
   .landing-hero__nav-list { display: block; width: 100%; }
   .landing-hero__nav-item { border-bottom: 1px solid rgba(255, 255, 255, .32); }
-  .landing-hero__nav-item > a,
+  .landing-hero__nav-item > :is(a, :where([data-href])),
   .landing-hero__nav-item > .landing-hero__nav-button,
   .landing-hero__nav-item > .landing-hero__nav-current {
     display: flex;
@@ -415,7 +415,7 @@
   .landing-hero__nav-button[aria-expanded="true"] + .landing-hero__submenu,
   .landing-hero__submenu-button[aria-expanded="true"] + .landing-hero__subsubmenu { display: block; }
   .landing-hero__all-link { display: block; }
-  .landing-hero__all-link a {
+  .landing-hero__all-link :is(a, :where([data-href])) {
     display: block;
     min-height: 54px;
     padding: 8px 0;
@@ -427,10 +427,10 @@
   .landing-hero__submenu-button[aria-expanded="true"] .landing-hero__chevron { transform: rotate(180deg) !important; }
   .landing-hero__submenu-item { border-top: 1px solid rgba(255, 255, 255, .14); }
   .landing-hero__submenu-item::after { display: none; }
-  .landing-hero__submenu-item > a,
+  .landing-hero__submenu-item > :is(a, :where([data-href])),
   .landing-hero__submenu-item > .landing-hero__nav-current { min-height: 54px; padding: 8px 0; background: transparent; font-size: var(--font-size-large); }
   .landing-hero__submenu-button .landing-hero__chevron { transform: rotate(0deg); }
-  .landing-hero__subsubmenu > li > a,
+  .landing-hero__subsubmenu > li > :is(a, :where([data-href])),
   .landing-hero__subsubmenu > li > .landing-hero__nav-current { min-height: 42px; padding: 10px 0; background: transparent; font-size: var(--font-size-body); }
   .landing-hero__menu-footer { display: block; margin-top: auto; padding-top: 56px; width: 100%;}
   .landing-hero__menu-footer p { margin: 0 0 20px; font-size: var(--font-size-large); line-height: 1.4; }

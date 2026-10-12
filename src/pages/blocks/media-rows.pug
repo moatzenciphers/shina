@@ -1,5 +1,6 @@
 -
-  const rows = [
+  const block = (locals.servicePage && locals.servicePage.mediaRows);
+  const rows = (block && block.rows) || [
     {
       image: require('../../img/back.png'),
       alt: 'Мастер обслуживает автомобиль с выездным оборудованием',
@@ -22,12 +23,16 @@
 
 section.media-rows.landing-section(aria-labelledby="media-rows-title")
   header.media-rows__header
-    p.media-rows__eyebrow.landing-eyebrow ПОЧЕМУ НАМ МОЖНО ДОВЕРЯТЬ
-    h2.media-rows__title.landing-title.landing-title--section#media-rows-title Отвечаем за работу и заранее объясняем стоимость
+    p.media-rows__eyebrow.landing-eyebrow= (block && block.eyebrow) || 'ПОЧЕМУ НАМ МОЖНО ДОВЕРЯТЬ'
+    h2.media-rows__title.landing-title.landing-title--section#media-rows-title= (block && block.title) || 'Отвечаем за работу и заранее объясняем стоимость'
   div.media-rows__items
     each row in rows
       div.media-rows__row
-        img.media-rows__image(src=row.image, alt=row.alt, loading="lazy", decoding="async")
+        if row.image
+          img.media-rows__image(src=row.image, alt=row.alt, loading="lazy", decoding="async")
+        else
+          div.media-rows__image.service-photo-placeholder(role="img", aria-label=row.photo + ' — заглушка')
+            span= row.photo + ' — заглушка'
         ul.media-rows__list
           each point in row.points
             li.media-rows__point

@@ -4,6 +4,7 @@ import { initButtonOutlines } from './button-outlines';
 import { initCookieConsent } from './cookie-consent';
 import { initLanding } from './landing';
 import { initSiteHeader } from './site-header';
+import { initDataHrefLinks } from './data-href';
 import { initMobileActions } from './mobile-actions';
 import { initQuickCall } from './quick-call';
 import { initReviewSlider } from './review-slider';
@@ -14,7 +15,8 @@ import { initSplitForm } from './split-form';
 import { initSiteFooter } from './site-footer';
 import { initServiceFilters } from './service-filters';
 
-document.addEventListener('DOMContentLoaded', () => {
+const initSite = () => {
+  initDataHrefLinks();
   initSiteHeader();
   initLanding();
   initMobileActions();
@@ -27,4 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initServiceFilters();
   initCookieConsent();
   initButtonOutlines();
-});
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSite, { once: true });
+} else {
+  initSite();
+}

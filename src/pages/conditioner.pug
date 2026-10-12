@@ -1,0 +1,38 @@
+doctype html
+- locals.columnsList = require('./data/conditioner');
+- locals.servicePage = require('./data/conditioner-page');
+- locals.priceTable = locals.servicePage.prices;
+
+html(lang="ru")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="theme-color", content="#06141b")
+    title= locals.servicePage.meta.title
+    meta(name="description", content=locals.servicePage.meta.description)
+    meta(property="og:type", content="website")
+    meta(property="og:title", content=locals.servicePage.meta.title)
+    meta(property="og:description", content=locals.servicePage.meta.description)
+    script.
+      window.__CALCULATOR_URL__ = './calculator.html?service=conditioner';
+      window.__YANDEX_MAPS_URL__ = !{JSON.stringify(yandexMapsUrl || '')};
+      window.__YANDEX_MAPS_DISABLED__ = !{JSON.stringify(!yandexMapsUrl)};
+      window.__YANDEX_SUGGEST_DISABLED__ = !{JSON.stringify(Boolean(yandexMapsUrl && !hasYandexSuggestApiKey))};
+      window.__OPENROUTESERVICE_API_KEY__ = !{JSON.stringify(openRouteServiceApiKey || '')};
+  body
+    div.landing(data-landing)
+      include blocks/site-header.pug
+      main.landing__main
+        include blocks/hero.pug
+        include blocks/features-grid.pug
+        include blocks/columns-list.pug
+        include blocks/price-table.pug
+        include blocks/steps-grid.pug
+        include blocks/media-rows.pug
+        include blocks/slider-grid.pug
+        include blocks/map-panel.pug
+        include blocks/accordion-grid.pug
+        include blocks/split-form.pug
+      include blocks/site-footer.pug
+      include blocks/mobile-actions.pug
+    include blocks/quick-call-dialog.pug

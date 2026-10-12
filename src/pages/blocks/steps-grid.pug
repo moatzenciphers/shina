@@ -1,5 +1,6 @@
 -
-  const steps = [
+  const block = (locals.servicePage && locals.servicePage.steps);
+  const steps = (block && block.items) || [
     { title: 'Укажите адрес и услугу', text: 'Выберите, что случилось, добавьте параметры автомобиля и получите предварительный расчёт.' },
     { title: 'Подтвердите заявку', text: 'Для срочного заказа покажем ориентировочное время приезда. Несрочный выезд можно запланировать на удобные дату и время.' },
     { title: 'Мастер приедет на оборудованном автомобиле', text: 'Специалист привезёт инструменты и оборудование для выбранной работы на месте.' },
@@ -8,8 +9,8 @@
 
 section.steps-grid.landing-section#process(aria-labelledby="steps-grid-title")
   header.steps-grid__header
-    p.steps-grid__eyebrow.landing-eyebrow КАК ПРОХОДИТ ВЫЕЗД
-    h2.steps-grid__title.landing-title.landing-title--section#steps-grid-title От заявки до готового автомобиля — четыре шага
+    p.steps-grid__eyebrow.landing-eyebrow= (block && block.eyebrow) || 'КАК ПРОХОДИТ ВЫЕЗД'
+    h2.steps-grid__title.landing-title.landing-title--section#steps-grid-title= (block && block.title) || 'От заявки до готового автомобиля — четыре шага'
   ol.steps-grid__items
     each step, index in steps
       li.steps-grid__item

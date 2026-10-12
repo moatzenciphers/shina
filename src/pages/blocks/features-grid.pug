@@ -1,5 +1,6 @@
 -
-  const features = [
+  const block = (locals.servicePage && locals.servicePage.features);
+  const features = (block && block.items) || [
     { title: '15–30 минут', text: 'Среднее время подачи ближайшего свободного мастера.' },
     { title: 'Работаем 24/7', text: 'Выезжаем днём, ночью, в выходные и праздники.' },
     { title: 'Цена известна заранее', text: 'Показываем диапазон стоимости и объясняем, из чего он складывается.' },
@@ -9,15 +10,21 @@
 section.features-grid.landing-section#about(aria-labelledby="features-grid-title")
   div.features-grid__inner
     header.features-grid__header
-      p.features-grid__eyebrow.landing-eyebrow ПОМОЩЬ РЯДОМ
-      h2.features-grid__title.landing-title.landing-title--section#features-grid-title Поможем на месте —<br>без эвакуатора и поездки в сервис
+      p.features-grid__eyebrow.landing-eyebrow= (block && block.eyebrow) || 'ПОМОЩЬ РЯДОМ'
+      h2.features-grid__title.landing-title.landing-title--section#features-grid-title
+        if block
+          = block.title
+        else
+          | Поможем на месте —
+          br
+          | без эвакуатора и поездки в сервис
     div.features-grid__items
       each feature in features
         article.features-grid__item
           h3.features-grid__item-title.landing-subtitle= feature.title
           p.features-grid__item-text.landing-text= feature.text
     div.features-grid__footer
-      p.features-grid__note.landing-text Не хотите заполнять калькулятор? Оставьте номер — оператор перезвонит в течение 2 минут.
+      p.features-grid__note.landing-text= (block && block.note) || 'Не хотите заполнять калькулятор? Оставьте номер — оператор перезвонит в течение 2 минут.'
       button.features-grid__cta.landing-cta(type="button", data-quick-call-open, aria-haspopup="dialog", aria-controls="quick-call-dialog")
         span Быстрый вызов
         svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")

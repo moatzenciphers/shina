@@ -1,5 +1,5 @@
 -
-  const landingNav = [
+  const landingNav = (locals.servicePage && locals.servicePage.nav) || [
     { label: 'О нас', href: '#about' },
     { label: 'Отзывы', href: '#reviews' },
     { label: 'Статьи', href: '#articles' },
@@ -9,21 +9,24 @@
     { category: 'Шиномонтаж', items: ['Правка дисков', 'Снятие секреток', 'Ремонт боковых порезов', 'Ремонт проколов', 'Сезонное хранение шин', 'Шиномонтажные работы', 'Сезонная замена шин'] },
     { category: 'Техпомощь', items: ['Доставка топлива', 'Отогрев автомобиля', 'Запуск двигателя', 'Замена аккумулятора'] }
   ];
-  const landingServicesHref = '#services';
+  const landingServicesHref = (locals.servicePage && locals.servicePage.servicesHref) || '#services';
 
 
 div.site-header-shell(data-site-header-root)
   header.landing-hero__header(data-site-header)
-    a.landing-hero__brand(href="#top", aria-label="Едем-чиним — на главную")
+    a.landing-hero__brand(href=locals.servicePage ? './index.html' : '#top', aria-label="Едем-чиним — на главную")
       svg.landing-hero__brand-car(viewBox="0 0 132 31", fill="none", aria-hidden="true")
         path(d="M5 23c6-5 16-6 28-6 9-8 18-12 35-12 15 0 27 4 39 12 10 0 16 2 20 6M15 23h20m62 0h23M46 13c18-5 33-5 48 2" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round")
       span.landing-hero__brand-name ЕДЕМ–ЧИНИМ
     a.landing-hero__crews(href="./calculator.html", data-open-calculator)
-      span.landing-hero__activity(aria-hidden="true")
-      span
-        strong 14 экипажей
-        | #{' '}
-        span.landing-hero__crews-note на линии
+      if (locals.servicePage && locals.servicePage.crewText)
+        span= locals.servicePage.crewText
+      else
+        span.landing-hero__activity(aria-hidden="true")
+        span
+          strong 14 экипажей
+          | #{' '}
+          span.landing-hero__crews-note на линии
     nav.landing-hero__nav#landing-hero-menu(aria-label="Разделы сайта", data-landing-menu)
       ul.landing-hero__nav-list
         li.landing-hero__nav-item.landing-hero__nav-item--services.landing-hero__nav-item--catalog(data-menu-item)

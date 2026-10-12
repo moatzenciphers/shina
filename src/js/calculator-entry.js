@@ -1,8 +1,11 @@
 import { initCalculator } from './calculator';
 import { initYandexAddress } from './map';
 import { initCookieConsent } from './cookie-consent';
+import { state } from './state';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const requestedService = new URLSearchParams(window.location.search).get('service');
+  if (['seasonal', 'puncture', 'conditioner', 'storage'].includes(requestedService)) state.service = requestedService;
   const orderForm = document.querySelector('.app .wpcf7 form');
   const orderWrapper = orderForm?.parentElement.closest('[data-order-form]');
   if (orderForm && orderWrapper) {

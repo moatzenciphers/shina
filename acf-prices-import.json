@@ -1,0 +1,222 @@
+[
+  {
+    "key": "group_shina_prices_fields",
+    "title": "Цены: данные позиции",
+    "fields": [
+      {
+        "key": "field_shina_price_services",
+        "label": "Услуга",
+        "name": "price_services",
+        "type": "relationship",
+        "instructions": "Выберите одну или несколько услуг, к которым относится эта позиция прайса.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "100",
+          "class": "",
+          "id": ""
+        },
+        "post_type": [
+          "services"
+        ],
+        "taxonomy": [],
+        "filters": [
+          "search"
+        ],
+        "elements": [],
+        "min": 1,
+        "max": 0,
+        "return_format": "id",
+        "bidirectional": 0,
+        "bidirectional_target": []
+      },
+      {
+        "key": "field_shina_price_type",
+        "label": "Тип",
+        "name": "price_type",
+        "type": "select",
+        "instructions": "",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "33",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "value": "Значение",
+          "table": "Таблица"
+        },
+        "default_value": "value",
+        "allow_null": 0,
+        "multiple": 0,
+        "ui": 1,
+        "ajax": 0,
+        "return_format": "value",
+        "placeholder": ""
+      },
+      {
+        "key": "field_shina_price_additional",
+        "label": "Дополнительная",
+        "name": "price_additional",
+        "type": "true_false",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "33",
+          "class": "",
+          "id": ""
+        },
+        "message": "Дополнительная услуга или доплата",
+        "default_value": 0,
+        "ui": 1,
+        "ui_on_text": "Да",
+        "ui_off_text": "Нет"
+      },
+      {
+        "key": "field_shina_price_display_type",
+        "label": "Тип вывода",
+        "name": "price_display_type",
+        "type": "select",
+        "instructions": "",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "34",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "rub": "Рубли",
+          "rub_from": "Рубли от",
+          "rub_per_item": "Рубли за шт",
+          "percent": "Проценты"
+        },
+        "default_value": "rub",
+        "allow_null": 0,
+        "multiple": 0,
+        "ui": 1,
+        "ajax": 0,
+        "return_format": "value",
+        "placeholder": ""
+      },
+      {
+        "key": "field_shina_price_value",
+        "label": "Значение",
+        "name": "price_value",
+        "type": "number",
+        "instructions": "Введите число без единиц и знаков: 4800 для суммы в рублях или 20 для 20%.",
+        "required": 1,
+        "conditional_logic": [
+          [
+            {
+              "field": "field_shina_price_type",
+              "operator": "==",
+              "value": "value"
+            }
+          ]
+        ],
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "min": 0,
+        "max": "",
+        "step": "0.01"
+      },
+      {
+        "key": "field_shina_price_rows",
+        "label": "Название / Значение",
+        "name": "price_rows",
+        "type": "repeater",
+        "instructions": "Добавьте строки таблицы, например «Неполный комплекс» и «Полный комплекс».",
+        "required": 1,
+        "conditional_logic": [
+          [
+            {
+              "field": "field_shina_price_type",
+              "operator": "==",
+              "value": "table"
+            }
+          ]
+        ],
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "table",
+        "min": 1,
+        "max": 0,
+        "collapsed": "field_shina_price_row_name",
+        "button_label": "Добавить строку",
+        "sub_fields": [
+          {
+            "key": "field_shina_price_row_name",
+            "label": "Название",
+            "name": "name",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "65",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Неполный комплекс",
+            "prepend": "",
+            "append": ""
+          },
+          {
+            "key": "field_shina_price_row_value",
+            "label": "Значение",
+            "name": "value",
+            "type": "number",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "35",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": 0,
+            "max": "",
+            "step": "0.01"
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "prices"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Наименование позиции хранится в стандартном заголовке записи prices (post_title). Остальные столбцы прайса задаются полями ACF. Поле «Услуга» допускает несколько записей services.",
+    "show_in_rest": 1
+  }
+]

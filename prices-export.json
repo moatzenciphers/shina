@@ -1,0 +1,1566 @@
+{
+    "format":  "shina-prices-v1",
+    "source_file":  "Цены.xlsx",
+    "sheet":  "Лист1",
+    "records":  [
+                    {
+                        "source_key":  "871cba5f542c5df29146cbd157e1662b14a718d0c82656e7b6ae5b4cd4cd760d",
+                        "source_row":  2,
+                        "post_title":  "Кроссовер",
+                        "service_titles":  [
+                                               "Сезонная замена шин",
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  1,
+                                    "price_display_type":  "percent",
+                                    "price_value":  20,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "bbe418632bffaef7979262335f71422205fb2758374420808c19204167afad7b",
+                        "source_row":  3,
+                        "post_title":  "Внедорожник",
+                        "service_titles":  [
+                                               "Сезонная замена шин",
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  1,
+                                    "price_display_type":  "percent",
+                                    "price_value":  40,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "927d39b39bcdc70a8c14cce7fae31809604a5388ce9c219f5ac899381bd77530",
+                        "source_row":  4,
+                        "post_title":  "Низкий профиль",
+                        "service_titles":  [
+                                               "Сезонная замена шин",
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  1,
+                                    "price_display_type":  "percent",
+                                    "price_value":  20,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "81f484fe8a44eb600059887ad45ae4350b1ddf6b1e7f849a88b7ee8b3f6a6e75",
+                        "source_row":  5,
+                        "post_title":  "Run Flat / C / AT",
+                        "service_titles":  [
+                                               "Сезонная замена шин",
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  1,
+                                    "price_display_type":  "percent",
+                                    "price_value":  40,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "c4a44a007b5a3cd81ce1be22de1bf183550ed1eb38d77b0732bbda8c9811d5c8",
+                        "source_row":  6,
+                        "post_title":  "Спецтехника, грузовое",
+                        "service_titles":  [
+                                               "Заправка автокондиционера"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  1,
+                                    "price_display_type":  "percent",
+                                    "price_value":  100,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "637af9a32928f04a58e9916d3ecd7e132e95c95828c935a13b3825e8d41d43f9",
+                        "source_row":  7,
+                        "post_title":  "Медная смазка",
+                        "service_titles":  [
+                                               "Сезонная замена шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  1,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Неполный комплекс",
+                                                           "value":  700
+                                                       },
+                                                       {
+                                                           "name":  "Полный комплекс",
+                                                           "value":  700
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "917fc504c2123fe01aea3e993ca249905df230cd58b116e2eb43208f841cf64a",
+                        "source_row":  8,
+                        "post_title":  "Механическая чистка ступиц",
+                        "service_titles":  [
+                                               "Сезонная замена шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  1,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Неполный комплекс",
+                                                           "value":  800
+                                                       },
+                                                       {
+                                                           "name":  "Полный комплекс",
+                                                           "value":  800
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "cb0c7c17b0b80286c0bdacfb8f387408593a5ce4377862f214b3db072d00607b",
+                        "source_row":  9,
+                        "post_title":  "R12-15",
+                        "service_titles":  [
+                                               "Сезонная замена шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Неполный комплекс",
+                                                           "value":  3100
+                                                       },
+                                                       {
+                                                           "name":  "Полный комплекс",
+                                                           "value":  3500
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "43266b8c8b0f51abb9e63d6ac73133d10974084198317357ce845dacbffe9886",
+                        "source_row":  10,
+                        "post_title":  "R16",
+                        "service_titles":  [
+                                               "Сезонная замена шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Неполный комплекс",
+                                                           "value":  3500
+                                                       },
+                                                       {
+                                                           "name":  "Полный комплекс",
+                                                           "value":  4000
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "c028c8b3e90687138eace438eb2ec3841139d839d82df0ba1c95a2ebf6350b6a",
+                        "source_row":  11,
+                        "post_title":  "R17",
+                        "service_titles":  [
+                                               "Сезонная замена шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Неполный комплекс",
+                                                           "value":  4000
+                                                       },
+                                                       {
+                                                           "name":  "Полный комплекс",
+                                                           "value":  4500
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "25b197e312a4e42f68db910b88fbdb969d4b8a49b7d75ca7454ac6fc69230071",
+                        "source_row":  12,
+                        "post_title":  "R18",
+                        "service_titles":  [
+                                               "Сезонная замена шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Неполный комплекс",
+                                                           "value":  4500
+                                                       },
+                                                       {
+                                                           "name":  "Полный комплекс",
+                                                           "value":  5100
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "22c7f18678396eb1269a96db0f9b2f10133e4396df2630e0c687027da41c90da",
+                        "source_row":  13,
+                        "post_title":  "R19",
+                        "service_titles":  [
+                                               "Сезонная замена шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Неполный комплекс",
+                                                           "value":  5000
+                                                       },
+                                                       {
+                                                           "name":  "Полный комплекс",
+                                                           "value":  5600
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "140d4402deef242797f87523812c1ee64de794cebd4a7df24e2e5a69c424a26e",
+                        "source_row":  14,
+                        "post_title":  "R20",
+                        "service_titles":  [
+                                               "Сезонная замена шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Неполный комплекс",
+                                                           "value":  5500
+                                                       },
+                                                       {
+                                                           "name":  "Полный комплекс",
+                                                           "value":  6500
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "843dfafcddc077b99be2594e0a19f21fb7d57f6f945ee0809e368ad15b4e61c5",
+                        "source_row":  15,
+                        "post_title":  "R21",
+                        "service_titles":  [
+                                               "Сезонная замена шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Неполный комплекс",
+                                                           "value":  6500
+                                                       },
+                                                       {
+                                                           "name":  "Полный комплекс",
+                                                           "value":  7500
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "5b6a9cd205888385a7a5d45e7c894da8a0c1c0f31d2dcfdd0583bbefcc1ea2c0",
+                        "source_row":  16,
+                        "post_title":  "R22",
+                        "service_titles":  [
+                                               "Сезонная замена шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Неполный комплекс",
+                                                           "value":  7500
+                                                       },
+                                                       {
+                                                           "name":  "Полный комплекс",
+                                                           "value":  9000
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "57606ac5d66a062cbd26e141c38051147cee13b4ed307d82e23c15bb3099b503",
+                        "source_row":  17,
+                        "post_title":  "R23",
+                        "service_titles":  [
+                                               "Сезонная замена шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Неполный комплекс",
+                                                           "value":  8500
+                                                       },
+                                                       {
+                                                           "name":  "Полный комплекс",
+                                                           "value":  11000
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "cf70bc54a159ecb8d3c09c7c3366f3fdc9e62bc812a37e15c521dec3cb1137c7",
+                        "source_row":  18,
+                        "post_title":  "R24",
+                        "service_titles":  [
+                                               "Сезонная замена шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Неполный комплекс",
+                                                           "value":  10000
+                                                       },
+                                                       {
+                                                           "name":  "Полный комплекс",
+                                                           "value":  12500
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "6b63234487b1f40d15acf21efac1e7b7796eabbbd66d40f9689690c7b4b72478",
+                        "source_row":  19,
+                        "post_title":  "R12-15",
+                        "service_titles":  [
+                                               "Ремонт проколов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Временный ремонт",
+                                                           "value":  2000
+                                                       },
+                                                       {
+                                                           "name":  "Полноценный ремонт с гарантией",
+                                                           "value":  3500
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "5a5b8786c76c567971c3f1f6975ab8e59d68dbb508a739dfaf73fc8fbc3f3995",
+                        "source_row":  20,
+                        "post_title":  "R16",
+                        "service_titles":  [
+                                               "Ремонт проколов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Временный ремонт",
+                                                           "value":  2000
+                                                       },
+                                                       {
+                                                           "name":  "Полноценный ремонт с гарантией",
+                                                           "value":  4000
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "b25352290557c2c55b18e493663dd0cf085d6fc5e3cad5f8bd2eabcda09098ef",
+                        "source_row":  21,
+                        "post_title":  "R17",
+                        "service_titles":  [
+                                               "Ремонт проколов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Временный ремонт",
+                                                           "value":  2000
+                                                       },
+                                                       {
+                                                           "name":  "Полноценный ремонт с гарантией",
+                                                           "value":  4500
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "bee0dbe70306e6c51a836712003846f5f68b2e43afccb24ddf52b4c7bd8a2945",
+                        "source_row":  22,
+                        "post_title":  "R18",
+                        "service_titles":  [
+                                               "Ремонт проколов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Временный ремонт",
+                                                           "value":  2500
+                                                       },
+                                                       {
+                                                           "name":  "Полноценный ремонт с гарантией",
+                                                           "value":  5000
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "af8ed9916723d19ccdb303ba5cc27f8640ff5bd85f05c84c88f929106d70e319",
+                        "source_row":  23,
+                        "post_title":  "R19",
+                        "service_titles":  [
+                                               "Ремонт проколов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Временный ремонт",
+                                                           "value":  2500
+                                                       },
+                                                       {
+                                                           "name":  "Полноценный ремонт с гарантией",
+                                                           "value":  5500
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "bc896a30567ede6c54dc5dc2bb8ece8bbeb3721a1cb6898366f0e20c31da9713",
+                        "source_row":  24,
+                        "post_title":  "R20",
+                        "service_titles":  [
+                                               "Ремонт проколов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Временный ремонт",
+                                                           "value":  3000
+                                                       },
+                                                       {
+                                                           "name":  "Полноценный ремонт с гарантией",
+                                                           "value":  6300
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "97dbb19f9dfa801f14e31a08d272dd8932a6650085a8a6ada67a92ba4e29c37b",
+                        "source_row":  25,
+                        "post_title":  "R21",
+                        "service_titles":  [
+                                               "Ремонт проколов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Временный ремонт",
+                                                           "value":  3500
+                                                       },
+                                                       {
+                                                           "name":  "Полноценный ремонт с гарантией",
+                                                           "value":  7000
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "836d81209f3bc5492c6d426612edc6074e7d3149f4ecee8861649fee9d872f9a",
+                        "source_row":  26,
+                        "post_title":  "R22",
+                        "service_titles":  [
+                                               "Ремонт проколов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Временный ремонт",
+                                                           "value":  4500
+                                                       },
+                                                       {
+                                                           "name":  "Полноценный ремонт с гарантией",
+                                                           "value":  7500
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "fdb0a22696ed6c24e6944a3cbf97e93f928f5108d22bbeea4f8215558842c128",
+                        "source_row":  27,
+                        "post_title":  "R23",
+                        "service_titles":  [
+                                               "Ремонт проколов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Временный ремонт",
+                                                           "value":  6000
+                                                       },
+                                                       {
+                                                           "name":  "Полноценный ремонт с гарантией",
+                                                           "value":  8300
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "b5a31352320fb10a8d1de0166ef826d730da5b07fe631908ee9c0866cebce0d5",
+                        "source_row":  28,
+                        "post_title":  "R24",
+                        "service_titles":  [
+                                               "Ремонт проколов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Временный ремонт",
+                                                           "value":  6000
+                                                       },
+                                                       {
+                                                           "name":  "Полноценный ремонт с гарантией",
+                                                           "value":  9500
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "4e37cc7f6fe1b1d6a1d3b495bbb38b4205c191037764526d8705e08c5615a251",
+                        "source_row":  29,
+                        "post_title":  "Заправка фреоном 134А до 400 г",
+                        "service_titles":  [
+                                               "Заправка автокондиционера"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  4800,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "9826014d6b66bf7ea7af32552dce06f0f1b29cbb8400c05c6dbca4207072a77f",
+                        "source_row":  30,
+                        "post_title":  "Дополнительно фреон 134А 100 г",
+                        "service_titles":  [
+                                               "Заправка автокондиционера"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "d296cab03700dafb57df02de0ae8f924c02c822ce871878370b7f72eb9625024",
+                        "source_row":  31,
+                        "post_title":  "Антибактериальная обработка системы",
+                        "service_titles":  [
+                                               "Заправка автокондиционера"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  1,
+                                    "price_display_type":  "rub",
+                                    "price_value":  500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "535bd1f3230ad7c5adfefca3707a30755e816183046b668cfd45dee8871ca020",
+                        "source_row":  32,
+                        "post_title":  "Дополнительный контур",
+                        "service_titles":  [
+                                               "Заправка автокондиционера"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  1,
+                                    "price_display_type":  "percent",
+                                    "price_value":  70,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "e7b6ca183d9aa5baecfd6291f2ea7375f591e174e153e8f01532d2d931e9ca79",
+                        "source_row":  33,
+                        "post_title":  "R12-16",
+                        "service_titles":  [
+                                               "Сезонное хранение шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Без дисков",
+                                                           "value":  4500
+                                                       },
+                                                       {
+                                                           "name":  "На дисках",
+                                                           "value":  5000
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "b0cdb68e98c381e6580e875452ae40dc029711326a5f0bf7dbce421d61de483a",
+                        "source_row":  34,
+                        "post_title":  "R17-19",
+                        "service_titles":  [
+                                               "Сезонное хранение шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Без дисков",
+                                                           "value":  5000
+                                                       },
+                                                       {
+                                                           "name":  "На дисках",
+                                                           "value":  5500
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "05cfa413c9198caf59482d8b4e3196fddf96f51be1611ddb1244d511877773b2",
+                        "source_row":  35,
+                        "post_title":  "R20-24",
+                        "service_titles":  [
+                                               "Сезонное хранение шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Без дисков",
+                                                           "value":  6000
+                                                       },
+                                                       {
+                                                           "name":  "На дисках",
+                                                           "value":  7000
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "b8e9e9dc6852bcb936a3c323a28bf7c14dacba478210ad06b41e2f88c54e5d17",
+                        "source_row":  36,
+                        "post_title":  "Доставка",
+                        "service_titles":  [
+                                               "Сезонное хранение шин"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "table",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  null,
+                                    "price_rows":  [
+                                                       {
+                                                           "name":  "Без дисков",
+                                                           "value":  3500
+                                                       }
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "76c3107abc94ce8855ebcf56185e5d714a3cf29b31a1c8c1f94edea0e18eb88b",
+                        "source_row":  37,
+                        "post_title":  "Доставка топлива",
+                        "service_titles":  [
+                                               "Доставка топлива"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  5000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "040407e3814a9b91d0b120a2714556f73bbda10690bff8cf5468ee1e5bd48aab",
+                        "source_row":  38,
+                        "post_title":  "Подбор, доставка и замена аккумулятора",
+                        "service_titles":  [
+                                               "Замена аккумулятора"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  4500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "c772b239c019785f6b0459809b9aaee0f4b5a9c2538b20b781cf1fac7ac440e0",
+                        "source_row":  39,
+                        "post_title":  "Стоимость запуска двигателя",
+                        "service_titles":  [
+                                               "Запуск двигателя"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  2500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "6d41af6d32b0b6d1be3d92e714a826d936e8588c414e2b0a7763a80c8585ec05",
+                        "source_row":  40,
+                        "post_title":  "Зарядка аккумулятора",
+                        "service_titles":  [
+                                               "Запуск двигателя"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  5000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "6d0f9d365272e458545dfda6757652eeec912b66640a03d4b6875def1db395e2",
+                        "source_row":  41,
+                        "post_title":  "Пуск мотоцикла",
+                        "service_titles":  [
+                                               "Запуск двигателя"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  2500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "dd108cb179d67e0505168f532a01ef067150015755de0a247f851627fdc1c0ec",
+                        "source_row":  42,
+                        "post_title":  "Стоимость отогрева автомобиля",
+                        "service_titles":  [
+                                               "Отогрев автомобиля"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  7000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "154cb3f4f35e205ecba1f4414a5139a4e7476e6a1218a6d1e906259d61b21e4b",
+                        "source_row":  43,
+                        "post_title":  "R12",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  4500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "cd95e748d3942dbeca00b4fdab0334a0fd9eca5238bff4adddae43d5a62af3ba",
+                        "source_row":  44,
+                        "post_title":  "R13",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  5000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "42a84c6a7ed1deea77f42ca5a5b34ea71a2bc3b571cab383b24b1b358c570265",
+                        "source_row":  45,
+                        "post_title":  "R14",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  5500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "92e954de1a666364012d68e294b13e31498821a247689838e6ab2f186b79150c",
+                        "source_row":  46,
+                        "post_title":  "R15",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  6000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "463b2612d9f21f789b5ccf5b9aa15c4817639233dd302ba96fdd25ed33fc8fbc",
+                        "source_row":  47,
+                        "post_title":  "R16",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  7000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "fa71620b0ac90c079938b37400fcd9918c2012a1acc059c5a9169d91b7f17a81",
+                        "source_row":  48,
+                        "post_title":  "R17",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  8000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "97d82e663910f6f8e72d8bad515c9465a191d1566a33d248fb12f23682442ccc",
+                        "source_row":  49,
+                        "post_title":  "R18",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  9000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "c208114a03dcd65f2243cad84207af873cb3360550be25a6894b9e8b9a26d749",
+                        "source_row":  50,
+                        "post_title":  "R19",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  10000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "f1dc8c5874849805729e8ec8be3efdd5dfc8fdf1617a81fd06eda11df4f5f041",
+                        "source_row":  51,
+                        "post_title":  "R20",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  11000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "6ef5e07349fc585021ef02836f8f85932278ff525af0479dae82dbd918a7651f",
+                        "source_row":  52,
+                        "post_title":  "R21",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  12000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "415302a995557942e026bfdcd31850c3eaa8ef2fb51822c96d805d9687b26d81",
+                        "source_row":  53,
+                        "post_title":  "R22",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  13000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "b463229846c5d79a4093e5575922fe6d0bad5d753160185c9e9aa12bfee85677",
+                        "source_row":  54,
+                        "post_title":  "R23",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  14000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "01dbb338840231c4f2c7909f8beb95cfa6d6d00e9283f243aee7e08dce5266af",
+                        "source_row":  55,
+                        "post_title":  "R24",
+                        "service_titles":  [
+                                               "Правка дисков"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub",
+                                    "price_value":  15000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "4609f96eac000769503e082be53d3c8e2b3add039b699fc99c620c7c2d86b66a",
+                        "source_row":  56,
+                        "post_title":  "R12",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  5000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "4cefc9f1e42c5aae435284eabd258b85046fee8defe5eb60c99f6f1f563cdfbe",
+                        "source_row":  57,
+                        "post_title":  "R13",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  5000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "0b92b36f1ba45b27342de33b86f86d0be3b876d4349f778184102fdb835591ad",
+                        "source_row":  58,
+                        "post_title":  "R14",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  5000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "013d860208921856f6b40b42c46f57c3aef60c64101cd2e1e9db179225773925",
+                        "source_row":  59,
+                        "post_title":  "R15",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  5000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "2f262ec2a5db1a724cecec373c875cb1b84adb8f6215126e4d0ed74c1d638aae",
+                        "source_row":  60,
+                        "post_title":  "R16",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  6500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "736e807016d5055c5ccd5b6977984f634796fb1da45cb30f03eca9f41467359e",
+                        "source_row":  61,
+                        "post_title":  "R17",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  9500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "c6117873ba249594f6452d42cd34012a7f76af16d964c747bf5c61051da11bb1",
+                        "source_row":  62,
+                        "post_title":  "R18",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  10500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "5ab16e8b279e2b43e1eb01482255884717a01a22789edaa9741984e07a14763b",
+                        "source_row":  63,
+                        "post_title":  "R19",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  11500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "85f6d9af6b0f6e2c1169534bcec10865ba7995d12a24cbd6ebb5b05c027cffa5",
+                        "source_row":  64,
+                        "post_title":  "R20",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  12000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "f89ca92310b4bd0f16069cd6e488f80e30e1f573145de96a382e9279cab2a6f8",
+                        "source_row":  65,
+                        "post_title":  "R21",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  13000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "1a221b7633cd1f093d2d7814e180bce855c738b05bb24620aa5fc11bb078222d",
+                        "source_row":  66,
+                        "post_title":  "R22",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  13000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "f46cf5ad16aa3c3e909d0eba056e5fe407bc9cd4cbbd5d81c4b57c07e96197cd",
+                        "source_row":  67,
+                        "post_title":  "R23",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  14000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "0eac5046c292c9bd9b21b4112bba45630299d3ce00ab636581a0f3b27e331d95",
+                        "source_row":  68,
+                        "post_title":  "R24",
+                        "service_titles":  [
+                                               "Ремонт боковых порезов"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  14000,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "7eaa1005e42e95f8d158a14fb9ec718c3d5ef1b208ac7f7f1a93152ebb597a47",
+                        "source_row":  69,
+                        "post_title":  "Снятие секреток за 1 шт",
+                        "service_titles":  [
+                                               "Снятие секреток"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_from",
+                                    "price_value":  2500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "74bbdf6505412e0686cbde79fa00f9e5976e6210f7a06e7feaa85b6f71e9cc91",
+                        "source_row":  70,
+                        "post_title":  "R12",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  800,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "09e524b9f8ec88ee63b259de76845b2c97a2fa989ba50de888f163d62e0019d0",
+                        "source_row":  71,
+                        "post_title":  "R13",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  800,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "a744a37afaaf85bb344d81c58a9af2570ac6132a93953f01333e37e06b69e4d3",
+                        "source_row":  72,
+                        "post_title":  "R14",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  800,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "4878f7a122b7f6e4b65aad94a9daf7b966bafc3a7d7fc1a57d73add303461dcd",
+                        "source_row":  73,
+                        "post_title":  "R15",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  925,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "16bc5ae218d1b2ebb98d033fed0eaa397f16ee007f292b1ecd490fd3a89c6429",
+                        "source_row":  74,
+                        "post_title":  "R16",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  1075,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "914849ae9221f9063271f984788338d69b22f20ea37297e8ef4d7319d5d07ceb",
+                        "source_row":  75,
+                        "post_title":  "R17",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  1275,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "909e382536d8250c944fe13de4e53169d063fc3d018dec459b8f2b28ed26bf44",
+                        "source_row":  76,
+                        "post_title":  "R18",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  1475,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "6e7dc171e9caf4795c6936ebeb2d93899b19246833467d8a791b96976b3b18a3",
+                        "source_row":  77,
+                        "post_title":  "R19",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  1700,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "0fa59a4b95baca81d285a844c6d2611b5c7948c5f31ba773cb11c0ffe5e40b42",
+                        "source_row":  78,
+                        "post_title":  "R20",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  1900,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "167817aa003657c3460f01a6c7584f92886173edf13bbefae97285cc36df9159",
+                        "source_row":  79,
+                        "post_title":  "R21",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  2050,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "67002d3fd057236b7b1a4e4f5dcc6a421f6baba165990ad9c31ef79d8f618f5e",
+                        "source_row":  80,
+                        "post_title":  "R22",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  2250,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "a69d9b9f38d5bce46614e3decc9abacfbf20bef81af4160da304298c6bcf7a38",
+                        "source_row":  81,
+                        "post_title":  "R23",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  2500,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    },
+                    {
+                        "source_key":  "62b82a6c8c3ab5184045fd2630bf3233bab99d05fff39cc6d6b143faff0ea064",
+                        "source_row":  82,
+                        "post_title":  "R24",
+                        "service_titles":  [
+                                               "Шиномонтажные работы"
+                                           ],
+                        "acf":  {
+                                    "price_type":  "value",
+                                    "price_additional":  0,
+                                    "price_display_type":  "rub_per_item",
+                                    "price_value":  2800,
+                                    "price_rows":  [
+
+                                                   ]
+                                }
+                    }
+                ]
+}

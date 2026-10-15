@@ -32,7 +32,7 @@
   },
   {
     "key": "group_landing_front_page_flexible",
-    "title": "Лендинг: блоки главной",
+    "title": "Блоки страниц и услуг",
     "fields": [
       {
         "key": "field_landing_blocks",
@@ -54,6 +54,26 @@
             "label": "Первый экран",
             "display": "block",
             "sub_fields": [
+              {
+                "key": "field_landing_hero_variant",
+                "label": "Вариант первого экрана",
+                "name": "hero_variant",
+                "type": "select",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "choices": {
+                  "home": "Главная: заголовок с 24/7 и рейтинг",
+                  "service": "Услуга: обычный заголовок и пояснение"
+                },
+                "default_value": "home",
+                "return_format": "value",
+                "ui": 1
+              },
               {
                 "key": "field_landing_hero_eyebrow",
                 "label": "Надпись над заголовком",
@@ -95,6 +115,36 @@
                   "id": ""
                 },
                 "default_value": "Приедем и починим на месте."
+              },
+              {
+                "key": "field_landing_hero_button",
+                "label": "Текст кнопки",
+                "name": "hero_button",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Рассчитать стоимость"
+              },
+              {
+                "key": "field_landing_hero_note",
+                "label": "Пояснение под кнопкой (вариант услуги)",
+                "name": "hero_note",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "",
+                "rows": 3,
+                "new_lines": ""
               },
               {
                 "key": "field_landing_hero_benefits",
@@ -476,6 +526,228 @@
             "min": "",
             "max": ""
           },
+          "layout_landing_columns_list": {
+            "key": "layout_landing_columns_list",
+            "name": "columns_list",
+            "label": "Колонки со списками",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_landing_columns_eyebrow",
+                "label": "Надпись над заголовком",
+                "name": "columns_eyebrow",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "ПЕРЕД ОБСЛУЖИВАНИЕМ"
+              },
+              {
+                "key": "field_landing_columns_title",
+                "label": "Заголовок",
+                "name": "columns_title",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": ""
+              },
+              {
+                "key": "field_landing_columns_description",
+                "label": "Описание",
+                "name": "columns_description",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "",
+                "rows": 3,
+                "new_lines": ""
+              },
+              {
+                "key": "field_landing_columns_items",
+                "label": "Колонки",
+                "name": "columns_items",
+                "type": "repeater",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "layout": "block",
+                "button_label": "Добавить",
+                "min": 0,
+                "max": 2,
+                "sub_fields": [
+                  {
+                    "key": "field_landing_columns_items_title",
+                    "label": "Заголовок колонки",
+                    "name": "title",
+                    "type": "text",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "default_value": ""
+                  },
+                  {
+                    "key": "field_landing_columns_items_items",
+                    "label": "Пункты списка",
+                    "name": "items",
+                    "type": "repeater",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "layout": "block",
+                    "button_label": "Добавить",
+                    "min": 0,
+                    "max": 0,
+                    "sub_fields": [
+                      {
+                        "key": "field_landing_columns_items_items_text",
+                        "label": "Текст пункта",
+                        "name": "text",
+                        "type": "textarea",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                          "width": "",
+                          "class": "",
+                          "id": ""
+                        },
+                        "default_value": "",
+                        "rows": 3,
+                        "new_lines": ""
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "key": "field_landing_columns_note",
+                "label": "Пояснение перед кнопкой",
+                "name": "columns_note",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "",
+                "rows": 3,
+                "new_lines": ""
+              },
+              {
+                "key": "field_landing_columns_button",
+                "label": "Текст кнопки",
+                "name": "columns_button",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "Вызвать мастера"
+              }
+            ],
+            "min": "",
+            "max": ""
+          },
+          "layout_landing_price_table": {
+            "key": "layout_landing_price_table",
+            "name": "price_table",
+            "label": "Таблица цен",
+            "display": "block",
+            "sub_fields": [
+              {
+                "key": "field_landing_pricing_eyebrow",
+                "label": "Надпись над заголовком",
+                "name": "pricing_eyebrow",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "УСЛУГА И СТОИМОСТЬ"
+              },
+              {
+                "key": "field_landing_pricing_title",
+                "label": "Заголовок",
+                "name": "pricing_title",
+                "type": "text",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": ""
+              },
+              {
+                "key": "field_landing_pricing_description",
+                "label": "Описание",
+                "name": "pricing_description",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "",
+                "rows": 3,
+                "new_lines": ""
+              },
+              {
+                "key": "field_landing_pricing_group_note",
+                "label": "Пояснение под доплатами",
+                "name": "pricing_group_note",
+                "type": "textarea",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+                },
+                "default_value": "",
+                "rows": 3,
+                "new_lines": ""
+              }
+            ],
+            "min": "",
+            "max": ""
+          },
           "layout_landing_cards_grid": {
             "key": "layout_landing_cards_grid",
             "name": "cards_grid",
@@ -652,6 +924,20 @@
                     "return_format": "id",
                     "preview_size": "medium",
                     "library": "all"
+                  },
+                  {
+                    "key": "field_landing_media_items_placeholder",
+                    "label": "Подпись заглушки, если фото пока нет",
+                    "name": "placeholder",
+                    "type": "text",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                      "width": "",
+                      "class": "",
+                      "id": ""
+                    },
+                    "default_value": ""
                   },
                   {
                     "key": "field_landing_media_items_points",
@@ -1093,7 +1379,7 @@
                   "class": "",
                   "id": ""
                 },
-                "default_value": "Калькулятор покажет предварительную стоимость и время приезда.",
+                "default_value": "Оператор уточнит детали и согласует стоимость работ и время приезда.",
                 "rows": 3,
                 "new_lines": ""
               }
@@ -1132,14 +1418,36 @@
           "id": ""
         },
         "default_value": ""
+      },
+      {
+        "key": "field_landing_calculator_service",
+        "label": "Слаг услуги для калькулятора",
+        "name": "calculator_service",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "instructions": "Необязательное поле обычных страниц. На записи services автоматически используется её слаг."
       }
     ],
     "location": [
       [
         {
-          "param": "page_type",
+          "param": "post_type",
           "operator": "==",
-          "value": "front_page"
+          "value": "page"
+        }
+      ],
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "services"
         }
       ]
     ],
@@ -1152,7 +1460,7 @@
     "active": true,
     "show_in_rest": 0,
     "description": "Порядок блоков задаётся гибким содержимым. Хедер и футер управляются отдельно.",
-    "modified": 1790953739
+    "modified": 1792048105
   },
   {
     "key": "group_landing_review_service",
@@ -1318,6 +1626,6 @@
     "hide_on_screen": "",
     "active": true,
     "show_in_rest": 1,
-    "modified": 1790953739
+    "modified": 1792048105
   }
 ]

@@ -125,6 +125,18 @@ module.exports = (_, argv) => {
         filename: 'css/[name].[contenthash:8].css',
       }),
       new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'src/pages/puncture.pug'),
+        filename: 'puncture.html',
+        templateParameters: {
+          yandexMapsUrl: getYandexMapsUrl(),
+          hasYandexSuggestApiKey: hasYandexSuggestApiKey(),
+          openRouteServiceApiKey: getOpenRouteServiceApiKey(),
+        },
+        chunks: ['main'],
+        inject: 'body',
+        scriptLoading: 'defer',
+      }),
+      new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'src/pages/conditioner.pug'),
         filename: 'conditioner.html',
         templateParameters: {

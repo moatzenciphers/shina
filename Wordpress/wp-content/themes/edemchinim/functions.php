@@ -107,6 +107,7 @@ function edemchinim_setup()
 add_action('after_setup_theme', 'edemchinim_setup');
 
 require_once get_template_directory() . '/inc/service-display.php';
+require_once get_template_directory() . '/inc/components.php';
 require_once get_template_directory() . '/inc/class-site-nav-walker.php';
 require_once get_template_directory() . '/inc/class-site-footer-walker.php';
 
@@ -952,7 +953,15 @@ function edemchinim_calculator_url()
     static $url = null;
     if ($url !== null) return $url;
     $pages = get_posts(array('post_type' => 'page', 'post_status' => 'publish', 'posts_per_page' => 1, 'meta_key' => '_wp_page_template', 'meta_value' => 'page-calculator.php'));
-    return $url = $pages ? get_permalink($pages[0]) : home_url('/calculator/');
+    $url = $pages ? get_permalink($pages[0]) : home_url('/calculator/');
+    $service = is_singular('services') ? get_post_field('post_name', get_queried_object_id()) : '';
+    if (! $service && function_exists('get_field') && is_page()) {
+        $service = get_field('calculator_service', get_queried_object_id());
+    }
+    if (is_string($service) && trim($service) !== '') {
+        $url = add_query_arg('service', $service, $url);
+    }
+    return $url;
 }
 
 /**

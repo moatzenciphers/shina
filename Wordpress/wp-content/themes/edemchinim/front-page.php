@@ -2,31 +2,8 @@
 /**
  * Flexible content landing page.
  *
- * The theme header opens the landing wrapper and renders its navigation.
+ * Uses the same flexible renderer as ordinary pages and services.
  *
  * @package edemchinim
  */
-get_header();
-require_once get_template_directory() . '/inc/landing.php';
-$landing_layouts = array(
-	'hero', 'features_grid', 'steps_grid', 'cards_grid', 'media_rows',
-	'slider_grid', 'map_panel', 'gallery_grid', 'accordion_grid', 'split_form',
-);
-?>
-<main class="landing__main">
-	<?php if (function_exists('have_rows') && have_rows('blocks', get_queried_object_id())) : ?>
-		<?php while (have_rows('blocks', get_queried_object_id())) : the_row(); ?>
-			<?php
-			$layout = get_row_layout();
-			if (in_array($layout, $landing_layouts, true)) {
-				get_template_part('template-parts/landing-' . str_replace('_', '-', $layout));
-			}
-			?>
-		<?php endwhile; ?>
-	<?php endif; ?>
-</main>
-<?php get_template_part('template-parts/landing-mobile-actions'); ?>
-</div>
-<?php
-get_template_part('template-parts/landing-quick-call');
-get_footer();
+require get_template_directory() . '/page.php';

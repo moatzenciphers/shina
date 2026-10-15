@@ -1,5 +1,37 @@
 <?php
-$posts = get_posts(array('post_type' => 'services', 'post_status' => 'publish', 'posts_per_page' => -1, 'orderby' => 'menu_order title', 'order' => 'ASC'));
+$selected_services = edemchinim_landing_sub('services_posts');
+$selected_ids = array();
+
+foreach ((array) $selected_services as $selected_service) {
+    $id = $selected_service instanceof WP_Post
+        ? $selected_service->ID
+        : absint($selected_service);
+
+    if ($id) {
+        $selected_ids[] = $id;
+    }
+}
+
+$args = array(
+    'post_type'   => 'services',
+    'post_status' => 'publish',
+);
+
+if ($selected_ids) {
+    // Выводим выбранные услуги в порядке из админки.
+    $args['post__in'] = $selected_ids;
+    $args['orderby'] = 'post__in';
+    $args['posts_per_page'] = -1;
+} else {
+    // Если ничего не выбрано — выводим последние опубликованные.
+    $count = absint(edemchinim_landing_sub('services_count'));
+
+    $args['posts_per_page'] = $count ?: -1;
+    $args['orderby'] = 'date';
+    $args['order'] = 'DESC';
+}
+
+$posts = get_posts($args);
 $archive = get_post_type_archive_link('services');
 $filters = array('popular' => 'Популярные');
 $service_terms = array();
@@ -38,7 +70,7 @@ $filters['all'] = 'Все услуги';
         <article class="cards-grid__item" id="service-<?php echo esc_attr($service->post_name); ?>" data-service-card data-service-terms="<?php echo esc_attr(implode(' ', $service_terms[$service->ID])); ?>">
             <div class="cards-grid__card-heading">
                 <?php echo edemchinim_service_icon($service->ID, 'cards-grid__icon'); ?>
-                <a class="cards-grid__link landing-subtitle" href="<?php echo esc_url(get_permalink($service)); ?>"><?php echo esc_html(get_the_title($service)); ?></a>
+                <span class="cards-grid__link landing-subtitle" data-href="<?php echo esc_url(get_permalink($service)); ?>"><?php echo esc_html(get_the_title($service)); ?></span>
             </div>
             <?php if ($description) : ?><p class="cards-grid__description"><?php echo esc_html($description); ?></p><?php endif; ?>
             <div class="cards-grid__bottom">
@@ -55,6 +87,6 @@ $filters['all'] = 'Все услуги';
     <?php endif; ?>
     <footer class="cards-grid__footer">
         <p class="cards-grid__footer-text landing-text"><?php echo esc_html(edemchinim_landing_sub('services_footer')); ?></p>
-        <?php if ($archive) : ?><a class="cards-grid__all-link landing-more-link" href="<?php echo esc_url($archive); ?>">Посмотреть все услуги<?php edemchinim_landing_arrow(); ?></a><?php endif; ?>
+        <?php if ($archive) : ?><span class="cards-grid__all-link landing-more-link" data-href="<?php echo esc_url($archive); ?>">Посмотреть все услуги<?php edemchinim_landing_arrow(); ?></span><?php endif; ?>
     </footer>
 </section>

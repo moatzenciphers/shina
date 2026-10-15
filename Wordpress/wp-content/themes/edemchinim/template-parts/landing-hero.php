@@ -1,5 +1,6 @@
 <?php
 /** Informative first screen with an editable review caption. */
+$service_variant = edemchinim_landing_sub('hero_variant', is_singular('services') ? 'service' : 'home') === 'service';
 $image_id = edemchinim_landing_image_id(edemchinim_landing_sub('hero_background'));
 $mobile_image_id = edemchinim_landing_image_id(edemchinim_landing_sub('hero_background_mobile'));
 $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'full') : '';
@@ -29,13 +30,18 @@ if (! $benefits) {
 }
 $benefits = array_slice($benefits, 0, 3);
 ?>
-<section class="landing-hero" aria-labelledby="landing-hero-title">
+<section class="landing-hero<?php echo $service_variant ? ' landing-hero--service' : ''; ?>" aria-labelledby="landing-hero-title">
     <picture class="landing-hero__picture" aria-hidden="true">
         <?php if ($mobile_image_url) : ?><source media="(max-width: 850px)" srcset="<?php echo esc_url($mobile_image_url); ?>"><?php endif; ?>
         <img src="<?php echo esc_url($image_url); ?>" alt="" decoding="async" fetchpriority="high">
     </picture>
     <div class="landing-hero__inner">
         <div class="landing-hero__content" id="top">
+            <?php if ($service_variant) : ?>
+                <?php if (edemchinim_landing_sub('hero_eyebrow')) : ?><p class="landing-eyebrow"><?php echo esc_html(edemchinim_landing_sub('hero_eyebrow')); ?></p><?php endif; ?>
+                <h1 class="landing-title landing-title--hero" id="landing-hero-title"><?php echo nl2br(esc_html(edemchinim_landing_sub('hero_title', get_the_title(get_queried_object_id())))); ?></h1>
+                <p class="landing-text landing-text--hero"><?php echo esc_html(edemchinim_landing_sub('hero_offer')); ?></p>
+            <?php else : ?>
             <a class="landing-hero__rating" href="#reviews" aria-label="<?php echo esc_attr(sprintf('Наш рейтинг %s из 5. Отзывы клиентов', number_format($rating, 1, ',', ''))); ?>">
                 <span class="landing-hero__rating-label">НАШ РЕЙТИНГ</span>
                 <span class="landing-hero__rating-row">
@@ -50,6 +56,7 @@ $benefits = array_slice($benefits, 0, 3);
             </a>
             <h1 class="landing-hero__title" id="landing-hero-title"><span class="landing-hero__title-first"><?php echo esc_html($title_lines[0]); ?></span><span class="landing-hero__title-second"><?php echo esc_html($title_lines[1] ?? 'ШИНОМОНТАЖ'); ?></span><span class="landing-hero__hours" aria-label="24/7"><span aria-hidden="true">24/7</span></span></h1>
             <p class="landing-hero__lead"><?php echo esc_html(edemchinim_landing_sub('hero_offer', 'Приедем и починим на месте.')); ?></p>
+            <?php endif; ?>
             <ul class="landing-hero__benefits">
                 <?php foreach ($benefits as $index => $benefit) :
                     $icon = edemchinim_sanitize_icon($benefit['icon'] ?? '');
@@ -57,16 +64,20 @@ $benefits = array_slice($benefits, 0, 3);
                         $icon = '<svg viewBox="0 0 24 24" fill="none"><path d="' . esc_attr($default_benefits[$index][2]) . '" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
                     }
                 ?>
-                    <li><span class="landing-hero__benefit-icon" aria-hidden="true"><?php echo $icon; ?></span><div><strong><?php echo esc_html($benefit['title'] ?? ''); ?></strong><span><?php echo esc_html($benefit['text'] ?? ''); ?></span></div></li>
+                    <li><?php if (! $service_variant) : ?><span class="landing-hero__benefit-icon" aria-hidden="true"><?php echo $icon; ?></span><?php endif; ?><div><strong><?php echo esc_html($benefit['title'] ?? ''); ?></strong><span><?php echo esc_html($benefit['text'] ?? ''); ?></span></div></li>
                 <?php endforeach; ?>
             </ul>
             <div class="landing-hero__visual-space" aria-hidden="true"></div>
-            <a class="landing-hero__cta landing-cta" href="<?php echo esc_url(edemchinim_calculator_url()); ?>" data-open-calculator><span>Рассчитать стоимость</span><?php edemchinim_landing_arrow(); ?></a>
+            <a class="landing-hero__cta landing-cta" href="<?php echo esc_url(edemchinim_calculator_url()); ?>" data-open-calculator><span><?php echo esc_html(edemchinim_landing_sub('hero_button', 'Рассчитать стоимость')); ?></span><?php edemchinim_landing_arrow(); ?></a>
+            <?php if ($service_variant) : ?>
+                <?php if (edemchinim_landing_sub('hero_note')) : ?><p class="service-page__price-note landing-text"><?php echo esc_html(edemchinim_landing_sub('hero_note')); ?></p><?php endif; ?>
+            <?php else : ?>
             <div class="landing-hero__prices" aria-label="Стоимость выезда">
                 <?php foreach ($prices as $price) : ?>
                     <div class="landing-hero__price"><span><?php echo esc_html($price['label'] ?? ''); ?></span><strong><?php echo esc_html($price['price'] ?? ''); ?></strong></div>
                 <?php endforeach; ?>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>

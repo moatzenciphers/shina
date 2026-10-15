@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#10151b"/>
+  <g stroke="#ff9f1a" stroke-width="4" opacity=".32">
+    <circle cx="1160" cy="420" r="120"/><circle cx="1160" cy="420" r="70"/>
+    <path d="M1160 350v140m-70-70h140m-120-50 100 100m-100 0 100-100"/>
+  </g>
+  <g fill="#fff" opacity=".6" font-family="Arial, sans-serif" text-anchor="middle">
+    <text x="1160" y="610" font-size="32">Фото ремонта прокола</text>
+    <text x="1160" y="660" font-size="24">Заглушка</text>
+  </g>
+</svg>

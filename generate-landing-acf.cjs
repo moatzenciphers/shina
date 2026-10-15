@@ -32,8 +32,14 @@ const heading = (prefix, eyebrow, title) => [
 ];
 const layouts = [
   layout('hero', 'Первый экран', [
+    field('hero_variant', 'Вариант первого экрана', 'select', {
+      choices: { home: 'Главная: заголовок с 24/7 и рейтинг', service: 'Услуга: обычный заголовок и пояснение' },
+      default_value: 'home', return_format: 'value', ui: 1,
+    }),
     ...heading('hero', '', 'ВЫЕЗДНОЙ ШИНОМОНТАЖ 24/7'),
     text('hero_offer', 'Короткий оффер', 'Приедем и починим на месте.'),
+    text('hero_button', 'Текст кнопки', 'Рассчитать стоимость'),
+    area('hero_note', 'Пояснение под кнопкой (вариант услуги)'),
     repeater('hero_benefits', 'Преимущества первого экрана', [text('title', 'Основной текст'), text('text', 'Подпись'), field('icon', 'SVG-код иконки', 'text', { instructions: 'Полный SVG-код с цветом currentColor. Если оставить пустым, используется стандартная иконка.' })], 3),
     image('hero_background', 'Фоновое изображение'),
     image('hero_background_mobile', 'Фоновое изображение для мобильных устройств'),
@@ -51,6 +57,21 @@ const layouts = [
     repeater('steps_items', 'Шаги', [text('title', 'Название'), area('text', 'Описание')], 4),
     text('steps_button', 'Текст кнопки', 'Рассчитать стоимость'),
   ]),
+  layout('columns_list', 'Колонки со списками', [
+    ...heading('columns', 'ПЕРЕД ОБСЛУЖИВАНИЕМ', ''),
+    area('columns_description', 'Описание'),
+    repeater('columns_items', 'Колонки', [
+      text('title', 'Заголовок колонки'),
+      repeater('items', 'Пункты списка', [area('text', 'Текст пункта')]),
+    ], 2),
+    area('columns_note', 'Пояснение перед кнопкой'),
+    text('columns_button', 'Текст кнопки', 'Вызвать мастера'),
+  ]),
+  layout('price_table', 'Таблица цен', [
+    ...heading('pricing', 'УСЛУГА И СТОИМОСТЬ', ''),
+    area('pricing_description', 'Описание'),
+    area('pricing_group_note', 'Пояснение под доплатами'),
+  ]),
   layout('cards_grid', 'Услуги и цены', [
     ...heading('services', 'УСЛУГИ И ЦЕНЫ', 'Выездной шиномонтаж и помощь на дороге'),
     area('services_intro', 'Вводный текст', 'Ориентировочные цены указаны «от». Точная стоимость зависит от автомобиля, объёма работ, адреса и времени выезда.'),
@@ -62,6 +83,7 @@ const layouts = [
     ...heading('media', 'ПОЧЕМУ НАМ МОЖНО ДОВЕРЯТЬ', 'Отвечаем за работу и заранее объясняем стоимость'),
     repeater('media_items', 'Ряды', [
       image('image', 'Изображение'),
+      text('placeholder', 'Подпись заглушки, если фото пока нет'),
       repeater('points', 'Пункты', [text('title', 'Заголовок'), area('text', 'Описание')], 3),
     ], 2),
   ]),
@@ -98,7 +120,7 @@ const layouts = [
     ...heading('help', 'НУЖНА ПОМОЩЬ?', 'Не знаете, какая услуга нужна?'),
     area('help_lead', 'Описание', 'Опишите, что произошло. Оператор разберётся в ситуации, уточнит детали и перезвонит в течение 2 минут.'),
     text('help_form_shortcode', 'Шорткод CF7 формы помощи'),
-    area('help_note', 'Пояснение под формой', 'Калькулятор покажет предварительную стоимость и время приезда.'),
+    area('help_note', 'Пояснение под формой', 'Оператор уточнит детали и согласует стоимость работ и время приезда.'),
   ]),
 ];
 
@@ -107,15 +129,21 @@ const groups = [
     field('reviews_count_text', 'Подпись количества отзывов', 'text', { default_value: 'Отзывы клиентов', instructions: 'Готовый текст для первого экрана и блока отзывов. Например: Более 2000 отзывов. Количество автоматически не подсчитывается.' }),
   ], location: [[{ param: 'options_page', operator: '==', value: 'main-option' }]], active: true },
   {
-    key: 'group_landing_front_page_flexible', title: 'Лендинг: блоки главной',
+    key: 'group_landing_front_page_flexible', title: 'Блоки страниц и услуг',
     fields: [
       field('blocks', 'Блоки страницы', 'flexible_content', {
         button_label: 'Добавить блок', layouts: Object.fromEntries(layouts.map((item) => [item.key, item])), min: 0, max: 0,
       }),
       text('quick_call_shortcode', 'Шорткод CF7 быстрого вызова'),
       text('calculator_form_shortcode', 'Шорткод CF7 подтверждения калькулятора'),
+      field('calculator_service', 'Слаг услуги для калькулятора', 'text', {
+        default_value: '', instructions: 'Необязательное поле обычных страниц. На записи services автоматически используется её слаг.',
+      }),
     ],
-    location: [[{ param: 'page_type', operator: '==', value: 'front_page' }]],
+    location: [
+      [{ param: 'post_type', operator: '==', value: 'page' }],
+      [{ param: 'post_type', operator: '==', value: 'services' }],
+    ],
     menu_order: 0, position: 'normal', style: 'default', label_placement: 'top',
     instruction_placement: 'label', hide_on_screen: '', active: true, show_in_rest: 0,
     description: 'Порядок блоков задаётся гибким содержимым. Хедер и футер управляются отдельно.',
@@ -141,6 +169,16 @@ const groups = [
   },
 ];
 
-require('fs').writeFileSync(require('path').join(__dirname, 'Wordpress/wp-content/themes/edemchinim/inc/acf-review-fields.json'), JSON.stringify(groups.find(group => group.key === 'group_landing_review_service'), null, 2) + '\n');
-require('fs').writeFileSync(require('path').join(__dirname, 'Wordpress/wp-content/themes/edemchinim/inc/acf-review-caption.json'), JSON.stringify(groups.find(group => group.key === 'group_landing_review_caption'), null, 2) + '\n');
-process.stdout.write(`${JSON.stringify(groups, null, 2)}\n`);
+const writeIfChanged = (filename, content) => {
+  const fs = require('fs');
+  const target = require('path').join(__dirname, filename);
+  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8').replace(/\r\n/g, '\n') !== content) fs.writeFileSync(target, content);
+};
+writeIfChanged('Wordpress/wp-content/themes/edemchinim/inc/acf-review-fields.json', JSON.stringify(groups.find(group => group.key === 'group_landing_review_service'), null, 2) + '\n');
+writeIfChanged('Wordpress/wp-content/themes/edemchinim/inc/acf-review-caption.json', JSON.stringify(groups.find(group => group.key === 'group_landing_review_caption'), null, 2) + '\n');
+const output = `${JSON.stringify(groups, null, 2)}\n`;
+if (process.argv.includes('--write')) {
+  require('fs').writeFileSync(require('path').join(__dirname, 'acf-landing-import.json'), output);
+} else {
+  process.stdout.write(output);
+}

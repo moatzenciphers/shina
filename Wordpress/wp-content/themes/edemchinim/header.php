@@ -34,6 +34,3 @@
         <?php get_template_part('template-parts/site-header'); ?>
     </div>
     <?php endif; ?>
-    <?php if (is_front_page()) : ?>
-        <div class="landing landing--wp-header" data-landing>
-    <?php endif; ?>

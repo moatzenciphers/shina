@@ -12,6 +12,11 @@
  * @package edemchinim
  */
 
+if (function_exists('get_field') && get_field('blocks', get_queried_object_id())) {
+	get_template_part('template-parts/components');
+	return;
+}
+
 get_header();
 ?>
 

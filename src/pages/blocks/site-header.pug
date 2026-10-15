@@ -38,7 +38,7 @@ div.site-header-shell(data-site-header-root)
                 ul.landing-hero__subsubmenu.header-services__list
                   each service in group.items
                     li.header-services__item
-                      a.header-services__link(href="./calculator.html", data-open-calculator)
+                      a.header-services__link(href=service === 'Ремонт проколов' ? './puncture.html' : './calculator.html', data-open-calculator=service === 'Ремонт проколов' ? null : true)
                         svg.header-services__icon(viewBox="0 0 24 24", fill="none", aria-hidden="true")
                           path(d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z M12 4v16 M4 12h16 M6.3 6.3l11.4 11.4 M6.3 17.7 17.7 6.3", stroke="currentColor", stroke-width="1.6", stroke-linecap="round", stroke-linejoin="round")
                         span= service

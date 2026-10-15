@@ -4,7 +4,9 @@
 	<div class="media-rows__items">
 		<?php foreach ($rows as $row) : $image_id = edemchinim_landing_image_id($row['image'] ?? 0); ?>
 		<div class="media-rows__row">
-			<?php if ($image_id) : echo wp_get_attachment_image($image_id, 'large', false, array('class' => 'media-rows__image', 'loading' => 'lazy')); endif; ?>
+			<?php if ($image_id) : echo wp_get_attachment_image($image_id, 'large', false, array('class' => 'media-rows__image', 'loading' => 'lazy')); else : ?>
+			<div class="media-rows__image service-photo-placeholder" role="img" aria-label="<?php echo esc_attr(($row['placeholder'] ?? 'Фотография работ') . ' — заглушка'); ?>"><span><?php echo esc_html(($row['placeholder'] ?? 'Фотография работ') . ' — заглушка'); ?></span></div>
+			<?php endif; ?>
 			<ul class="media-rows__list">
 				<?php foreach (($row['points'] ?? array()) as $point) : ?>
 				<li class="media-rows__point"><h3 class="media-rows__point-title landing-subtitle"><?php echo esc_html($point['title'] ?? ''); ?></h3><p class="media-rows__point-text landing-text"><?php echo esc_html($point['text'] ?? ''); ?></p></li>

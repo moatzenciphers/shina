@@ -43,15 +43,13 @@
 .columns-list__item {
   padding: 20px 0;
 }
+.columns-list__item:first-child {
+  padding-top: 0 !important;
+}
 
 .columns-list__item + .columns-list__item {
   border-top: 1px solid var(--landing-divider);
 }
-
-.columns-list__item .landing-text {
-  max-width: 30ch;
-}
-
 .columns-list__item:last-child {
   padding-bottom: 0;
 }

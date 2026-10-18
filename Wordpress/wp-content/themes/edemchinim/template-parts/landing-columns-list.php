@@ -1,8 +1,13 @@
-<?php $columns = edemchinim_landing_sub('columns_items', array()); ?>
+<?php
+$columns = edemchinim_landing_sub('columns_items', array());
+$description = edemchinim_landing_sub('columns_description');
+$note = edemchinim_landing_sub('columns_note');
+$button = edemchinim_landing_sub('columns_button');
+?>
 <section class="columns-list landing-section" aria-labelledby="columns-list-title">
 	<header class="columns-list__header">
 		<?php edemchinim_landing_heading('columns', 'columns-list'); ?>
-		<p class="columns-list__description landing-text"><?php echo esc_html(edemchinim_landing_sub('columns_description')); ?></p>
+		<?php if ($description) : ?><p class="columns-list__description landing-text"><?php echo esc_html($description); ?></p><?php endif; ?>
 	</header>
 	<div class="columns-list__columns">
 		<?php foreach ($columns as $column) : ?>
@@ -16,8 +21,10 @@
 		</div>
 		<?php endforeach; ?>
 	</div>
+	<?php if ($note || $button) : ?>
 	<div class="columns-list__footer">
-		<p class="columns-list__note landing-text"><?php echo esc_html(edemchinim_landing_sub('columns_note')); ?></p>
-		<button class="columns-list__cta landing-cta" type="button" data-open-calculator><span><?php echo esc_html(edemchinim_landing_sub('columns_button', 'Вызвать мастера')); ?></span><?php edemchinim_landing_arrow(); ?></button>
+		<?php if ($note) : ?><p class="columns-list__note landing-text"><?php echo esc_html($note); ?></p><?php endif; ?>
+		<?php if ($button) : ?><button class="columns-list__cta landing-cta" type="button" data-open-calculator><span><?php echo esc_html($button); ?></span><?php edemchinim_landing_arrow(); ?></button><?php endif; ?>
 	</div>
+	<?php endif; ?>
 </section>

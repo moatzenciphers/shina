@@ -1,4 +1,4 @@
-<?php $shortcode = function_exists('get_field') ? get_field('quick_call_shortcode', get_queried_object_id()) : ''; ?>
+<?php $shortcode = function_exists('get_field') ? get_field('quick_call_shortcode', $args['settings_id'] ?? get_queried_object_id()) : ''; ?>
 <?php if ($shortcode) : ?>
 <div class="quick-call-backdrop" data-quick-call-dialog hidden>
 	<div class="quick-call-dialog" id="quick-call-dialog" role="dialog" aria-modal="true" aria-labelledby="quick-call-title" aria-describedby="quick-call-description">

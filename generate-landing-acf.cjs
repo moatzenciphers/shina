@@ -125,6 +125,18 @@ const layouts = [
 ];
 
 const groups = [
+  {
+    key: 'group_services_catalog', title: 'Каталог услуг: заголовок',
+    fields: [
+      text('catalog_title', 'Заголовок H1', 'Все услуги'),
+      area('catalog_intro', 'Вводный текст', 'Выездной шиномонтаж и техпомощь в Москве и Московской области. Выберите услугу, чтобы узнать условия обслуживания и посмотреть подробный прайс.'),
+    ],
+    location: [
+      [{ param: 'options_page', operator: '==', value: 'services-archive' }],
+      [{ param: 'page_template', operator: '==', value: 'page-services.php' }],
+    ],
+    active: true,
+  },
   { key: 'group_landing_review_caption', title: 'Лендинг: подпись отзывов', fields: [
     field('reviews_count_text', 'Подпись количества отзывов', 'text', { default_value: 'Отзывы клиентов', instructions: 'Готовый текст для первого экрана и блока отзывов. Например: Более 2000 отзывов. Количество автоматически не подсчитывается.' }),
   ], location: [[{ param: 'options_page', operator: '==', value: 'main-option' }]], active: true },
@@ -143,6 +155,7 @@ const groups = [
     location: [
       [{ param: 'post_type', operator: '==', value: 'page' }],
       [{ param: 'post_type', operator: '==', value: 'services' }],
+      [{ param: 'options_page', operator: '==', value: 'services-archive' }],
     ],
     menu_order: 0, position: 'normal', style: 'default', label_placement: 'top',
     instruction_placement: 'label', hide_on_screen: '', active: true, show_in_rest: 0,

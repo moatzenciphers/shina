@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#10151b"/>
+  <g stroke="#ff9f1a" stroke-width="4" opacity=".32">
+    <path d="M1000 280v260m320-260v260m-320-30h320m-320-110h320"/>
+    <rect x="1020" y="300" width="120" height="90" rx="20"/>
+    <rect x="1180" y="300" width="120" height="90" rx="20"/>
+    <rect x="1020" y="410" width="120" height="90" rx="20"/>
+    <rect x="1180" y="410" width="120" height="90" rx="20"/>
+  </g>
+  <g fill="#fff" opacity=".6" font-family="Arial, sans-serif" text-anchor="middle">
+    <text x="1160" y="610" font-size="32">Фото хранения сезонных шин</text>
+    <text x="1160" y="660" font-size="24">Заглушка</text>
+  </g>
+</svg>

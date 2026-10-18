@@ -20,6 +20,6 @@ section.steps-grid.landing-section#process(aria-labelledby="steps-grid-title")
           p.steps-grid__item-text.landing-text= step.text
   div.steps-grid__footer
     button.steps-grid__cta.landing-cta(type="button", data-open-calculator)
-      span Рассчитать стоимость
+      span= (block && block.button) || 'Рассчитать стоимость'
       svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
         path(d="M5 16h21m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="square")

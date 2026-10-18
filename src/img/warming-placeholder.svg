@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#10151b"/>
+  <g stroke="#ff9f1a" stroke-width="4" opacity=".32">
+    <path d="M1030 440h260l-25-65h-200l-35 65v55h260v-55m-210-90c-30-25 25-35 0-60m80 60c-30-25 25-35 0-60m80 60c-30-25 25-35 0-60"/>
+    <circle cx="1090" cy="505" r="20"/><circle cx="1230" cy="505" r="20"/>
+  </g>
+  <g fill="#fff" opacity=".6" font-family="Arial, sans-serif" text-anchor="middle">
+    <text x="1160" y="610" font-size="32">Фото отогрева автомобиля</text>
+    <text x="1160" y="660" font-size="24">Заглушка</text>
+  </g>
+</svg>

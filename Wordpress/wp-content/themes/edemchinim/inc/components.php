@@ -129,6 +129,44 @@ function edemchinim_landing_price_table($posts, $caption, $additional = false)
 	echo '</tbody></table>';
 }
 
+/** The first primary price in services_prices is the card's base tariff. */
+function edemchinim_service_catalog_price($service_id)
+{
+	foreach (edemchinim_landing_price_posts($service_id) as $price) {
+		if (edemchinim_get_field('price_additional', $price->ID, false)) continue;
+		$format = edemchinim_get_field('price_display_type', $price->ID, 'rub');
+		if ($format === 'percent') continue;
+		if (edemchinim_get_field('price_type', $price->ID, 'value') === 'table') {
+			$values = array();
+			foreach ((array) edemchinim_get_field('price_rows', $price->ID, array()) as $row) {
+				if (isset($row['value']) && is_numeric($row['value'])) $values[] = (float) $row['value'];
+			}
+			if ($values) return edemchinim_landing_price_text(min($values), $format === 'rub_per_item' ? $format : 'rub_from');
+		} else {
+			$value = edemchinim_get_field('price_value', $price->ID, null);
+			if (is_numeric($value)) return edemchinim_landing_price_text($value, $format);
+		}
+	}
+	$value = edemchinim_get_field('service_price_from', $service_id, null);
+	return is_numeric($value) ? edemchinim_landing_price_text($value, 'rub_from') : '';
+}
+
+/** Reuse the existing flexible field for content below the services archive. */
+function edemchinim_services_archive_options()
+{
+	if (! function_exists('acf_add_options_sub_page')) return;
+	acf_add_options_sub_page(array(
+		'page_title' => 'Каталог услуг',
+		'menu_title' => 'Настройки каталога',
+		'menu_slug' => 'services-archive',
+		'parent_slug' => 'edit.php?post_type=services',
+		'post_id' => 'services-archive',
+		'capability' => 'manage_options',
+		'redirect' => false,
+	));
+}
+add_action('acf/init', 'edemchinim_services_archive_options');
+
 function edemchinim_render_landing_blocks($post_id)
 {
 	if (! function_exists('have_rows')) return;

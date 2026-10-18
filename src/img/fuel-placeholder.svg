@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#10151b"/>
+  <g stroke="#ff9f1a" stroke-width="4" opacity=".32">
+    <path d="M1060 530V330h150v200Zm20-170h110v80h-110Zm130 40h35v90a20 20 0 0 0 40 0V355l-35-35m-20 0 55 55m-250 155h200"/>
+  </g>
+  <g fill="#fff" opacity=".6" font-family="Arial, sans-serif" text-anchor="middle">
+    <text x="1160" y="610" font-size="32">Фото доставки топлива</text>
+    <text x="1160" y="660" font-size="24">Заглушка</text>
+  </g>
+</svg>

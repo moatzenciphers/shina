@@ -1,5 +1,58 @@
 [
   {
+    "key": "group_services_catalog",
+    "title": "Каталог услуг: заголовок",
+    "fields": [
+      {
+        "key": "field_landing_catalog_title",
+        "label": "Заголовок H1",
+        "name": "catalog_title",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "Все услуги"
+      },
+      {
+        "key": "field_landing_catalog_intro",
+        "label": "Вводный текст",
+        "name": "catalog_intro",
+        "type": "textarea",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "Выездной шиномонтаж и техпомощь в Москве и Московской области. Выберите услугу, чтобы узнать условия обслуживания и посмотреть подробный прайс.",
+        "rows": 3,
+        "new_lines": ""
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "services-archive"
+        }
+      ],
+      [
+        {
+          "param": "page_template",
+          "operator": "==",
+          "value": "page-services.php"
+        }
+      ]
+    ],
+    "active": true
+  },
+  {
     "key": "group_landing_review_caption",
     "title": "Лендинг: подпись отзывов",
     "fields": [
@@ -1449,6 +1502,13 @@
           "operator": "==",
           "value": "services"
         }
+      ],
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "services-archive"
+        }
       ]
     ],
     "menu_order": 0,
@@ -1460,7 +1520,7 @@
     "active": true,
     "show_in_rest": 0,
     "description": "Порядок блоков задаётся гибким содержимым. Хедер и футер управляются отдельно.",
-    "modified": 1792048105
+    "modified": 1792340971
   },
   {
     "key": "group_landing_review_service",
@@ -1626,6 +1686,6 @@
     "hide_on_screen": "",
     "active": true,
     "show_in_rest": 1,
-    "modified": 1792048105
+    "modified": 1792340971
   }
 ]

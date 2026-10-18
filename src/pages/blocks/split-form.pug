@@ -7,7 +7,7 @@ section.split-form.landing-section#help(aria-labelledby="split-form-title")
       h2.split-form__title.landing-title.landing-title--section#split-form-title= (block && block.title) || 'Не знаете, какая услуга нужна?'
       p.split-form__lead.landing-text= (block && block.lead) || 'Опишите, что произошло. Оператор разберётся в ситуации, уточнит детали и перезвонит в течение 2 минут.'
     form.split-form__form(data-split-form)
-      if locals.servicePage
+      if locals.servicePage && locals.servicePage.serviceKey
         input(type="hidden", name="service", value=locals.servicePage.serviceKey)
       div.split-form__fields
         label.split-form__field(for="help-phone")

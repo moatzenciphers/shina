@@ -1,0 +1,27 @@
+doctype html
+- locals.articlesData = require('./data/articles');
+- locals.articlesEmptyState = typeof articlesEmpty !== 'undefined' && articlesEmpty;
+- locals.currentArticlesPage = typeof articlesPage !== 'undefined' ? articlesPage : 1;
+- locals.visibleArticles = locals.articlesData.posts.slice((locals.currentArticlesPage - 1) * locals.articlesData.perPage, locals.currentArticlesPage * locals.articlesData.perPage);
+- locals.columnsList = locals.articlesEmptyState ? locals.articlesData.emptyEditorial : locals.articlesData.editorial;
+- locals.servicePage = { form: locals.articlesData.form };
+
+html(lang="ru")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="theme-color", content="#06141b")
+    title= locals.currentArticlesPage > 1 ? 'Статьи — страница 2 | Едем-чиним' : 'Статьи об автомобиле и помощи на дороге | Едем-чиним'
+    meta(name="description", content="Материалы о шинах, обслуживании автомобиля и помощи на дороге от Едем-чиним.")
+    script.
+      window.__CALCULATOR_URL__ = './calculator.html';
+  body
+    div.landing(data-landing)
+      include blocks/site-header.pug
+      main.landing__main
+        include blocks/articles-grid.pug
+        include blocks/columns-list.pug
+        include blocks/split-form.pug
+      include blocks/site-footer.pug
+      include blocks/mobile-actions.pug
+    include blocks/quick-call-dialog.pug

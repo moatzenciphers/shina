@@ -1,5 +1,8 @@
 <?php
-$selected_services = edemchinim_landing_sub('services_posts');
+$is_catalog = ! empty($args['catalog']);
+$catalog_title = $args['title'] ?? 'Все услуги';
+$catalog_intro = $args['intro'] ?? '';
+$selected_services = $is_catalog ? array() : edemchinim_landing_sub('services_posts');
 $selected_ids = array();
 
 foreach ((array) $selected_services as $selected_service) {
@@ -17,7 +20,10 @@ $args = array(
     'post_status' => 'publish',
 );
 
-if ($selected_ids) {
+if ($is_catalog) {
+    $args['posts_per_page'] = -1;
+    $args['orderby'] = array('menu_order' => 'ASC', 'title' => 'ASC');
+} elseif ($selected_ids) {
     // Выводим выбранные услуги в порядке из админки.
     $args['post__in'] = $selected_ids;
     $args['orderby'] = 'post__in';
@@ -47,8 +53,14 @@ $filters['all'] = 'Все услуги';
 ?>
 <section class="cards-grid landing-section" id="services" aria-labelledby="cards-grid-title" data-service-catalog>
     <header class="cards-grid__header">
-        <?php edemchinim_landing_heading('services', 'cards-grid'); ?>
-        <p class="cards-grid__intro landing-text"><?php echo esc_html(edemchinim_landing_sub('services_intro')); ?></p>
+        <?php if ($is_catalog) : ?>
+            <p class="cards-grid__eyebrow landing-eyebrow">УСЛУГИ И ЦЕНЫ</p>
+            <h1 class="cards-grid__title landing-title landing-title--section" id="cards-grid-title"><?php echo esc_html($catalog_title); ?></h1>
+            <?php if ($catalog_intro) : ?><p class="cards-grid__intro landing-text"><?php echo esc_html($catalog_intro); ?></p><?php endif; ?>
+        <?php else : ?>
+            <?php edemchinim_landing_heading('services', 'cards-grid'); ?>
+            <p class="cards-grid__intro landing-text"><?php echo esc_html(edemchinim_landing_sub('services_intro')); ?></p>
+        <?php endif; ?>
     </header>
     <?php if ($posts) : ?>
     <div class="cards-grid__filters" role="group" aria-label="Категория услуг">
@@ -63,6 +75,7 @@ $filters['all'] = 'Все услуги';
     <div class="cards-grid__items" id="services-items">
         <?php foreach ($posts as $service) :
             $price = edemchinim_get_field('service_price_from', $service->ID);
+            $catalog_price = $is_catalog ? edemchinim_service_catalog_price($service->ID) : '';
             $note = edemchinim_get_field('service_price_note', $service->ID);
             $description = edemchinim_get_field('service_card_description', $service->ID);
             $description = $description ?: wp_trim_words(wp_strip_all_tags(get_the_excerpt($service)), 18, '…');
@@ -76,7 +89,9 @@ $filters['all'] = 'Все услуги';
             <div class="cards-grid__bottom">
                 <div class="cards-grid__price-group">
                     <?php if ($note) : ?><p class="cards-grid__price-note"><?php echo esc_html($note); ?></p><?php endif; ?>
-                    <?php if ($price !== '' && $price !== false && $price !== null) : ?><p class="cards-grid__price">от <?php echo esc_html(number_format_i18n((float) $price, 0)); ?> ₽</p><?php endif; ?>
+                    <?php if ($is_catalog) : ?>
+                        <?php if ($catalog_price !== '') : ?><p class="cards-grid__price"><?php echo esc_html($catalog_price); ?></p><?php endif; ?>
+                    <?php elseif ($price !== '' && $price !== false && $price !== null) : ?><p class="cards-grid__price">от <?php echo esc_html(number_format_i18n((float) $price, 0)); ?> ₽</p><?php endif; ?>
                 </div>
                 <span class="cards-grid__details" aria-hidden="true"><svg class="cards-grid__arrow" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M7 5h12v12" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></span>
             </div>
@@ -84,9 +99,13 @@ $filters['all'] = 'Все услуги';
         <?php endforeach; ?>
     </div>
     <p class="cards-grid__empty" data-service-filter-empty hidden>В этой категории пока нет услуг.</p>
+    <?php elseif ($is_catalog) : ?>
+        <p class="cards-grid__empty">Услуги пока не опубликованы.</p>
     <?php endif; ?>
+    <?php if (! $is_catalog) : ?>
     <footer class="cards-grid__footer">
         <p class="cards-grid__footer-text landing-text"><?php echo esc_html(edemchinim_landing_sub('services_footer')); ?></p>
         <?php if ($archive) : ?><span class="cards-grid__all-link landing-more-link" data-href="<?php echo esc_url($archive); ?>">Посмотреть все услуги<?php edemchinim_landing_arrow(); ?></span><?php endif; ?>
     </footer>
+    <?php endif; ?>
 </section>

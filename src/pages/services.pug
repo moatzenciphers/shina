@@ -1,0 +1,28 @@
+doctype html
+- locals.catalogPage = require('./data/services-page');
+- locals.servicePage = { form: locals.catalogPage.form };
+- locals.cardsGrid = { primary: true, title: 'Все услуги', description: 'Выездной шиномонтаж и техпомощь в Москве и Московской области. Выберите услугу, чтобы узнать условия обслуживания и посмотреть подробный прайс.', footer: false, cards: locals.catalogPage.cards };
+- locals.columnsList = locals.catalogPage.columnsList;
+
+html(lang="ru")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="theme-color", content="#06141b")
+    title= locals.catalogPage.meta.title
+    meta(name="description", content=locals.catalogPage.meta.description)
+    meta(property="og:type", content="website")
+    meta(property="og:title", content=locals.catalogPage.meta.title)
+    meta(property="og:description", content=locals.catalogPage.meta.description)
+    script.
+      window.__CALCULATOR_URL__ = './calculator.html';
+  body
+    div.landing(data-landing)
+      include blocks/site-header.pug
+      main.landing__main
+        include blocks/cards-grid.pug
+        include blocks/columns-list.pug
+        include blocks/split-form.pug
+      include blocks/site-footer.pug
+      include blocks/mobile-actions.pug
+    include blocks/quick-call-dialog.pug

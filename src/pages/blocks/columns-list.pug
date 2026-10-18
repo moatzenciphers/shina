@@ -2,7 +2,8 @@ section.columns-list.landing-section(aria-labelledby="columns-list-title")
   header.columns-list__header
     p.columns-list__eyebrow.landing-eyebrow= columnsList.eyebrow
     h2.columns-list__title.landing-title.landing-title--section#columns-list-title= columnsList.title
-    p.columns-list__description.landing-text= columnsList.description
+    if columnsList.description
+      p.columns-list__description.landing-text= columnsList.description
   div.columns-list__columns
     each column in columnsList.columns
       div.columns-list__column
@@ -11,9 +12,12 @@ section.columns-list.landing-section(aria-labelledby="columns-list-title")
           each item in column.items
             li.columns-list__item
               p.landing-text= item
-  div.columns-list__footer
-    p.columns-list__note.landing-text= columnsList.note
-    button.columns-list__cta.landing-cta(type="button", data-open-calculator)
-      span= columnsList.button
-      svg(viewBox="0 0 32 32", fill="none", aria-hidden="true", focusable="false")
-        path(d="M5 16h21m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="square")
+  if columnsList.note || columnsList.button
+    div.columns-list__footer
+      if columnsList.note
+        p.columns-list__note.landing-text= columnsList.note
+      if columnsList.button
+        button.columns-list__cta.landing-cta(type="button", data-open-calculator)
+          span= columnsList.button
+          svg(viewBox="0 0 32 32", fill="none", aria-hidden="true", focusable="false")
+            path(d="M5 16h21m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="square")

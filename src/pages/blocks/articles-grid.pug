@@ -1,0 +1,57 @@
+section.articles-grid.landing-section(aria-labelledby="articles-title")
+  nav.articles-grid__breadcrumbs(aria-label="Хлебные крошки")
+    a(href="./index.html") Главная
+    svg(viewBox="0 0 16 16", fill="none", aria-hidden="true")
+      path(d="m6 3 5 5-5 5", stroke="currentColor", stroke-width="1.5")
+    span(aria-current="page") Статьи
+  header.articles-grid__header
+    p.landing-eyebrow ПОЛЕЗНО АВТОВЛАДЕЛЬЦУ
+    h1.articles-grid__title.landing-title#articles-title Статьи
+    p.articles-grid__intro.landing-text= locals.articlesEmptyState ? locals.articlesData.emptyIntro : locals.articlesData.intro
+  if locals.articlesEmptyState
+    div.articles-grid__empty
+      svg.articles-grid__empty-icon(viewBox="0 0 64 64", fill="none", aria-hidden="true")
+        path(d="M16 8h23l10 10v38H16V8Zm23 0v12h10M24 30h17M24 38h17M24 46h10", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
+      h2.landing-title.landing-title--section Здесь пока нет статей
+      p.articles-grid__empty-text.landing-text Скоро здесь появятся первые публикации. Если вопрос об автомобиле не может ждать, посмотрите услуги или оставьте заявку ниже.
+      a.landing-cta(href="./services.html")
+        span Все услуги
+        svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+          path(d="M5 16h21m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="square")
+  else
+    div.articles-grid__items
+      each post in locals.visibleArticles
+        article.articles-grid__card
+          div.articles-grid__image-wrap
+            img.articles-grid__image(src=post.image, alt=post.alt, loading="lazy", decoding="async", width="640", height="400")
+          div.articles-grid__body
+            div.articles-grid__meta
+              span.articles-grid__category= post.category
+              time(datetime=post.date)= post.dateLabel
+            a.articles-grid__link.articles-grid__card-title.landing-subtitle(href="#")= post.title
+            p.articles-grid__excerpt.landing-text= post.excerpt
+            span.articles-grid__more.landing-more-link(aria-hidden="true") Читать статью
+              svg(viewBox="0 0 32 32", fill="none")
+                path(d="M5 16h22m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
+    nav.articles-grid__pagination(aria-label="Страницы статей")
+      if locals.currentArticlesPage > 1
+        a.articles-grid__page.articles-grid__page--arrow(href="./articles.html", aria-label="Предыдущая страница", rel="prev")
+          svg(viewBox="0 0 24 24", fill="none", aria-hidden="true")
+            path(d="M20 12H4m6-6-6 6 6 6", stroke="currentColor", stroke-width="1.5")
+      else
+        span.articles-grid__page.articles-grid__page--disabled(aria-disabled="true", aria-label="Предыдущая страница недоступна")
+          svg(viewBox="0 0 24 24", fill="none", aria-hidden="true")
+            path(d="M20 12H4m6-6-6 6 6 6", stroke="currentColor", stroke-width="1.5")
+      each pageNumber in [1, 2]
+        if pageNumber === locals.currentArticlesPage
+          span.articles-grid__page.articles-grid__page--current(aria-current="page", aria-label=`Страница ${pageNumber}`)= pageNumber
+        else
+          a.articles-grid__page(href=pageNumber === 1 ? './articles.html' : './articles-page-2.html', aria-label=`Страница ${pageNumber}`)= pageNumber
+      if locals.currentArticlesPage < 2
+        a.articles-grid__page.articles-grid__page--arrow(href="./articles-page-2.html", aria-label="Следующая страница", rel="next")
+          svg(viewBox="0 0 24 24", fill="none", aria-hidden="true")
+            path(d="M4 12h16m-6-6 6 6-6 6", stroke="currentColor", stroke-width="1.5")
+      else
+        span.articles-grid__page.articles-grid__page--disabled(aria-disabled="true", aria-label="Следующая страница недоступна")
+          svg(viewBox="0 0 24 24", fill="none", aria-hidden="true")
+            path(d="M4 12h16m-6-6 6 6-6 6", stroke="currentColor", stroke-width="1.5")

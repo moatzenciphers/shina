@@ -1,0 +1,14 @@
+section.article-content.landing-section(aria-label="Текст статьи")
+  div.article-content__layout
+    div.article-content__body!= locals.articlePage.content
+    aside.article-content__sidebar
+      nav.article-content__contents(aria-labelledby="article-contents-title")
+        h2.landing-subtitle#article-contents-title В статье
+        ol
+          each item in locals.articlePage.contents
+            li
+              a(href=`#${item.id}`)= item.title
+  a.article-content__back.landing-more-link(href="./articles.html")
+    svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+      path(d="M27 16H5m8-8-8 8 8 8", stroke="currentColor", stroke-width="2", stroke-linecap="round", stroke-linejoin="round")
+    span Все статьи

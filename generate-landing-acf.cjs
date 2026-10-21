@@ -126,6 +126,35 @@ const layouts = [
 
 const groups = [
   {
+    key: 'group_articles_archive', title: 'Статьи: настройки списка',
+    fields: [
+      text('articles_title', 'Заголовок H1', 'Статьи'),
+      area('articles_intro', 'Вступление при наличии статей', 'Как подготовиться к обслуживанию и разобраться в частых вопросах о шинах, эксплуатации автомобиля и помощи на дороге.'),
+      area('articles_empty_intro', 'Вступление пустого списка', 'Готовим материалы о шинах, обслуживании автомобиля и помощи на дороге.'),
+      text('articles_empty_title', 'Заголовок пустого состояния', 'Здесь пока нет статей'),
+      area('articles_empty_text', 'Текст пустого состояния', 'Скоро здесь появятся первые публикации. А пока можно посмотреть доступные услуги.'),
+      field('articles_per_page', 'Статей на странице', 'number', { default_value: 6, min: 1, max: 48, step: 1 }),
+      text('articles_form_shortcode', 'Шорткод CF7 для детальных статей по умолчанию'),
+    ],
+    instructions: 'Заполняйте у рубрики со слагом articles. Блоки после списка задаются общим гибким содержимым blocks. Форма архива добавляется макетом split_form, это поле задаёт резервную форму отдельных статей.',
+    location: [[{ param: 'taxonomy', operator: '==', value: 'category' }]], active: true,
+  },
+  {
+    key: 'group_article_details', title: 'Статья: первый экран, услуга и форма',
+    fields: [
+      area('article_lead', 'Лид первого экрана', ''),
+      image('article_hero_image', 'Фоновое фото (если отличается от изображения записи)'),
+      text('article_author_label', 'Подпись автора (если отличается от автора записи)'),
+      field('article_show_contents', 'Показывать оглавление', 'true_false', { default_value: 1, ui: 1, instructions: 'Собирается автоматически из H2 основного контента. Существующие уникальные id заголовков сохраняются.' }),
+      field('article_service', 'Связанная услуга', 'post_object', { post_type: ['services'], return_format: 'id', allow_null: 1, multiple: 0, ui: 1 }),
+      text('article_form_title', 'Заголовок формы', 'Нужна помощь с автомобилем?'),
+      area('article_form_lead', 'Пояснение формы', 'Опишите ситуацию. Оператор уточнит детали и согласует необходимую помощь.'),
+      text('article_form_shortcode', 'Шорткод CF7 (заменяет форму из настроек рубрики)'),
+    ],
+    description: 'Используется для обычных записей рубрики articles и её дочерних рубрик. Название, текст, дата и миниатюра задаются стандартными полями WordPress.',
+    location: [[{ param: 'post_type', operator: '==', value: 'post' }]], active: true,
+  },
+  {
     key: 'group_services_catalog', title: 'Каталог услуг: заголовок',
     fields: [
       text('catalog_title', 'Заголовок H1', 'Все услуги'),
@@ -156,6 +185,7 @@ const groups = [
       [{ param: 'post_type', operator: '==', value: 'page' }],
       [{ param: 'post_type', operator: '==', value: 'services' }],
       [{ param: 'options_page', operator: '==', value: 'services-archive' }],
+      [{ param: 'taxonomy', operator: '==', value: 'category' }],
     ],
     menu_order: 0, position: 'normal', style: 'default', label_placement: 'top',
     instruction_placement: 'label', hide_on_screen: '', active: true, show_in_rest: 0,
@@ -192,6 +222,7 @@ writeIfChanged('Wordpress/wp-content/themes/edemchinim/inc/acf-review-caption.js
 const output = `${JSON.stringify(groups, null, 2)}\n`;
 if (process.argv.includes('--write')) {
   require('fs').writeFileSync(require('path').join(__dirname, 'acf-landing-import.json'), output);
+  writeIfChanged('acf-articles-import.json', JSON.stringify(groups.filter(group => ['group_articles_archive', 'group_article_details', 'group_landing_front_page_flexible'].includes(group.key)), null, 2) + '\n');
 } else {
   process.stdout.write(output);
 }

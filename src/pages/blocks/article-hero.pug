@@ -1,0 +1,20 @@
+header.article-hero(aria-labelledby="article-title")
+  div.article-hero__background(aria-hidden="true")
+    img(src=locals.articlePage.image, alt="", fetchpriority="high")
+  div.article-hero__inner.landing-section
+    nav.article-hero__breadcrumbs(aria-label="Хлебные крошки")
+      a(href="./index.html") Главная
+      svg(viewBox="0 0 16 16", fill="none", aria-hidden="true")
+        path(d="m6 3 5 5-5 5", stroke="currentColor", stroke-width="1.5")
+      a(href="./articles.html") Статьи
+      svg(viewBox="0 0 16 16", fill="none", aria-hidden="true")
+        path(d="m6 3 5 5-5 5", stroke="currentColor", stroke-width="1.5")
+      span(aria-current="page")= locals.articlePage.title
+    div.article-hero__copy
+      p.landing-eyebrow= locals.articlePage.category
+      h1.article-hero__title.landing-title.landing-title--hero#article-title= locals.articlePage.title
+      p.article-hero__lead.landing-text= locals.articlePage.description
+      div.article-hero__meta
+        span= locals.articlePage.author
+        time(datetime=locals.articlePage.date)= locals.articlePage.dateLabel
+        span= locals.articlePage.readingLabel

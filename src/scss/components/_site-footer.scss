@@ -12,11 +12,13 @@
 }
 
 .site-footer__panel {
+  padding: var(--landing-section-padding) var(--landing-gutter);
   max-width: 1770px;
   margin-inline: auto;
+  padding-bottom: 20px;
 }
 
-.site-footer--wp { padding-top: clamp(32px, 5vw, 80px); }
+// .site-footer--wp { padding-top: clamp(32px, 5vw, 80px); }
 .site-footer__description { color: var(--color-muted); line-height: 1.4; }
 .site-footer__contacts :is(a, :where([data-href])) { color: inherit; text-decoration: none; }
 .site-footer__contacts :is(a, :where([data-href])):hover { color: var(--color-accent); }

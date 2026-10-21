@@ -1,5 +1,272 @@
 [
   {
+    "key": "group_articles_archive",
+    "title": "Статьи: настройки списка",
+    "fields": [
+      {
+        "key": "field_landing_articles_title",
+        "label": "Заголовок H1",
+        "name": "articles_title",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "Статьи"
+      },
+      {
+        "key": "field_landing_articles_intro",
+        "label": "Вступление при наличии статей",
+        "name": "articles_intro",
+        "type": "textarea",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "Как подготовиться к обслуживанию и разобраться в частых вопросах о шинах, эксплуатации автомобиля и помощи на дороге.",
+        "rows": 3,
+        "new_lines": ""
+      },
+      {
+        "key": "field_landing_articles_empty_intro",
+        "label": "Вступление пустого списка",
+        "name": "articles_empty_intro",
+        "type": "textarea",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "Готовим материалы о шинах, обслуживании автомобиля и помощи на дороге.",
+        "rows": 3,
+        "new_lines": ""
+      },
+      {
+        "key": "field_landing_articles_empty_title",
+        "label": "Заголовок пустого состояния",
+        "name": "articles_empty_title",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "Здесь пока нет статей"
+      },
+      {
+        "key": "field_landing_articles_empty_text",
+        "label": "Текст пустого состояния",
+        "name": "articles_empty_text",
+        "type": "textarea",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "Скоро здесь появятся первые публикации. А пока можно посмотреть доступные услуги.",
+        "rows": 3,
+        "new_lines": ""
+      },
+      {
+        "key": "field_landing_articles_per_page",
+        "label": "Статей на странице",
+        "name": "articles_per_page",
+        "type": "number",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": 6,
+        "min": 1,
+        "max": 48,
+        "step": 1
+      },
+      {
+        "key": "field_landing_articles_form_shortcode",
+        "label": "Шорткод CF7 для детальных статей по умолчанию",
+        "name": "articles_form_shortcode",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      }
+    ],
+    "instructions": "Заполняйте у рубрики со слагом articles. Блоки после списка задаются общим гибким содержимым blocks. Форма архива добавляется макетом split_form, это поле задаёт резервную форму отдельных статей.",
+    "location": [
+      [
+        {
+          "param": "taxonomy",
+          "operator": "==",
+          "value": "category"
+        }
+      ]
+    ],
+    "active": true
+  },
+  {
+    "key": "group_article_details",
+    "title": "Статья: первый экран, услуга и форма",
+    "fields": [
+      {
+        "key": "field_landing_article_lead",
+        "label": "Лид первого экрана",
+        "name": "article_lead",
+        "type": "textarea",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "rows": 3,
+        "new_lines": ""
+      },
+      {
+        "key": "field_landing_article_hero_image",
+        "label": "Фоновое фото (если отличается от изображения записи)",
+        "name": "article_hero_image",
+        "type": "image",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "id",
+        "preview_size": "medium",
+        "library": "all"
+      },
+      {
+        "key": "field_landing_article_author_label",
+        "label": "Подпись автора (если отличается от автора записи)",
+        "name": "article_author_label",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_landing_article_show_contents",
+        "label": "Показывать оглавление",
+        "name": "article_show_contents",
+        "type": "true_false",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": 1,
+        "ui": 1,
+        "instructions": "Собирается автоматически из H2 основного контента. Существующие уникальные id заголовков сохраняются."
+      },
+      {
+        "key": "field_landing_article_service",
+        "label": "Связанная услуга",
+        "name": "article_service",
+        "type": "post_object",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "post_type": [
+          "services"
+        ],
+        "return_format": "id",
+        "allow_null": 1,
+        "multiple": 0,
+        "ui": 1
+      },
+      {
+        "key": "field_landing_article_form_title",
+        "label": "Заголовок формы",
+        "name": "article_form_title",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "Нужна помощь с автомобилем?"
+      },
+      {
+        "key": "field_landing_article_form_lead",
+        "label": "Пояснение формы",
+        "name": "article_form_lead",
+        "type": "textarea",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "Опишите ситуацию. Оператор уточнит детали и согласует необходимую помощь.",
+        "rows": 3,
+        "new_lines": ""
+      },
+      {
+        "key": "field_landing_article_form_shortcode",
+        "label": "Шорткод CF7 (заменяет форму из настроек рубрики)",
+        "name": "article_form_shortcode",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      }
+    ],
+    "description": "Используется для обычных записей рубрики articles и её дочерних рубрик. Название, текст, дата и миниатюра задаются стандартными полями WordPress.",
+    "location": [
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "post"
+        }
+      ]
+    ],
+    "active": true
+  },
+  {
     "key": "group_services_catalog",
     "title": "Каталог услуг: заголовок",
     "fields": [
@@ -1509,6 +1776,13 @@
           "operator": "==",
           "value": "services-archive"
         }
+      ],
+      [
+        {
+          "param": "taxonomy",
+          "operator": "==",
+          "value": "category"
+        }
       ]
     ],
     "menu_order": 0,
@@ -1520,7 +1794,7 @@
     "active": true,
     "show_in_rest": 0,
     "description": "Порядок блоков задаётся гибким содержимым. Хедер и футер управляются отдельно.",
-    "modified": 1792340971
+    "modified": 1792560959
   },
   {
     "key": "group_landing_review_service",
@@ -1686,6 +1960,6 @@
     "hide_on_screen": "",
     "active": true,
     "show_in_rest": 1,
-    "modified": 1792340971
+    "modified": 1792560959
   }
 ]

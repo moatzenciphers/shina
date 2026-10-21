@@ -1,0 +1,10 @@
+section.related-service.landing-section(aria-labelledby="related-service-title")
+  div.related-service__inner
+    div.related-service__copy
+      p.landing-eyebrow= locals.articlePage.relatedService.eyebrow
+      h2.related-service__title.landing-title.landing-title--section#related-service-title= locals.articlePage.relatedService.title
+      p.related-service__text.landing-text= locals.articlePage.relatedService.text
+    a.related-service__cta.landing-cta(href=locals.articlePage.relatedService.href)
+      span= locals.articlePage.relatedService.button
+      svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+        path(d="M5 16h21m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="square")

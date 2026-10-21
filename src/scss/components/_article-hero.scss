@@ -1,0 +1,23 @@
+.article-hero { position: relative; min-height: calc(100svh - 72px); isolation: isolate; }
+.article-hero__background { position: absolute; inset: 0; z-index: -1; }
+.article-hero__background img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.article-hero__background::after { position: absolute; inset: 0; content: ''; background: linear-gradient(90deg, var(--color-landing-bg), transparent), linear-gradient(0deg, var(--color-landing-bg), rgba(6, 20, 27, .35) 70%, var(--color-landing-bg)); }
+.article-hero__inner.landing-section { display: flex; flex-direction: column; justify-content: space-between; gap: 64px; width: 100%; min-height: inherit; background: transparent; padding-bottom: 104px}
+.article-hero__breadcrumbs { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; color: var(--color-muted); font-size: var(--font-size-small); }
+.article-hero__breadcrumbs a { color: inherit; text-decoration: none; }
+.article-hero__breadcrumbs a:hover { color: var(--color-accent); }
+.article-hero__breadcrumbs svg { width: 16px; height: 16px; flex: 0 0 auto; }
+.article-hero__copy { max-width: 960px; }
+.article-hero__title { margin-top: 20px; }
+.article-hero__lead { max-width: 720px; margin-top: 24px; color: var(--color-text); }
+.article-hero__meta { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 32px; color: var(--color-muted); font-size: var(--font-size-body); }
+.article-hero__meta > :first-child { color: var(--color-text); }
+.article-hero__breadcrumbs a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+@media (max-width: 650px) {
+  .article-hero__inner.landing-section { gap: 48px; }
+  .article-hero__breadcrumbs [aria-current] { display: none; }
+  .article-hero__breadcrumbs svg:last-of-type { display: none; }
+  .article-hero__background img { object-position: 60% center; }
+  .article-hero__background::after { background: linear-gradient(0deg, var(--color-landing-bg), rgba(6, 20, 27, .65) 75%, var(--color-landing-bg)); }
+  .article-hero__meta { gap: 12px 16px; }
+}

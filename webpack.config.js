@@ -66,6 +66,10 @@ module.exports = (_, argv) => {
     module: {
       rules: [
         {
+          test: /\.html$/,
+          type: 'asset/source',
+        },
+        {
           test: /\.pug$/,
           use: [
             {
@@ -123,6 +127,13 @@ module.exports = (_, argv) => {
       new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src/pages/calculator.pug'), filename: 'calculator.html', chunks: ['main', 'calculator'], inject: 'body', scriptLoading: 'defer', templateParameters: { yandexMapsUrl: getYandexMapsUrl(), hasYandexSuggestApiKey: hasYandexSuggestApiKey(), openRouteServiceApiKey: getOpenRouteServiceApiKey() } }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash:8].css',
+      }),
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'src/pages/article.pug'),
+        filename: 'article.html',
+        chunks: ['main'],
+        inject: 'body',
+        scriptLoading: 'defer',
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'src/pages/articles.pug'),

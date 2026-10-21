@@ -1,0 +1,11 @@
+.related-service__inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; padding-block: 32px; border-top: 1px solid var(--landing-divider); border-bottom: 1px solid var(--landing-divider); }
+.related-service__copy { max-width: 800px; }
+.related-service__title { margin-top: 12px; }
+.related-service__text { margin-top: 20px; }
+.related-service__cta { flex: 0 0 auto; text-decoration: none; }
+@media (max-width: 1000px) {
+  .related-service__inner { align-items: flex-start; flex-direction: column; gap: 24px; }
+}
+@media (max-width: 650px) {
+  .related-service__cta { width: 100%; }
+}

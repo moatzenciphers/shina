@@ -28,7 +28,7 @@ section.articles-grid.landing-section(aria-labelledby="articles-title")
             div.articles-grid__meta
               span.articles-grid__category= post.category
               time(datetime=post.date)= post.dateLabel
-            a.articles-grid__link.articles-grid__card-title.landing-subtitle(href="#")= post.title
+            a.articles-grid__link.articles-grid__card-title.landing-subtitle(href=post.href || '#')= post.title
             p.articles-grid__excerpt.landing-text= post.excerpt
             span.articles-grid__more.landing-more-link(aria-hidden="true") Читать статью
               svg(viewBox="0 0 32 32", fill="none")

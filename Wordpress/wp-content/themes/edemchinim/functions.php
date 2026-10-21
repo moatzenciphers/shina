@@ -108,6 +108,7 @@ add_action('after_setup_theme', 'edemchinim_setup');
 
 require_once get_template_directory() . '/inc/service-display.php';
 require_once get_template_directory() . '/inc/components.php';
+require_once get_template_directory() . '/inc/articles.php';
 require_once get_template_directory() . '/inc/class-site-nav-walker.php';
 require_once get_template_directory() . '/inc/class-site-footer-walker.php';
 

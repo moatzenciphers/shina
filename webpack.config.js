@@ -166,6 +166,13 @@ module.exports = (_, argv) => {
         scriptLoading: 'defer',
       }),
       new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'src/pages/about.pug'),
+        filename: 'about.html',
+        chunks: ['main'],
+        inject: 'body',
+        scriptLoading: 'defer',
+      }),
+      new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'src/pages/fuel.pug'),
         filename: 'fuel.html',
         templateParameters: {

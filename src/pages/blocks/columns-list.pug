@@ -11,7 +11,12 @@ section.columns-list.landing-section(aria-labelledby="columns-list-title")
         ul.columns-list__items
           each item in column.items
             li.columns-list__item
-              p.landing-text= item
+              if typeof item === 'string'
+                p.landing-text= item
+              else
+                p.landing-text
+                  a.landing-more-link(href=item.href)= item.label
+                p.landing-text= item.text
   if columnsList.note || columnsList.button
     div.columns-list__footer
       if columnsList.note

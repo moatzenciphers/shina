@@ -267,5 +267,7 @@
 
 This repo uses SEOAgent — a persistent AI SEO agent. Its state lives in `.seoagent/`.
 
+- Страницу «О нас» собирать из общих hero, columns-list, media-rows и split-form без отдельного CSS. Фото первого экрана остаётся фоном, для команды и оборудования до получения оригиналов показывать подписанные заглушки. Не придумывать стаж, численность, рейтинги и реквизиты компании. В columns-list допускаются пункты со ссылкой на услугу и пояснением; существующий вывод строк сохраняется.
+
 - At session start, read `.agents/skills/seoagent/SKILL.md` — the working contract for all SEO tasks.
 - At the start of each session, run `seoagent sync`. If it lists pending inbox actions, work them unless the user asked for something else first: read `.seoagent/inbox/README.md`, do each one, then `seoagent ack <id>`.

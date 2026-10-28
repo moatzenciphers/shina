@@ -7,7 +7,7 @@
     { label: 'Главная', current: true },
     { label: 'Цены' }, { label: 'Зона выезда' }, { label: 'Отзывы' },
     { label: 'Фото работ' }, { label: 'Частые вопросы' },
-    { label: 'Контакты' }, { label: 'О компании' }
+    { label: 'Контакты' }, { label: 'О компании', href: './about.html' }
   ];
   const documentLinks = [
     'Политика конфиденциальности', 'Согласие на обработку персональных данных',
@@ -48,7 +48,7 @@ footer.site-footer.landing-section#contacts
                   if item.current
                     span.site-footer__active(aria-current="page")= item.label
                   else
-                    a(href="#")= item.label
+                    a(href=item.href || '#')= item.label
         div.site-footer__group
           button.site-footer__toggle(type="button", aria-expanded="false", aria-controls="footer-documents", data-footer-toggle)
             span ДОКУМЕНТЫ

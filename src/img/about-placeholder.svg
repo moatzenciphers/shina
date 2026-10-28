@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#06141b"/>
+  <g stroke="#ff9f1a" stroke-width="3" opacity=".28">
+    <path d="M930 560V390h245l95 85h100v85h-55m-305 0h-80m135 0h185M950 420h185l65 55H950z"/>
+    <circle cx="1038" cy="560" r="42"/>
+    <circle cx="1310" cy="560" r="42"/>
+  </g>
+  <g fill="#fff" opacity=".6" font-family="Arial, sans-serif" text-anchor="middle">
+    <text x="1150" y="685" font-size="30">Фото команды и автомобиля</text>
+    <text x="1150" y="730" font-size="24">Заглушка</text>
+  </g>
+</svg>

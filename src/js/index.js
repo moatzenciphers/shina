@@ -9,6 +9,7 @@ import { initMobileActions } from './mobile-actions';
 import { initQuickCall } from './quick-call';
 import { initReviewSlider } from './review-slider';
 import './review-dialog';
+import { initCoverageMap } from './coverage-map';
 import { initMapPanel } from './map-panel';
 import { initGalleryGrid } from './gallery-grid';
 import { initSplitForm } from './split-form';
@@ -23,6 +24,7 @@ const initSite = () => {
   initQuickCall();
   initReviewSlider();
   initMapPanel();
+  initCoverageMap();
   initGalleryGrid();
   initSplitForm();
   initSiteFooter();

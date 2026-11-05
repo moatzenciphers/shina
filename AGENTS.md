@@ -271,3 +271,5 @@ This repo uses SEOAgent — a persistent AI SEO agent. Its state lives in `.seoa
 
 - At session start, read `.agents/skills/seoagent/SKILL.md` — the working contract for all SEO tasks.
 - At the start of each session, run `seoagent sync`. If it lists pending inbox actions, work them unless the user asked for something else first: read `.seoagent/inbox/README.md`, do each one, then `seoagent ack <id>`.
+
+- Страницы отзывов, работ и контактов могут использовать отдельные композиции `support-page` в общей айдентике и общем CSS/JS. Отзывы выводить из существующего reviews, с полным текстом и серверной пагинацией по 9 записей, без внешних площадок и формы добавления. Галерея — реальные вложения с выбором ACF works_images или флагом shina_photo_is_active, по 12 на страницу, с GLightbox. Контакты — только выезд в Москву и МО; телефон +7 (499) 648-19-90, в WordPress контактные поля брать из настроек, пустые email/реквизиты/ссылки скрывать. Не выдумывать офис, отзывы, отчёты или фото; локальные новые списки без полученных данных имеют честные пустые состояния.

@@ -1,0 +1,21 @@
+doctype html
+- locals.supportTitle = 'Отзывы клиентов';
+html(lang="ru")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="theme-color", content="#06141b")
+    title Отзывы клиентов | Едем-чиним
+    meta(name="description", content="Отзывы клиентов о выездном шиномонтаже и помощи на дороге Едем-чиним.")
+    script.
+      window.__CALCULATOR_URL__ = './calculator.html';
+      window.__YANDEX_MAPS_URL__ = !{JSON.stringify(typeof yandexMapsUrl !== 'undefined' ? yandexMapsUrl : '')};
+  body
+    div.landing(data-landing)
+      include blocks/site-header.pug
+      main.support-page.landing-section#primary
+        include blocks/support-header.pug
+        include blocks/reviews-page.pug
+      include blocks/site-footer.pug
+      include blocks/mobile-actions.pug
+    include blocks/quick-call-dialog.pug

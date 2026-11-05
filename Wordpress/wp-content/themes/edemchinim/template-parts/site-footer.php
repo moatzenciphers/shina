@@ -1,6 +1,6 @@
 <?php
 /** Shared WordPress footer. Menu top-level items are collapsible groups. */
-$footer_phone = edemchinim_get_option_field('shina_phone', '');
+$footer_phone = edemchinim_get_option_field('shina_phone', '+7 (499) 648-19-90');
 $footer_email = edemchinim_get_option_field('shina_email', '');
 ?>
 <footer class="site-footer site-footer--wp" id="contacts">
@@ -13,9 +13,9 @@ $footer_email = edemchinim_get_option_field('shina_email', '');
                 </a>
                 <p class="site-footer__description">Выездной шиномонтаж и помощь на дороге в Москве и МО 24/7.</p>
                 <p class="site-footer__contacts">
-                    <?php if ($footer_phone) : ?>Телефон: <a href="<?php echo esc_url(edemchinim_phone_href($footer_phone)); ?>"><?php echo esc_html($footer_phone); ?></a><?php else : ?>Телефон: уточняется<?php endif; ?><br>
+                    <?php if ($footer_phone) : ?>Телефон: <a href="<?php echo esc_url(edemchinim_phone_href($footer_phone)); ?>"><?php echo esc_html($footer_phone); ?></a><?php endif; ?><br>
                     Круглосуточно<br>
-                    <?php if ($footer_email && is_email($footer_email)) : ?>E-mail: <a href="mailto:<?php echo esc_attr($footer_email); ?>"><?php echo esc_html($footer_email); ?></a><?php else : ?>E-mail: уточняется<?php endif; ?>
+                    <?php if ($footer_email && is_email($footer_email)) : ?>E-mail: <a href="mailto:<?php echo esc_attr($footer_email); ?>"><?php echo esc_html($footer_email); ?></a><?php endif; ?>
                 </p>
             </div>
             <nav class="site-footer__nav" aria-label="Навигация в футере">

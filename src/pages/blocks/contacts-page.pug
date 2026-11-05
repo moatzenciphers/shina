@@ -1,0 +1,20 @@
+div.contacts-page__layout
+  div.contacts-page__details
+    a.contacts-page__phone(href="tel:+74996481990") +7 (499) 648-19-90
+    dl.contacts-page__facts
+      div
+        dt График работы
+        dd 24/7
+      div
+        dt Зона выезда
+        dd Москва и Московская область
+      div
+        dt Формат работы
+        dd Только выезд к автомобилю
+    a.landing-cta.contacts-page__cta(href="./calculator.html", data-open-calculator)
+      span Рассчитать стоимость
+      svg(viewBox="0 0 32 32", fill="none", aria-hidden="true")
+        path(d="M5 16h21m-8-8 8 8-8 8", stroke="currentColor", stroke-width="2", stroke-linecap="square")
+  section.contacts-page__coverage(aria-labelledby="coverage-title")
+    h2.landing-subtitle#coverage-title Зона выезда
+    include coverage-map.pug

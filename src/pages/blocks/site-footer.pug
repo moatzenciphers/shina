@@ -4,10 +4,10 @@
     ['Прикурка автомобиля', 'Отогрев автомобиля', 'Доставка топлива', 'Заправка кондиционера', 'Подбор шин и дисков', 'Хранение шин']
   ];
   const clientLinks = [
-    { label: 'Главная', current: true },
-    { label: 'Цены' }, { label: 'Зона выезда' }, { label: 'Отзывы' },
-    { label: 'Фото работ' }, { label: 'Частые вопросы' },
-    { label: 'Контакты' }, { label: 'О компании', href: './about.html' }
+    { label: 'Главная', href: './index.html', current: true },
+    { label: 'Цены' }, { label: 'Зона выезда' }, { label: 'Отзывы', href: './reviews.html' },
+    { label: 'Фото работ', href: './works.html' }, { label: 'Частые вопросы' },
+    { label: 'Контакты', href: './contacts.html' }, { label: 'О компании', href: './about.html' }
   ];
   const documentLinks = [
     'Политика конфиденциальности', 'Согласие на обработку персональных данных',
@@ -23,7 +23,10 @@ footer.site-footer.landing-section#contacts
             path(d="M5 23c6-5 16-6 28-6 9-8 18-12 35-12 15 0 27 4 39 12 10 0 16 2 20 6M15 23h20m62 0h23M46 13c18-5 33-5 48 2", stroke="currentColor", stroke-width="3", stroke-linecap="round", stroke-linejoin="round")
           span.site-footer__brand-name ЕДЕМ–ЧИНИМ
         p.site-footer__description.landing-text Выездной шиномонтаж и помощь на дороге в Москве и МО 24/7.
-        p.site-footer__contacts Телефон: уточняется<br>Круглосуточно<br>E-mail: уточняется
+        p.site-footer__contacts
+          a(href="tel:+74996481990") +7 (499) 648-19-90
+          br
+          | Круглосуточно
       nav.site-footer__nav(aria-label="Навигация в футере")
         div.site-footer__group.site-footer__group--services
           button.site-footer__toggle(type="button", aria-expanded="false", aria-controls="footer-services", data-footer-toggle)
@@ -45,7 +48,7 @@ footer.site-footer.landing-section#contacts
             ul.site-footer__link-list
               each item in clientLinks
                 li
-                  if item.current
+                  if typeof supportTitle !== 'undefined' ? (item.label === supportTitle || (supportTitle === 'Отзывы клиентов' && item.label === 'Отзывы') || (supportTitle === 'Фотографии работ' && item.label === 'Фото работ')) : item.current
                     span.site-footer__active(aria-current="page")= item.label
                   else
                     a(href=item.href || '#')= item.label

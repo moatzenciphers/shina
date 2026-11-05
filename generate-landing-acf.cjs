@@ -124,7 +124,35 @@ const layouts = [
   ]),
 ];
 
+const supportPageGroups = [
+  {
+    key: 'group_support_page', title: 'Страница: заголовок и форма',
+    fields: [text('support_title', 'Заголовок H1 (по умолчанию название страницы)'), area('support_intro', 'Вступление (необязательно)'), text('support_form_shortcode', 'Шорткод существующей CF7-формы (необязательно)')],
+    location: [
+      [{ param: 'page_template', operator: '==', value: 'page-reviews.php' }],
+      [{ param: 'page_template', operator: '==', value: 'page-works.php' }],
+      [{ param: 'page_template', operator: '==', value: 'page-contacts.php' }],
+      [{ param: 'options_page', operator: '==', value: 'reviews-archive' }],
+    ], active: true,
+  },
+  {
+    key: 'group_works_page', title: 'Работы: фотографии',
+    fields: [field('works_images', 'Фотографии работ', 'gallery', { return_format: 'id', preview_size: 'medium', library: 'all', min: 0, max: 0, instructions: 'Только реальные фотографии работ. Выбранные изображения выводятся в заданном порядке. Если поле пустое, используются изображения медиабиблиотеки с включённым «Показывать в галерее» (shina_photo_is_active).' })],
+    location: [[{ param: 'page_template', operator: '==', value: 'page-works.php' }]], active: true,
+  },
+  {
+    key: 'group_contact_settings', title: 'Контактные данные сайта',
+    fields: [
+      field('shina_email', 'Электронная почта', 'email', { instructions: 'Общий email для контактов и футера. Пустое поле не выводится.' }),
+      repeater('shina_contact_links', 'Дополнительные способы связи', [text('label', 'Название'), field('url', 'Адрес ссылки', 'url')]),
+      area('shina_legal_details', 'Реквизиты (необязательно)'),
+    ],
+    location: [[{ param: 'options_page', operator: '==', value: 'main-option' }]], active: true,
+  },
+];
+
 const groups = [
+  ...supportPageGroups,
   {
     key: 'group_articles_archive', title: 'Статьи: настройки списка',
     fields: [
@@ -220,6 +248,8 @@ const writeIfChanged = (filename, content) => {
 writeIfChanged('Wordpress/wp-content/themes/edemchinim/inc/acf-review-fields.json', JSON.stringify(groups.find(group => group.key === 'group_landing_review_service'), null, 2) + '\n');
 writeIfChanged('Wordpress/wp-content/themes/edemchinim/inc/acf-review-caption.json', JSON.stringify(groups.find(group => group.key === 'group_landing_review_caption'), null, 2) + '\n');
 const output = `${JSON.stringify(groups, null, 2)}\n`;
+writeIfChanged('Wordpress/wp-content/themes/edemchinim/inc/acf-support-pages.json', JSON.stringify(supportPageGroups, null, 2) + '\n');
+writeIfChanged('acf-support-pages-import.json', JSON.stringify(supportPageGroups, null, 2) + '\n');
 if (process.argv.includes('--write')) {
   require('fs').writeFileSync(require('path').join(__dirname, 'acf-landing-import.json'), output);
   writeIfChanged('acf-articles-import.json', JSON.stringify(groups.filter(group => ['group_articles_archive', 'group_article_details', 'group_landing_front_page_flexible'].includes(group.key)), null, 2) + '\n');

@@ -1,0 +1,21 @@
+doctype html
+- locals.supportTitle = 'Контакты';
+html(lang="ru")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="theme-color", content="#06141b")
+    title Контакты | Едем-чиним
+    meta(name="description", content="Телефон Едем-чиним: +7 (499) 648-19-90. Работаем только на выезд по Москве и Московской области.")
+    script.
+      window.__CALCULATOR_URL__ = './calculator.html';
+      window.__YANDEX_MAPS_URL__ = !{JSON.stringify(typeof yandexMapsUrl !== 'undefined' ? yandexMapsUrl : '')};
+  body
+    div.landing(data-landing)
+      include blocks/site-header.pug
+      main.support-page.landing-section#primary
+        include blocks/support-header.pug
+        include blocks/contacts-page.pug
+      include blocks/site-footer.pug
+      include blocks/mobile-actions.pug
+    include blocks/quick-call-dialog.pug

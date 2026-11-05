@@ -1,0 +1,15 @@
+- const photos = typeof workPhotos !== 'undefined' ? workPhotos : [];
+if photos.length
+  div.works-page__grid
+    each photo in photos
+      figure.works-page__item
+        a.works-page__photo(href=photo.image, data-collection-photo, data-gallery="work-photos", data-title=photo.title, aria-label=photo.title ? `Открыть фото: ${photo.title}` : 'Открыть фотографию работы')
+          img(src=photo.image, alt=photo.alt || '', loading="lazy", decoding="async")
+        if photo.title || photo.caption
+          figcaption
+            if photo.title
+              strong= photo.title
+            if photo.caption
+              span= photo.caption
+else
+  p.support-page__empty.landing-text Фотографии пока не добавлены.

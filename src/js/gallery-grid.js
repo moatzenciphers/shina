@@ -2,6 +2,7 @@ import GLightbox from 'glightbox';
 import 'glightbox/dist/css/glightbox.css';
 
 export const initGalleryGrid = () => {
+  if (document.querySelector('[data-collection-photo]')) GLightbox({ selector: '[data-collection-photo]', loop: false, touchNavigation: true });
   const track = document.querySelector('[data-gallery-slider]');
   const prev = document.querySelector('[data-gallery-prev]');
   const next = document.querySelector('[data-gallery-next]');

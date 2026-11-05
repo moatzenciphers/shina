@@ -1,0 +1,210 @@
+[
+  {
+    "key": "group_support_page",
+    "title": "Страница: заголовок и форма",
+    "fields": [
+      {
+        "key": "field_landing_support_title",
+        "label": "Заголовок H1 (по умолчанию название страницы)",
+        "name": "support_title",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_landing_support_intro",
+        "label": "Вступление (необязательно)",
+        "name": "support_intro",
+        "type": "textarea",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "rows": 3,
+        "new_lines": ""
+      },
+      {
+        "key": "field_landing_support_form_shortcode",
+        "label": "Шорткод существующей CF7-формы (необязательно)",
+        "name": "support_form_shortcode",
+        "type": "text",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page_template",
+          "operator": "==",
+          "value": "page-reviews.php"
+        }
+      ],
+      [
+        {
+          "param": "page_template",
+          "operator": "==",
+          "value": "page-works.php"
+        }
+      ],
+      [
+        {
+          "param": "page_template",
+          "operator": "==",
+          "value": "page-contacts.php"
+        }
+      ],
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "reviews-archive"
+        }
+      ]
+    ],
+    "active": true
+  },
+  {
+    "key": "group_works_page",
+    "title": "Работы: фотографии",
+    "fields": [
+      {
+        "key": "field_landing_works_images",
+        "label": "Фотографии работ",
+        "name": "works_images",
+        "type": "gallery",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "id",
+        "preview_size": "medium",
+        "library": "all",
+        "min": 0,
+        "max": 0,
+        "instructions": "Только реальные фотографии работ. Выбранные изображения выводятся в заданном порядке. Если поле пустое, используются изображения медиабиблиотеки с включённым «Показывать в галерее» (shina_photo_is_active)."
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page_template",
+          "operator": "==",
+          "value": "page-works.php"
+        }
+      ]
+    ],
+    "active": true
+  },
+  {
+    "key": "group_contact_settings",
+    "title": "Контактные данные сайта",
+    "fields": [
+      {
+        "key": "field_landing_shina_email",
+        "label": "Электронная почта",
+        "name": "shina_email",
+        "type": "email",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "instructions": "Общий email для контактов и футера. Пустое поле не выводится."
+      },
+      {
+        "key": "field_landing_shina_contact_links",
+        "label": "Дополнительные способы связи",
+        "name": "shina_contact_links",
+        "type": "repeater",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "block",
+        "button_label": "Добавить",
+        "min": 0,
+        "max": 0,
+        "sub_fields": [
+          {
+            "key": "field_landing_shina_contact_links_label",
+            "label": "Название",
+            "name": "label",
+            "type": "text",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          },
+          {
+            "key": "field_landing_shina_contact_links_url",
+            "label": "Адрес ссылки",
+            "name": "url",
+            "type": "url",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            }
+          }
+        ]
+      },
+      {
+        "key": "field_landing_shina_legal_details",
+        "label": "Реквизиты (необязательно)",
+        "name": "shina_legal_details",
+        "type": "textarea",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "rows": 3,
+        "new_lines": ""
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "main-option"
+        }
+      ]
+    ],
+    "active": true
+  }
+]

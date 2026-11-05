@@ -1,6 +1,6 @@
 <?php
 /** Shared header and WordPress menu. */
-$header_phone = edemchinim_get_option_field('shina_phone', '+7 (000) 000-00-00');
+$header_phone = edemchinim_get_option_field('shina_phone', '+7 (499) 648-19-90');
 $header_phone_href = edemchinim_phone_href($header_phone);
 $menu_location = has_nav_menu('landing-primary') ? 'landing-primary' : 'menu-1';
 $calculator_href = edemchinim_calculator_url();

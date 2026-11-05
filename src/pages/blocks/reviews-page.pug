@@ -1,0 +1,24 @@
+- const items = typeof reviewItems !== 'undefined' ? reviewItems : [];
+if items.length
+  div.reviews-page__list
+    each review in items
+      article.reviews-page__item
+        header.reviews-page__meta
+          span.reviews-page__stars(role="img", aria-label="5 из 5") ★★★★★
+          time(datetime=review.dateTime)= review.date
+        div.reviews-page__body
+          div
+            if review.heading
+              h2.reviews-page__heading.landing-subtitle= review.heading
+            blockquote.reviews-page__quote= review.text
+          if review.photos && review.photos.length
+            div.reviews-page__photos
+              each photo in review.photos
+                a(href=photo, data-collection-photo, data-gallery=`review-${review.dateTime}`, aria-label="Открыть фотографию отзыва")
+                  img(src=photo, alt="Фото из отзыва клиента", width="80", height="80", loading="lazy")
+        footer.reviews-page__author
+          cite= review.author
+          if review.service
+            span= review.service
+else
+  p.support-page__empty.landing-text Отзывы пока не добавлены.

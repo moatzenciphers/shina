@@ -112,6 +112,9 @@ module.exports = (_, argv) => {
       ],
     },
     plugins: [
+      ...['reviews', 'works', 'contacts'].map((name) => new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, `src/pages/${name}.pug`), filename: `${name}.html`, chunks: ['main'], inject: 'body', scriptLoading: 'defer', templateParameters: { yandexMapsUrl: getYandexMapsUrl() },
+      })),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'src/pages/index.pug'),
         filename: 'index.html',

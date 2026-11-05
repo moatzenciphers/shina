@@ -4,7 +4,7 @@ $posts = array_values(array_filter($posts, static function ($post) {
 	return (bool) edemchinim_get_field('shina_review_is_active', $post->ID, 1);
 }));
 $posts = array_slice($posts, 0, 9);
-$archive = get_post_type_archive_link('reviews');
+$archive = edemchinim_support_url('reviews');
 $summary = edemchinim_review_summary();
 $filters = array('all' => 'Все');
 $review_services = array();

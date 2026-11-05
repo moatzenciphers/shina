@@ -1,5 +1,5 @@
 <?php
-$mobile_actions_phone = edemchinim_get_option_field('shina_phone', '+7 (000) 000-00-00');
+$mobile_actions_phone = edemchinim_get_option_field('shina_phone', '+7 (499) 648-19-90');
 $mobile_actions_phone_href = edemchinim_phone_href($mobile_actions_phone);
 ?>
 <nav class="mobile-actions" aria-label="Быстрые действия" data-mobile-actions>

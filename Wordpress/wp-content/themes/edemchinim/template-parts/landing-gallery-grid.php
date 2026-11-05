@@ -1,7 +1,7 @@
 <?php
 $images = array_values(array_filter(array_map('edemchinim_landing_image_id', (array) edemchinim_landing_sub('gallery_images', array()))));
 $gallery_page = get_page_by_path('vyezdy');
-$gallery_archive = $gallery_page ? get_permalink($gallery_page) : '';
+$gallery_archive = edemchinim_support_url('works') ?: ($gallery_page && $gallery_page->post_status === 'publish' ? get_permalink($gallery_page) : '');
 ?>
 <section class="gallery-grid landing-section" id="visits" aria-labelledby="gallery-grid-title">
 	<div class="gallery-grid__panel">

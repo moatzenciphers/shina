@@ -83,6 +83,7 @@
   font-size: 28px;
 }
 
+
 .slider-grid__dialog-quote {
   margin: 16px 0 0;
   font-size: var(--font-size-large);
@@ -95,6 +96,10 @@
   margin: 16px 0 24px;
   color: var(--color-muted);
 }
+
+.slider-grid__dialog-service a { display: inline-flex; align-items: center; gap: 8px; color: var(--color-accent); text-decoration: none; }
+.slider-grid__dialog-service a:hover { color: var(--color-accent-hover); }
+.slider-grid__dialog-service a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
 
 .slider-grid__dialog-author {
   display: flex;

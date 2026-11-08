@@ -1,7 +1,7 @@
 import GLightbox from 'glightbox';
-// Shared by the standalone WordPress asset and the frontend bundle.
+// Included in the common frontend and WordPress site bundle.
 const initReviewDialog = () => {
-  const track = document.querySelector('[data-review-slider]');
+  const track = document.querySelector('.reviews-page__list, [data-review-slider]');
   const dialog = document.querySelector('[data-review-dialog]');
   if (!track || !dialog || dialog.dataset.reviewDialogReady) return;
 
@@ -17,11 +17,11 @@ const initReviewDialog = () => {
   let opener = null;
   GLightbox({ selector: '[data-review-photo]', loop: false });
 
-  track.classList.add('slider-grid__track--expandable');
+  track.classList.add(track.matches('.reviews-page__list') ? 'reviews-page__list--expandable' : 'slider-grid__track--expandable');
 
   const syncButtons = () => {
-    track.querySelectorAll('.slider-grid__item').forEach((card) => {
-      const quote = card.querySelector('.slider-grid__quote');
+    track.querySelectorAll('.slider-grid__item, .reviews-page__item').forEach((card) => {
+      const quote = card.querySelector('.slider-grid__quote, .reviews-page__quote');
       const button = card.querySelector('[data-review-open]');
       if (quote && button) button.hidden = quote.scrollHeight <= quote.clientHeight + 1;
     });
@@ -30,22 +30,24 @@ const initReviewDialog = () => {
   track.addEventListener('click', (event) => {
     const button = event.target.closest('[data-review-open]');
     if (!button || !track.contains(button)) return;
-    const card = button.closest('.slider-grid__item');
-    const cardStars = card.querySelector('.slider-grid__stars');
-    const cardDate = card.querySelector('.slider-grid__date');
+    const card = button.closest('.slider-grid__item, .reviews-page__item');
+    const cardStars = card.querySelector('.slider-grid__stars, .reviews-page__stars');
+    const cardDate = card.querySelector('.slider-grid__date, .reviews-page__meta time');
     opener = button;
     stars.textContent = cardStars?.textContent || '';
     stars.setAttribute('aria-label', cardStars?.getAttribute('aria-label') || '');
-    text.textContent = card.querySelector('.slider-grid__quote')?.textContent || '';
-    const serviceLabel = card.querySelector('.slider-grid__service');
+    text.textContent = card.querySelector('.slider-grid__quote, .reviews-page__quote')?.textContent || '';
+    const serviceLabel = card.querySelector('.slider-grid__service, .reviews-page__service');
     service.replaceChildren(...Array.from(serviceLabel?.childNodes || []).map((node) => node.cloneNode(true)));
-    if (heading) heading.textContent = card.querySelector('.slider-grid__review-heading')?.textContent || 'Отзыв клиента';
-    if (photos) photos.replaceChildren(...Array.from(card.querySelectorAll('[data-review-photos] img')).map((photo) => photo.cloneNode(true)));
-    author.textContent = card.querySelector('.slider-grid__author-name')?.textContent || '';
+    service.hidden = !serviceLabel;
+    if (heading) heading.textContent = card.querySelector('.slider-grid__review-heading, .reviews-page__heading')?.textContent || 'Отзыв клиента';
+    if (photos) photos.replaceChildren(...Array.from(card.querySelectorAll('[data-review-photos] img, .reviews-page__photos img')).map((photo) => photo.cloneNode(true)));
+    author.textContent = card.querySelector('.slider-grid__author-name, .reviews-page__name')?.textContent || '';
     date.textContent = cardDate?.textContent || '';
     date.dateTime = cardDate?.dateTime || '';
     document.body.classList.add('review-dialog-open');
     dialog.showModal();
+    dialog.scrollTop = 0;
     closeButton?.focus();
   });
 

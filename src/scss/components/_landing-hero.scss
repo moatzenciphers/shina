@@ -86,7 +86,7 @@
   .landing-hero__stars svg { width: 22px; height: 22px; }
   .landing-hero__rating-value { font-size: var(--font-size-body); }
   .landing-hero__rating-count { padding-left: 12px; font-size: var(--font-size-small); }
-  .landing-hero__title { width: 100%; grid-template-columns: max-content max-content; grid-template-rows: repeat(2, 1.03em); justify-content: space-between; gap: 0 16px; margin-top: 20px; font-size: 6vw; font-size: calc((100cqw - 26px)/12) }
+  .landing-hero__title { width: 100%; grid-template-columns: max-content max-content; grid-template-rows: repeat(2, 1.03em); justify-content: space-between; gap: 0 16px; margin-top: 20px; font-size: 6vw; font-size: calc((100cqw - 26px)/13) }
   .landing-hero__title-first { grid-column: 1; }
   .landing-hero__title-second { grid-column: 1; }
   .landing-hero__hours { grid-column: 2;

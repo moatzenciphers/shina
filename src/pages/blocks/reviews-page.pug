@@ -1,11 +1,13 @@
 - const items = typeof reviewItems !== 'undefined' ? reviewItems : [];
 if items.length
   div.reviews-page__list
-    each review in items
+    each review, reviewIndex in items
       article.reviews-page__item
         header.reviews-page__meta
+          div.reviews-page__identity
+            span.reviews-page__name= review.author
+            time(datetime=review.dateTime)= review.date
           span.reviews-page__stars(role="img", aria-label="5 из 5") ★★★★★
-          time(datetime=review.dateTime)= review.date
         div.reviews-page__body
           div
             if review.heading
@@ -14,11 +16,14 @@ if items.length
           if review.photos && review.photos.length
             div.reviews-page__photos
               each photo in review.photos
-                a(href=photo, data-collection-photo, data-gallery=`review-${review.dateTime}`, aria-label="Открыть фотографию отзыва")
+                a(href=photo, data-collection-photo, data-gallery=`review-${reviewIndex}`, aria-label="Открыть фотографию отзыва")
                   img(src=photo, alt="Фото из отзыва клиента", width="80", height="80", loading="lazy")
         footer.reviews-page__author
-          cite= review.author
+          button.reviews-page__more(type="button", data-review-open, aria-haspopup="dialog", hidden) Читать полностью
           if review.service
-            span= review.service
+            div.reviews-page__service
+              span.reviews-page__service-label Услуга:
+              span= review.service
+  include review-dialog.pug
 else
   p.support-page__empty.landing-text Отзывы пока не добавлены.

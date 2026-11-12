@@ -1,0 +1,16 @@
+<?php
+use Edemchinim\Content\Blocks;
+ $shortcode = function_exists('get_field') ? get_field('quick_call_shortcode', get_queried_object_id()) : ''; ?>
+<?php if (empty($shortcode)) $shortcode = '[contact-form-7 id="ccf62c4" title="Быстрый вызов"]'; ?>
+<?php if ($shortcode) : ?>
+<div class="quick-call-backdrop" data-quick-call-dialog hidden>
+	<div class="quick-call-dialog" id="quick-call-dialog" role="dialog" aria-modal="true" aria-labelledby="quick-call-title" aria-describedby="quick-call-description">
+		<button class="quick-call-dialog__close" type="button" data-quick-call-close aria-label="Закрыть форму"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+		<p class="quick-call-dialog__eyebrow landing-eyebrow">ПОМОЩЬ РЯДОМ</p>
+		<div class="quick-call-dialog__title landing-title landing-title--dialog" id="quick-call-title">Быстрый вызов</div>
+		<p class="quick-call-dialog__description landing-text landing-text--dialog" id="quick-call-description">Оставьте номер телефона, чтобы оператор мог вам перезвонить.</p>
+		<?php Blocks::form($shortcode); ?>
+		<p class="quick-call-dialog__status" role="status" aria-live="polite" data-quick-call-status hidden></p>
+	</div>
+</div>
+<?php endif; ?>

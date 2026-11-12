@@ -1,0 +1,282 @@
+{
+  "edemchinim_get_field": [
+    "Edemchinim\\Support\\Fields",
+    "get"
+  ],
+  "edemchinim_get_option_field": [
+    "Edemchinim\\Support\\Fields",
+    "option"
+  ],
+  "edemchinim_phone_href": [
+    "Edemchinim\\Support\\Formatting",
+    "phoneHref"
+  ],
+  "edemchinim_get_image_url": [
+    "Edemchinim\\Support\\Formatting",
+    "imageUrl"
+  ],
+  "edemchinim_relative_date": [
+    "Edemchinim\\Support\\Formatting",
+    "relativeDate"
+  ],
+  "edemchinim_asset_url": [
+    "Edemchinim\\Support\\Icons",
+    "assetUrl"
+  ],
+  "edemchinim_option_icon": [
+    "Edemchinim\\Support\\Icons",
+    "option"
+  ],
+  "edemchinim_phone_icon": [
+    "Edemchinim\\Support\\Icons",
+    "phone"
+  ],
+  "edemchinim_landing_sub": [
+    "Edemchinim\\Content\\Blocks",
+    "sub"
+  ],
+  "edemchinim_landing_heading": [
+    "Edemchinim\\Content\\Blocks",
+    "heading"
+  ],
+  "edemchinim_landing_arrow": [
+    "Edemchinim\\Content\\Blocks",
+    "arrow"
+  ],
+  "edemchinim_landing_posts": [
+    "Edemchinim\\Content\\Blocks",
+    "posts"
+  ],
+  "edemchinim_landing_image_id": [
+    "Edemchinim\\Content\\Blocks",
+    "imageId"
+  ],
+  "edemchinim_landing_cf7": [
+    "Edemchinim\\Content\\Blocks",
+    "form"
+  ],
+  "edemchinim_landing_layouts": [
+    "Edemchinim\\Content\\Blocks",
+    "layouts"
+  ],
+  "edemchinim_render_landing_blocks": [
+    "Edemchinim\\Content\\Blocks",
+    "render"
+  ],
+  "edemchinim_landing_price_posts": [
+    "Edemchinim\\Content\\Prices",
+    "posts"
+  ],
+  "edemchinim_landing_price_text": [
+    "Edemchinim\\Content\\Prices",
+    "format"
+  ],
+  "edemchinim_landing_price_table": [
+    "Edemchinim\\Content\\Prices",
+    "renderTable"
+  ],
+  "edemchinim_service_catalog_price": [
+    "Edemchinim\\Content\\Prices",
+    "catalogPrice"
+  ],
+  "edemchinim_sanitize_icon": [
+    "Edemchinim\\Content\\Services",
+    "sanitizeIcon"
+  ],
+  "edemchinim_service_icon": [
+    "Edemchinim\\Content\\Services",
+    "icon"
+  ],
+  "edemchinim_service_areas": [
+    "Edemchinim\\Content\\Services",
+    "areas"
+  ],
+  "edemchinim_services_archive_options": [
+    "Edemchinim\\Content\\Services",
+    "registerArchiveSettings"
+  ],
+  "edemchinim_review_service_id": [
+    "Edemchinim\\Content\\Reviews",
+    "serviceId"
+  ],
+  "edemchinim_review_summary": [
+    "Edemchinim\\Content\\Reviews",
+    "summary"
+  ],
+  "edemchinim_public_reviews_meta": [
+    "Edemchinim\\Content\\Reviews",
+    "publicMeta"
+  ],
+  "edemchinim_reviews_archive_query": [
+    "Edemchinim\\Content\\Reviews",
+    "archiveQuery"
+  ],
+  "edemchinim_support_review": [
+    "Edemchinim\\Content\\Reviews",
+    "prepare"
+  ],
+  "edemchinim_support_url": [
+    "Edemchinim\\Content\\Pages",
+    "url"
+  ],
+  "edemchinim_support_page_number": [
+    "Edemchinim\\Content\\Pages",
+    "pageNumber"
+  ],
+  "edemchinim_support_pagination": [
+    "Edemchinim\\Content\\Pages",
+    "pagination"
+  ],
+  "edemchinim_articles_root": [
+    "Edemchinim\\Content\\Articles",
+    "root"
+  ],
+  "edemchinim_articles_url": [
+    "Edemchinim\\Content\\Articles",
+    "url"
+  ],
+  "edemchinim_is_article": [
+    "Edemchinim\\Content\\Articles",
+    "isArticle"
+  ],
+  "edemchinim_article_template": [
+    "Edemchinim\\Content\\Articles",
+    "template"
+  ],
+  "edemchinim_articles_query": [
+    "Edemchinim\\Content\\Articles",
+    "query"
+  ],
+  "edemchinim_article_category": [
+    "Edemchinim\\Content\\Articles",
+    "category"
+  ],
+  "edemchinim_article_contents": [
+    "Edemchinim\\Content\\Articles",
+    "contents"
+  ],
+  "edemchinim_setup": [
+    "Edemchinim\\Theme\\Setup",
+    "support"
+  ],
+  "roots_head_cleanup": [
+    "Edemchinim\\Theme\\Setup",
+    "cleanup"
+  ],
+  "edemchinim_content_width": [
+    "Edemchinim\\Theme\\Setup",
+    "contentWidth"
+  ],
+  "edemchinim_widgets_init": [
+    "Edemchinim\\Theme\\Setup",
+    "widgets"
+  ],
+  "edemchinim_scripts": [
+    "Edemchinim\\Theme\\Assets",
+    "enqueue"
+  ],
+  "edemchinim_rest_allowed_repair_types": [
+    "Edemchinim\\Rest\\Parameters",
+    "repairTypes"
+  ],
+  "edemchinim_rest_validate_positive_int": [
+    "Edemchinim\\Rest\\Parameters",
+    "positiveInt"
+  ],
+  "edemchinim_rest_validate_per_page": [
+    "Edemchinim\\Rest\\Parameters",
+    "perPage"
+  ],
+  "edemchinim_rest_sanitize_repair_type": [
+    "Edemchinim\\Rest\\Parameters",
+    "sanitizeRepairType"
+  ],
+  "edemchinim_rest_validate_repair_type": [
+    "Edemchinim\\Rest\\Parameters",
+    "validateRepairType"
+  ],
+  "edemchinim_rest_sanitize_search": [
+    "Edemchinim\\Rest\\Parameters",
+    "sanitizeSearch"
+  ],
+  "edemchinim_rest_get_pagination": [
+    "Edemchinim\\Rest\\Parameters",
+    "pagination"
+  ],
+  "edemchinim_rest_paginated_response": [
+    "Edemchinim\\Rest\\Parameters",
+    "response"
+  ],
+  "edemchinim_rest_get_repair_type": [
+    "Edemchinim\\Rest\\Parameters",
+    "repairType"
+  ],
+  "edemchinim_rest_review_photos": [
+    "Edemchinim\\Rest\\Reviews",
+    "photos"
+  ],
+  "edemchinim_rest_prepare_review": [
+    "Edemchinim\\Rest\\Reviews",
+    "prepare"
+  ],
+  "edemchinim_rest_get_reviews": [
+    "Edemchinim\\Rest\\Reviews",
+    "get"
+  ],
+  "edemchinim_rest_prepare_photo": [
+    "Edemchinim\\Rest\\Photos",
+    "prepare"
+  ],
+  "edemchinim_rest_get_photos": [
+    "Edemchinim\\Rest\\Photos",
+    "get"
+  ],
+  "edemchinim_rest_prepare_faq": [
+    "Edemchinim\\Rest\\Faq",
+    "prepare"
+  ],
+  "edemchinim_rest_get_faq": [
+    "Edemchinim\\Rest\\Faq",
+    "get"
+  ],
+  "edemchinim_register_rest_routes": [
+    "Edemchinim\\Rest\\Routes",
+    "register"
+  ],
+  "edemchinim_normalize_master_points": [
+    "Edemchinim\\Calculator\\Config",
+    "normalizePoints"
+  ],
+  "edemchinim_prepare_calculator_config": [
+    "Edemchinim\\Calculator\\Config",
+    "prepare"
+  ],
+  "edemchinim_calculator_url": [
+    "Edemchinim\\Calculator\\Config",
+    "url"
+  ],
+  "edemchinim_sanitize_yandex_map_value": [
+    "Edemchinim\\Calculator\\Maps",
+    "sanitize"
+  ],
+  "edemchinim_build_legacy_master_points_map": [
+    "Edemchinim\\Calculator\\Maps",
+    "legacy"
+  ],
+  "edemchinim_load_master_points_yandex_map": [
+    "Edemchinim\\Calculator\\Maps",
+    "load"
+  ],
+  "edemchinim_prepare_master_points_yandex_map_field": [
+    "Edemchinim\\Calculator\\Admin",
+    "prepareField"
+  ],
+  "edemchinim_patch_acf_yandex_map_admin_script": [
+    "Edemchinim\\Calculator\\Admin",
+    "enqueue"
+  ],
+  "edemchinim_migrate_master_points_to_yandex_map": [
+    "Edemchinim\\Calculator\\Migration",
+    "run"
+  ]
+}

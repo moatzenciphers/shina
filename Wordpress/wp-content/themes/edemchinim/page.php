@@ -1,43 +1,27 @@
 <?php
 /**
- * The template for displaying all pages
- *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site may use a
- * different template.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package edemchinim
+ * Template Name: Страница в разработке
+ * Template Post Type: page
  */
-
-if (function_exists('get_field') && get_field('blocks', get_queried_object_id())) {
-	get_template_part('template-parts/components');
-	return;
-}
-
 get_header();
 ?>
-
-	<main id="primary" class="site-main">
-
-		<?php
-		while ( have_posts() ) :
-			the_post();
-
-			get_template_part( 'template-parts/content', 'page' );
-
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
-
-		endwhile; // End of the loop.
-		?>
-
-	</main><!-- #main -->
-
-<?php
-get_sidebar();
-get_footer();
+<main id="primary" class="development-page landing">
+    <?php while (have_posts()) : the_post(); ?>
+    <section class="development-page__content landing-section" aria-labelledby="development-page-title">
+        <p class="landing-eyebrow"><?php echo esc_html(get_the_title()); ?></p>
+        <h1 class="development-page__title landing-title" id="development-page-title">Страница в разработке</h1>
+        <div class="development-page__text landing-text">
+            <?php if (trim(get_the_content()) !== '') : ?>
+                <?php the_content(); ?>
+            <?php else : ?>
+                <p>Мы готовим эту страницу. Пока вы можете перейти на главную.</p>
+            <?php endif; ?>
+        </div>
+        <a class="development-page__cta landing-cta" href="<?php echo esc_url(home_url('/')); ?>">
+            <span>На главную</span>
+            <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 16h21m-8-8 8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>
+        </a>
+    </section>
+    <?php endwhile; ?>
+</main>
+<?php get_footer(); ?>

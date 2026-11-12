@@ -1,0 +1,1066 @@
+{
+  "acf": {
+    "calculator": {
+      "html": "0a283295942fdfb22555ad8a862e66d1edeb41fca153f46cb82597227cbf2a34",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "article": {
+      "html": "a2f3c721b25811cde19bcdfa577bbd34af5071e5d0d2ba8aed135fdb27c093a5",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "article-protected": {
+      "html": "a05ad0c57b87faffe89b3a85927d070de97801c99a58abb33345b444f29fbfe5",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "article-no-related": {
+      "html": "221ca1a61bbad51718611ce708d79263e2d4bb1bf0729a16b3218e98a4b57ee8",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "category": {
+      "html": "556ea060d230f346dd0a19a70e4528c3ee982ca44f3f62d7f6730823354d12de",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "category-empty": {
+      "html": "d8657d656a8ce2e86caaa456443ed8b09bfe5f75eca4fd1e9acbec53e946c994",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "category-no-images": {
+      "html": "270e2e4341302576d13174b3d9a24c24ab3e8b9477c2fffca0c40171ddd78f1d",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "contacts": {
+      "html": "ccd5559039ad2c2681a9246b4d211e19f06fa4d8e7a9904d1f5be489df182328",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "works": {
+      "html": "563a83f5bcc2797ae9225d763e0a542ad3637184949c6179c6ae87375ea0f821",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "works-empty": {
+      "html": "7dc9217f99acd41a3da8e3a981e189fb56d651f52836f91ddf553d37dce13a09",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews": {
+      "html": "ba5d31e08afcd86b1a43ef403869bf158ff67c944e4722466117416f47e1928e",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews-empty": {
+      "html": "be2503ea0f9319b7c1bcf6c88f32998681bf0a64c95be5b7ec43cab4021346a0",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews-archive": {
+      "html": "6d5bbef1dffd2d34ae41bc8d44f3955a3314bf026d06d7c407b2938f2eb92f42",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews-archive-empty": {
+      "html": "7f7f389d52d861aa850eff672b35907b4a798cb380d82f0e13f0a71aa7793d0b",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "search": {
+      "html": "b9af6d6c779cb7fbb7567d557eea3a59e91930fe78a9b3756b5093f48be0c752",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "sidebar",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "search-empty": {
+      "html": "e7a5ed8e188513d0ee486676f8a9b8f1af0d1af062a0db18c8e6e0bb780e30b8",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "sidebar",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "blocks": {
+      "html": "722f586c1a401b3791b7281aa272a0fa025b3af28a181a71a7e488de487e2d13",
+      "layout_calls": [],
+      "warnings": []
+    },
+    "catalog": {
+      "html": "1374480246ea03127afd6f03406d21d3b4da26f104f16d8f4178860e24c3a99f",
+      "layout_calls": [
+        [
+          "header",
+          ""
+        ],
+        [
+          "footer",
+          ""
+        ]
+      ],
+      "warnings": []
+    },
+    "catalog-empty": {
+      "html": "e0744e070d61b788a4d221405f256c690f635837b79b5d280cfcf9e7b2b0cc1d",
+      "layout_calls": [
+        [
+          "header",
+          ""
+        ],
+        [
+          "footer",
+          ""
+        ]
+      ],
+      "warnings": []
+    },
+    "all-blocks": {
+      "html": "ad4b77f62d2aaf1c4f312c23525ffad30da6a622a4cb493af5ce01f5f28d78c5",
+      "layout_calls": [],
+      "warnings": []
+    },
+    "contacts-layout": {
+      "html": "0519a6094be92617f1bbef1c8e07732453974fa08f3b2d42382a9f586bd5e5d7",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "works-layout": {
+      "html": "e04d406652cd31bdd175fbc8747d2e643c38c867323040d2445008b85de20d67",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews-layout": {
+      "html": "5bca681db77b8a866438df4cd4427ea77f4d747cd42d03282af84c7d5da8eaeb",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews-archive-layout": {
+      "html": "f822d3621b757108df32ca80428093e79fe3e066ce43c10d0222eae16ed54c37",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "catalog-layout": {
+      "html": "4f13ec34965787cb02df7367e262fdb7e9594ab52927245836a8b9679e2da463",
+      "layout_calls": [
+        [
+          "header",
+          ""
+        ],
+        [
+          "footer",
+          ""
+        ]
+      ],
+      "warnings": []
+    },
+    "category-layout": {
+      "html": "2cf3b7b87321a93dd0518e794f74226db339a154c0528a215fb8c897280f6dd8",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "article-layout": {
+      "html": "25e6a130066ce1f8e3c1b4a824a43bccd46146fa6b7eb10dffecfe024afd53e1",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "single-guest-layout": {
+      "html": "a23ffa07698a9899f7fd515467b94ad655a729742a586605b4866c051b66776d",
+      "layout_calls": [
+        [
+          "header",
+          ""
+        ],
+        [
+          "footer",
+          ""
+        ]
+      ],
+      "warnings": []
+    },
+    "single-auth-layout": {
+      "html": "75f8eb0be3a3afc5e92dd41b0a51eca5acc7cf21c1ef95a6784714378393cd21",
+      "layout_calls": [
+        [
+          "header",
+          ""
+        ],
+        [
+          "footer",
+          ""
+        ]
+      ],
+      "warnings": []
+    },
+    "archive-layout": {
+      "html": "47818d0874c145a74899ea1cd7f6de4d8decb9a30169c51f9c7fefddd306cd45",
+      "layout_calls": [
+        [
+          "header",
+          "new"
+        ],
+        [
+          "footer",
+          "new"
+        ]
+      ],
+      "warnings": []
+    },
+    "search-layout": {
+      "html": "b72d04fca829ac15bc5843e77ffcacb338f5cb8793bb780a019a8d297581d202",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "sidebar",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "search-empty-layout": {
+      "html": "8d385a3b028a47554ec12ad50f09198995f775f939e89c47111a8a4c130b5c64",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "sidebar",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "calculator-layout": {
+      "html": "ee0278ac121e726913ccad909eb5e1e49d6f403ac0f13163777bbcf8d4e700ea",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "calculator-renamed-layout": {
+      "html": "ee0278ac121e726913ccad909eb5e1e49d6f403ac0f13163777bbcf8d4e700ea",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "calculator-slug-layout": {
+      "html": "a23ffa07698a9899f7fd515467b94ad655a729742a586605b4866c051b66776d",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "category-context-layout": {
+      "html": "6e31808841326989ec9a2f0fe84de195cc30b8137c15e6afcae18b1dc0d35c3e",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews-archive-context-layout": {
+      "html": "bcb9a7346c48d20e540eb8e0c687d3b0dddf355b549f9fda04462810e3e46ac0",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "contacts-context-layout": {
+      "html": "117a59599a4f3712316552b935ed4e78a88c92fe8fa2ba977e4a5af0af5c3f6b",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    }
+  },
+  "no-acf": {
+    "calculator": {
+      "html": "0a283295942fdfb22555ad8a862e66d1edeb41fca153f46cb82597227cbf2a34",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "article": {
+      "html": "a2f3c721b25811cde19bcdfa577bbd34af5071e5d0d2ba8aed135fdb27c093a5",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "article-protected": {
+      "html": "a05ad0c57b87faffe89b3a85927d070de97801c99a58abb33345b444f29fbfe5",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "article-no-related": {
+      "html": "221ca1a61bbad51718611ce708d79263e2d4bb1bf0729a16b3218e98a4b57ee8",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "category": {
+      "html": "556ea060d230f346dd0a19a70e4528c3ee982ca44f3f62d7f6730823354d12de",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "category-empty": {
+      "html": "d8657d656a8ce2e86caaa456443ed8b09bfe5f75eca4fd1e9acbec53e946c994",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "category-no-images": {
+      "html": "270e2e4341302576d13174b3d9a24c24ab3e8b9477c2fffca0c40171ddd78f1d",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "contacts": {
+      "html": "ccd5559039ad2c2681a9246b4d211e19f06fa4d8e7a9904d1f5be489df182328",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "works": {
+      "html": "563a83f5bcc2797ae9225d763e0a542ad3637184949c6179c6ae87375ea0f821",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "works-empty": {
+      "html": "7dc9217f99acd41a3da8e3a981e189fb56d651f52836f91ddf553d37dce13a09",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews": {
+      "html": "ba5d31e08afcd86b1a43ef403869bf158ff67c944e4722466117416f47e1928e",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews-empty": {
+      "html": "be2503ea0f9319b7c1bcf6c88f32998681bf0a64c95be5b7ec43cab4021346a0",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews-archive": {
+      "html": "6d5bbef1dffd2d34ae41bc8d44f3955a3314bf026d06d7c407b2938f2eb92f42",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews-archive-empty": {
+      "html": "7f7f389d52d861aa850eff672b35907b4a798cb380d82f0e13f0a71aa7793d0b",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "search": {
+      "html": "b9af6d6c779cb7fbb7567d557eea3a59e91930fe78a9b3756b5093f48be0c752",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "sidebar",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "search-empty": {
+      "html": "e7a5ed8e188513d0ee486676f8a9b8f1af0d1af062a0db18c8e6e0bb780e30b8",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "sidebar",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "blocks": {
+      "html": "722f586c1a401b3791b7281aa272a0fa025b3af28a181a71a7e488de487e2d13",
+      "layout_calls": [],
+      "warnings": []
+    },
+    "catalog": {
+      "html": "1374480246ea03127afd6f03406d21d3b4da26f104f16d8f4178860e24c3a99f",
+      "layout_calls": [
+        [
+          "header",
+          ""
+        ],
+        [
+          "footer",
+          ""
+        ]
+      ],
+      "warnings": []
+    },
+    "catalog-empty": {
+      "html": "e0744e070d61b788a4d221405f256c690f635837b79b5d280cfcf9e7b2b0cc1d",
+      "layout_calls": [
+        [
+          "header",
+          ""
+        ],
+        [
+          "footer",
+          ""
+        ]
+      ],
+      "warnings": []
+    },
+    "all-blocks": {
+      "html": "ad4b77f62d2aaf1c4f312c23525ffad30da6a622a4cb493af5ce01f5f28d78c5",
+      "layout_calls": [],
+      "warnings": []
+    },
+    "contacts-layout": {
+      "html": "0519a6094be92617f1bbef1c8e07732453974fa08f3b2d42382a9f586bd5e5d7",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "works-layout": {
+      "html": "e04d406652cd31bdd175fbc8747d2e643c38c867323040d2445008b85de20d67",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews-layout": {
+      "html": "5bca681db77b8a866438df4cd4427ea77f4d747cd42d03282af84c7d5da8eaeb",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews-archive-layout": {
+      "html": "f822d3621b757108df32ca80428093e79fe3e066ce43c10d0222eae16ed54c37",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "catalog-layout": {
+      "html": "4f13ec34965787cb02df7367e262fdb7e9594ab52927245836a8b9679e2da463",
+      "layout_calls": [
+        [
+          "header",
+          ""
+        ],
+        [
+          "footer",
+          ""
+        ]
+      ],
+      "warnings": []
+    },
+    "category-layout": {
+      "html": "2cf3b7b87321a93dd0518e794f74226db339a154c0528a215fb8c897280f6dd8",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "article-layout": {
+      "html": "25e6a130066ce1f8e3c1b4a824a43bccd46146fa6b7eb10dffecfe024afd53e1",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "single-guest-layout": {
+      "html": "a23ffa07698a9899f7fd515467b94ad655a729742a586605b4866c051b66776d",
+      "layout_calls": [
+        [
+          "header",
+          ""
+        ],
+        [
+          "footer",
+          ""
+        ]
+      ],
+      "warnings": []
+    },
+    "single-auth-layout": {
+      "html": "75f8eb0be3a3afc5e92dd41b0a51eca5acc7cf21c1ef95a6784714378393cd21",
+      "layout_calls": [
+        [
+          "header",
+          ""
+        ],
+        [
+          "footer",
+          ""
+        ]
+      ],
+      "warnings": []
+    },
+    "archive-layout": {
+      "html": "47818d0874c145a74899ea1cd7f6de4d8decb9a30169c51f9c7fefddd306cd45",
+      "layout_calls": [
+        [
+          "header",
+          "new"
+        ],
+        [
+          "footer",
+          "new"
+        ]
+      ],
+      "warnings": []
+    },
+    "search-layout": {
+      "html": "b72d04fca829ac15bc5843e77ffcacb338f5cb8793bb780a019a8d297581d202",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "sidebar",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "search-empty-layout": {
+      "html": "8d385a3b028a47554ec12ad50f09198995f775f939e89c47111a8a4c130b5c64",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "sidebar",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "calculator-layout": {
+      "html": "ee0278ac121e726913ccad909eb5e1e49d6f403ac0f13163777bbcf8d4e700ea",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "calculator-renamed-layout": {
+      "html": "ee0278ac121e726913ccad909eb5e1e49d6f403ac0f13163777bbcf8d4e700ea",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "calculator-slug-layout": {
+      "html": "a23ffa07698a9899f7fd515467b94ad655a729742a586605b4866c051b66776d",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "category-context-layout": {
+      "html": "2cf3b7b87321a93dd0518e794f74226db339a154c0528a215fb8c897280f6dd8",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "reviews-archive-context-layout": {
+      "html": "f822d3621b757108df32ca80428093e79fe3e066ce43c10d0222eae16ed54c37",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    },
+    "contacts-context-layout": {
+      "html": "117a59599a4f3712316552b935ed4e78a88c92fe8fa2ba977e4a5af0af5c3f6b",
+      "layout_calls": [
+        [
+          "header",
+          null
+        ],
+        [
+          "footer",
+          null
+        ]
+      ],
+      "warnings": []
+    }
+  }
+}

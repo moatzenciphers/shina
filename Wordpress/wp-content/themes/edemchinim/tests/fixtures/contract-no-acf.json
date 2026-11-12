@@ -1,0 +1,711 @@
+{
+    "bootstrap_hooks": [
+        [
+            "action",
+            "after_setup_theme",
+            "edemchinim_setup",
+            10,
+            1
+        ],
+        [
+            "action",
+            "acf/init",
+            "Closure",
+            10,
+            1
+        ],
+        [
+            "action",
+            "widgets_init",
+            "Disable_WP_Comments::disable_rc_widget",
+            10,
+            1
+        ],
+        [
+            "filter",
+            "wp_headers",
+            "Disable_WP_Comments::filter_wp_headers",
+            10,
+            1
+        ],
+        [
+            "action",
+            "template_redirect",
+            "Disable_WP_Comments::filter_query",
+            9,
+            1
+        ],
+        [
+            "action",
+            "add_admin_bar_menus",
+            "Disable_WP_Comments::filter_admin_bar",
+            0,
+            1
+        ],
+        [
+            "action",
+            "admin_init",
+            "Disable_WP_Comments::filter_admin_bar",
+            10,
+            1
+        ],
+        [
+            "action",
+            "wp_loaded",
+            "Disable_WP_Comments::setup_filters",
+            10,
+            1
+        ],
+        [
+            "action",
+            "enqueue_block_editor_assets",
+            "Disable_WP_Comments::filter_gutenberg_blocks",
+            10,
+            1
+        ],
+        [
+            "filter",
+            "rest_endpoints",
+            "Disable_WP_Comments::filter_rest_endpoints",
+            10,
+            1
+        ],
+        [
+            "filter",
+            "xmlrpc_methods",
+            "Disable_WP_Comments::disable_xmlrc_comments",
+            10,
+            1
+        ],
+        [
+            "filter",
+            "rest_pre_insert_comment",
+            "Disable_WP_Comments::disable_rest_api_comments",
+            10,
+            2
+        ],
+        [
+            "filter",
+            "comments_array",
+            "__return_empty_array",
+            20,
+            1
+        ],
+        [
+            "filter",
+            "single_template",
+            "edemchinim_article_template",
+            10,
+            1
+        ],
+        [
+            "action",
+            "pre_get_posts",
+            "edemchinim_articles_query",
+            10,
+            1
+        ],
+        [
+            "action",
+            "pre_get_posts",
+            "edemchinim_reviews_archive_query",
+            10,
+            1
+        ],
+        [
+            "action",
+            "acf/init",
+            "Closure",
+            10,
+            1
+        ],
+        [
+            "filter",
+            "wp_img_tag_add_auto_sizes",
+            "__return_false",
+            10,
+            1
+        ],
+        [
+            "remove",
+            "wp_footer",
+            "wp_enqueue_global_styles",
+            1,
+            1
+        ],
+        [
+            "remove",
+            "wp_body_open",
+            "wp_global_styles_render_svg_filters",
+            10,
+            1
+        ],
+        [
+            "action",
+            "init",
+            "roots_head_cleanup",
+            10,
+            1
+        ],
+        [
+            "filter",
+            "wpcf7_autop_or_not",
+            "__return_false",
+            10,
+            1
+        ],
+        [
+            "action",
+            "after_setup_theme",
+            "edemchinim_content_width",
+            0,
+            1
+        ],
+        [
+            "action",
+            "widgets_init",
+            "edemchinim_widgets_init",
+            10,
+            1
+        ],
+        [
+            "action",
+            "rest_api_init",
+            "edemchinim_register_rest_routes",
+            10,
+            1
+        ],
+        [
+            "filter",
+            "acf/update_value/key=field_shina_calc_master_points",
+            "edemchinim_sanitize_yandex_map_value",
+            10,
+            3
+        ],
+        [
+            "filter",
+            "acf/load_value/key=field_shina_calc_master_points",
+            "edemchinim_load_master_points_yandex_map",
+            5,
+            3
+        ],
+        [
+            "action",
+            "wp_enqueue_scripts",
+            "Closure",
+            10,
+            1
+        ],
+        [
+            "filter",
+            "acf/prepare_field/key=field_shina_calc_master_points",
+            "edemchinim_prepare_master_points_yandex_map_field",
+            5,
+            1
+        ],
+        [
+            "action",
+            "acf/input/admin_enqueue_scripts",
+            "edemchinim_patch_acf_yandex_map_admin_script",
+            100,
+            1
+        ],
+        [
+            "action",
+            "acf/init",
+            "edemchinim_migrate_master_points_to_yandex_map",
+            30,
+            1
+        ],
+        [
+            "action",
+            "wp_enqueue_scripts",
+            "edemchinim_scripts",
+            10,
+            1
+        ],
+        [
+            "filter",
+            "wpcf7_special_mail_tags",
+            "z_clean_coordinates_tag",
+            10,
+            3
+        ],
+        [
+            "filter",
+            "wpcf7_mail_components",
+            "z_cf7_to_tlg_action",
+            10,
+            3
+        ],
+        [
+            "filter",
+            "wpcf7_mail_tag_replaced",
+            "theme_cf7_translate_mail_tags",
+            10,
+            4
+        ],
+        [
+            "action",
+            "acf/init",
+            "edemchinim_services_archive_options",
+            10,
+            1
+        ],
+        [
+            "action",
+            "init",
+            [
+                "Edemchinim\\Testing\\Telegram",
+                "request"
+            ],
+            0,
+            1
+        ],
+        [
+            "filter",
+            "http_request_args",
+            [
+                "Edemchinim\\Testing\\Telegram",
+                "http"
+            ],
+            10,
+            2
+        ],
+        [
+            "filter",
+            "pre_wp_mail",
+            [
+                "Edemchinim\\Testing\\Telegram",
+                "mail"
+            ],
+            10,
+            2
+        ],
+        [
+            "action",
+            "wp_footer",
+            [
+                "Edemchinim\\Testing\\Telegram",
+                "notice"
+            ],
+            99,
+            1
+        ]
+    ],
+    "calculator_html": "11767e7c28fa50f9968a18a025950c4c9144ea717810ae30adebec3a7b928388",
+    "function_bodies": {
+        "edemchinim_article_category": "bce7aafd37147c79cdd9447727cdf8816a15ae7e050f300f73c1eb362d339c5c",
+        "edemchinim_article_contents": "6c6d851061dd9d2574ae5279dd6c34fa95b1ca50bf3aac6de5c0a136c6f21f91",
+        "edemchinim_article_template": "391621169822b4108afed3ca66ebe32346357f87e90f20f2dcf8178df8d30147",
+        "edemchinim_articles_query": "3f4a4f810edb660f64fb4dd037f423d66c0b88dd2fdcb5a3986a6aa8a9be6fef",
+        "edemchinim_articles_root": "5b2508d7f310aad7fa13b36c679335018fcbcfeabef813ee7a0f3423a91c992b",
+        "edemchinim_articles_url": "1fc144ab0cab7046438f44cccc8a68575e07ac408af5448339833646d853bd56",
+        "edemchinim_asset_url": "4c174395af680dc68f9d101fa128639ba9a84a91b75f02c56bdaf13204eed5bf",
+        "edemchinim_build_legacy_master_points_map": "64d7b9857efc29d3dd3ff803c6cf458d8ebec791d7f3b1bfb541545143991a4c",
+        "edemchinim_calculator_url": "4e52bcbd71258715a379aab204e4307d858e58ab2b2ed7f9e7d1c5117ee7c0db",
+        "edemchinim_content_width": "ec181e207a09af96311718bd453023056041c4cad68cc610dbbf956c99decf4c",
+        "edemchinim_get_field": "b62d1163b5acd602262935db3b2e336bc237b79a979b9042ba723190f68b9724",
+        "edemchinim_get_image_url": "e3cf0323d3b27897474b6c4976ec56dd5504d0bd022ae34ddd0c0e5bdec2528e",
+        "edemchinim_get_option_field": "8725f7ab18d95139bd3f45f416d5694532ee6c4dc5d39db770576202c0deb050",
+        "edemchinim_is_article": "a63cb731333f2e96f3c02d87012b9073db39220ec71b167007ae26f0246a9dad",
+        "edemchinim_landing_arrow": "1320e03c3f7b8dd20cd24d7d8d756734784a6238c7c245522527e197f0e88210",
+        "edemchinim_landing_cf7": "472786c473a11456ff6cc26fdae6ab4aac23b5a4baae08fc1e64c36a07c9ae62",
+        "edemchinim_landing_heading": "f60e193d4188c253dcd7356de659fec2240a95a1adaa4b8e1b4d8c627cf40f8b",
+        "edemchinim_landing_image_id": "696e1e41f57b6eac2456c7baf447ee834a6e5a3c2d9b176a2bb7137e320998f2",
+        "edemchinim_landing_layouts": "ad9b7f9612b5a76725b99935a6e148f100461b914e0e0dbdb6b80fe12a56cde7",
+        "edemchinim_landing_posts": "231448758b202f0ea23efc50a36037ace336725a27782dbe43f416d291f43bc8",
+        "edemchinim_landing_price_posts": "5d525b8da622f338bcc544cff9115e36597171170d96a92e5758d8da13771d65",
+        "edemchinim_landing_price_table": "f8657c1967f805428fe32ddd98714dc14d65472bbba0df95a3f55d5160c16273",
+        "edemchinim_landing_price_text": "93a44491b6f481f1289cc439dce471f84551f84faee00b812c36282073ffe6bb",
+        "edemchinim_landing_sub": "606ff5b551d36a04e5af10884d6ab533758cee4b4e7f1db58c7af6d5e60a4ea1",
+        "edemchinim_load_master_points_yandex_map": "e02c8176db2978acc45e306a564e64c8a28519b356678ffe987dadae7db0a79d",
+        "edemchinim_migrate_master_points_to_yandex_map": "b3f5981a693f89dfe42b6776e29d2e6ee45485221f5bae998e1f4c295e509ee7",
+        "edemchinim_normalize_master_points": "15d18d9b55aafe6141758653792a8b52a5727b307f1145a5a8424dd411d8bcff",
+        "edemchinim_option_icon": "5eb44b8e66b0838b379f05577beef2478ee5c33c6a56d1406897504821ba4d0a",
+        "edemchinim_patch_acf_yandex_map_admin_script": "170a98567e9f41397bd266e63d3794e458fa84c1a79b702db283bdac62bf54e2",
+        "edemchinim_phone_href": "8b2f88543957e41ab5a5fda039ae92139fe1379fa0982621a7c2bba471509b64",
+        "edemchinim_phone_icon": "e20ab1f5f69f2e1861ea4462e46064d302aee5b43f7cf475246e07f00d2b8875",
+        "edemchinim_prepare_calculator_config": "e3f67135b82f369ad3a1c4d314f0a802c68252d78b1c3e74ba7bc177abd5ab1c",
+        "edemchinim_prepare_master_points_yandex_map_field": "8c48ef7eb8472ac1c83c684cce132678eb173cca0dcbe2fa7f666a4b2a124da8",
+        "edemchinim_public_reviews_meta": "c9cbca6e71e6e6ef4afe524095703fe645eed7b874aee1fe82a2600e78ff0d5d",
+        "edemchinim_register_rest_routes": "581a7b6c6b56eb015c82c214a05b65965bc05e39b4820b1d692d84be0ff49f7b",
+        "edemchinim_relative_date": "fc6f3edc3f6281cbc063baba83e5a2ebdf1f4b9a6a9fc9120d9c5c51b4b03c3f",
+        "edemchinim_render_landing_blocks": "8d64c700dd8552fc04a1a77c995c1f4ec48c6eab0a26234fb60cefd93ff37e5a",
+        "edemchinim_rest_allowed_repair_types": "ae03a7750888914cbea34abfd591d00678a5b903d08de4d1892d6cc909625bc4",
+        "edemchinim_rest_get_faq": "fa080c9ca1962587c59fdbfb2c9c672eb0a5b32f582daf7b7221c7b6a4d073b1",
+        "edemchinim_rest_get_pagination": "fd2a93fc50d55a90de218d362faff0f284a6d098021fcca8bd723ec9499731df",
+        "edemchinim_rest_get_photos": "fd24915f48b246619819350c4c44b8fdf104d35d0c72e7684e81402a6b3b0a11",
+        "edemchinim_rest_get_repair_type": "4bcc25a8aee3ca568c9beb1c8d9c8cea05cc440630581c334b9693b5165bc8f8",
+        "edemchinim_rest_get_reviews": "82a7c76db213607d08524a16bd3f4872245d77f0a5784268bb245a709cb6076f",
+        "edemchinim_rest_paginated_response": "42e6bafd0edfdcfcbdee804170bc4c995fae935b0e10f0f98b7076061872cbf5",
+        "edemchinim_rest_prepare_faq": "acbc96340b95ca80688adec8335ee920ed52c87e9bb44d8aa1f0796de9216a9d",
+        "edemchinim_rest_prepare_photo": "9ce858e9910a4342bfc98f2b3f501e57b687fabea499bb90ad651396b407e11f",
+        "edemchinim_rest_prepare_review": "1bc3d4782a8b5ceeb2e568d9b41ba8245083d3527a58217546570e7508564725",
+        "edemchinim_rest_review_photos": "12373881bae41cdaabeaacc4b511712c0375061daa8de0a458351cf8224fecd5",
+        "edemchinim_rest_sanitize_repair_type": "23e8abf5b02726c02fba6357e8911bba4bf8f38c763dd2e61fb2ef68205ab558",
+        "edemchinim_rest_sanitize_search": "d92e85526cdb2a9b18c933fab1944e78a73b42406820d42c5468dd532f4c7a8f",
+        "edemchinim_rest_validate_per_page": "ca5b6cd00eb4c097e9e155f5a703b68e5eaee56427c9fc668afe2f9090de79d9",
+        "edemchinim_rest_validate_positive_int": "97e6ee1ce0f7e5b6def01eeb9da50f9a5b440b88f62bceacba11ccc42940f2a2",
+        "edemchinim_rest_validate_repair_type": "9a5b6b1c3219e20c22f4118a8454120ca5119d59b7611b899f64211ac709c845",
+        "edemchinim_review_service_id": "91774ba9f968afb8faeaf783d018e90ae029d835462df05454e51c2db83d59a8",
+        "edemchinim_review_summary": "89bb7e60d9d82a79f68bb1a952888939b0c49340678858c716f105e7bb9673d2",
+        "edemchinim_reviews_archive_query": "0a01c48a558b1fe1a051d3488d45ed2d9e63bf2fcd53bc613893923b2340acdf",
+        "edemchinim_sanitize_icon": "71fcbe9000cd1c4afd2cfaa065a15e49ed455ac7274f169debdfa8d08b267eb5",
+        "edemchinim_sanitize_yandex_map_value": "ddf746b57fe980ce556aaa62d1a530da8ac3d7e7c03ae47b87656fa598ba9e8d",
+        "edemchinim_scripts": "3d13c5eb2335e8be0e5730659e5a93809169198d5fa907c423ee170b2b00f0a5",
+        "edemchinim_service_areas": "e30963ae6d41599eca2cf066967335a4b85f95225b7548bd06131a0148e79c75",
+        "edemchinim_service_catalog_price": "6121eace546f6180bb90d28b6580fc5967d4f194bbecb67d3774b2dee93f2247",
+        "edemchinim_service_icon": "80558b3b4a3ae32612b09148a058830bc88941ce86f519e58dac9146c740b163",
+        "edemchinim_services_archive_options": "699c092d08728c333586313949081bddb37f4ca02efc68091ae93213177774df",
+        "edemchinim_setup": "9bbd9c61977e56e356cf10170c5c70691790dd29528d875ff983d77e90ff75e5",
+        "edemchinim_support_page_number": "5f5db69e15db9f55a7f8c8d4ddf60b079f4b70c97eace211ae0df3776c0d31c8",
+        "edemchinim_support_pagination": "9f184b2eb5bc4c3da5e344439be01a6c8ed5a61a5fb20d231f7579d80f59ef82",
+        "edemchinim_support_review": "89bb3e247b9432f10829f8b93c6f08c3384aaa47884ee3f86efe3f540af4e972",
+        "edemchinim_support_url": "cd363f96755238d3a7b3dfde97781c8998698ff16437b03d909b658885b487d9",
+        "edemchinim_widgets_init": "cab40aad8e2d691c58790a1105528c5f8e4dd01f329ac41d2a8cc26cc3f7aebc",
+        "roots_head_cleanup": "b0197bdbcc07480ea039dde6786cc1904a779d222763327cf4cf7d138224308a",
+        "theme_cf7_translate_mail_tags": "037553c930dd700e77ff680596a5cb0a11af4b5cd5509c1777cf3f24f8d255a6",
+        "z_cf7_to_tlg_action": "ce6521d28aa3a476adce78259b44430a0356fc600505d1277f8a5c5c8cddc704",
+        "z_clean_coordinates_tag": "d2c09be9b7f03759f714f35804630c86c43d52d064255ac7f2a07379af67abaf"
+    },
+    "routes": {
+        "shina/v1/reviews": {
+            "methods": "GET",
+            "callback": "edemchinim_rest_get_reviews",
+            "permission_callback": "__return_true",
+            "args": {
+                "page": {
+                    "default": 1,
+                    "sanitize_callback": "absint",
+                    "validate_callback": "edemchinim_rest_validate_positive_int"
+                },
+                "per_page": {
+                    "default": 10,
+                    "sanitize_callback": "absint",
+                    "validate_callback": "edemchinim_rest_validate_per_page"
+                },
+                "repair_type": {
+                    "default": "",
+                    "sanitize_callback": "edemchinim_rest_sanitize_repair_type",
+                    "validate_callback": "edemchinim_rest_validate_repair_type"
+                }
+            }
+        },
+        "shina/v1/photos": {
+            "methods": "GET",
+            "callback": "edemchinim_rest_get_photos",
+            "permission_callback": "__return_true",
+            "args": {
+                "page": {
+                    "default": 1,
+                    "sanitize_callback": "absint",
+                    "validate_callback": "edemchinim_rest_validate_positive_int"
+                },
+                "per_page": {
+                    "default": 10,
+                    "sanitize_callback": "absint",
+                    "validate_callback": "edemchinim_rest_validate_per_page"
+                },
+                "repair_type": {
+                    "default": "",
+                    "sanitize_callback": "edemchinim_rest_sanitize_repair_type",
+                    "validate_callback": "edemchinim_rest_validate_repair_type"
+                }
+            }
+        },
+        "shina/v1/faq": {
+            "methods": "GET",
+            "callback": "edemchinim_rest_get_faq",
+            "permission_callback": "__return_true",
+            "args": {
+                "page": {
+                    "default": 1,
+                    "sanitize_callback": "absint",
+                    "validate_callback": "edemchinim_rest_validate_positive_int"
+                },
+                "per_page": {
+                    "default": 20,
+                    "sanitize_callback": "absint",
+                    "validate_callback": "edemchinim_rest_validate_per_page"
+                },
+                "search": {
+                    "default": "",
+                    "sanitize_callback": "edemchinim_rest_sanitize_search"
+                }
+            }
+        }
+    },
+    "fields": {
+        "zero": 0,
+        "empty": "fallback",
+        "false": false,
+        "array": [
+            "one"
+        ],
+        "missing": "fallback"
+    },
+    "option_field": "fixture",
+    "phones": [
+        "tel:+79991234567",
+        "tel:+79991234567",
+        "tel:+79991234567",
+        "#"
+    ],
+    "images": [
+        "/large.jpg",
+        "https://example.test/images/15-medium_large.jpg",
+        "/image.jpg",
+        ""
+    ],
+    "review_photos": [
+        "/one.jpg",
+        "/two.jpg"
+    ],
+    "pagination": {
+        "page": 2,
+        "per_page": 50
+    },
+    "response": {
+        "data": {
+            "reviews": [
+                {
+                    "id": 42
+                }
+            ],
+            "items": [
+                {
+                    "id": 42
+                }
+            ],
+            "page": 2,
+            "per_page": 10,
+            "total": 23,
+            "total_pages": 3,
+            "has_more": true
+        },
+        "headers": {
+            "X-WP-Total": 23,
+            "X-WP-TotalPages": 3
+        }
+    },
+    "validation": [
+        [
+            false,
+            false
+        ],
+        [
+            true,
+            true
+        ],
+        [
+            true,
+            true
+        ],
+        [
+            true,
+            false
+        ]
+    ],
+    "repair_types": [
+        true,
+        true,
+        true,
+        false,
+        false
+    ],
+    "prices": [
+        "1 500 ₽",
+        "+12,50%",
+        "250 ₽/шт.",
+        "—"
+    ],
+    "points": [
+        [
+            {
+                "id": "master-2",
+                "name": "Мастер",
+                "latitude": 55.7,
+                "longitude": 37.6
+            },
+            {
+                "id": "master-3",
+                "name": "Второй",
+                "latitude": 55.8,
+                "longitude": 37.7
+            }
+        ],
+        [
+            {
+                "id": "master-2",
+                "name": "Мастер",
+                "latitude": 55.7,
+                "longitude": 37.6
+            },
+            {
+                "id": "master-3",
+                "name": "Второй",
+                "latitude": 55.8,
+                "longitude": 37.7
+            }
+        ],
+        [],
+        {
+            "master_points": [
+                {
+                    "id": "master-2",
+                    "name": "Мастер",
+                    "latitude": 55.7,
+                    "longitude": 37.6
+                },
+                {
+                    "id": "master-3",
+                    "name": "Второй",
+                    "latitude": 55.8,
+                    "longitude": 37.7
+                }
+            ],
+            "custom": 42
+        }
+    ],
+    "sanitized_map": "{\"center_lat\":55.755864,\"center_lng\":37.617698,\"zoom\":18,\"type\":\"map\",\"marks\":[{\"id\":2,\"content\":\"\\u041c\\u0430\\u0441\\u0442\\u0435\\u0440\",\"type\":\"Point\",\"coords\":[55.7,37.6],\"circle_size\":0}]}",
+    "migration_once": [
+        {
+            "options_shina_calculator_config_master_points": 1,
+            "options_shina_calculator_config_master_points_0_latitude": "55.7",
+            "options_shina_calculator_config_master_points_0_longitude": "37.6",
+            "options_shina_calculator_config_master_points_0_name": "Мастер"
+        },
+        []
+    ],
+    "migration_twice": [
+        {
+            "options_shina_calculator_config_master_points": 1,
+            "options_shina_calculator_config_master_points_0_latitude": "55.7",
+            "options_shina_calculator_config_master_points_0_longitude": "37.6",
+            "options_shina_calculator_config_master_points_0_name": "Мастер"
+        },
+        []
+    ],
+    "load_legacy_map": "{\"center_lat\":55.755864,\"center_lng\":37.617698,\"zoom\":9,\"type\":\"map\",\"marks\":[{\"id\":1,\"content\":\"\\u041c\\u0430\\u0441\\u0442\\u0435\\u0440\",\"type\":\"Point\",\"coords\":[55.7,37.6],\"circle_size\":0}]}",
+    "prepared_map": {
+        "value": "{\"center_lat\":55.755864,\"center_lng\":37.617698,\"zoom\":9,\"type\":\"map\",\"marks\":[{\"id\":1,\"content\":\"u041cu0430u0441u0442u0435u0440\",\"type\":\"Point\",\"coords\":[55.7,37.6],\"circle_size\":0}]}"
+    },
+    "landing_resources": [
+        [
+            "style",
+            [
+                "edemchinim-landing",
+                "https://example.test/wp-content/themes/edemchinim/css/landing.css",
+                [],
+                "[filemtime]"
+            ]
+        ],
+        [
+            "script",
+            [
+                "edemchinim-main",
+                "https://example.test/wp-content/themes/edemchinim/js/landing.js",
+                [],
+                "[filemtime]",
+                true
+            ]
+        ],
+        [
+            "inline",
+            [
+                "edemchinim-main",
+                "cb13fd774f755973889f52b79884cf7bfe994304e75df67ddc05d0b1dbdde5c0",
+                "before"
+            ]
+        ]
+    ],
+    "calculator_resources": [
+        [
+            "style",
+            [
+                "edemchinim-landing",
+                "https://example.test/wp-content/themes/edemchinim/css/landing.css",
+                [],
+                "[filemtime]"
+            ]
+        ],
+        [
+            "script",
+            [
+                "edemchinim-main",
+                "https://example.test/wp-content/themes/edemchinim/js/landing.js",
+                [],
+                "[filemtime]",
+                true
+            ]
+        ],
+        [
+            "inline",
+            [
+                "edemchinim-main",
+                "cb13fd774f755973889f52b79884cf7bfe994304e75df67ddc05d0b1dbdde5c0",
+                "before"
+            ]
+        ],
+        [
+            "script",
+            [
+                "edemchinim-calculator",
+                "https://example.test/wp-content/themes/edemchinim/js/calculator.js",
+                [],
+                "1.0.8",
+                true
+            ]
+        ]
+    ],
+    "admin_without_map_plugin": [],
+    "admin_with_map_plugin": [
+        [
+            "dequeue",
+            [
+                "acf-yandex"
+            ]
+        ],
+        [
+            "deregister",
+            [
+                "acf-yandex"
+            ]
+        ],
+        [
+            "register",
+            [
+                "acf-yandex",
+                "https://example.test/wp-content/themes/edemchinim/js/acf-yandex-map-admin.js",
+                [
+                    "jquery",
+                    "yandex-map-api"
+                ],
+                "[filemtime]",
+                true
+            ]
+        ],
+        [
+            "localize",
+            [
+                "acf-yandex",
+                "acf_yandex_locale",
+                {
+                    "map_init_fail": "Не удалось инициализировать поле Яндекс Карты.",
+                    "mark_hint": "Перетащите точку. Нажмите правой кнопкой, чтобы удалить.",
+                    "btn_clear_all": "Очистить",
+                    "btn_clear_all_hint": "Удалить все точки",
+                    "mark_save": "Сохранить",
+                    "mark_remove": "Удалить"
+                }
+            ]
+        ],
+        [
+            "script",
+            [
+                "acf-yandex"
+            ]
+        ]
+    ]
+}

@@ -245,10 +245,13 @@ const writeIfChanged = (filename, content) => {
   const target = require('path').join(__dirname, filename);
   if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8').replace(/\r\n/g, '\n') !== content) fs.writeFileSync(target, content);
 };
-writeIfChanged('Wordpress/wp-content/themes/edemchinim/inc/acf-review-fields.json', JSON.stringify(groups.find(group => group.key === 'group_landing_review_service'), null, 2) + '\n');
-writeIfChanged('Wordpress/wp-content/themes/edemchinim/inc/acf-review-caption.json', JSON.stringify(groups.find(group => group.key === 'group_landing_review_caption'), null, 2) + '\n');
 const output = `${JSON.stringify(groups, null, 2)}\n`;
-writeIfChanged('Wordpress/wp-content/themes/edemchinim/inc/acf-support-pages.json', JSON.stringify(supportPageGroups, null, 2) + '\n');
+// The imported theme uses the live site's ACF configuration. Install exports only when explicitly requested.
+if (process.argv.includes('--install-theme-fields')) {
+  writeIfChanged('Wordpress/wp-content/themes/edemchinim/inc/acf-review-fields.json', JSON.stringify(groups.find(group => group.key === 'group_landing_review_service'), null, 2) + '\n');
+  writeIfChanged('Wordpress/wp-content/themes/edemchinim/inc/acf-review-caption.json', JSON.stringify(groups.find(group => group.key === 'group_landing_review_caption'), null, 2) + '\n');
+  writeIfChanged('Wordpress/wp-content/themes/edemchinim/inc/acf-support-pages.json', JSON.stringify(supportPageGroups, null, 2) + '\n');
+}
 writeIfChanged('acf-support-pages-import.json', JSON.stringify(supportPageGroups, null, 2) + '\n');
 if (process.argv.includes('--write')) {
   require('fs').writeFileSync(require('path').join(__dirname, 'acf-landing-import.json'), output);

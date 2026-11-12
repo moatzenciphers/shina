@@ -1,0 +1,18 @@
+{
+  "template-parts/landing-hero": "template-parts/blocks/hero",
+  "template-parts/landing-features-grid": "template-parts/blocks/features-grid",
+  "template-parts/landing-steps-grid": "template-parts/blocks/steps-grid",
+  "template-parts/landing-columns-list": "template-parts/blocks/columns-list",
+  "template-parts/landing-price-table": "template-parts/blocks/price-table",
+  "template-parts/landing-cards-grid": "template-parts/blocks/cards-grid",
+  "template-parts/landing-media-rows": "template-parts/blocks/media-rows",
+  "template-parts/landing-slider-grid": "template-parts/blocks/slider-grid",
+  "template-parts/landing-map-panel": "template-parts/blocks/map-panel",
+  "template-parts/landing-gallery-grid": "template-parts/blocks/gallery-grid",
+  "template-parts/landing-accordion-grid": "template-parts/blocks/accordion-grid",
+  "template-parts/landing-split-form": "template-parts/blocks/split-form",
+  "template-parts/header-template": "template-parts/layout/header",
+  "template-parts/footer-template": "template-parts/layout/footer",
+  "template-parts/landing-quick-call": "template-parts/forms/quick-call",
+  "template-parts/support-page": "template-parts/pages/support"
+}

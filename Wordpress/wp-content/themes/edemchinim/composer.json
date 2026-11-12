@@ -24,6 +24,12 @@
         "wp-cli/i18n-command": "^2.2.5"
     },
     "scripts": {
+        "test:compat": [
+            "@php tests/theme-contract.php",
+            "@php tests/theme-contract.php --without-acf",
+            "@php tests/template-render-check.php",
+            "@php tests/telegram-test.php"
+        ],
         "lint:wpcs": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
         "lint:php": "@php ./vendor/bin/parallel-lint --exclude .git --exclude vendor .",
         "make-pot": "wp i18n make-pot . languages/_s.pot"

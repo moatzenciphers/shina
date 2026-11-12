@@ -1,4 +1,8 @@
 <?php
+use Edemchinim\Support\PostTags;
+
+
+
 /**
  * The template for displaying search results pages
  *
@@ -28,12 +32,35 @@ get_header();
 			while ( have_posts() ) :
 				the_post();
 
-				/**
-				 * Run the loop for the search to output the results.
-				 * If you want to overload this in a child theme then include a file
-				 * called content-search.php and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', 'search' );
+
+
+?>
+
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+	<header class="entry-header">
+		<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
+
+		<?php if ( 'post' === get_post_type() ) : ?>
+		<div class="entry-meta">
+			<?php
+			PostTags::postedOn();
+			PostTags::postedBy();
+			?>
+		</div><!-- .entry-meta -->
+		<?php endif; ?>
+	</header><!-- .entry-header -->
+
+	<?php PostTags::thumbnail(); ?>
+
+	<div class="entry-summary">
+		<?php the_excerpt(); ?>
+	</div><!-- .entry-summary -->
+
+	<footer class="entry-footer">
+		<?php PostTags::entryFooter(); ?>
+	</footer><!-- .entry-footer -->
+</article><!-- #post-<?php the_ID(); ?> -->
+<?php 
 
 			endwhile;
 
@@ -41,7 +68,51 @@ get_header();
 
 		else :
 
-			get_template_part( 'template-parts/content', 'none' );
+
+
+?>
+
+<section class="no-results not-found">
+	<header class="page-header">
+		<h1 class="page-title"><?php esc_html_e( 'Nothing Found', 'edemchinim' ); ?></h1>
+	</header><!-- .page-header -->
+
+	<div class="page-content">
+		<?php
+		if ( is_home() && current_user_can( 'publish_posts' ) ) :
+
+			printf(
+				'<p>' . wp_kses(
+					/* translators: 1: link to WP admin new post page. */
+					__( 'Ready to publish your first post? <a href="%1$s">Get started here</a>.', 'edemchinim' ),
+					array(
+						'a' => array(
+							'href' => array(),
+						),
+					)
+				) . '</p>',
+				esc_url( admin_url( 'post-new.php' ) )
+			);
+
+		elseif ( is_search() ) :
+			?>
+
+			<p><?php esc_html_e( 'Sorry, but nothing matched your search terms. Please try again with some different keywords.', 'edemchinim' ); ?></p>
+			<?php
+			get_search_form();
+
+		else :
+			?>
+
+			<p><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'edemchinim' ); ?></p>
+			<?php
+			get_search_form();
+
+		endif;
+		?>
+	</div><!-- .page-content -->
+</section><!-- .no-results -->
+<?php 
 
 		endif;
 		?>

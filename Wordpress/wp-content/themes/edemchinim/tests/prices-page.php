@@ -42,10 +42,19 @@ function get_permalink($post) { return '/services/' . $post->ID . '/'; }
 function home_url($path) { return $path; }
 function apply_filters($name, $value) { return $value; }
 function get_template_directory_uri() { return 'file://' . dirname(__DIR__); }
+function get_template_part($slug, $name = null, $args = array()) { require dirname(__DIR__) . '/' . $slug . '.php'; }
+function shortcode_exists($tag) { return $tag === 'contact-form-7'; }
+function do_shortcode($shortcode) { return '<form class="wpcf7-form"><input type="tel" name="phone" aria-label="Телефон"><button type="submit">Получить помощь</button></form>'; }
 function get_header() {
-    echo '<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="' . get_template_directory_uri() . '/css/landing.css"></head><body><div class="landing landing--wp-header">';
+    $styles = glob(dirname(__DIR__, 5) . '/dist/css/main.*.css');
+    $css = $styles ? 'file://' . $styles[0] : get_template_directory_uri() . '/css/landing.css';
+    echo '<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="' . $css . '"></head><body><div class="landing landing--wp-header">';
 }
-function get_footer() { echo '</div></body></html>'; }
+function get_footer() {
+    $module = dirname(__DIR__, 5) . '/src/js/prices-page.js';
+    if (is_readable($module)) echo '<script>' . str_replace('export const ', 'const ', file_get_contents($module)) . PHP_EOL . 'initPricesPage();</script>';
+    echo '</div></body></html>';
+}
 function check($condition, $message) { if (! $condition) throw new RuntimeException($message); }
 
 $groups = \Edemchinim\Content\Prices::groups();
@@ -60,6 +69,9 @@ check(strpos($html, 'от 1 500 ₽') !== false && strpos($html, '+20%') !== fal
 check(strpos($html, '700 ₽/шт.') !== false && strpos($html, 'R17') !== false, 'Preserve table headings and per-item format.');
 check(substr_count($html, 'id="price-service-11"') === 1 && strpos($html, 'href="#price-service-11"') !== false, 'Navigation anchors must resolve to unique sections.');
 check(strpos($html, 'tabindex="0"') !== false, 'Wide tables must support keyboard scrolling.');
+check(substr_count($html, '<details class="prices-page__service"') === 2 && strpos($html, '<details class="prices-page__service" open') === false, 'Each service starts collapsed.');
+check(substr_count($html, 'class="split-form landing-section"') === 1 && substr_count($html, '<form ') === 1, 'Reuse the existing form once after the prices.');
+check(strpos($html, 'class="split-form landing-section"') > strrpos($html, '</details>'), 'Form follows all price groups.');
 if (in_array('--render', $argv, true)) { echo $html; exit; }
 $services = array();
 ob_start(); require dirname(__DIR__) . '/page-prices.php'; $empty = ob_get_clean();

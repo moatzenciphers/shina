@@ -12,6 +12,7 @@ import './review-dialog';
 import { initCoverageMap } from './coverage-map';
 import { initMapPanel } from './map-panel';
 import { initGalleryGrid } from './gallery-grid';
+import { initPricesPage } from './prices-page';
 import { initSplitForm } from './split-form';
 import { initSiteFooter } from './site-footer';
 import { initServiceFilters } from './service-filters';
@@ -27,6 +28,7 @@ const initSite = () => {
   initCoverageMap();
   initGalleryGrid();
   initSplitForm();
+  initPricesPage();
   initSiteFooter();
   initServiceFilters();
   initCookieConsent();
